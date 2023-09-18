@@ -11,7 +11,7 @@ git tag 0.1.0
 ```
 - Push the tag
 ```
-git tag --push
+git push --tags
 ```
 
 
