@@ -1,48 +1,109 @@
-# [SemVer](https://semver.org/)
+# Streamlining Terraform CLI Setup
 
 
-This branch is dedicated to teach you how to branch, issue and tag stuff as required with semver.
+We began our journey by identifying the Linux distribution we were using, specifically Ubuntu, and determined this by inspecting the system file.
+
+[Check your OS Version](https://www.cyberciti.biz/faq/how-to-check-os-version-in-linux-command-line/)
 
 
-Semantic Versioning is a versioning scheme for software that aims to provide a clear and predictable way of communicating changes and updates to a software package. 
+We did it [just here](assets/os-distru.png).
 
-It's particularly important in the world of software development, as it helps developers and users understand the nature and impact of updates, ensuring compatibility and smooth transitions between different versions of a software package.
+Further, the cli failed due to the following.<br>
+The point of concern was this line of code:
+```sh
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+```
 
-
-Semantic Versioning follows a three-part version number format: MAJOR.MINOR.PATCH. Each part of the version number carries specific meaning:
-
-
-- **MAJOR:** This digit is incremented when there are incompatible changes that require users to make significant adjustments to their code or configurations. It signifies major updates or changes that could break existing functionality.
-- **MINOR:** The minor version is incremented when new features are added in a backward-compatible manner. This means that while new functionality is introduced, existing code and configurations should still work without any issues.
-- **PATCH:** The patch version is incremented for backward-compatible bug fixes or minor improvements that do not introduce new features. These updates typically address issues and improve the overall stability of the software.
-
-Additionally, Semantic Versioning allows for the inclusion of pre-release and build metadata:
-
-- **Pre-release:** This is a hyphen followed by an identifier for pre-release versions. Pre-release versions are for development and testing purposes and may not be stable for production use. For example, 1.0.0-alpha.1 or 2.0.0-beta.2.
-- **Build metadata:** This is a plus sign followed by build metadata, which can be used to specify information about the build process or other details relevant to the release.
-
-Here's an example table illustrating how Semantic Versioning works:
+To enhance it, we modified it as follows:
+```sh
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" -y
+```
 
 
-| Version      | Meaning                                           |
-|--------------|---------------------------------------------------|
-| 1.0.0        | Initial release                                  |
-| 1.1.0        | Added new features, backward-compatible         |
-| 1.1.1        | Bug fix, backward-compatible                    |
-| 2.0.0        | Incompatible changes, significant upgrade       |
-| 2.0.1        | Bug fix, backward-compatible                    |
-| 2.1.0        | Added new features, backward-compatible         |
-| 3.0.0-alpha.1 | Pre-release version, not stable for production  |
-| 3.0.0-beta.1  | Pre-release version, for testing and feedback  |
-| 3.0.0        | Stable release, backward-compatible             |
+Next, we consulted the official Terraform documentation to acquire the correct installation instructions: 
+
+https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
 
 
-Semantic Versioning helps you and your friends understand the impact of updates at a glance. 
+We meticulously followed these instructions one by one, resulting in successful installation.
 
-It promotes transparency, reduces compatibility issues, and ensures smoother software development and deployment processes. 
 
-| Developers| You  are encouraged to follow SemVer to provide a consistent and reliable experience to their users. |
-|---|---|
+[See this asset](assets/refactor-tf.png) to observe the comparison.
+
+Subsequently, we transformed these steps into a Bash script, located at  `./bin/here`
+
+
+### Automate the Script
+
+In the context of Gitpod, we simplified the setup step within the workflow from:
+
+```yaml
+    init: |
+      sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      sudo apt-get update && sudo apt-get install terraform
+```
+
+To just;
+
+```yaml
+    init: |
+     source ./bin/install_terraform_cli
+```
+
+Furthermore, we established a solution to address the scenario where initializing occurs only when starting a new workspace:
+
+| Scenario                          | Initialization  |
+|-----------------------------------|------------------|
+| When starting a new workspace     | `init`           |
+| Launching an existing workspace   | No `init`        |
+
+**Solution;**
+
+Use either the `before` or `command` directive as shown below:
+
+
+```yaml
+    before: |
+     source ./bin/install_terraform_cli
+```
+
+#### Linux Permissions
+
+Take the file, make it executable and associate it with the current user.
+
+```sh
+chmod u+x ./bin/install_terraform_cli
+```
+
+Or follownig this number:
+
+```sh
+chmod 744 ./bin/install_terraform_cli
+```
+
+
+Bash scripts start with shebang, learn more;
+https://en.wikipedia.org/wiki/Chmod
+
+
+Execute scripts;
+
+Use the `./` shorthand notiation to execute the bash script.
+
+eg. `./bin/install_terraform_cli` its included above.
+
+> Refer to  [.gitpod.yml](.gitpod.yml)
+
+
+### Considerations
+
+Create an issue [#3](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/3) that will have the number three cause;
+
+- Our initial issue, identified as #1, was established.
+- We initiated a Pull Request (PR) to implement the assigned task from that issue, which is now #2.
+- Subsequently, we introduced a new issue, referenced as [#3](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/3), with distinct objectives.
 
 
 
