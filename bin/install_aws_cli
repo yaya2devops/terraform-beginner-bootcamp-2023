@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd /workspace
+cd /workspace || exit
 
 rm -f '/workspace/awscliv2.zip'
 rm -rf '/workspace/aws'
@@ -11,4 +11,4 @@ sudo ./aws/install
 
 aws sts get-caller-identity
 
-cd $PROJECT_ROOT
+cd "$PROJECT_ROOT" || exit
