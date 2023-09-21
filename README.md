@@ -11,25 +11,32 @@ You to create a bucket and throw things in and access them in the cloud that's a
 ```sh
 aws s3 ls
 ```
+
 ![List some of my buckets](assets/0.6.0/bucket-ls.png)
 
 2. Create a new S3 bucket, you can use the `mb` which make bucket.
+
 ```sh
 aws s3 mb s3://your-bucket-name
 ```
+
 > We will code the above command in terraform.
 
-3.Upload a File to an S3 Bucket,  you can use the `cp` (copy) command:
+3.Upload a File to an S3 Bucket, you can use the `cp` (copy) command:
+
 ```sh
 aws s3 cp /path/to/local/file s3://your-bucket-name/
 ```
-- Replace `/path/to/local/file` with the path to the file on your local machine 
+
+- Replace `/path/to/local/file` with the path to the file on your local machine
 - Replace `your-bucket-name` with the name of your S3 bucket.
 
 4. List all objects within a specific S3 bucket, use the following command
+
 ```
 aws s3 ls s3://your-bucket-name/
 ```
+
 ![List My Frontend Content From S3](assets/0.6.0/buck-object-ls.png)
 
 5. Download an Object from an S3 Bucket with the `cp` command with reverse copying
@@ -37,20 +44,21 @@ aws s3 ls s3://your-bucket-name/
 ```sh
 aws s3 cp s3://your-bucket-name/object-key /path/to/local/directory/
 ```
+
 - Replace `your-bucket-name` with the name of your S3 bucket
 - Replace `object-key` with the key of the object you want to download
 - Replace `/path/to/local/directory/` with the directory where you want to save the downloaded file.
-
 
 6. Delete an Object from an S3 Bucket use the `rm`(remove) command
 
 ```sh
 aws s3 rm s3://your-bucket-name/object-key
 ```
-- Replace `your-bucket-name` with the name of your S3 bucket 
+
+- Replace `your-bucket-name` with the name of your S3 bucket
 - Replace `object-key` with the key of the object you want to delete.
 
-Great and cool. 
+Great and cool.
 These are some basic AWS S3 commands to get you started with managing buckets and objects using the AWS CLI.
 
 Let's now get back to terraform.
@@ -65,8 +73,8 @@ Before we begin, ensure you have the following prerequisites:
 We made both of these in previous branches. Double check.
 
 ## Create an S3 Bucket with Terraform
-First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.
 
+First of all, the naming conventions between CloudFormation and Terraform resources may occasionally align, but this alignment is not always guaranteed. Double-check.
 
 ### Searching for S3 in Terraform Registry
 
@@ -111,16 +119,15 @@ resource "aws_s3_bucket" "example" {
 
 > Should fail too. We lack our AWS Provider.
 
-
 ### Configure AWS Provider
 
-You need to configure the AWS provider in your Terraform configuration to provide the necessary AWS credentials. 
-
+You need to configure the AWS provider in your Terraform configuration to provide the necessary AWS credentials.
 
 1. Go to the registry and search for aws.
-https://registry.terraform.io/providers/hashicorp/aws/latest
+   https://registry.terraform.io/providers/hashicorp/aws/latest
 
-2. Click  USE PROVIDER on the second navbar on the right besides Documenation;
+2. Click USE PROVIDER on the second navbar on the right besides Documenation;
+
 ```hcl
 terraform {
   required_providers {
@@ -137,6 +144,7 @@ provider "aws" {
 ```
 
 3. Reflect on our previous provider.
+
 ```tf
 terraform {
   required_providers {
@@ -155,6 +163,7 @@ provider "random" {
 How are we going to add that?
 
 This looks stupid. We must have a single block for each. So?
+
 ```tf
 terraform {
   required_providers {
@@ -183,6 +192,7 @@ provider "aws" {
 }
 
 ```
+
 4. Apply critical thinking and get the following results;
 
 ```tf
@@ -196,7 +206,7 @@ terraform {
       source = "hashicorp/aws"
       version = "5.17.0"
     }
-    
+
   }
 }
 
@@ -208,14 +218,16 @@ provider "aws" {
   # Configuration options
 }
 ```
+
 We had to take aws inside previous provider and put it along the random.
 
 Go try plan the infra. It should fail. <br>
 You added a new provider it must be mapped to your `.terraform` dotfile.
 
- Init is required.
+Init is required.
 
 ### Initialize and Plan
+
 1. Now, you can initialize Terraform by running the following command and should work.
 
 ```hcl
@@ -229,7 +241,7 @@ terraform init
 The random is generating the name with capital while bucket only supports low letter.
 
 3. Run `terrafom apply` and observe the failure.
-The plan is not smart enough. Be careful. You could get a green pass and then get rejected in apply.
+   The plan is not smart enough. Be careful. You could get a green pass and then get rejected in apply.
 
 We will address this issue next.
 
@@ -238,6 +250,7 @@ We will address this issue next.
 To resolve the bucket naming issue, modify the resource definition as follows.
 
 1. Change the bucket name from that to `random_string.bucket_name.result`
+
 ```
 resource "aws_s3_bucket" "example" {
   bucket = random_string.bucket_name.result
@@ -249,6 +262,7 @@ Ensure you have previously defined `random_string.bucket_name.result` like I sho
 2. Update the resource definition for random as required and Set length to reduce the chance of conflicts.
 
 From this;
+
 ```
 resource "random_string" "bucket_name" {
   length           = 16
@@ -257,6 +271,7 @@ resource "random_string" "bucket_name" {
 ```
 
 To that;
+
 ```
 resource "random_string" "bucket_name" {
   lower = true
@@ -270,6 +285,7 @@ resource "random_string" "bucket_name" {
 
 1. After fixing the issue, Run `terraform validate`
 2. Or re-run Terraform plan (it does validate in the background as a bonus):
+
 ```
 terraform plan
 ```
@@ -277,10 +293,13 @@ terraform plan
 This time, this also should work without errors. But we must verify further.
 
 ### Terraform Apply
+
 Once you have successfully planned, apply the changes:
+
 ```sh
 terraform apply
 ```
+
 Again. Please be cautious; a successful plan does not guarantee success during the apply phase.
 
 This is works you can verify from your terminal.
@@ -292,12 +311,15 @@ You can double verify your bucket in the console.
 ![Its Her from AWS](assets/0.6.0/bucket-console.png)
 
 ### Double Checking Terraform State
+
 After applying the changes, check the state of Terraform with the following commands:
+
 ```sh
 terraform show
 ```
 
-You can also find it in your current directory. 
+You can also find it in your current directory.
+
 ```json
    {
       "mode": "managed",
@@ -312,9 +334,10 @@ You can also find it in your current directory.
 The code is around 117 lines you got the point. It is now having the bucket state.
 
 ### Destroying the Bucket
+
 Why you may ask. Because if we push the bucket will no longer be managed by Terraform's state file, and re-importing it may be necessary.
 
-To  destroy the bucket, use the following command:
+To destroy the bucket, use the following command:
 
 ![Bye bye Bucket](assets/0.6.0/bucket-destroy.png)
 
@@ -339,13 +362,10 @@ Double check your `terraform.tfstate`
 Yep that is all it now!
 
 #### Security Reminder
+
 Never commit your AWS credentials to version control. Keep your credentials secure and use proper AWS authentication methods.
 
-- It's essential never to hard code your AWS credentials in your Terraform configuration. 
-- Rely on AWS configuration through environment variables using the `export`. 
+- It's essential never to hard code your AWS credentials in your Terraform configuration.
+- Rely on AWS configuration through environment variables using the `export`.
 
 Terraform will use these credentials in the background.
-
-
-
-
