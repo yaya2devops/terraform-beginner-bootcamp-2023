@@ -1,234 +1,328 @@
-## Installation of AWS CLI for Quick Interaction
+# Terraform Basics
 
-In our quest to communicate swiftly and efficiently with AWS CLI, we've devised a streamlined installation process.
+We explored the fundamentals of Terraform, a powerful infrastructure as code (IaC) tool. 
 
- Although we've already incorporated it into Gitpod, we're now taking an extra step to ensure authentication.
+We began by navigating to the Terraform Registry at [https://registry.terraform.io](https://registry.terraform.io) to access essential resources and modules.
 
+**Provider vs. Module**: We discussed the distinction between a provider and a module in Terraform. 
+- Providers are responsible for managing resources
+- While modules serve as reusable building blocks for your infrastructure.
 
-To achieve this, we will create a bash script named `install_aws_cli` within the `./bin` directory. 
+### Goals
+Our primary objectives for this bootcamp include:
+- Creating a custom provider(which is something very hard but cool to do)
+- Developing a module, a fundamental Terraform construct.  (normal) 
 
-This script will contain all the necessary commands, 
-- Starting with the shebang declaration 
-- Integrating the existent instructional commands 
-```sh
-#!/usr/bin/env bash
+## Calling a Provider From Registry
+We initiated our journey by employing the `random` provider, which enables us to generate random values. 
 
-# Navigate to the project's root directory
-cd /workspace
+You can find this provider at [hashicorp/random](https://registry.terraform.io/providers/hashicorp/random/latest).
 
-# Download the AWS CLI installer
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+### Provider and Resource Configuration
+1. We declared the `random` provider in our main Terraform configuration file as follows:
+```tf
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
 
-# Unzip the installer package
-unzip awscliv2.zip
-
-# Install AWS CLI
-sudo ./aws/install
-
-# Return to the project's root directory
-cd $PROJECT_ROOT
-```
-
-We will update the environment variable to match the one previously established in our coding section. 
-
-You can find more information in the [branch five labeled](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable).
-
-
-This is how we previously executed these commands in Gitpod:
-```yaml
-before: |
-  cd /workspace
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
-  cd $THEIA_WORKSPACE_ROOT
-```
-
-Now, instead of duplicating this code in various places, we can simply reference our newly created script like this:
-
-```yaml
-before: |
-  source .bin/install_aws_cli
-```
-
-This approach not only simplifies our workflow but also ensures consistency and ease of maintenance.
-
-
-### Verifying Your AWS CLI Configuration
-Before proceeding, it's crucial to ensure that your AWS CLI is properly configured for authentication. Follow these detailed steps to confirm your setup:
-
-1. Check Your AWS CLI Authentication Status
-```
-aws sts get-caller-identity
-```
-
-If you see a message indicating that you are not authenticated, it's time to address this issue.
-
-![Not Auth](assets/0.4.0/ur-not-authenticated.png)
-
-#### Resolving the Unauthenticated Issue
-
-To resolve the authentication issue, you have two options: 
-- follow the [official AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
-) 
-- or use me as your documentation.
-
-2. Manual Configuration:
-
-You can manually set your AWS CLI credentials. 
-
-These values provided here are for instructional purposes; 
-```
-$ export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-$ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-$ export AWS_DEFAULT_REGION=us-west-2
-```
-
-Ensure you replace them with your actual 
-- AWS access key
-- Secret key 
-- Preferred AWS region
-
-Next, open your `.env` file that was created in again  [branch five](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable). 
-
-Insert the following lines with your actual credentials:
-```
-# .env file
-
-AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
-AWS_DEFAULT_REGION=YOUR_PREFERRED_REGION
-```
-
-
-
-### 3. AWS IAM User Configuration
-
-- Navigate to your AWS Management Console, specifically the IAM (Identity and Access Management) section. 
-- Create a new IAM user, naming it "yourname-terraform-beginner-bootcamp". 
-- Next, create a group of permissions and assign it to this newly created user.
-
-Inside the IAM user settings;
-- Access the "Security Credentials" tab. 
-- Scroll down and click "Create access key," selecting "CLI" as the access type. 
-- Confirm the action without specifying a value for the next option.
-
-
-Retrieve the access key and secret access key from the previous step, and assign them to your environment variables as follows:
-```
-AWS_ACCESS_KEY_ID=your_access_key_here
-AWS_SECRET_ACCESS_KEY=your_secret_key_here
-AWS_DEFAULT_REGION=your_region_here
-```
-
-- Ensure you add these variables to your CLI session using the export command:
-```
-export AWS_ACCESS_KEY_ID=your_access_key_here
-export AWS_SECRET_ACCESS_KEY=your_secret_key_here
-export AWS_DEFAULT_REGION=your_region_here
-```
-
-#### Making Environment Variables Persistent in Gitpod
-
-To make these environment variables persist in your Gitpod environment, use the gp env command:
-```
-gp env AWS_ACCESS_KEY_ID=your_access_key_here
-gp env AWS_SECRET_ACCESS_KEY=your_secret_key_here
-gp env AWS_DEFAULT_REGION=your_region_here
-```
-
-#### **Security Note: Do Not Leave Credentials in `.env.sample`**
-Ensure you do not include your actual AWS credentials in your .env.sample file. Security check to keep sensitive information like AWS keys out of version-controlled files.
-
-
-#### Verify AWS CLI Authentication
-
-Now just double-check your AWS CLI authentication by running the command:
-```
-aws sts get-caller-identity
-```
-
-If everything is correctly configured, you should receive a JSON payload similar to this:
-
-```json
-{
-    "UserId": "<value>",
-    "Account": "<aws-id>",
-    "Arn": "arn:aws:iam::<aws-id>:user/yourname-in-terraform-beginner-bootcamp"
+provider "random" {
+  # Configuration options
 }
 ```
 
-Also add that at the end of the script so you can see it on gitpod launch
-```bash
+Note: The `main.tf` configuration file is considered the top root module in Terraform, and we are continually building modules within it. 
 
-sudo ./aws/install
-# I am Previous AWS CLI Install Instructions
+|:lamp:|We are technically making modules all the time|
+|---   |---|
 
-aws sts get-caller-identity
-
-cd $PROJECT_ROOT
-# I am After AWS CLI Install Instructions
-
-```
-By following this, you'll ensure that your AWS CLI is properly authenticated!
-
-## Refining AWS CLI Script 
-While re-executing the AWS CLI installation script, you might encounter a prompt requesting user input to confirm the installation if AWS CLI components already exist.
-
-To ensure a smooth installation without user intervention, we need to modify the script accordingly. Here's a detailed guide on how to achieve this:
-
-### 1. Handling Existing AWS CLI Components
-The initial concern is addressing the presence of existing AWS CLI components. 
-
-To achieve this, we can take the following steps with a simple `ls` on the `workspace` dir.
-
-- Check if the AWS CLI zip file exists and remove it if it does.
-- Check if the AWS CLI directory exists and remove it along with the zip file if found.
-
-To overcome this, we can add logic to remove any existing components before proceeding with the installation.
-
-We got this from GPT, here is [the history](https://chat.openai.com/share/a49c1186-f867-421e-9d63-9b541e3f6677)
-```bash
-# Define the path to the AWS CLI zip file
-AWS_ZIP_FILE='/workspace/awscliv2.zip'
-
-# Check if the AWS CLI zip file exists and remove it if found
-if [ -e "$AWS_ZIP_FILE" ]; then
-    rm -f "$AWS_ZIP_FILE"
-fi
+2. Resource Creation: We created a random resource named "bucket_id" put it below the provider code:
+```tf
+resource "random_id" "bucket_id" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = var.ami_id
+  }
+}
 ```
 
-When attempting to run the script, it remains unresponsive. We need to explore more innovative solutions to resolve this issue.
-
-### 2. Assign Env Vars
-Consider assigning it to an environment variable.
-
+3. Naming Conventions: Rename the resource to "bucket_id" for clarity.
+4. Navigate to the Terraform Registry and click on the "Documentation" tab located in the left-hand side second navbar, adjacent to the "Use Provider" button.
+5. Proceed to the "Resources" section and select the desired resource. Place this chosen resource immediately below the previously mentioned one.
 ```
-$AWS_ZIPPO='awscliv2.zip'
-if [ -e "/workspace/$AWS_ZIPPO" ]; then
-    rm -f "/workspace/$AWS_ZIPPO"
-fi
+resource "random_id" "name" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = var.ami_id
+  }
 ```
 
-Despite attempting another approach, the issue persists, and the script is still not functioning correctly.
+6. Assign the name `bucket_id` to the resource to align it with our specific use case.
 
-### 3. GPT is Average
+7. Navigate to the resource section and select the specified simple resource. Place it directly underneath the previous resource.
+```
+resource "random_id" "bucket_name" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = var.ami_id
+  }
+```
+
+Looks Mh. I think we can try this with a random string.
+
+### Expanding Resources
+To enhance our resources, we added a random string generator instead.
+
+1. Located the "random string" resource in the Terraform Registry, then replaced the existing resource with the following code:
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = true
+  override_special = ""
+```
+
+2. from  `override_special =`  take the `"/@£$"` as we dont need.
+
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = true
+  override_special = ""
+}
+``
+
+3. Or just go back to this and put special to false and just delete the `override_special` instead:
+
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = false
+}
+```
+
+### Add outputs
+
+1. Add an output block to return the random string value and name it with our bucket_name
+```tf
+output "" {}
+```
+2. For the value assign it the `id` of `bucket_name` of that `random_string`
+
+```tf
+output "random_bucket_name" {
+ value = random_string.bucket_name.id
+}
+```
+
+3. Additionally, let's verify whether it returns a different value or remains consistent.
+
+```tf
+output "random_bucket_name" {
+ value = random_string.bucket_name.result
+}
+```
 
 
-Let's investigate Stack Overflow using the 'dev null' approach: 
-https://stackoverflow.com/questions/31318068/how-to-write-a-shell-script-to-remove-a-file-if-it-already-exists
+### Pre-Verify 
 
-We performed a basic `ls` command to discover that the installation process created an 'aws' directory in addition to the zip file.
 
-The straightforward solution is to delete both the directory and the zip file. 
+Make sure the file looks like this before actually testing terraform
 
-This can be accomplished after navigating to our workspace.
+```tf
+
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
+
+provider "random" {
+  # Configuration options
+}
+
+  
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = false
+}
+
+
+output "random_bucket_name" {
+ value = random_string.bucket_name.id
+}
+
+output "random_bucket_name" {
+ value = random_string.bucket_name.result
+}
+```
+
+If so, nice lets go ahead.
+
+
+## Terraform Workflow
+We reviewed essential Terraform commands and workflow steps.
+
+### Initialization
+We executed `terraform init`, which:
+- Created a `.terraform` directory for Terraform configuration. (Downloaded the required provider binary)
+- Generated a `terraform.lock.hcl` file to lock the provider version.
+
+![Outputs and Stuff](assets/0.5.0/random-provider.png)
+
+
+> If you are going for the certification, I already did [a year or something ago](https://www.credly.com/badges/81d4dcaf-2e4c-4d8e-9ef1-58ef47fe77ee). Try to remmember the path registry.terraform.io comes a lot.
+
+### Planning
+We ran `terraform plan` to preview the infrastructure changes.
 ```sh
-rm -f '/workspace/awscliv2.zip'
-rm -rf '/workspace/aws'
-```
-It should function smoothly.<br>
-This step may seem insignificant, but it can be quite beneficial for beginners to get going. <br>I used to see this as china. Look at me now. I'm rocking.
+Terraform will perform the following actions:
 
-Thats it for this! See u soon.
+  # random_string.bucket_name will be created
+  + resource "random_string" "bucket_name" {
+      + id          = (known after apply)
+      + length      = 16
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = true
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + random_bucket_name_id     = (known after apply)
+  + random_bucket_name_result = (known after apply)
+```
+
+### Apply
+Using `terraform apply`, we applied the configuration, which returned the specified outputs.
+```sh
+Outputs:
+random_bucket_name_id = "vvGZbRsNc3bkJ0Lg"
+random_bucket_name_result = "vvGZbRsNc3bkJ0Lg"
+```
+
+- Go ahead and delete the id line, I prefer the result. Make sure output looks like that;
+```tf
+output "random_bucket_name_result" {
+ value = random_string.bucket_name.result
+}
+```
+
+- Try terraform plan
+
+this step will referesh the state 
+```sh
+random_string.bucket_name: Refreshing state... [id=vvGZbRsNc3bkJ0Lg]
+
+Changes to Outputs:
+  - random_bucket_name_id     = "vvGZbRsNc3bkJ0Lg" -> null
+
+You can apply this plan to save these new output values to the Terraform state, without changing any real
+infrastructure.
+```
+
+- Run terraform apply as follow to not have to confirm with Yes.
+
+```sh
+terraform apply --auto-approve
+```
+![Auto Approve Not Always](assets/0.5.0/auto-approve-single-random.png)
+
+When you run a the apply you get the `terraform.tfstate`. 
+
+Its ignored in our `.gitignore` but you can see it here, tell u about ur config. 
+
+Dont touch it pls. Only if required.
+```sh
+{
+  "version": 4,
+  "terraform_version": "1.5.7",
+  "serial": 3,
+  "lineage": "f275b0ef-379f-f74c-95d5-b8feac774f8c",
+  "outputs": {
+    "random_bucket_name_result": {
+      "value": "vvGZbRsNc3bkJ0Lg",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "random_string",
+      "name": "bucket_name",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "id": "vvGZbRsNc3bkJ0Lg",
+            "keepers": null,
+            "length": 16,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": null,
+            "result": "vvGZbRsNc3bkJ0Lg",
+            "special": false,
+            "upper": true
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
+```
+
+You should get a single random number assigned to ur variable and you are not asked to say yes.
+
+
+### Output Check
+1. Verify outputs using `terraform output` and specific output names.
+
+Example:
+```sh
+$ terraform output random_bucket_name_result
+"vvGZbRsNc3bkJ0Lg"
+```
+
+
+2. Try output with the name of the output e.g.
+
+![Outputs and Stuff](assets/0.5.0/tf-output.png)
+
+```sh
+terraform output random_bucket_name_result
+
+"vvGZbRsNc3bkJ0Lg"
+```
+
+
+
+### Important Links To Empower You
+- [Noting Stuff realtime, Draft](assets/0.5.0/draft-0.5.0-real-time.txt)
+- [Remake Draft with GPT](https://chat.openai.com/share/8526b242-9920-43f2-b199-0df1700ffc3a)
+- [Write Issues and more](https://chat.openai.com/share/91b1c7e4-adfd-493b-b19e-b09854a6e3bc)
+
+This page is a direct outcome of the links I've just shared. See you soon! (this was done in one of the chats)
+
 

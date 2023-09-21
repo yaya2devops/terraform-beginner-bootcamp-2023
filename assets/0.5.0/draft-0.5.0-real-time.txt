@@ -1,0 +1,255 @@
+## Terraform Basiscs
+
+We started by going to the terraform registry
+https://registry.terraform.io
+
+
+We started to acknolwdge the difference between a provider and a module in terraform
+
+Also some changes to the UI that looks good but we are not familiar with yet
+- Browse Policy Libraries
+- Browse Run Tasks
+
+
+Our main goals  for this bootcamp are to;
+
+- Create a provider (which is something very hard but cool to do)
+- Create a module (normal) 
+
+We will start to work with the random provider which allow us to randomly generate things out
+https://registry.terraform.io/providers/hashicorp/random/latest
+
+
+### How it really works
+
+we will create a resource and that will generate a random value and then we can access that value!
+
+
+
+1. use the provider from the link and take it to main;
+
+```tf
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
+
+provider "random" {
+  # Configuration options
+}
+```
+
+2. from the registry click documenation at the left in the second navbar beside USE Provider button
+
+3. go to resource and take this simple resource and put it below the above
+```
+resource "random_id" "name" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = var.ami_id
+  }
+```
+
+4. name it for our use cases bucket_id
+
+3. go to resource and take this simple resource and put it below the above
+```
+resource "random_id" "bucket_name" {
+  keepers = {
+    # Generate a new id each time we switch to a new AMI id
+    ami_id = var.ami_id
+  }
+```
+
+### Expand Resources
+
+on the registry I think we need a random string.
+
+1. Go to registry and click resources on the toc on the left and click random string
+2. take the code and replace it instead of the above
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = true
+  override_special = "/@£$"
+}
+```
+
+3. from  `override_special =`  take the `"/@£$"` as we dont need.
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = true
+  override_special = ""
+}
+``
+
+
+### Add output
+1. Add output just below the above to return the random.
+```tf
+output "" {}
+```
+
+2. name it with our bucket_name
+3. for the value assign it the `id` of `bucket_name` of that `random_string`
+```tf
+output "random_bucket_name" {
+ value = random_string.bucket_name.id
+}
+```
+
+4. We cant tell so lets test two outputs
+
+
+
+```tf
+output "random_bucket_name" {
+ value = random_string.bucket_name.result
+}
+```
+
+5. Also, just go back to this and put special to false and just delete the override_special instead:
+
+```tf
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = false
+}
+``
+
+
+Verify your file as follow;
+
+
+```tf
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
+
+provider "random" {
+  # Configuration options
+}
+
+  
+resource "random_string" "bucket_name" {
+  length           = 16
+  special          = false
+}
+
+output "random_bucket_name" {
+ value = random_string.bucket_name.id
+}
+
+output "random_bucket_name" {
+ value = random_string.bucket_name.result
+}
+```
+
+If so, nice lets go ahead.
+
+
+### Start With Terraform
+
+1. run terraform init it should do somethings
+- u have a dotfile for terraform ( downloaded the binairy for the provider)
+- and a lock file terraform.lock.hcl (locking the version ur using and some hashes)
+
+If you are going for the certification, I already did. Try to remmember the path registry.terraform.io
+
+We have gitignore to ignore that
+
+
+2. try terraform plan to see what u gonna have infra.
+
+```
+Terraform will perform the following actions:
+
+  # random_string.bucket_name will be created
+  + resource "random_string" "bucket_name" {
+      + id          = (known after apply)
+      + length      = 16
+      + lower       = true
+      + min_lower   = 0
+      + min_numeric = 0
+      + min_special = 0
+      + min_upper   = 0
+      + number      = true
+      + numeric     = true
+      + result      = (known after apply)
+      + special     = false
+      + upper       = true
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + random_bucket_name_id     = (known after apply)
+  + random_bucket_name_result = (known after apply)
+```
+
+3. go ahead and run terraform apply, it will return the output we just coded with same random.
+```sh
+Outputs:
+random_bucket_name_id = "vvGZbRsNc3bkJ0Lg"
+random_bucket_name_result = "vvGZbRsNc3bkJ0Lg"
+```
+
+4. Go ahead and delete the id line, I prefer the result. Make sure output looks like that;
+
+```tf
+output "random_bucket_name_result" {
+ value = random_string.bucket_name.result
+}
+```
+
+5. Go try terraform plan
+
+this step will referesh the state 
+```
+random_string.bucket_name: Refreshing state... [id=vvGZbRsNc3bkJ0Lg]
+
+Changes to Outputs:
+  - random_bucket_name_id     = "vvGZbRsNc3bkJ0Lg" -> null
+
+You can apply this plan to save these new output values to the Terraform state, without changing any real
+infrastructure.
+```
+
+
+
+6. go and click terraform apply as follow to not have to confirm with Yes.
+
+
+```
+terraform apply --auto-approve
+```
+
+You should get the random
+
+
+
+7. check for output usng terraform output command
+```
+ $ terraform output
+random_bucket_name_result = "vvGZbRsNc3bkJ0Lg"
+```
+8. try output with the name of the output e.g.
+```
+terraform output random_bucket_name_result
+
+"vvGZbRsNc3bkJ0Lg"
+```
+
+
+
+
