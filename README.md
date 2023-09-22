@@ -1,350 +1,253 @@
-# Provision S3 Using Terraform
+# Migrate To Terraform Cloud
 
-Amazon S3 is an object storage service like Dropbox.
+Terraform Cloud is a powerful tool that enables you to manage your infrastructure as code securely.
+ 
+![HashiCorp Wont bother](https://developer.hashicorp.com/_next/image?url=https%3A%2F%2Fcontent.hashicorp.com%2Fapi%2Fassets%3Fproduct%3Dtutorials%26version%3Dmain%26asset%3Dpublic%252Fimg%252Fterraform%252Fcloud%252Foverview.png%26width%3D2776%26height%3D1272&w=3840&q=75)
 
-You to create a bucket and throw things in and access them in the cloud that's all the idea of it.
+We'll cover setting up Terraform Cloud.<br> You can check [the pricing is dead cheap](https://www.hashicorp.com/products/terraform/pricing), this equals to zero.
 
-### Try BucketOps
+### Prerequisites
 
-1. List all your S3 buckets, use the following command:
+Just get the infra on again. Remember we destroyed it previously.
 
-```sh
-aws s3 ls
+With simple `terraform init` and `terraform apply`.
+
+If you are using your local. The `tfdotfile` is sitting there. <br>You can attack `terraform apply` directly.
+
+## Why Use Remote State Storage?
+The truth is we never want to responsible for that file. 
+
+We may lose it. Also We don't want anyone to see it. 
+- Eliminates the risk of losing the state file
+- Ensures that only authorized team members can access it. 
+
+Terraform is platform-agnostic you can store your state wherever.
+- Terraform Cloud is a recommended solution because its a sponsor.
+- You can store it in S3 or a container in an Azure blob.
+
+## Getting Started
+
+When you sign up for Terraform Cloud, you'll be prompted to create your first organization.
+
+[This link will get you started](https://app.terraform.io/public/signup/account?utm_source=learn
+).
+
+If you followed this, ignore the provision resource example resources. <br>I am your example..
+
+
+### Organizations, Projects, and Workspaces?
+
+Terraform Cloud organizes your infrastructure into these three levels:
+
+
+|🌐|You create the project so when u create Your workspace You can specify that project..|
+|---|---|
+
 ```
-![List some of my buckets](assets/0.6.0/bucket-ls.png)
-
-2. Create a new S3 bucket, you can use the `mb` which make bucket.
-```sh
-aws s3 mb s3://your-bucket-name
+🌐 Terraform Cloud Organization
+├── 📁 Project 1
+│   ├── 📁 Workspace 1.1
+│   ├── 📁 Workspace 1.2
+│   └── 📁 Workspace 1.3
+└── 📁 Project 2
+    ├── 📁 Workspace 2.1
+    ├── 📁 Workspace 2.2
+    └── 📁 Workspace 2.3
 ```
-> We will code the above command in terraform.
 
-3.Upload a File to an S3 Bucket,  you can use the `cp` (copy) command:
-```sh
-aws s3 cp /path/to/local/file s3://your-bucket-name/
+- **Organization:** The top-level entity in Terraform Cloud, which can contain multiple projects.
+- **Project:** A collection of related Terraform configurations.
+- **Workspace:** An isolated environment where Terraform configurations are applied and managed.
+
+
+## Configure Workspace Settings
+
+1. Create an organzation and call it e.g. `yayaintfcloud`.
+
+After creating your organization, you'll be directed to create your first workspace and to Choose from:
+
+- **Version Control Workflow (Most Common)**: Connect to a version control provider like GitHub.
+- **CLI-Driven Workflow:** Trigger Terraform runs from your local command line. (most cases and ours)
+- **API Driven** (more advanced)
+
+I tried the first. But its not our case for now. <br>
+We want only to see stuff.
+
+![capture for tf success org](assets/0.7.0/create-tfcloud-org.png)
+
+Go to the second. <br>Trigger remote Terraform runs from your local command line.
+
+
+2. You will be directed to page to create ur first workspace.
+
+Pick a default project and create your workspace. 
+
+![PoC workspace Cloud](assets/0.7.0/default-tfcloud-workspace.png)
+
+> Workspace names should only contain l letters, numbers, dashes, and underscores.
+
+Now you should have ur workspace listed.
+
+In case you are confused.
+
+![Tricky just click it](assets/0.7.0/use-this-if-u-stuck.png)
+
+
+
+## Create a Project
+
+1. From the top right corner, click "New" and select "Project" to create a new project for our bootcamp. 
+
+We dont have to but lets make things in its theme. 
+
+2. Name our project `yaya-tf-bootcamp-2023`. This will be used next.
+
+
+### Create Your Real Workspace
+
+We created a default workspace. <br>Now we will go and create the one that will apply to our bootcamp.
+
+
+1. from the left side, click create workspace and call it `terra-house-2023`
+
+![My Terraform Cloud Is Cool](assets/0.7.0/tf-house-workspace.png)
+
+You should have your project in a good state.
+
+2. Pick your project and create your workspace.
+
+
+## Code the Cloud Block
+
+Once your workspace is created, You will get that [cloud block](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate).
+
+![PoC Terraform Cloud Config Ready](assets/0.7.0/terraform-config.png)
+
+Now, let's migrate your state to Terraform Cloud for centralized management:
+
+1. Set Up Cloud Block
 ```
-- Replace `/path/to/local/file` with the path to the file on your local machine 
-- Replace `your-bucket-name` with the name of your S3 bucket.
-
-4. List all objects within a specific S3 bucket, use the following command
-```
-aws s3 ls s3://your-bucket-name/
-```
-![List My Frontend Content From S3](assets/0.6.0/buck-object-ls.png)
-
-5. Download an Object from an S3 Bucket with the `cp` command with reverse copying
-
-```sh
-aws s3 cp s3://your-bucket-name/object-key /path/to/local/directory/
-```
-- Replace `your-bucket-name` with the name of your S3 bucket
-- Replace `object-key` with the key of the object you want to download
-- Replace `/path/to/local/directory/` with the directory where you want to save the downloaded file.
-
-
-6. Delete an Object from an S3 Bucket use the `rm`(remove) command
-
-```sh
-aws s3 rm s3://your-bucket-name/object-key
-```
-- Replace `your-bucket-name` with the name of your S3 bucket 
-- Replace `object-key` with the key of the object you want to delete.
-
-Great and cool. 
-These are some basic AWS S3 commands to get you started with managing buckets and objects using the AWS CLI.
-
-Let's now get back to terraform.
-
-## Prerequisites
-
-Before we begin, ensure you have the following prerequisites:
-
-- [Terraform](https://www.terraform.io/) installed on your local machine.
-- AWS credentials properly configured, either through environment variables or AWS configuration files (`~/.aws/credentials` and `~/.aws/config`).
-
-We made both of these in previous branches. Double check.
-
-## Create an S3 Bucket with Terraform
-First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.
-
-
-### Searching for S3 in Terraform Registry
-
-To start, you need to find the AWS S3 on the Terraform Registry. You can do this by searching for 'S3' in the Terraform Registry.
-
-You can find it [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket). If it is that hard for you to search.
-
-### Define the Terraform Resource
-
-Now, let's define the Terraform resource for the S3 bucket.
-
-You can refer to this: [The reference you've been told](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket).
-
-1. So place this right under the random resource we did earlier;
-
-```hcl
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+  cloud {
+    organization = "ORGANIZATION-NAME"
+    workspaces {
+      name = "learn-terraform-cloud-migrate"
+    }
   }
-}
 ```
 
-2. Let's temporarily remove the tags since we don't require them at the moment.
+We thought we needed [the remote block](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate) but its using the cloud block.
 
-```hcl
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
-}
+[Back in the days;](https://developer.hashicorp.com/terraform/language/settings/backends/remote)
+
+```
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "yayaintfcloud"
+
+    workspaces {
+      name = "terra-house-2023"
+``` 
+
+Now it is easier for configuration;
+
+```
+  cloud {
+    organization = "yayaintfcloud"
+
+    workspaces {
+      name = "terra-house-2023"
+    }
+  }
 ```
 
-3. Comment it because we need to setup our AWS provider first.
+Make sure its looks like this.
 
-4. Verify by running a terraform init.
+### RESOLVED: Configure TF Cloud With Gitpod (Token)
 
-- The failure is expected because our random bucket naming process is generating uppercase letters, which are not supported as bucket names in S3.
+1. Go back to your CLI and run to authenticate with terraform cloud;
+```
+terraform login
+```
 
-5. Verify further plan and apply?
+2. Confirm yes to create a file
 
-> Should fail too. We lack our AWS Provider.
+You will get a stupid screen.<br>
 
+3. Click `p` for print and go to the url.
 
-### Configure AWS Provider
+This takes you to Terraform Cloud. Here is the url;
+```
+https://app.terraform.io/app/settings/tokens?source=terraform-login
+```
+4. Create a token and pick one for one day. 
 
-You need to configure the AWS provider in your Terraform configuration to provide the necessary AWS credentials. 
+5. Take the token create the file yourself.
+```
+touch /home/gitpod/.terraform.d/credentials.tfrc.json
+```
 
-
-1. Go to the registry and search for aws.
-https://registry.terraform.io/providers/hashicorp/aws/latest
-
-2. Click  USE PROVIDER on the second navbar on the right besides Documenation;
-```hcl
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.17.0"
+6. Check the file structure in GPT but dont trust it.
+7. [Go to reddit](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/) and get the structure instead.
+```JSON
+ {
+  "credentials": {
+    "app.terraform.io": {
+      "token": "<add-it-here>"
     }
   }
 }
-
-provider "aws" {
-  # Configuration options
-}
 ```
 
-3. Reflect on our previous provider.
-```tf
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-}
+> HashiCorp doesn't even display the structure of that file. Please consider this, HashiCorp.
 
-provider "random" {
-  # Configuration options
-}
-```
-
-How are we going to add that?
-
-This looks stupid. We must have a single block for each. So?
-```tf
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-}
-
-provider "random" {
-  # Configuration options
-}
-
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.17.0"
-    }
-  }
-}
-
-provider "aws" {
-  # Configuration options
-}
+8. `Open` the file that you touched it. 
 
 ```
-4. Apply critical thinking and get the following results;
-
-```tf
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1" }
-
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.17.0"
-    }
-    
-  }
-}
-
-provider "random" {
-  # Configuration options
-}
-
-provider "aws" {
-  # Configuration options
-}
+open  /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
-We had to take aws inside previous provider and put it along the random.
+9. Add the content with the token you got from tf cloud.
 
-Go try plan the infra. It should fail. <br>
-You added a new provider it must be mapped to your `.terraform` dotfile.
+### Simple Test
 
- Init is required.
+To test its working. 
 
-### Initialize and Plan
-1. Now, you can initialize Terraform by running the following command and should work.
+1. Run `terraform init`.
+2. Check your dotfile.
 
-```hcl
-terraform init
-```
 
-![dotfile with bucket](assets/0.6.0/aws-provider-tf.png)
+3. Double check your Terraform Cloud resources;
 
-2. Try running plan. Should gives ok while we both know it is not.
+![Infra State Resources](assets/0.7.0/tf-cloud.png)
 
-The random is generating the name with capital while bucket only supports low letter.
+4. Triple check your outputs in Terraform Cloud;
 
-3. Run `terrafom apply` and observe the failure.
-The plan is not smart enough. Be careful. You could get a green pass and then get rejected in apply.
+![Infra State Output](assets/0.7.0/mini-out.png)
 
-We will address this issue next.
 
-### Fixing Bucket Naming Issue
+- `terraform.tfstate` is now included in the dotfile
+- an environment file is created with ur tf cloud workspace.
 
-To resolve the bucket naming issue, modify the resource definition as follows.
+![dotfile took effect](assets/0.7.0/dotfile.png)
 
-1. Change the bucket name from that to `random_string.bucket_name.result`
-```
-resource "aws_s3_bucket" "example" {
-  bucket = random_string.bucket_name.result
-}
-```
+### Apply is now different.
 
-Ensure you have previously defined `random_string.bucket_name.result` like I showed you.
+1. Run the apply command.
 
-2. Update the resource definition for random as required and Set length to reduce the chance of conflicts.
+![Apply with tfcloud](assets/0.7.0/apply-theme-with-tf-cloud.png)
 
-From this;
-```
-resource "random_string" "bucket_name" {
-  length           = 16
-  special          = false
-}
-```
+The command returns that its dealing with terraform cloud now.
 
-To that;
-```
-resource "random_string" "bucket_name" {
-  lower = true
-  upper = false
-  length   = 32
-  special  = false
-}
-```
+#### Potential Actions
+- Automate the process of tf login and similar steps.
+- Explore the possibility of storing the token in Gitpod session storage 
+- Generate the necessary JSON file for the token; evaluate feasibility.
+- Consider abbreviating the Terraform <smth>
 
-### Re-run Terraform Plan
 
-1. After fixing the issue, Run `terraform validate`
-2. Or re-run Terraform plan (it does validate in the background as a bonus):
-```
-terraform plan
-```
 
-This time, this also should work without errors. But we must verify further.
 
-### Terraform Apply
-Once you have successfully planned, apply the changes:
-```sh
-terraform apply
-```
-Again. Please be cautious; a successful plan does not guarantee success during the apply phase.
 
-This is works you can verify from your terminal.
 
-![CLI Apply Success W/ Bucket Name](assets/0.6.0/bucket-applied.png)
-
-You can double verify your bucket in the console.
-
-![Its Her from AWS](assets/0.6.0/bucket-console.png)
-
-### Double Checking Terraform State
-After applying the changes, check the state of Terraform with the following commands:
-```sh
-terraform show
-```
-
-You can also find it in your current directory. 
-```json
-   {
-      "mode": "managed",
-      "type": "aws_s3_bucket",
-      "name": "example",
-      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
-      "instances": [
-        {etc}
-
-```
-
-The code is around 117 lines you got the point. It is now having the bucket state.
-
-### Destroying the Bucket
-Why you may ask. Because if we push the bucket will no longer be managed by Terraform's state file, and re-importing it may be necessary.
-
-To  destroy the bucket, use the following command:
-
-![Bye bye Bucket](assets/0.6.0/bucket-destroy.png)
-
-```
-terraform destroy
-```
-
-Double check your `terraform.tfstate`
-
-```json
-{
-  "version": 4,
-  "terraform_version": "1.5.7",
-  "serial": 6,
-  "lineage": "b17f132c-59c0-f3f6-5a4a-0d2c182bf7b5",
-  "outputs": {},
-  "resources": [],
-  "check_results": null
-}
-```
-
-Yep that is all it now!
-
-#### Security Reminder
-Never commit your AWS credentials to version control. Keep your credentials secure and use proper AWS authentication methods.
-
-- It's essential never to hard code your AWS credentials in your Terraform configuration. 
-- Rely on AWS configuration through environment variables using the `export`. 
-
-Terraform will use these credentials in the background.
 
 
 
