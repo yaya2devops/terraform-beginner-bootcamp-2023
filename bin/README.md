@@ -1,4 +1,3 @@
-
 ### Terraform Beginner Bootcamp Bin
 
 ```
@@ -14,4 +13,3 @@ In this representation;
 
 - 📁 represents a directory.
 - 📄 represents a file.
-
