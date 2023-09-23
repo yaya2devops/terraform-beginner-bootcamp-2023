@@ -2,7 +2,7 @@
 
 # Define target directory and file
 TARGET_DIR="/home/gitpod/.terraform.d"
-TARGET_FILE="${TARGET_DIR}/credentials.tfrc.json"
+TARGET_FILE="$TARGET_DIR/credentials.tfrc.json"
 
 # Check if TERRAFORM_CLOUD_TOKEN is set
 if [ -z "$TERRAFORM_CLOUD_TOKEN" ]; then
@@ -26,4 +26,4 @@ cat > "$TARGET_FILE" << EOF
 }
 EOF
 
-echo "${TARGET_FILE} has been generated."
+echo "$TARGET_FILE has been generated."
