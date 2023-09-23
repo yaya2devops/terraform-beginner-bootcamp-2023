@@ -1,170 +1,148 @@
-# Gitpod Terraform Cloud Authentication
+# A Terraformer `tf` Alias
 
-As we [previously encountered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/21-generate-tfrc#resolved-configure-tf-cloud-with-gitpod-token), `terraform login` is stuck.<br>
+We'll walk you through creating an alias for Terraform, making it more convenient to use. 
 
-We found a workaround to just;
-- Make the file,
-- Generate the token from terraform cloud,
-- Add the content ourself.
+E.g. Instead of `terraform init`, you can write just `tf init`.
 
-In this, we will make a script that do just that for us. <br>
-We will then go ahead and automate it in <br>our `.gitpod` so it does it itself. <br>Every given time.
+- [Manual Alias Setup](#section-1-manual-alias-setup)
+- [Alias in A Bash Script](#section-2-automating-alias-setup-with-a-bash-script)
+- [Automate the Alias in Gitpod](#section-3-using-the-alias-in-gitpod)
 
-- [Design the Bash Script](#design-the-bash-script)
-- [Get The Token From Terraform Cloud](#get-the-token-from-terraform-cloud)
-- [Automating Terraform Cloud Authentication](#automating-terraform-cloud-authentication)
+We'll cover how to manually set up the alias and create a bash script to automate the process.
 
+### Section 1: Manual Alias Setup
 
-We will also extend the token's validity to 30 days for added convenience.<br>
-Welcome to `0.8.0` in our week 1 of the Terraform Beginner Bootcamp.
+**Step 1: Accessing Your Bash Profile**
+To create an alias for Terraform manually, you need to edit your Bash profile.
 
+1. Open your terminal and run the following command to access your Bash profile:
+```sh
+nano ~/.bash_profile
+```
+2. This command will open your Bash profile in the Nano text editor.
 
-### Design the Bash Script
+**Step 2: Adding the Terraform Alias**
+In the Nano text editor, navigate to the end of the file.
 
-1. **Create a file** in the `/bin` directory, call it `gen_tfrc` and add the shebang:
+3. Add the following line to create an alias for Terraform:
+```sh
+alias tf="terraform"
+```
+4. Save your changes by pressing `Ctrl + O`, then press `Enter`.
+
+**Step 3: Updating Your Bash Profile**
+After adding the alias, you need to update your Bash profile. Run this command:
+```sh
+source ~/.bash_profile
+```
+Now, you have successfully set up the Terraform alias manually.
+
+### Section 2: Automating Alias Setup with a Bash Script
+
+**Step 1: Creating a Bash Script**
+To automate the alias setup, you can create a bash script. Here's how:
+
+1. Create a new file for your script using the terminal or a text editor. We'll call it `setup_tf_alias.sh`.
+
+2. Open the script file for editing:
+```sh
+nano setup_tf_alias.sh
+```
+3. Inside the script file, add the following shebang to init the script:
 ```sh
 #!/usr/bin/env bash
 ```
-This line indicates that the script should be interpreted by the Bash shell, located at `/usr/bin/env bash`.
 
-2. **Define Target Directory and File**
+4. Check if the alias already exists in the .bash_profile
+
 ```sh
-TARGET_DIR="/home/gitpod/.terraform.d"
-TARGET_FILE="${TARGET_DIR}/credentials.tfrc.json"
+grep -q 'alias tf="terraform"' ~/.bash_profile
 ```
-- Define the target directory (`/home/gitpod/.terraform.d`) 
-- The target file (`credentials.tfrc.json`) where the generated token will be stored.
+5. Add the if statement and append the the allias with the following code
 
-
-3. **Check If TERRAFORM_CLOUD_TOKEN is Set**
 ```sh
-if [ -z "$TERRAFORM_CLOUD_TOKEN" ]; then
-    echo "Error: TERRAFORM_CLOUD_TOKEN environment variable is not set."
-    exit 1
+if [ $? -ne 0 ]; then
+    # If the alias does not exist, append it
+    echo 'alias tf="terraform"' >> ~/.bash_profile
+    echo "Alias added successfully."
+```
+> $? is a special variable in bash that holds the exit status of the last command executed
+
+6. Add the Else to Inform the user if the alias already exists
+```sh
+else
+    echo "Alias already exists in .bash_profile."
 fi
 ```
-   This code checks if the environment variable `TERRAFORM_CLOUD_TOKEN` is set. If it's not set (empty), the script will print an error message and exit with an error code (`1`).
-
-4. **Check If Directory Exists, If Not, Create It**
+7. Source the .bash_profile to make the alias available immediately
 ```sh
-if [ ! -d "$TARGET_DIR" ]; then
-    mkdir -p "$TARGET_DIR"
-fi
+source ~/.bash_profile
 ```
-   The script checks if the target directory exists and creates it if it doesn't.
 
-5. **Generate `credentials.tfrc.json` with the Token**
+For the sake of readability, the script does not perform line breaks.
+
+I thought to update it with the following to make it so.
+
+![PoC no line jump](assets/0.9.0/read-clearly.png)
+
+```
+echo -e "\nalias tf=\"terraform\"" >> ~/.bash_profile
+```
+
+Instead of what it previously was;
+```
+echo 'alias tf="terraform"' >> ~/.bash_profile
+```
+
+8. Save your changes by pressing `Ctrl + O`, then press `Enter`.
+
+**Step 2: Making the Script Executable**
+You need to make the script executable. Run the following command:
+
 ```sh
-cat > "$TARGET_FILE" << EOF
-{
-"credentials": {
-    "app.terraform.io": {
-    "token": "$TERRAFORM_CLOUD_TOKEN"
-    }
-}
-}
-EOF
+chmod u+x setup_tf_alias.sh
 ```
 
-This code uses the `cat` command with a "here document" (<< EOF) to create the `credentials.tfrc.json` file with the Terraform Cloud token provided by the `TERRAFORM_CLOUD_TOKEN` environment variable.
+**Step 3: Executing the Script**
+Now, you can execute the script to add the alias to your `.bash_profile`. Run the following command:
 
-6. **Print Success Message**
 ```sh
-echo "${TARGET_FILE} has been generated."
+./setup_tf_alias.sh
 ```
-After successfully generating the `credentials.tfrc.json` file, a message confirming its generation is displayed.
+The script will automatically add the Terraform alias to your Bash profile and update it.
 
-7. **Setting Executable Permissions**
-   - Ensure proper permissions by using the `chmod` command on the Bash script.
-```
-chmod u+x ./bin/gen_tfrc
-```
+### Section 3: Using the Alias in Gitpod
 
-Great progress! Let's pause for a moment. 
+**Step 1 : Integrating with Gitpod**
+If you're using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it's available in both terminals.
 
-Before proceeding, there are a few more things we need to set up.
+1. In your Gitpod configuration file (`.gitpod.yml`), add the following lines to both the AWS;
 
-### Get The Token From Terraform Cloud
-
-
-1. Nav to the provided link to obtain a new token. If you can't locate it there, you can always retrieve it from here.
-```
-https://app.terraform.io/app/settings/tokens?source=terraform-login
+```yaml
+  - name: aws-cli
+    env:
+      AWS_CLI_AUTO_PROMPT: on-partial
+    before: |
+      source ./bin/tf_alias
 ```
 
-2. **Extending Token Validity for our 4 weeks bootcamp**
-   - Increase the token's lifespan to 30 days, ensuring longer usability.
-
-![Increase Token Evidence](assets/0.8.0/30d-tfcloud-token.png)
-
-3. **Assigning Environment Variable for Gitpod**
-   - Define the variable in environment variables
-```
-export TERRAFORM_CLOUD_TOKEN='YOURS-WITH-30-DAYS-HERE'
-```
-4. Persist the environment variable to ensure it remains accessible within Gitpod.
-```
-gp env TERRAFORM_CLOUD_TOKEN='YOURS-WITH-30-DAYS-HERE'
-```
-
-![Verify Gitpod UI For You](assets/0.8.0/gitpod-token-presist.png)
-
-> I updated the `.env.example` file with that ([without revealing sensitive data](link here)) to teach you.
-
-- We've extended the token's duration.
-- Our variables have been persistently stored.
-
-✅ Eliminating the need for frequent adjustments.
-
-
-
-5. **Launch your gitpod and Run the Script**
-
-> Double check if the file exist or its content to triple verify.
-
-```
-cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
-```
-- Execute the script and view its output to confirm successful execution;
-```
-./bin/gen_tfrc
-
-/home/gitpod/.terraform.d/credentials.tfrc.json has been generated.
-```
-
-
-6. `cat` or `open` the token file to verify
-```sh
-cat /home/gitpod/.terraform.d/credentials.tfrc.json
-```
-
-- `cat` open in within your terminal.
-- `open` will open it within your code editor.
-
-Great and cool! Lets get it automated.
-
-
-
-## Automating Terraform Cloud Authentication
-
-**Objective: To automate the authentication of Terraform Cloud on Gitpod workspace launch.**
-
-1. **Integrating the bash source to your `.gitpod`**
-
-Navigate to your Gitpod configuration file and include the script source within the 'terraform' label aka section.
+2. And Terraform blocks;
 ```yaml
   - name: terraform
     before: |
-     source ./bin/install_terraform_cli
-     source ./bin/generate_tfrc_credentials
+      source ./bin/tf_alias
 ```
 
-We thought it was necessary to include the script in both sections to ensure it functions correctly in both terminals. Including it in the 'terraform' section is sufficient.
+This wont generate double alias line. Tested.
 
-2. Verify by restarting your workspace to ensure that the file contains your token.
+3. Save the `.gitpod.yml` file.
 
-![File is Here Yey!](assets/0.8.0/cat-open-inspire.png)
+Now, every time you start a Gitpod workspace; 
+- the alias will be automatically set up in both AWS and Terraform environments.
+- You can now use `tf` instead of `terraform` in your commands
 
-- [Secrets 100](assets/0.8.0/0.8.0.txt)
-- [Secrets 101](https://chat.openai.com/share/816459f7-8838-41ad-9de7-b67fcc532cda)
-- [Secrets 102](https://chat.openai.com/share/2fcf57c0-7e90-4e32-82e3-167f7469890b)
+4. Restart your workspace and observe.
+
+![You are A Terraformer and Transformer!](assets/0.9.0/terraformer.png)
+
+This is `0.9.0` making your Terraform workflow more efficient and user-friendly.
