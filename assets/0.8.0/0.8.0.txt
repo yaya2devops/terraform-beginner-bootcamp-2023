@@ -1,0 +1,41 @@
+---100:Notes 1AM----
+
+
+create issue (generate tfrc)
+
+generate tfrc token and autoamte it in gitpod
+
+- create bash script to create tfrc and map token
+- create token for 30 dayys
+- assign env var for gitpod and preistit it
+
+
+----
+
+We had a little snag with terraform login so we gotta automate to make it easier.
+We will write a script to do that for us.
+
+
+
+set  ur token longer (30days)
+- add the env var to ur .env.example (dont exxplicit it just the holder)
+gp env it so we have it forever ' '
+
+- create the script
+- chmod it
+
+
+run it and cat it
+
+
+
+add it to terraform block source to make it auto
+
+
+this is it.
+
+
+----
+- issue done mark
+- pr
+- tags(b4: checkout, pull, fetch) main and push
