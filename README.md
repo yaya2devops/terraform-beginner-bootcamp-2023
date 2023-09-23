@@ -1,254 +1,170 @@
-# Migrate To Terraform Cloud
+# Gitpod Terraform Cloud Authentication
 
-Terraform Cloud is a powerful tool that enables you to manage your infrastructure as code securely.
- 
-![HashiCorp Wont bother](https://developer.hashicorp.com/_next/image?url=https%3A%2F%2Fcontent.hashicorp.com%2Fapi%2Fassets%3Fproduct%3Dtutorials%26version%3Dmain%26asset%3Dpublic%252Fimg%252Fterraform%252Fcloud%252Foverview.png%26width%3D2776%26height%3D1272&w=3840&q=75)
+As we [previously encountered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/21-generate-tfrc#resolved-configure-tf-cloud-with-gitpod-token), `terraform login` is stuck.<br>
 
-We'll cover setting up Terraform Cloud.<br> You can check [the pricing is dead cheap](https://www.hashicorp.com/products/terraform/pricing), this equals to zero.
+We found a workaround to just;
+- Make the file,
+- Generate the token from terraform cloud,
+- Add the content ourself.
 
-### Prerequisites
+In this, we will make a script that do just that for us. <br>
+We will then go ahead and automate it in <br>our `.gitpod` so it does it itself. <br>Every given time.
 
-Just get the infra on again. Remember we destroyed it previously.
-
-With simple `terraform init` and `terraform apply`.
-
-If you are using your local. The `tfdotfile` is sitting there. <br>You can attack `terraform apply` directly.
-
-## Why Use Remote State Storage?
-The truth is we never want to responsible for that file. 
-
-We may lose it. Also We don't want anyone to see it. 
-- Eliminates the risk of losing the state file
-- Ensures that only authorized team members can access it. 
-
-Terraform is platform-agnostic you can store your state wherever.
-- Terraform Cloud is a recommended solution because its a sponsor.
-- You can store it in S3 or a container in an Azure blob.
-
-## Getting Started
-
-When you sign up for Terraform Cloud, you'll be prompted to create your first organization.
-
-[This link will get you started](https://app.terraform.io/public/signup/account?utm_source=learn
-).
-
-If you followed this, ignore the provision resource example resources. <br>I am your example..
+- [Design the Bash Script](#design-the-bash-script)
+- [Get The Token From Terraform Cloud](#get-the-token-from-terraform-cloud)
+- [Automating Terraform Cloud Authentication](#automating-terraform-cloud-authentication)
 
 
-### Organizations, Projects, and Workspaces?
+We will also extend the token's validity to 30 days for added convenience.<br>
+Welcome to `0.8.0` in our week 1 of the Terraform Beginner Bootcamp.
 
-Terraform Cloud organizes your infrastructure into these three levels:
 
+### Design the Bash Script
 
-|🌐|You create the project so when u create Your workspace You can specify that project..|
-|---|---|
-
+1. **Create a file** in the `/bin` directory, call it `gen_tfrc` and add the shebang:
+```sh
+#!/usr/bin/env bash
 ```
-🌐 Terraform Cloud Organization
-├── 📁 Project 1
-│   ├── 📁 Workspace 1.1
-│   ├── 📁 Workspace 1.2
-│   └── 📁 Workspace 1.3
-└── 📁 Project 2
-    ├── 📁 Workspace 2.1
-    ├── 📁 Workspace 2.2
-    └── 📁 Workspace 2.3
+This line indicates that the script should be interpreted by the Bash shell, located at `/usr/bin/env bash`.
+
+2. **Define Target Directory and File**
+```sh
+TARGET_DIR="/home/gitpod/.terraform.d"
+TARGET_FILE="${TARGET_DIR}/credentials.tfrc.json"
 ```
-
-- **Organization:** The top-level entity in Terraform Cloud, which can contain multiple projects.
-- **Project:** A collection of related Terraform configurations.
-- **Workspace:** An isolated environment where Terraform configurations are applied and managed.
+- Define the target directory (`/home/gitpod/.terraform.d`) 
+- The target file (`credentials.tfrc.json`) where the generated token will be stored.
 
 
-## Configure Workspace Settings
-
-1. Create an organzation and call it e.g. `yayaintfcloud`.
-
-After creating your organization, you'll be directed to create your first workspace and to Choose from:
-
-- **Version Control Workflow (Most Common)**: Connect to a version control provider like GitHub.
-- **CLI-Driven Workflow:** Trigger Terraform runs from your local command line. (most cases and ours)
-- **API Driven** (more advanced)
-
-I tried the first. But its not our case for now. <br>
-We want only to see stuff.
-
-![capture for tf success org](assets/0.7.0/create-tfcloud-org.png)
-
-Go to the second. <br>Trigger remote Terraform runs from your local command line.
-
-
-2. You will be directed to page to create ur first workspace.
-
-Pick a default project and create your workspace. 
-
-![PoC workspace Cloud](assets/0.7.0/default-tfcloud-workspace.png)
-
-> Workspace names should only contain l letters, numbers, dashes, and underscores.
-
-Now you should have ur workspace listed.
-
-In case you are confused.
-
-![Tricky just click it](assets/0.7.0/use-this-if-u-stuck.png)
-
-
-
-## Create a Project
-
-1. From the top right corner, click "New" and select "Project" to create a new project for our bootcamp. 
-
-We dont have to but lets make things in its theme. 
-
-2. Name our project `yaya-tf-bootcamp-2023`. This will be used next.
-
-
-### Create Your Real Workspace
-
-We created a default workspace. <br>Now we will go and create the one that will apply to our bootcamp.
-
-
-1. from the left side, click create workspace and call it `terra-house-2023`
-
-![My Terraform Cloud Is Cool](assets/0.7.0/tf-house-workspace.png)
-
-You should have your project in a good state.
-
-2. Pick your project and create your workspace.
-
-
-## Code the Cloud Block
-
-Once your workspace is created, You will get that [cloud block](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate).
-
-![PoC Terraform Cloud Config Ready](assets/0.7.0/terraform-config.png)
-
-Now, let's migrate your state to Terraform Cloud for centralized management:
-
-1. Set Up Cloud Block
+3. **Check If TERRAFORM_CLOUD_TOKEN is Set**
+```sh
+if [ -z "$TERRAFORM_CLOUD_TOKEN" ]; then
+    echo "Error: TERRAFORM_CLOUD_TOKEN environment variable is not set."
+    exit 1
+fi
 ```
-  cloud {
-    organization = "ORGANIZATION-NAME"
-    workspaces {
-      name = "learn-terraform-cloud-migrate"
+   This code checks if the environment variable `TERRAFORM_CLOUD_TOKEN` is set. If it's not set (empty), the script will print an error message and exit with an error code (`1`).
+
+4. **Check If Directory Exists, If Not, Create It**
+```sh
+if [ ! -d "$TARGET_DIR" ]; then
+    mkdir -p "$TARGET_DIR"
+fi
+```
+   The script checks if the target directory exists and creates it if it doesn't.
+
+5. **Generate `credentials.tfrc.json` with the Token**
+```sh
+cat > "$TARGET_FILE" << EOF
+{
+"credentials": {
+    "app.terraform.io": {
+    "token": "$TERRAFORM_CLOUD_TOKEN"
     }
-  }
+}
+}
+EOF
 ```
 
-We thought we needed [the remote block](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate) but its using the cloud block.
+This code uses the `cat` command with a "here document" (<< EOF) to create the `credentials.tfrc.json` file with the Terraform Cloud token provided by the `TERRAFORM_CLOUD_TOKEN` environment variable.
 
-[Back in the days;](https://developer.hashicorp.com/terraform/language/settings/backends/remote)
-
+6. **Print Success Message**
+```sh
+echo "${TARGET_FILE} has been generated."
 ```
-  backend "remote" {
-    hostname = "app.terraform.io"
-    organization = "yayaintfcloud"
+After successfully generating the `credentials.tfrc.json` file, a message confirming its generation is displayed.
 
-    workspaces {
-      name = "terra-house-2023"
-``` 
-
-Now it is easier for configuration;
-
+7. **Setting Executable Permissions**
+   - Ensure proper permissions by using the `chmod` command on the Bash script.
 ```
-  cloud {
-    organization = "yayaintfcloud"
-
-    workspaces {
-      name = "terra-house-2023"
-    }
-  }
+chmod u+x ./bin/gen_tfrc
 ```
 
-Make sure its looks like this.
+Great progress! Let's pause for a moment. 
 
-### RESOLVED: Configure TF Cloud With Gitpod (Token)
+Before proceeding, there are a few more things we need to set up.
 
-1. Go back to your CLI and run to authenticate with terraform cloud;
-```
-terraform login
-```
+### Get The Token From Terraform Cloud
 
-2. Confirm yes to create a file
 
-You will get a stupid screen.<br>
-
-3. Click `p` for print and go to the url.
-
-This takes you to Terraform Cloud. Here is the url;
+1. Nav to the provided link to obtain a new token. If you can't locate it there, you can always retrieve it from here.
 ```
 https://app.terraform.io/app/settings/tokens?source=terraform-login
 ```
-4. Create a token and pick one for one day. 
 
-5. Take the token create the file yourself.
-```
-touch /home/gitpod/.terraform.d/credentials.tfrc.json
-```
+2. **Extending Token Validity for our 4 weeks bootcamp**
+   - Increase the token's lifespan to 30 days, ensuring longer usability.
 
-6. Check the file structure in GPT but dont trust it.
-7. [Go to reddit](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/) and get the structure instead.
-```JSON
- {
-  "credentials": {
-    "app.terraform.io": {
-      "token": "<add-it-here>"
-    }
-  }
-}
+![Increase Token Evidence](assets/0.8.0/30d-tfcloud-token.png)
+
+3. **Assigning Environment Variable for Gitpod**
+   - Define the variable in environment variables
+```
+export TERRAFORM_CLOUD_TOKEN='YOURS-WITH-30-DAYS-HERE'
+```
+4. Persist the environment variable to ensure it remains accessible within Gitpod.
+```
+gp env TERRAFORM_CLOUD_TOKEN='YOURS-WITH-30-DAYS-HERE'
 ```
 
-> HashiCorp doesn't even display the structure of that file. Please consider this, HashiCorp.
+![Verify Gitpod UI For You](assets/0.8.0/gitpod-token-presist.png)
 
-8. `Open` the file that you touched it. 
+> I updated the `.env.example` file with that ([without revealing sensitive data](link here)) to teach you.
+
+- We've extended the token's duration.
+- Our variables have been persistently stored.
+
+✅ Eliminating the need for frequent adjustments.
+
+
+
+5. **Launch your gitpod and Run the Script**
+
+> Double check if the file exist or its content to triple verify.
 
 ```
-open  /home/gitpod/.terraform.d/credentials.tfrc.json
+cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
 ```
-9. Add the content with the token you got from tf cloud.
+- Execute the script and view its output to confirm successful execution;
+```
+./bin/gen_tfrc
 
-### Simple Test
-
-To test its working. 
-
-1. Run `terraform init`.
-2. Check your dotfile.
+/home/gitpod/.terraform.d/credentials.tfrc.json has been generated.
+```
 
 
-3. Double check your Terraform Cloud resources;
+6. `cat` or `open` the token file to verify
+```sh
+cat /home/gitpod/.terraform.d/credentials.tfrc.json
+```
 
-![Infra State Resources](assets/0.7.0/tf-cloud.png)
+- `cat` open in within your terminal.
+- `open` will open it within your code editor.
 
-4. Triple check your outputs in Terraform Cloud;
-
-![Infra State Output](assets/0.7.0/mini-out.png)
-
-
-- `terraform.tfstate` is now included in the dotfile
-- an environment file is created with ur tf cloud workspace.
-
-![dotfile took effect](assets/0.7.0/dotfile.png)
-
-### Apply is now different.
-
-1. Run the apply command.
-
-![Apply with tfcloud](assets/0.7.0/apply-theme-with-tf-cloud.png)
-
-The command returns that its dealing with terraform cloud now.
-
-#### Potential Actions
-- Automate the process of tf login and similar steps.
-- Explore the possibility of storing the token in Gitpod session storage 
-- Generate the necessary JSON file for the token; evaluate feasibility.
-- Consider abbreviating the Terraform <smth>
+Great and cool! Lets get it automated.
 
 
 
+## Automating Terraform Cloud Authentication
 
+**Objective: To automate the authentication of Terraform Cloud on Gitpod workspace launch.**
 
+1. **Integrating the bash source to your `.gitpod`**
 
+Navigate to your Gitpod configuration file and include the script source within the 'terraform' label aka section.
+```yaml
+  - name: terraform
+    before: |
+     source ./bin/install_terraform_cli
+     source ./bin/generate_tfrc_credentials
+```
 
+We thought it was necessary to include the script in both sections to ensure it functions correctly in both terminals. Including it in the 'terraform' section is sufficient.
 
+2. Verify by restarting your workspace to ensure that the file contains your token.
 
+![File is Here Yey!](assets/0.8.0/cat-open-inspire.png)
 
+- [Secrets 100](assets/0.8.0/0.8.0.txt)
+- [Secrets 101](https://chat.openai.com/share/816459f7-8838-41ad-9de7-b67fcc532cda)
+- [Secrets 102](https://chat.openai.com/share/2fcf57c0-7e90-4e32-82e3-167f7469890b)
