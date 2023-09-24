@@ -229,9 +229,9 @@ To test its working.
 
 ![dotfile took effect](assets/0.7.0/dotfile.png)
 
-### Apply is now different.
+### `init` is now different.
 
-1. Run the apply command.
+1. Run the `terraform init` command.
 
 ![Apply with tfcloud](assets/0.7.0/apply-theme-with-tf-cloud.png)
 
