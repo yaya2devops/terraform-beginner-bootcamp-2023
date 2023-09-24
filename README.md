@@ -42,7 +42,7 @@ Now, you have successfully set up the Terraform alias manually.
 **Step 1: Creating a Bash Script**
 To automate the alias setup, you can create a bash script. Here's how:
 
-1. Create a new file for your script using the terminal or a text editor. We'll call it `setup_tf_alias.sh`.
+1. Create a new file for your script using the terminal or a text editor. We'll call it `tf_alias` in `/bin/`.
 
 2. Open the script file for editing:
 ```sh
@@ -100,14 +100,14 @@ echo 'alias tf="terraform"' >> ~/.bash_profile
 You need to make the script executable. Run the following command:
 
 ```sh
-chmod u+x setup_tf_alias.sh
+chmod u+x ./bin/tf_alias
 ```
 
 **Step 3: Executing the Script**
 Now, you can execute the script to add the alias to your `.bash_profile`. Run the following command:
 
 ```sh
-./setup_tf_alias.sh
+./bin/tf_alias
 ```
 The script will automatically add the Terraform alias to your Bash profile and update it.
 
