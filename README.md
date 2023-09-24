@@ -95,7 +95,7 @@ unset PROJECT_ROOT
 For better organization, it's recommended to centralize all environment variables in a dotenv file.
 
 
-1. Create file in the ``/bin/` and name it `.env.sample`.
+1. Create file in the `bin/` and name it `.env.sample`.
 2. Add your desired environment variables to it.
 ```
 # Hello I am called .env
@@ -106,7 +106,7 @@ PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 
 By following this approach, you can maintain a cleaner and more organized environment variable configuration in your project.
 
-> You have to remove the .sample to make it work.
+> You have to remove the `.sample` from `.env` to make it work.
 
 
 
