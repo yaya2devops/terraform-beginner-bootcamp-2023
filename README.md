@@ -1,148 +1,127 @@
-# A Terraformer `tf` Alias
+# The Terraform Beginner Bootcamp
 
-We'll walk you through creating an alias for Terraform, making it more convenient to use. 
+Welcome to space, and I genuinely hope you discover something of value here—no doubt.
 
-E.g. Instead of `terraform init`, you can write just `tf init`.
+To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in [the given order](w0-branches.png). 
 
-- [Manual Alias Setup](#section-1-manual-alias-setup)
-- [Alias in A Bash Script](#section-2-automating-alias-setup-with-a-bash-script)
-- [Automate the Alias in Gitpod](#section-3-using-the-alias-in-gitpod)
+![Rounded Week Zero Diaram](week-zero-diagram-round-corner.imageonline.png)
 
-We'll cover how to manually set up the alias and create a bash script to automate the process.
+> Starting with this one!
 
-### Section 1: Manual Alias Setup
+### Week Minus One and Paving the Way
 
-**Step 1: Accessing Your Bash Profile**
-To create an alias for Terraform manually, you need to edit your Bash profile.
+It's essential to note that the bootcamp did not start at this stage. <br>
+```
+📂 terraform-beginner-bootcamp-2023
+  ├─ 📂 introduction
+  ├─ 📂 week0-bprep
+  ├─ 📂 week0-pprew
+  ├─ 📂 week1-building
+  ├─ 📂 week2-connecting
+  ├─ 📂 week3-catchup
+  └─ 📂 week4-the-end
+```
+We had a preceding phase known as the "Bootcamp Prep Week" prior to Week 0. 
 
-1. Open your terminal and run the following command to access your Bash profile:
+Tasks like signing in or up for multiple platforms and becoming familiar with basic capabilities;
+
+1. **Understanding the Role**: Clarified the expectations and responsibilities of a Cloud Engineer for the upcoming project.
+2. **Template Adoption**: Implemented the ExamPro initial template for project.
+3. **Access to Discord**: Successfully gained access to the Discord communication platform.
+4. **Effective Questioning Skills**: Learned and aAcquired the skill of asking pertinent questions.
+5. **Markdown Mastery**: Demonstrated more proficiency in Markdown for creating well-structured developer content.
+6. **Git and GitHub Proficiency**: Strengthened knowledge and skills in Git and GitHub, essential for version control and collaborative coding.
+7. **Git Graph Use**: Used Git Graph for visualizing and managing the project when branching, and tagging.
+8. **Terraform Cloud Familiarity**: Initiated the journey with Terraform Cloud for our IaC.
+9. **Jumpad Registration**: Signed up for Jumpad, the local alternative for Gitpod, codespaces or any.
+
+
+## Week Zero Is The Way — [SemVer](https://semver.org/)
+
+Week zero kicked off with a focus on more on branching, ticket management, and tagging, all in alignment with semantic versioning.
+
+
+Semantic Versioning is a scheme for software that helps developers convey meaningful information about the changes in their code lets say e.g.
+
+| Version      | Meaning                                           |
+|--------------|---------------------------------------------------|
+| 1.0.0        | Initial release                                  |
+| 1.1.0        | Added new features, backward-compatible         |
+| 1.1.1        | Bug fix, backward-compatible                    |
+| 2.0.0        | Incompatible changes, significant upgrade       |
+| 2.0.1        | Bug fix, backward-compatible                    |
+| 2.1.0        | Added new features, backward-compatible         |
+| 3.0.0-alpha.1 | Pre-release version, not stable for production  |
+| 3.0.0-beta.1  | Pre-release version, for testing and feedback  |
+| 3.0.0        | Stable release, backward-compatible             |
+
+To implement SemVer properly in Git, you should follow these guidelines:
+
+0. Set Up a Repository: If you don't already have a Git repository for your project, create one by initing the .git dir
 ```sh
-nano ~/.bash_profile
+git init
 ```
-2. This command will open your Bash profile in the Nano text editor.
 
-**Step 2: Adding the Terraform Alias**
-In the Nano text editor, navigate to the end of the file.
+1. **Define Your Version Number**: Start by defining your initial version number. SemVer follows the format `MAJOR.MINOR.PATCH`, where:
 
-3. Add the following line to create an alias for Terraform:
+   - `MAJOR` is incremented for significant, backward-incompatible changes.
+   - `MINOR` is incremented for backward-compatible new features or improvements.
+   - `PATCH` is incremented for backward-compatible bug fixes.
+
+For example, if your project is at version 1.0.0, you might start with:
 ```sh
-alias tf="terraform"
+git tag 1.0.0
 ```
-4. Save your changes by pressing `Ctrl + O`, then press `Enter`.
-
-**Step 3: Updating Your Bash Profile**
-After adding the alias, you need to update your Bash profile. Run this command:
+2. **Commit Your Changes**: Commit your changes as usual. Make sure that each commit message is descriptive and follows a conventional format, which includes a summary and, if needed, a detailed description.
 ```sh
-source ~/.bash_profile
+git commit -m "feat: Add new feature X"
+git commit -m "fix: Fix issue Y"
+git commit -m "chore: Update dependencies"
 ```
-Now, you have successfully set up the Terraform alias manually.
-
-### Section 2: Automating Alias Setup with a Bash Script
-
-**Step 1: Creating a Bash Script**
-To automate the alias setup, you can create a bash script. Here's how:
-
-1. Create a new file for your script using the terminal or a text editor. We'll call it `setup_tf_alias.sh`.
-
-2. Open the script file for editing:
+3. **Bump Version Numbers**: When you're ready to release a new version, update the version number accordingly in your project. For example, if you're releasing a minor version, update the `MINOR` number:
 ```sh
-nano setup_tf_alias.sh
+git tag 1.1.0
 ```
-3. Inside the script file, add the following shebang to init the script:
+4. **Write a Changelog**: Create a changelog that details the changes in this release, including new features, bug fixes, and any other noteworthy items. This helps users understand what has changed between versions.
+
+5. **Push to Git**: Push your changes and tags to your Git repository:
 ```sh
-#!/usr/bin/env bash
+git push origin master --tags
 ```
+6. **Release Workflow**: You can implement a release workflow that automates the process of updating the version number and creating a changelog. Various tools and scripts are available to help with this, such as standard-version, semantic-release, or your custom scripts.
 
-4. Check if the alias already exists in the .bash_profile
-
+**standard-version:** A popular tool for automating versioning and changelog generation. You can install it via npm:
 ```sh
-grep -q 'alias tf="terraform"' ~/.bash_profile
+npm install -g standard-version
 ```
-5. Add the if statement and append the the allias with the following code
-
-```sh
-if [ $? -ne 0 ]; then
-    # If the alias does not exist, append it
-    echo 'alias tf="terraform"' >> ~/.bash_profile
-    echo "Alias added successfully."
-```
-> $? is a special variable in bash that holds the exit status of the last command executed
-
-6. Add the Else to Inform the user if the alias already exists
-```sh
-else
-    echo "Alias already exists in .bash_profile."
-fi
-```
-7. Source the .bash_profile to make the alias available immediately
-```sh
-source ~/.bash_profile
-```
-
-For the sake of readability, the script does not perform line breaks.
-
-I thought to update it with the following to make it so.
-
-![PoC no line jump](assets/0.9.0/read-clearly.png)
-
-```
-echo -e "\nalias tf=\"terraform\"" >> ~/.bash_profile
-```
-
-Instead of what it previously was;
-```
-echo 'alias tf="terraform"' >> ~/.bash_profile
-```
-
-8. Save your changes by pressing `Ctrl + O`, then press `Enter`.
-
-**Step 2: Making the Script Executable**
-You need to make the script executable. Run the following command:
+Then, you can run it after your changes are ready for release:
 
 ```sh
-chmod u+x setup_tf_alias.sh
+standard-version
 ```
 
-**Step 3: Executing the Script**
-Now, you can execute the script to add the alias to your `.bash_profile`. Run the following command:
+**semantic-release:** A more comprehensive tool that automates the entire release process, including versioning, changelog generation, and publishing to package registries.
 
-```sh
-./setup_tf_alias.sh
+7. **Publish Your Release**: If your project is a library or package, you may want to publish it to a package registry like npm, PyPI, or others. 
+
+If your code is already on GitHub, simply push it to your remote.
 ```
-The script will automatically add the Terraform alias to your Bash profile and update it.
-
-### Section 3: Using the Alias in Gitpod
-
-**Step 1 : Integrating with Gitpod**
-If you're using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it's available in both terminals.
-
-1. In your Gitpod configuration file (`.gitpod.yml`), add the following lines to both the AWS;
-
-```yaml
-  - name: aws-cli
-    env:
-      AWS_CLI_AUTO_PROMPT: on-partial
-    before: |
-      source ./bin/tf_alias
+git push --tags
 ```
 
-2. And Terraform blocks;
-```yaml
-  - name: terraform
-    before: |
-      source ./bin/tf_alias
-```
+This was 0.1.0 where I show you how to adhere to the SemVer principles.
 
-This wont generate double alias line. Tested.
+**Conluding SemVer;**
+- Ensures that your version numbers convey meaningful information about your software's changes and compatibility.
+- Facilitates collaboration among team by providing a standardized versioning approach.
 
-3. Save the `.gitpod.yml` file.
+Also great bootcampers have devised the following to exhibit our project's workflow.
 
-Now, every time you start a Gitpod workspace; 
-- the alias will be automatically set up in both AWS and Terraform environments.
-- You can now use `tf` instead of `terraform` in your commands
+- [A visual content](https://cdn.discordapp.com/attachments/1138488134003335199/1154906046184292373/Black_and_Neon_Blue_Gradient_Futuristic_Cyber_Monday_Sale_Poster_1920_645_px_Desktop_Wallpaper.png) 
+- [An instructional Content](https://cdn.discordapp.com/attachments/1138488134003335199/1155139598498939001/Screenshot_2023-09-22_205956.png) 
 
-4. Restart your workspace and observe.
 
-![You are A Terraformer and Transformer!](assets/0.9.0/terraformer.png)
+Semantic Versioning helps you and your friends understand the impact of updates at a glance. 
 
-This is `0.9.0` making your Terraform workflow more efficient and user-friendly.
+| DEVELOPERS!| You  are encouraged to follow SemVer to provide a consistent and reliable experience! |
+|---|---|
