@@ -305,7 +305,7 @@ You can also find it in your current directory.
       "name": "example",
       "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
       "instances": [
-        {etc}
+        { }
 
 ```
 
