@@ -1,6 +1,6 @@
 # Gitpod Terraform Cloud Authentication
 
-As we [previously encountered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/21-generate-tfrc#resolved-configure-tf-cloud-with-gitpod-token), `terraform login` is stuck.<br>
+As we [previously encountered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/18-migrate-terraform-cloud#resolved-configure-tf-cloud-with-gitpod-token), `terraform login` is stuck.<br>
 
 We found a workaround to just;
 - Make the file,
@@ -156,15 +156,21 @@ Navigate to your Gitpod configuration file and include the script source within 
   - name: terraform
     before: |
      source ./bin/install_terraform_cli
-     source ./bin/generate_tfrc_credentials
+     source ./bin/generate_tfrc
 ```
 
 We thought it was necessary to include the script in both sections to ensure it functions correctly in both terminals. Including it in the 'terraform' section is sufficient.
 
-2. Verify by restarting your workspace to ensure that the file contains your token.
+
+| Resources          | Description                                                |
+|---------------|------------------------------------------------------------|
+| [Secrets 100](assets/0.8.0/0.8.0.txt)   | This is my personal draft.                                 |
+| [Secrets 101](https://chat.openai.com/share/816459f7-8838-41ad-9de7-b67fcc532cda)   |  Make something out of my draft. |
+| [Secrets 102](https://chat.openai.com/share/2fcf57c0-7e90-4e32-82e3-167f7469890b)  | Amplify Issues, Code, Instructions. |
 
 ![File is Here Yey!](assets/0.8.0/cat-open-inspire.png)
 
-- [Secrets 100](assets/0.8.0/0.8.0.txt)
-- [Secrets 101](https://chat.openai.com/share/816459f7-8838-41ad-9de7-b67fcc532cda)
-- [Secrets 102](https://chat.openai.com/share/2fcf57c0-7e90-4e32-82e3-167f7469890b)
+**Verify by restarting your workspace to ensure that the file contains your token.**
+
+
+
