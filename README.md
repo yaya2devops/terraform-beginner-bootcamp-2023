@@ -225,7 +225,7 @@ We have already showcased some of them.
 
 1. Create a normal variable block wherever required;
 
-```json
+```
 variable "region" 
 {
   type    = string
@@ -263,7 +263,7 @@ This is cool because it helps terraform knows where to go find vars first.
 
 
 - `*.auto.tfvars`  is a plain text file where you can set variables like key-value pairs e.g.
-```json
+```
 example_var = "new_value"
 ```
 
