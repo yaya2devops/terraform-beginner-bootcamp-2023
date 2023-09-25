@@ -4,12 +4,12 @@ tasks:
      source ./bin/install_terraform_cli
      source ./bin/generate_tfrc_credentials
      source ./bin/tf_alias
-     cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
+     cp $PROJECT_ROOT/terraform.tfvars.sample $PROJECT_ROOT/terraform.tfvars
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
     before: |
-      source .bin/aws_cli_install
+      source .bin/install_aws_cli
       source ./bin/tf_alias
 vscode:
   extensions:
