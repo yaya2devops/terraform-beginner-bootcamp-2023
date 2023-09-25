@@ -1,291 +1,204 @@
-# Design Your Terraform Modules
+# Terraform Config Drift
 
-Welcome to 1.0.0 of our week one of the bootcamp where we delve into structuring our Terraform root modules.
+`1.2.0` started with the idea to answer the following questions.
 
-We've already begun with `main.tf`. we can accomplish everything within that single file. We can also call that a module.
 
-We will go over making our own module to gain a deeper understanding of Terraform capabilities e.g;
 
-- Organizing your Terraform configurations,
-- Working with remote/local state,
-- Managing Terraform variables in different ways.
+- How to fix it when you delete your state file?  
+- Is there anyway you can recover it?
 
-Before starting, consider [learning more about the tf structure.](https://developer.hashicorp.com/terraform/language/modules/develop/structure)
-![architectural-diagram-w1](assets/1.0.0/week-1-diagram.png)
+|🐛 |The feasibility of this depends on the available resources.|
+|---|---|
+|📦|Store your state in a file-like format because not all resources support direct importation.|
 
-The key is that when we adopt the correct approach to module design, our code will be understood at glance and we'll also promote its portability. 
+- [Bucket State Is Lost](#bucket-state-is-lost)
+- [Get Random Back](#get-random-back)
+- [Bucket The Regex Way](#bucket-the-regex-way)
+- [Test Drifted Test](#test-drifted-test)
 
-Others can take that and adapt it to suit their specific requirements. <br>And this is beautiful!
+## Bucket State Is Lost
+Our Terraform state no longer manages that bucket. 
 
-### Terraform Directory Layout
+To get state back, we need to search for the import within Terraform.<br>
+[Learn more about the import.](https://developer.hashicorp.com/terraform/cli/import)
 
-1. Create the following strucutre in your project root.
+To get the import for the s3, follow this process.
+
+1. Go to the Terraform Registry.
+2. Navigate to `Providers` and select `AWS`.
+3. In the search bar, type `s3` to find the AWS S3 related resources.
+4. Look for `aws_s3_bucket` and click on it.
+5. On the right-hand side of the page, you'll find a section labeled **ON THIS PAGE**.
+6. Click on `import` to go directly to the import documentation.
+
+It should provide you with the necessary import instructions.
+
+```hcl
+import {
+  to = aws_s3_bucket.bucket
+  id = "bucket-name"
+} 
+```
+And the direct command;
+
 ```sh
-🌳 Module Components:
-├── 📄main.t: The Core Configuration
-│   └── 📝 Contains the main configuration for your Terraform resources.
-├── 📄variables.t: Input Variables
-│   └── 📝 Stores definitions for input variables.
-├── 📄terraform.tfvar: Variable Data
-│   └── 📝 Holds data or variable values to load into your Terraform project.
-├── 📄outputs.t: Storing Outputs
-│   └── 📝 Defines the outputs of your Terraform module.
-├── 📄 providers.tf: Provider Configuration
-│   └── 📝 Contains provider configurations and settings.
-└── 📄 README.md: Module Documentation
-    └── 📝 Provides essential documentation and information about the module.
+terraform import aws_s3_bucket.bucket bucket-name
+```
+> The import [just in case.](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import)
+
+Take the command to cli and see and change with our bucket named `example`.
+```sh
+terraform import aws_s3_bucket.example <random-from-ur-aws>
 ```
 
-**Module Component Guidelines;**
-- Recommended structure for organizing your Terraform root modules,
-- Suggests moving provider blocks and outputs to dedicated files,
-- Highlights the importance of README.md for clear documentation.
+It will import a new state but;
+- The import will exclude the randomly generated configuration,
+- on tf plan, a prompt to delete the existing bucket and create a new one (`2+ 1-`)
 
-|💭|Differing opinions may arise regarding the placement of the `tf` block for providers|
-|---|---|
-|💡|Some advocating for its exclusive presence in the `main.tf` file.|
-|💡💡|The choice depends on your team's preferences and conventions.|
+Our next task is to retrieve the state in a randomized fashion.
 
-2. Please proceed with migrating the `tf` block for providers to the `providers.tf` file.
-3. Let's relocate the output configurations to the `output.tf` file.
-4. Bring back the tags we [took out previously.]() 
 
-We will use it back to create an additional custom variable.
+
+## Get Random Back
+The method I demonstrated for locating imports in S3 applies to nearly all scenarios. 
+
+So, sharpen your direction-finding skills, and I'll emphasize it once more.
+
+1. Go to your desired provider.
+2. Expand the list of resources.
+3. Locate the specific resource, such as `random_string`.
+4. On the right-hand side, click on `import` and take it.
+```
+terraform import random_string.test test
+```
+We've named it "bucket_name," so it functions as follows:
+```
+terraform import random_string.bucket_name <paste-random-name-from-s3>
+```
+> The import [just in case.](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string#import)
+
+Be aware that importing state may not include the random configuration. 
+
+Terraform suggest deleting and recreating the resource along with a random component. 
+
+
+|💡|Both are now in their original states.|
+|---|:---|
+|💡💡|But in `tf plan` it seems to think it needs to be replaced.|
+|💡💡💡|It's time to terminate  random. Was nice|
+
+
+## Bucket The Regex Way
+We will proceed by discontinuing the random generation and instead implement a validator.
+
+Similar to the way we did with UUIDs, but this time tailored to meet [bucket rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
+
+1. Go to the main.tf
+2. Delete the Random Provider from `providers.tf`.
 ```hcl
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+    random = {
+      source = "hashicorp/random"
+      version = "3.5.1"
+    }
 ```
-
-5. change `Name` to `UserUuid` ;
-```
-  tags = {
-    UserUuid     = var.user_uuid
-  }
-```
-
-Although we initially considered GPT's suggestion, we prefer to have it inline.
-
-
-We added a variable block for the UUID, and within this block, we incorporated the validation process.
-
-
-|❌| Using Terraform Cloud, we coudnt receive a prompt for the variable.|
-|---|---|
-|✅|To address this, let's transition to remote configuration.|
-
-
-First, comment out the cloud block and initialize the configuration. <br>
-However, it appears we need to revert this migration. <br>
-Nevermind, please uncomment the block.
-
-
-6. Let's manually provide the variable, which should trigger an error when executing and I'll tell you why
-```
-terraform plan -var user_uuid="testingod"
-```
-We included validation in the variable to ensure it conforms to a specific regex pattern.  
-
-![Regex Baby](assets/1.1.0/regex-in-action.png)
-
-
-The error is expected which is nice because we coded validation to accept stuff the format of UUIDs.
-
-> A solid understanding of regular expressions is essential in this context.
-
-
-|🐌 |Terraform Cloud is noticeably slower compared to local state operations!|
-|---|---|
-|🏃🏻|When executing a plan on a local state, the process is significantly faster.|
-|💡|Let's go back to local state.|
-
-Potential reasons of this Incl;
-- We can test what happen when we lose our state 
-- Opening to imports (next ver `1.1.0`)
-- Dig into ways to recover state
-
-
-### From Terraform Cloud Back to Local State
-
-1. try to run a terrform destroy.
-
-Failed because we have to configure our aws credentials in terraform cloud. We didnt said that before.
-
-2. Go Terraform Cloud, go To variables and then add New variable
-> When asked choose Environment variable and not terraform
-3. Add one by one your access key, private key and region.
-![State of AWS Vars in TF Cloud](assets/1.1.0/set-tf-cloud-aws-cred.png)
-
-> Mark the first two as sensitive, the **region** is ok.
-
-4. You can now go ahead and destroy your infrastructure.
-5. Observe the runs in Terraform Cloud. 
-
-You can check the process in real time.
-
-![TF Cloud Destroy Run](assets/1.1.0/tfcloud-destroy-run.png)
-
-
-### Local Migration Test
-
-We considered the migration is possible now.
-
-1. Try re experimenting with tags and see what happens when you use them.
-```
-    tags = {
-    UserUuid = var.user_uuid
-  }
-```
-
-2. Add this to ur bucket resource to look like;
+3. Remove the Random resource from `main.tf`.
 ```hcl
-resource "aws_s3_bucket" "example" {
-  bucket = random_string.bucket_name.result
-    tags = {
-    UserUuid = var.user_uuid
-  }
+resource "random_string" "bucket_name" {
+  lower = true
+  upper = false
+  length   = 32
+  special  = false
 }
 ```
-> We came here without passing a value to it locally.
-
-3. Be sure to remove your `lockfile` and `dotfile` to terminate any tf cloud related processes.
-4. run `tf init` then `tf plan`
-5. give an actual uuid to the var;
-```
-terraform plan -var user_uuid="uuid-format" 
-```
-
-e.g.
-
-```
-terraform plan -var user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d" 
-```
-
-If it still doesn't work, ensure that your validation block, along with its parent variable, are not commented out.
+4. Remove the bucket configuration `bucket = random_string.bucket_name.result`
 ```hcl
-variable "user_uuid" {
-  description = "The UUID of the user"
+bucket = random_string.bucket_name.result
+```
+5. Add `bucket = var.bucket_name` instead.
+```hcl
+bucket = var.bucket_name
+```
+6. In  bucket resource change its name from `example` to `website_bucket`.
+
+```hcl
+resource "aws_s3_bucket" "example" 
+
+resource "aws_s3_bucket" "website_bucket" 
+```
+
+7. Update the ouptut to not use the random provider and to call our new bucket name.
+```hcl
+output "bucket_name" {
+  value = aws_s3_bucket.website_bucket.bucket
+```
+
+8. add the bucket name to our `terraform.tfvars` and keep a copy in `terraform.tfvars.sample`
+
+```hcl
+bucket_name="from-aws"
+```
+
+9. Define that variable within the variables.tf file.
+
+
+Ask GPT to generate a Terraform variable definition for the bucket name with validation logic to ensure it conforms to the requirements for a valid AWS bucket name.
+
+
+- Start with the variable definition with a great description;
+
+```hcl
+variable "bucket_name" {
+  description = "The name of the S3 bucket"
   type        = string
+```
+- Go ahead with the validation after considering [the following rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
+
+```hcl
   validation {
-    condition        = can(regex("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$", var.user_uuid))
-    error_message    = "The user_uuid value is not a valid UUID."
+    condition     = (
+      length(var.bucket_name) >= 3 && length(var.bucket_name) <= 63 && 
+      can(regex("^[a-z0-9][a-z0-9-.]*[a-z0-9]$", var.bucket_name))
+    )
+    error_message = "The bucket name must be between 3 and 63 characters, start and end with a lowercase letter or number, and can contain only lowercase letters, numbers, hyphens, and dots."
+  }
+```
+
+- Together, fogether to look like this;
+```hcl
+variable "bucket_name" {
+  description = "The name of the S3 bucket"
+  type        = string
+
+  validation {
+    condition     = (
+      length(var.bucket_name) >= 3 && length(var.bucket_name) <= 63 && 
+      can(regex("^[a-z0-9][a-z0-9-.]*[a-z0-9]$", var.bucket_name))
+    )
+    error_message = "The bucket name must be between 3 and 63 characters, start and end with a lowercase letter or number, and can contain only lowercase letters, numbers, hyphens, and dots."
   }
 }
 ```
 
-6. It should work perfectly.
+### Test Drifted Test
+Make sure you deleted previous S3s.
+1. Try giving a bucket name that violates the rule e.g. YayaToDevOps
+2. Give a tf plan a try
 
-Great and cool! Lets proceed more with our var manipulation skills.
+![Failed Validation Applied](assets/1.2.0/regex-bucket.png)
 
-7. Go to our terraform.tfvars file and include the variable there.
-user_uuid="uuid-format" (looks like toml baby)
-```sh
-user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
-```
-> Looks like TOML Baby! whats that? Eeeeh [long story.]()
+3. Double assign it a correct naming.
+4. Give a tf plan a try
+5. Run tf apply
 
-8. Run `tf plan` only and [it will pick](assets/1.1.0/varplan.md) it up.
-
-When doing TF Cloud, You must configure this manually as Terraform variables . ( And not the environment variable we previously used for AWS)
-
-![TF CLOUD Env Var vs TF Vars](assets/1.1.0/envstfvar.png)
-
-9. Create an fork file of the terraform.tfvars with `.sample`extension and add the content.
-```
-user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
-```
-
-> terraform.tfvars is ignored. Good alternative to not waste this.
-
-10. Delete your  and try this command to see if it does the job.
-```yaml
-cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
-```
-
-11. It does, now in `gitpod.yml` add the above to the terraform block to look like:
-```yaml
-  - name: terraform
-    before: |
-     source ./bin/install_terraform_cli
-     source ./bin/generate_tfrc_credentials
-     source ./bin/tf_alias
-     cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
-```
-
-This automate the process of getting that example file to a real file on gitpod launch and we are well set!
-
-## Terraform Variables 101
-
-I considered adding this part to showcase the different ways you can deal with vars in `tf`. 
-
-We have already showcased some of them.
-
-### **Variable Input via CLI and Files Flag:**
-
-1. Create a normal variable block wherever required;
-
-```
-variable "region" 
-{
-  type    = string
-  default = "us-west-1"
-}
-```
-
-2. You can override it using this command;
-
-```
-terraform apply -var="region=new_value"
-```
-
-3. Or you can create the following json (or HCL) file call it `variables.json` e.g;
-
-```json
-{
-  "region": "us-east-2",
-  "instance_type": "m5.large"
-}
-```
-
-4. Overide it using that command but with passing the file flag.
-```sh
-tf apply -var-file=variables.json
-```
-
-Terraform will use the values specified in the variables.json file to override the defaults defined in your example.tf configuration. 
-
-### **Variable Files** (.auto.tfvars and .auto.tfvars.json)
-
-This is cool because it helps terraform knows where to go find vars first.
-- If you have a configuration named yaya.tf
-- Terraform will automatically look for a file named yaya.auto.tfvars or yaya.auto.tfvars.json and load variable values from there. 
+![Applied with Vars Instead of random](assets/1.2.0/apply-without-random.png)
 
 
-- `*.auto.tfvars`  is a plain text file where you can set variables like key-value pairs e.g.
-```
-example_var = "new_value"
-```
+You should have your bucket in aws applied. 
 
-- `*.auto.tfvars.json` is a JSON file where you can define variables and their values. For example:
-```json
-{
-  "example_var": "new_value"
-}
-```
+![Buck w/ no random](assets/1.2.0/buck.png)
 
-Also `*.auto.tfvars.json` and `terraform.tfvars.json` are almost the same. Just think about it as a way to design you infrastructure with namings.
+That was our `1.2.0` configuration drift.
 
 
-#### Great and cool! My takeaways are;
-- You can create as many TF files as needed; they will all be combined.
-- To pass an environment variable, use tf var.
-- For overrides or new variable settings, employ the var flag.
-- In TF Cloud, you can configure both environment variables and TF variables.
-- Demonstrates how to define and use custom variables.
-- Promotes inline variable usage for improved readability.
-- Shows how to include variable validation within var blocks and regex is cool to know.
-
-Also since our plan worked, `tf apply` changes locally and lose your state to see if we are able to recover it next.
-
-See you in  `1.2.0` the config drift.
+|Consider Regex for vars when validating inputs.|
+|---|
