@@ -4,7 +4,7 @@ Welcome to space, and I genuinely hope you discover something of value here—no
 
 To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in [the given order](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png). 
 
-![Rounded Week Zero Diaram](../assets/week-0-diagram.png)
+![Rounded Week Zero Diaram](../assets/1.0.0/week-0-diagram.png)
 
 > Starting with this one!
 
