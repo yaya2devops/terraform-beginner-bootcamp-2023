@@ -1,0 +1,166 @@
+1.3.0
+
+
+issue: Construct The AWS Terrahouse Terraform Module
+
+
+
+- setup directory stucture for our module
+- port our s3 bucket  into the module
+
+create ticket and branch from it;
+
+
+In this comprehensive ticket, we will embark on a series of pivotal tasks, each of which plays a crucial role in achieving our ultimate objective.
+
+- [ ] **Establish Directory Structure** 📂
+  We will begin by meticulously setting up the directory structure for our module, ensuring an organized and easily navigable project environment.
+- [ ] **Craft a Nested Module** 🛠️
+   We'll delve into the intricacies of constructing a nested module, leveraging the power of modularity and encapsulation in our project's architecture.
+- [ ] **Migrate S3 Bucket To Module** 🗄️
+  This task involves seamlessly migrating our S3 bucket integration into the module, enhancing the scalability and manageability of data storage.
+- [ ] **Implement Module Calls** 📞
+  We will orchestrate module calls from various sources, facilitating communication and coordination among different components of our project.
+- [ ] **Employ the `tf refresh` Command** 🔄
+  This step will acquaint us with the practical use cases and benefits of the `tf refresh` command within the Terraform ecosystem.
+
+By the end of this comprehensive undertaking, we will have not only achieved these critical milestones but also gained a profound more of what matters in terraform.
+
+
+--- launch it up.
+
+In the following we will create our first nested module and migrate our s3 bucket to it from the root.
+
+We will aslo experiencing the output and vaiables calls when it comes to dealing with nested modules
+
+
+In the upcoming we will work to accomplish;
+
+- Creating our initial nested module 
+- Transferring our S3 bucket from the root module to the module.
+- Experience with output and variable calls working with nested modules.
+---
+
+Lets look on our doc for directory stucture for modules again.
+
+
+- create new folder named modules/ terrahouse_aws
+
+he have private repo with all providers implemented 
+just beacause i have validator for aws only to keep it simple.
+
+- main
+outputs
+vars
+README.md
+LICENSE
+
+Anton babenko is famous for craeting lots of tf modules.
+
+
+grap an apache license form him 
+
+- now regarding our arhitecure
+
+we want to isolate everything related to storage (s3, etc) in its file--storage dir
+and anything related to delivery in its file e.g. (cloudfront etc.)----cdn dir
+
+
+
+every modules required provider.
+u can do not and see that it gives u an erro.
+
+- go to main on root and take the provider to inside the main.
+- also take our bucket resource ot main tf
+
+
+in the root provider just take the content to main. and delete it 
+
+because we are not specifing any provider (we took its content to the module
+- move our variables 
+- move our outputs
+
+
+so we moved our stuff to this module/name level how to actually reference them in the root? 
+
+--> we can import a module withing a module block.
+
+bring the code to it:
+
+
+
+Inside the block we can source to the directory of the module.
+and we can add the input vars	(bucket name and uuid)
+
+
+### about refereing modules
+
+- check sources can be local path like ours or from github, from registry
+
+https://developer.hashicorp.com/terraform/language/modules/sources
+
+
+
+- do init 
+
+it will take u to delete the aws bloc
+
+its empty so its ok
+
+
+plan error
+
+because we have to define variables in both placs. since validator already in modulennjust cal  the variables in the root leve as wel but donnt include the validaotr it will alreayd eb applied ot the module
+
+
+it will work with no issue
+
+
+-- try apply and od the new bucket 
+yess
+
+run terraform output
+
+but we dont see an output???
+
+
+we have it only in the module. so an ouput within a nested module allows us to access these at the top level but if we wannt to get ouput we also have to add it in the root output as well.
+
+the difference is now we will get it from the module.
+
+so its value = module.name-dir.bucket_name
+
+nested because its nested wihtin this project.
+
+---
+
+after outut 
+
+do tf refresh to fix local
+
+meaning it will change that ouptut.
+
+
+- run apply now
+
+
+now we will get the output after apply
+
+write output to see it as well;
+
+
+--- employ output with nested modules
+employe var with nested modules
+created a nested module
+
+
+
+
+--commit:#nb refactor S3 into new terrhouse module
+-pr
+
+destory ur infra later on.
+
+
+- git pull
+-git tag
