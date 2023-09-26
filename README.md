@@ -7,7 +7,7 @@ To Recap Just For You we'll be;
 - Transferring our S3 bucket from the root module to the module.
 - Experiencing with output and variable calls working with nested modules.
 
-We started by triple checking The terraform modules Structure [again]().
+We started by triple checking The terraform modules Structure [again](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/29-design-tf-root-module#design-your-terraform-modules).
 
 When you're ready, I'm sure you're excited to go. <br>
 Let's take on this together!
