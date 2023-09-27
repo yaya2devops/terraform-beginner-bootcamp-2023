@@ -7,11 +7,26 @@ grep -q 'alias tf="terraform"' ~/.bash_profile
 if [ $? -ne 0 ]; then
     # If the alias does not exist, append it
     echo -e "\nalias tf=\"terraform\"" >> ~/.bash_profile
-    echo "Alias added successfully."
+    echo "Alias 'tf' added successfully."
 else
     # Inform the user if the alias already exists
-    echo "Alias already exists in .bash_profile."
+    echo "Alias 'tf' already exists in .bash_profile."
 fi
 
-# Optional: source the .bash_profile to make the alias available immediately
+# Add additional aliases
+cat <<EOL >> ~/.bash_profile
+alias tfa='terraform apply'
+alias tfaa='terraform apply --auto-approve'
+alias tfd='terraform destroy'
+alias tfda='terraform destroy --auto-approve'
+alias tfi='terraform init'
+alias tfim='terraform import'
+alias tfli='terraform login'
+alias tflo='terraform logout'
+alias tfo='terraform output'
+alias tfp='terraform plan'
+alias tfpr='terraform plan -refresh-only'
+EOL
+
+# Optional: source the .bash_profile to make the aliases available immediately
 source ~/.bash_profile
