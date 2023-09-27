@@ -147,7 +147,8 @@ But the provider change year in a year.
 3. Click on AWS and see the list.
 4. AWS_S3_Bucket_Website_Configuration
 5. [Get it from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration) instead.
-```hcll
+
+```hcl
 resource "aws_s3_bucket_website_configuration" "example" {
   bucket = aws_s3_bucket.example.id
 
@@ -169,7 +170,7 @@ resource "aws_s3_bucket_website_configuration" "example" {
   }
 }
 ```
-6. Change the example name to website_configuration
+6. Change the example name to `website_configuration`
 7. Reference to our bucket from the module;
 ```hcl
 resource "aws_s3_bucket_website_configuration" "website_configuration" 
@@ -222,9 +223,9 @@ output "s3_website_endpoint" {
   value = module.terrahouse_aws.website_endpoint
 }
 ```
-5. in terraform.tfvars assign the actual url.
+5. in `terraform.tfvars` assign the actual url.
 ```
-s3_website_endpoint=""
+s3_website_endpoint="<here>"
 ```
 
 Configuration doing good. 
@@ -268,7 +269,7 @@ resource "aws_s3_object" "index_html" {
 }
 ```
 3. Repeat for `error.html` configuration.
-```
+```hcl
 resource "aws_s3_object" "error_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "error.html"
@@ -380,7 +381,7 @@ This allows us to provide flexibility to the module, enabling anyone to change t
 Let's set up a variable for that purpose.
 
 1. Add the variables for index file at the module level within the `variables` block;
-```
+```hcl
 variable "index_html_filepath" {
   description = "The file path for index.html"
   type        = string
