@@ -1,432 +1,174 @@
-# Implementing CDN Via Code
+# Terraform Content Versioning 
 
-Hello Terraformers, Here we'll be implementing a CDN to our s3 bucket website hosting using CloudFront to enhance website performance, speed and security via Terraform.
+Hey Terraformer, I'll outline the process of implementing content versioning for our S3 bucket serving a website via CloudFront in this  1.6.0.
 
-This will be next hooked up to our Terratowns.
+**Note:** This step should be done prior to cloudfront dsitrubution caching.
 
-### CloudFront As Code
+### Bootcamper Context
+Content versioning is essential for efficiently managing your files content and ensuring that changes to your site files only when necessary.
 
-1. [Ask GPT](https://chat.openai.com/share/9aff3158-acfc-49a2-b880-4a9642ac58ca); 
-```
-Give me aws cloudfront serving static website hosting for an s3 bucket using terraform.
-```
-So it is giving us something with the bucket (we did that), <br>And the policy yep good stuff.
+- We want to validate the cache when the file changes.
+- We want to be more explicit about which version of the website we are serving.
+- We don't want cache is cleared entirely when any file changes
 
-#### Origin Configuration
-- For the origin config, it is giving us origin access identity.
-- New way of doing it which is origin acces control.
+The last is very expensive call.
 
-GPT is not aware of this, as it was introduced only last year.
-- it can  indeed write much terraform.
-- But it may not be accurate but junk.
+Instead, implement content versioning to cache only when desired.
+- This is version one of the site
+- This is version two of the site
+We want it to be that explicit.
 
 
 
-### Find CloudFront In Registry
+## Versioning Your Website
 
-1. Go to the Terraform Registry 
-2. Go to providers and click AWS
-3. top right click documentation
-4. In search find the AWS CloudFront Distribution 
-5. search the resource: `aws_cloudfront_distribution`.
-
-We also see data block, we may [proceed to that]() later.
-
-6. From the resource take [the block from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#example-usage) instead of GPT.
-
-We have an example of an S3 origin configuration for CloudFront. <br>It looks to be well-structured. 
+We will clearly define different versions of the website (e.g., V1, V2..etc).
 
 
-## Resource Structuring
-We thought to start with the resources to ensure they are grouped together alphabetically for your cute eyes.
+Starting with **defining Content Version in Terraform Variables**
 
-1. Create `resource-cdn.tf`.
-2. Create `resource-storage.tf`.
-3. Bring all storage components and paste them into `resources-storage.tf`.
+1. Open the `terraform.tfvars` file and add `content_version=1` (or the desired version).
 ```hcl
-resource "aws_s3_bucket" "website_bucket" {
-  # etc
-}
-
-resource "aws_s3_bucket_website_configuration" "website_configuration" {
-    # etc
-}
-
-resource "aws_s3_object" "index_html" {
-    # etc
-}
-
-resource "aws_s3_object" "error_html" {
-    # etc
-}
-
+content_version=1
 ```
-4. Grab the relevant code [from the registry](#find-cloudfront-in-registry) for `res-cdn.tf`, but not all of it.
-5. Remove the alias for custom domain.
+2. Add `content_version` to your main Terraform module call under `source`.
 ```hcl
-  aliases = ["mysite.example.com", "yoursite.example.com"]
+  content_version = var.content_version
 ```
-6. Exclude query string passing is ok
-```
-      query_string = false
-```
-7. Eliminate cookie passing.
+3. Implement a Terraform variable for `content_version` that only accepts positive integers starting from one in your modules `variables.tf`.
 ```hcl
-      cookies {
-        forward = "none"
-      }
-    }
+variable "content_version" {
+  description = "The content version. Should be a positive integer starting at 1."
+  type        = number
+
+  validation {
+    condition     = var.content_version > 0 && floor(var.content_version) == var.content_version
+    error_message = "The content_version must be a positive integer starting at 1."
+  }
+
+}
 ```
-8. Retain the "allow all" policy.
+4. Include that in the variable call in ``variables.tf`` in the module level.
 ```hcl
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+variable "content_version" {
+  type        = number
+}
+```
+
+### Configure Resource Lifecycle
+We want to trigger thhose in particular cases using **Lifecycle**
+
+It enables you to respond to various actions on a resource, such as its creation, deletion, and other relevant events.
+
+1. Navigate to the `resource-storage.tf` file.
+2. Look for the S3 resource lifecycle.
+```hcl
+ resource "azurerm_resource_group" "example" {
+  # ...
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+```
+3. Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
+```hcl
+  lifecycle {
+    ignore_changes = [etag]
   }
 ```
-9. Modify caching behavior to keep only the default settings.
-```
-  default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id }
-```
-Meaning, remove both `ordered_cache_behavior`.
-
-10. Specify optional geographical restrictions - Change the type to "none" and remove.
+4. Exclude the ETag field within the lifecycle.
 ```hcl
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-      locations        = []
-    }
+    ignore_changes = [etag]
+```
+
+Learn more about lifecycle in terraform [from here.](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+
+### Test 101
+Observe the behavior when changes are made:
+1. Comment both the lifecycle configurations.
+```hcl
+  #lifecycle {
+  #  ignore_changes = [etag]
+  #}
+```
+2. Make changes to the files and observe Terraform plan and apply results.
+3. Uncomment the lifecycle configurations and change file
+4. run tfp
+5. observe the behavior again.
+
+
+This is ignoring the etag. <br>To make it so, we have to code the trigger.
+
+### **Triggering the Changes**
+Our approach involves closely associating it with the respective resource. To trigger changes based on the content version, we'll use Terraform's `terraform_data` resource.
+
+Traditionally, you would associate a null resource and a provider.. in the way offered by HashiCorp.
+
+1. Configure the `terraform_data` resource to manage content versions as if they were regular resources.
+```hcl
+resource "terraform_data" "content_version" {
+  input = var.content_version
+}
+```
+2. Connect the content version to the resource lifecycle to trigger updates when the content version changes.
+```hcl
+    replace_triggered_by = [terraform_data.content_version.output]
+```
+
+3. make sure its place for ur index.html lifecycle like this:
+```hcl
+  lifecycle {
+    replace_triggered_by = [terraform_data.content_version.output]
+    ignore_changes = [etag]
   }
 ```
-> We could specify for specific countries.
-11. Tag resources with a UUID, as done previously.
-```hcl
-  tags = {
-    UserUuid = var.user_uuid
-  }
-```
-12. Specify HTTPS certification for free. 
-```hcl
-  viewer_certificate {
-    cloudfront_default_certificate = true
-  }
-```
-Note that this won't work alone because it expects configuration within the `origin{}` block.
-```hcl
-  origin {
-    domain_name              = aws_s3_bucket.website_bucket.bucket_regional_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
-    origin_id                = local.s3_origin_id
-  }
-```
-
-Lets do it.
-
-### Specifying Required Variables `resource-cdn.tf`
-We will now apply a use case for **locals.** The block serves as a method for passing local variables.
-
-Note that these in the block from registry require definitions.  
-```
-access control id=origin_access_control 
-
-
-origin id= local.
-```
-While we can pass variables as environment variables, this situation presents a good example of when to use locals.
-
-
-- Define `origin_id` as "local" to pass local variables, add local block;
-```hcl
-local { }
-```
-- It is locals. just for your awarness.
-```hcl
-locals {
-  s3_origin_id = "MyS3Origin"
-}
-```
-
-### Origin Access Control Config `resource-cdn.tf`
-
-
-1. Utilize the `aws_cloudfront_origin_access_control` block [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control#example-usage).
-```hcl
-resource "aws_cloudfront_origin_access_control" "example" {
-  name                              = "example"
-  description                       = "Example Policy"
-  origin_access_control_origin_type = "s3"
-  signing_behavior                  = "always"
-  signing_protocol                  = "sigv4"
-}
-```
-2. Customize the resource name and use interpolation for the bucket name.
-```hcl
-  name   = "OAC ${var.bucket_name}"
-```
-3. Add a description.
-```hcl
-  description  = "Origin Access Controls for Static Website Hosting ${var.bucket_name}"
-```
-4. Leave network configurations they are correctly set.
-```
-  signing_behavior  = "always"
-  signing_protocol  = "sigv4"
-```
-That should be set, whats left is bucket policy ony..
-
-5. change the name of the block to `default`.
-
-### Adding the Bucket Policy Block `resource-storage.tf`
-I spent a considerable amount of time obtaining that policy.<br> Should I give it to you? 
-
-Let's help you create it yourself.
-
-1. Use the `aws_s3_bucket_policy` resource [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy#example-usage).
-
-```hcl
-resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
-  bucket = aws_s3_bucket.example.id
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
-}
-```
-2. Customize the name to "bucket_policy".
-```hcl
-resource "aws_s3_bucket_policy" "bucket_policy"
-```
-3. Reference the S3 bucket using `website_bucket.bucket`.
-```
-  bucket = aws_s3_bucket.website_bucket.bucket
-```
-||If we have only one of something, we can just name it default. |
-|---:|:---|
-||We can [always revisit—step5](#origin-access-control-config-resource-cdntf) and make them all 'default' later|
-
-Instead of this we will code our policy into it.
-```
-data.aws_iam_policy_document.allow_access_from_another_account.json
-```
-4. Define the policy as a JSON-encoded string.
-```hcl
-policy =jsonencode()
-```
-5. Go to the [cloudfront origin access control](https://aws.amazon.com/fr/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/) and bring the policy to here:
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowCloudFrontServicePrincipalReadOnly",
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "cloudfront.amazonaws.com"
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*",
-            "Condition": {
-                "StringEquals": {
-                    "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
-                }
-            }
-        },
-        {
-            "Sid": "AllowLegacyOAIReadOnly",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
-        }
-    ]
-}
-```
-
-In order to include this we have to make some changes..
- 
-6. Change `:` to `=` for the lines of policy
-
-
-Thats more of HCL; it serves as the foundational syntax underpinning Terraform, shaping Terraform into what it is.
-
-7. We only require one statement; specifically, take the second block starting with 'sid'."
-```hcl
-        {
-            "Sid" = "AllowLegacyOAIReadOnly",
-            "Effect" = "Allow",
-            "Principal" = {
-                "AWS" = "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"
-            },
-            "Action" = "s3:GetObject",
-            "Resource" = "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
-        }
-    
-```
-
-In the initial statement, we are indeed interested in 'sid,' 'effect,' 'version,' 'principal,' and 'action'..
-
-However, our target for modification is the bucket.
-```
-"Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
-```
-8. Incorporate interpolations using `${aws_s3_bucket.website_bucket.id}`.
-
-We have conditions that require us to narrow it down to either 'distru' or 'acc.' It's requesting an account ID.
-
-This is an effective way to use data.
-
-#### Data Block
-
-
-1. When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.
-2. In our case, we aim to utilize something for `aws_id` within the policy.
-3. For this purpose, we can employ `aws_caller_identity.` 
-
-We've previously used it to validate our account in the CLI. [Check it out](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage).
-```hcl
-data "aws_caller_identity" "current" {}
-
-output "account_id" {
-  value = data.aws_caller_identity.current.account_id
-}
-
-output "caller_arn" {
-  value = data.aws_caller_identity.current.arn
-}
-
-output "caller_user" {
-  value = data.aws_caller_identity.current.user_id
-}
-```
-Consequently, we can easily retrieve the account ID.
-
-4. Add the following to the main.tf in ur module.
-```
-data "aws_caller_identity" "current" {} 
-```
-Now, you can reference this data wherever you need it; that's all it takes.
-
-5. We can access the value, which is `data.aws_caller_identity.account_id`.
-6. In our data policy, incorporate `data.aws_caller_identity.account_id` into the interpolation.
-```
-"arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}
-```
-
-7. Add the interpolation using ${}.
-8. avigate to the CloudFront distribution registry link, find the reference, and identify the ID. 
-9. Include the variable for the 'distrubution' in the interpolation as well.
 
-```
-:distribution/${aws_cloudfront_distribution.s3_distribution.id}"
-```
-We could have opted for using an ARN..This will do the exact job with less code..
-```hcl
-"AWS:SourceArn": data.aws_caller_identity.current.arn
-```
+When we modify our version, it will be treated and managed in a manner similar to a resource.
 
-But. Our preference was to utilize the data source! And learn.
+### Test 202
 
-10. Test `tf init` and `tfp`
+1. Run `terraform plan` and see if it actually decide to change it;
 
+![something](assets/1.6.0/only-adding-data.png)
 
-**Error 1:** We mistakenly used `local` instead of `locals.`
+It does work because tf data never existed.<br>
+But. It doesn't appear to be triggering the content as expected..."
 
-**Error 2:** The 'id' in the bucket policy resource was placed outside the curly braces, it should be inside like this: `{.id}`.
+2. run `tfaa` and and do `tfp` to see no change.
+3. Change some of the content and do `tfp`.
 
+It also didn't incorporate the changes...
 
-11. Both were corrected in the instruction. I am just saying. If so, remake step 10.
 
-![It worked by file download instead](assets/1.5.0/index-download.png)
+### Test 303
+Because we hadn't altered the version.
 
-It worked, but when it comes to downloading the file, it's not launching.
+1. let's update it to '2' in the tfvars file.
+2. run tfp and observe now.
+![No changes](assets/1.6.0/no-changes.png)
 
+> It's still not producing any changes.
+3. Do a `tpa` maybe tfp is lying to us.
 
-#### URL equals Download
+Still...Terraformers...
 
-The mystery lies in the fact that while we referenced the file, we didn't specify its file type to Terraform.
+### Test 404 
+The issue arises because we changed the variable in the tfvars file but didn't reference it in the module block in the our `main.tf` at the root level.
 
+1. Change content_version = 1 to var.content_version.
+2. Run 'tfp' again.
+3. Observe that the change will now take effect.
 
-1. Navigate to the registry: `aws => s3_object` 
-2. find the "content_type" argument reference on the right table of contents (TOC).
-3. In the resource block for `"aws_s3_object" "index.html"`, include `content_type="text/html"`.
-```hcl
-resource "aws_s3_object" "index_html" {
+[Check it out!](https://d2nrp0gajz6owu.cloudfront.net/)
+![Yeah Content Versioning works!](assets/1.6.0/resolved.png)
 
-  content_type = "text/html"
-  }
-```
-4. Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
-```hcl
-resource "aws_s3_object" "error_html" {
+Notice that the updated version is correctly influencing the process.
 
-  content_type = "text/html"
-}
-```
-5. tfp and tfa and check the link again.
 
-||Still downloading the file..Why?|
-|---:|:---|
-||It's a CDN, and It caches values|
-||To ensure it functions properly|
-||You need to clear the cache|
+#### Conclusion
+We can now manage and trigger changes to our website more efficiently. <br>Each content version will be handled like a resource,
 
-### Clear CloudFront Cache
-We will clear the CDN cache in AWS CloudFront by creating an invalidation.
-1. Go to CloudFront.
-2. Click on your distribution.
-3. In the Invalidations pane, select "Create Invalidation."
-4. Add the following:
-```
-/*
-```
+This implementation won't trigger cache clearing in CloudFront. <br>This aspect will be addressed in version 1.7.0 of our project.
 
-![Clear Cash For Real](assets/1.5.0/clear-cache.png)
-
-This will clear the cache of all items. <br>Alternatively, you can specify individual items one by one.
-
-
-
-After it's done, double-check the URL. Still dowloading.... 
-
-
-#### Troubleshooting
-
-I have reservations about the bucket's reliability.
-1. Let's remove it, as it might lead to configuration drift – that's perfectly acceptable.
-2. Create a new index file and request an HTML file with a well-structured header and an appealing design from GPT.
-3. Ensure that the HTML is improved and any errors are corrected.
-4. Simply map out a plan and execute it to upload the files once more.
-5. Now, we need to head over to CloudFront and perform another round of validation...
-
-||It's time to streamline these processes and automate them|
-|---:|:---|
-||Any modifications should trigger automatic updates |
-||This is something we should explore soon|
-
-**Quick update:** We tried it from bucket—It is working;
-
-![cdn served via bucket w/new content](assets/1.5.0/content-from-bucket.png)
-
-
-Check the CloudFront URL => It's working perfectly now! 
-
-![cdn served via cloudfront w/new content](assets/1.5.0/content-from-cloudfront.png)
-
-We've explored various effective strategies to overcome numerous challenges. 
-
-If you've been following along, I must commend your excellent efforts!
-
-
-#### `1.5.0` Considerations
-
-CloudFront can be quite a headache and It truly demands significant time to spin up. 
-- Consider using the `retain_on_delete` flag.
-- We can reference a created policy in IAM instead.
-
-We've addressed data sources, locals and now the next step is to explore further cache invalidation streamline.
-
-
+FYI again, Terraform is not be the optimal tool for this specific task but for the learning.
