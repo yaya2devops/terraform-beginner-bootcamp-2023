@@ -1,0 +1,159 @@
+Hello Terraformer!
+
+These notes are for you! To learn more about me and how I get sh*t done!
+It is also for you to consider patterns that can lead to success. From a success.
+
+---
+
+
+we are going more we have s3 and cloud front setup 
+
+it is servng our website 
+
+but we want it to validate the cahce when the file changes.
+
+
+I want it to be very explicit
+- this is version one of the site
+- this is version two of the site
+
+
+the reason why, when invalid the cache we are clearling all the cache. this is dangerious..
+an expsenvie call.
+
+
+if u are using cloudfront its caching a version to all edge locations around the world..
+
+
+we only want to cache when we want to cahce.
+
+the sotion is setup a content version 
+
+
+- i was trying the cloudfront distru first.. but i relized we have to do it after.
+
+
+create issue:: Setup Content Versioning
+
+- [] only change a file when we set a content version.
+   - Create an issue in your project management tool to set up content versioning.
+     - [ ] Issue: Setup Content Version
+   - Ensure that files are only changed when a specific content version is set.
+
+create branch. 
+
+---
+
+
+### Explicit File Version Push
+go to modules 
+
+
+go to tfvars and add conten_version=1
+add content verson to ur main tf in the module call under source.
+2. go gpt and ask write tf variable for conten_variables that ensures it only uses postivei integer starting at one
+
+3. take that to ur modules variabales.tf.
+we want to trigger those llifecyce in particular cases.
+
+
+4. go to res-storage.tf and go learn 
+
+- look for the rf resource lifecycle.
+
+it allows u when a resource it created, deleted, prevented and whatever.
+
+5. add lifecycle to resources of index.html and error.html
+6. in that ignore the etag inside the lifecycle.
+
+comment both lifectycle and lets observe.
+Lets observe 
+
+tpaa
+
+change and 
+
+tfp to see it observe the chance.
+
+
+uncomment back and see
+
+tpa now it  will ignroe the etag.
+
+
+now we have to the trigger.
+
+the way we gonna do it is we have to make it tight to resource.
+
+
+
+traditiaonlay you would no resource and get no provider by hashicorp
+
+but now we use the "terraform_data" resource
+
+
+now if we change our version it will be managed like a resource.
+
+
+so we can go back to lifcecycle and trigger basaed on that.
+
+replace_triggered_by  = []output etcc..
+
+
+
+- do tfp and see if it actually decide to cahnge it? 
+
+
+it does because tf data never existed but it doesnt look like triggering that content...
+
+
+
+just apply 
+
+and then go do plan
+
+see that there is no chance
+
+
+change ur content and do tfp
+
+
+it wont detect changes??
+
+
+because we didnt change the version.
+
+change ver to 2 in tfvars and do tfp
+
+
+still. not doing anything.
+
+do tpa maybe tfp is lying to us
+
+
+the problem becase we changed the variable inn tfvars but not refereing it in 
+
+module block in root/maintf
+
+
+change contentv_version =1  to var.content_version
+
+
+tfp
+
+
+
+it gonnna take effect!!!! the version is doing good and telling u abuotn it!
+
+
+
+
+good good but!
+
+commit name: only upoad index.htm if a content version has changed.
+pr
+
+destroy infra;
+wait and go tag
+
+this is wont trigger the cache to get cleared in clouudfront. that is something else to work on in 1.7.0
