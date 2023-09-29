@@ -1,524 +1,432 @@
-# Master S3 Static Hosting
+# Implementing CDN Via Code
 
-Welcome to this `1.4.0` where I'll elighten you on how to host a static website on S3 using your fingers and Terraform.
+Hello Terraformers, Here we'll be implementing a CDN to our s3 bucket website hosting using CloudFront to enhance website performance, speed and security via Terraform.
 
-## Background
-We previously performed the setup using the AWS Console.
+This will be next hooked up to our Terratowns.
 
+### CloudFront As Code
 
-### Host Your First HTTP Server
-Let me get you going from your dev env.
-1. Create `public` directory.
-2. Add an index.html
-3. add some content of your wish.
-4. Install the `http-server` package globally on your system. 
-```sh
-$ npm install http-server -g
+1. [Ask GPT](https://chat.openai.com/share/9aff3158-acfc-49a2-b880-4a9642ac58ca); 
 ```
-This will allow you to run a simple HTTP server to serve your web app's files.
-
-5. cd to `/public`.
-6. Start the HTTP server using the following command:
+Give me aws cloudfront serving static website hosting for an s3 bucket using terraform.
 ```
-$ http-server
+So it is giving us something with the bucket (we did that), <br>And the policy yep good stuff.
+
+#### Origin Configuration
+- For the origin config, it is giving us origin access identity.
+- New way of doing it which is origin acces control.
+
+GPT is not aware of this, as it was introduced only last year.
+- it can  indeed write much terraform.
+- But it may not be accurate but junk.
+
+
+
+### Find CloudFront In Registry
+
+1. Go to the Terraform Registry 
+2. Go to providers and click AWS
+3. top right click documentation
+4. In search find the AWS CloudFront Distribution 
+5. search the resource: `aws_cloudfront_distribution`.
+
+We also see data block, we may [proceed to that]() later.
+
+6. From the resource take [the block from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#example-usage) instead of GPT.
+
+We have an example of an S3 origin configuration for CloudFront. <br>It looks to be well-structured. 
+
+
+## Resource Structuring
+We thought to start with the resources to ensure they are grouped together alphabetically for your cute eyes.
+
+1. Create `resource-cdn.tf`.
+2. Create `resource-storage.tf`.
+3. Bring all storage components and paste them into `resources-storage.tf`.
+```hcl
+resource "aws_s3_bucket" "website_bucket" {
+  # etc
+}
+
+resource "aws_s3_bucket_website_configuration" "website_configuration" {
+    # etc
+}
+
+resource "aws_s3_object" "index_html" {
+    # etc
+}
+
+resource "aws_s3_object" "error_html" {
+    # etc
+}
+
+```
+4. Grab the relevant code [from the registry](#find-cloudfront-in-registry) for `res-cdn.tf`, but not all of it.
+5. Remove the alias for custom domain.
+```hcl
+  aliases = ["mysite.example.com", "yoursite.example.com"]
+```
+6. Exclude query string passing is ok
+```
+      query_string = false
+```
+7. Eliminate cookie passing.
+```hcl
+      cookies {
+        forward = "none"
+      }
+    }
+```
+8. Retain the "allow all" policy.
+```hcl
+    viewer_protocol_policy = "allow-all"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+  }
+```
+9. Modify caching behavior to keep only the default settings.
+```
+  default_cache_behavior {
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = local.s3_origin_id }
+```
+Meaning, remove both `ordered_cache_behavior`.
+
+10. Specify optional geographical restrictions - Change the type to "none" and remove.
+```hcl
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+      locations        = []
+    }
+  }
+```
+> We could specify for specific countries.
+11. Tag resources with a UUID, as done previously.
+```hcl
+  tags = {
+    UserUuid = var.user_uuid
+  }
+```
+12. Specify HTTPS certification for free. 
+```hcl
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
+```
+Note that this won't work alone because it expects configuration within the `origin{}` block.
+```hcl
+  origin {
+    domain_name              = aws_s3_bucket.website_bucket.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_id                = local.s3_origin_id
+  }
 ```
 
-![HTTP Server Hosted](assets/1.4.0/clickops/http-server.png)
+Lets do it.
 
-Now, we aim to take this to s3.
+### Specifying Required Variables `resource-cdn.tf`
+We will now apply a use case for **locals.** The block serves as a method for passing local variables.
 
-### Use S3 For That Instead
+Note that these in the block from registry require definitions.  
+```
+access control id=origin_access_control 
 
-#### STEP 1 : Create an S3 Bucket for Static Website Hosting
 
-1. Log in to your AWS Console.
-2. Navigate to the S3 service.
-3. Click on "Create bucket."
-4. Choose a unique name for your bucket (e.g., "ya-ya") and select a region.
-5. Leave the default settings for the rest of the options and click "Create bucket."
+origin id= local.
+```
+While we can pass variables as environment variables, this situation presents a good example of when to use locals.
 
-#### Step 2: Upload Your Static Website Files
 
-1. In the S3 bucket you just created, navigate to the "Upload" button.
-2. Select the "index.html" file from your local system and upload it to the S3 bucket.
+- Define `origin_id` as "local" to pass local variables, add local block;
+```hcl
+local { }
+```
+- It is locals. just for your awarness.
+```hcl
+locals {
+  s3_origin_id = "MyS3Origin"
+}
+```
 
-I did it via the CLI.
+### Origin Access Control Config `resource-cdn.tf`
 
-![Upload From CLI](assets/1.4.0/clickops/index-to-bucket.png)
 
-I suggest you go do it too.
+1. Utilize the `aws_cloudfront_origin_access_control` block [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control#example-usage).
+```hcl
+resource "aws_cloudfront_origin_access_control" "example" {
+  name                              = "example"
+  description                       = "Example Policy"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+```
+2. Customize the resource name and use interpolation for the bucket name.
+```hcl
+  name   = "OAC ${var.bucket_name}"
+```
+3. Add a description.
+```hcl
+  description  = "Origin Access Controls for Static Website Hosting ${var.bucket_name}"
+```
+4. Leave network configurations they are correctly set.
+```
+  signing_behavior  = "always"
+  signing_protocol  = "sigv4"
+```
+That should be set, whats left is bucket policy ony..
 
-#### Step 3: Configure Your S3 Bucket for Static Website Hosting
+5. change the name of the block to `default`.
 
-1. In your S3 bucket, click on the "Properties" tab.
-2. Scroll down to the "Static website hosting" card and click "Edit."
-3. Select the option for "Use this bucket to host a website."
-4. Specify "index.html" as the Index document.
-5. Optionally, you can specify an error document (e.g., "error.html").
-![Files Specify](assets/1.4.0/clickops/files-clickops.png)
-6. Click "Save changes."
-7. Check your app on the web;
+### Adding the Bucket Policy Block `resource-storage.tf`
+I spent a considerable amount of time obtaining that policy.<br> Should I give it to you? 
 
-![Issue CDN required](assets/1.4.0/clickops/issue.png)
+Let's help you create it yourself.
 
-#### Step 4: Create an AWS CloudFront Distribution
+1. Use the `aws_s3_bucket_policy` resource [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy#example-usage).
 
-We want to use AWS CloudFront as a Content CDN to distribute our website
+```hcl
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.example.id
+  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+}
+```
+2. Customize the name to "bucket_policy".
+```hcl
+resource "aws_s3_bucket_policy" "bucket_policy"
+```
+3. Reference the S3 bucket using `website_bucket.bucket`.
+```
+  bucket = aws_s3_bucket.website_bucket.bucket
+```
+||If we have only one of something, we can just name it default. |
+|---:|:---|
+||We can [always revisit—step5](#origin-access-control-config-resource-cdntf) and make them all 'default' later|
 
-1. Go to the AWS CloudFront service.
-2. Click on `Create Distribution.`
-3. Choose `Web` as the distribution type.
-4. In the `Origin Settings,` select your S3 bucket as the origin.
-5. Create the distribution.
-
-**Note: To restrict access to your S3 bucket through CloudFront, you can must use an origin access identity and an S3 bucket policy like the one below:**
-
+Instead of this we will code our policy into it.
+```
+data.aws_iam_policy_document.allow_access_from_another_account.json
+```
+4. Define the policy as a JSON-encoded string.
+```hcl
+policy =jsonencode()
+```
+5. Go to the [cloudfront origin access control](https://aws.amazon.com/fr/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/) and bring the policy to here:
 ```json
 {
     "Version": "2012-10-17",
-    "Id": "PolicyForCloudFrontPrivateContent",
     "Statement": [
         {
-            "Sid": "AllowCloudFrontServicePrincipal",
+            "Sid": "AllowCloudFrontServicePrincipalReadOnly",
             "Effect": "Allow",
             "Principal": {
                 "Service": "cloudfront.amazonaws.com"
             },
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::<bucket-name>/*",
+            "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*",
             "Condition": {
                 "StringEquals": {
-                    "AWS:SourceArn": "arn:aws:cloudfront::<aws-id>:distribution/your-distribution-id"
+                    "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
                 }
             }
+        },
+        {
+            "Sid": "AllowLegacyOAIReadOnly",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
         }
     ]
 }
 ```
 
-We needed to reconfigure the distribution process due to our failure to define a clear policy. 
-
-6. Check your new distrubution url and see the site.
-
-![CloudFront Clickops](assets/1.4.0/clickops/second-distru-worked.png)
+In order to include this we have to make some changes..
+ 
+6. Change `:` to `=` for the lines of policy
 
 
-Some takeaways from this;
-- distru takes too long to create
-- distrus takes too long to delete
+Thats more of HCL; it serves as the foundational syntax underpinning Terraform, shaping Terraform into what it is.
 
-We also noticed that we could configure that without taking too long<br>(Delete not required)..
-
-I mean, guys, we all know that was planned. I just like it.
-
-
-## Code That in Terraform
-
-The configuration provided above will be completely transformed into Terraform code.
-1. Ask GPT to write u a tf for static website hosting for an s3 bucket. <br>
-I mean this looks like something.
-2. In your `main.tf` module, grap something from that and add it as a resource.
-
-See if it actally works. 
-No it won't.
-I'll tel you why.
-
-3. Run `tf init`. Error.
-4. Change the bucket from `bucket = "my-static-website-bucket"` to `aws_s3_bucket.website_bucket.bucket`.
-
-5. Run `tf init` to initialize the Terraform configuration again which should work.
-6. Execute `tf plan` to review and see if it can do it.
-
-|⚠️|Argument is deprecated|
-|---:|:---|
-|❓ |why gpt gave is the wrong thing?|
-|✅ |The aws provider for 5.0 doesnt exist in gpt.|
-
-GPT is not doing it to nowdays. 
-
-I personally don't find terraform changes a lot. <br>
-But the provider change year in a year.
-
-### Back to Home
-
-**We can't rely on GPT** 
-1. Go to TF Registry
-2. AWS Provider
-3. Click on AWS and see the list.
-4. AWS_S3_Bucket_Website_Configuration
-5. [Get it from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration) instead.
-
+7. We only require one statement; specifically, take the second block starting with 'sid'."
 ```hcl
-resource "aws_s3_bucket_website_configuration" "example" {
-  bucket = aws_s3_bucket.example.id
+        {
+            "Sid" = "AllowLegacyOAIReadOnly",
+            "Effect" = "Allow",
+            "Principal" = {
+                "AWS" = "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"
+            },
+            "Action" = "s3:GetObject",
+            "Resource" = "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+        }
+    
+```
 
-  index_document {
-    suffix = "index.html"
-  }
+In the initial statement, we are indeed interested in 'sid,' 'effect,' 'version,' 'principal,' and 'action'..
 
-  error_document {
-    key = "error.html"
-  }
+However, our target for modification is the bucket.
+```
+"Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+```
+8. Incorporate interpolations using `${aws_s3_bucket.website_bucket.id}`.
 
-  routing_rule {
-    condition {
-      key_prefix_equals = "docs/"
-    }
-    redirect {
-      replace_key_prefix_with = "documents/"
-    }
-  }
+We have conditions that require us to narrow it down to either 'distru' or 'acc.' It's requesting an account ID.
+
+This is an effective way to use data.
+
+#### Data Block
+
+
+1. When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.
+2. In our case, we aim to utilize something for `aws_id` within the policy.
+3. For this purpose, we can employ `aws_caller_identity.` 
+
+We've previously used it to validate our account in the CLI. [Check it out](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage).
+```hcl
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+
+output "caller_arn" {
+  value = data.aws_caller_identity.current.arn
+}
+
+output "caller_user" {
+  value = data.aws_caller_identity.current.user_id
 }
 ```
-6. Change the example name to `website_configuration`
-7. Reference to our bucket from the module;
+Consequently, we can easily retrieve the account ID.
+
+4. Add the following to the main.tf in ur module.
+```
+data "aws_caller_identity" "current" {} 
+```
+Now, you can reference this data wherever you need it; that's all it takes.
+
+5. We can access the value, which is `data.aws_caller_identity.account_id`.
+6. In our data policy, incorporate `data.aws_caller_identity.account_id` into the interpolation.
+```
+"arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}
+```
+
+7. Add the interpolation using ${}.
+8. avigate to the CloudFront distribution registry link, find the reference, and identify the ID. 
+9. Include the variable for the 'distrubution' in the interpolation as well.
+
+```
+:distribution/${aws_cloudfront_distribution.s3_distribution.id}"
+```
+We could have opted for using an ARN..This will do the exact job with less code..
 ```hcl
-resource "aws_s3_bucket_website_configuration" "website_configuration" 
-
-{
-  bucket = aws_s3_bucket.website_bucket.bucket
-}
+"AWS:SourceArn": data.aws_caller_identity.current.arn
 ```
 
-8. Try planning and it should now work;
-9. tf apply to have the website hosting.
+But. Our preference was to utilize the data source! And learn.
 
-> Many people mention GPT, but it's not the solution for everything, my friend.
-
-
-### Verify From AWS
-
-1. Go to S3.
-2. Verify the bucket.
-3. Navigate to the properties section.
-4. Scroll down down down.
-5. You'll find the url.
-
-This is good. <br>But it wont work.
+10. Test `tf init` and `tfp`
 
 
-#### Website Endpoint
-So the site is stuck because we have to provide the endpoint to terraform in advance.
+**Error 1:** We mistakenly used `local` instead of `locals.`
 
-1. Retrieve the website endpoint URL from AWS S3 properties.
-2. Add output in Terraform using `website_endpoint`, you are pro now.
-```hcl
-output "website_endpoint" 
-{
-  value = aws_s3_bucket_website_configuration.website_configuration.website_endpoint
-}
-```
-
-3. Add a description, it is nice.
-```hcl
-  description = "The endpoint URL for the AWS S3 bucket website"
-```
-
-We also learned that we have to call the output in top level as well.
-
-4. Do the same for top level and reference our output.
-```hcl
-output "s3_website_endpoint" {
-  description = "S3 Static Website hosting endpoint"
-  value = module.terrahouse_aws.website_endpoint
-}
-```
-5. in `terraform.tfvars` assign the actual url.
-```
-s3_website_endpoint="<here>"
-```
-
-Configuration doing good. 
-
-But we have to upload the files.<br>
-Because still it didnt work.
+**Error 2:** The 'id' in the bucket policy resource was placed outside the curly braces, it should be inside like this: `{.id}`.
 
 
-## Files Content Touchpoint
+11. Both were corrected in the instruction. I am just saying. If so, remake step 10.
 
-Our goal is to configure terraform so we can upload files as code.
+![It worked by file download instead](assets/1.5.0/index-download.png)
 
-We will create the index and error files and push them with a terraform function. 
-
-But.
-
-|✋|This is an action you should avoid with Terraform|
-|---:|:---|
-| ✔|Terraform is primarily designed for managing the state of infrastructure|
-|❌|Not individual files|
-
-Even though Terraform has the capability..
-
-We will also discover the existence of provisioners, which allow you to execute commands either remotely or locally.
-- Terraform discourages such actions. 
-- If you have files, it's advisable to handle data management separately. 
-We will use tf for all three but isnt the best case in production.
+It worked, but when it comes to downloading the file, it's not launching.
 
 
-### Using `aws_s3_object`
-1. Go to the AWS registry and take `aws_s3_object` (not `aws_s3_bucket_object`).
-2. Specify the bucket, key, and source for your `index.html`.
+#### URL equals Download
+
+The mystery lies in the fact that while we referenced the file, we didn't specify its file type to Terraform.
+
+
+1. Navigate to the registry: `aws => s3_object` 
+2. find the "content_type" argument reference on the right table of contents (TOC).
+3. In the resource block for `"aws_s3_object" "index.html"`, include `content_type="text/html"`.
 ```hcl
 resource "aws_s3_object" "index_html" {
-  bucket = aws_s3_bucket.website_bucket.bucket
-  key    = "index.html"
-  source = var.index_html_filepath
 
-  # Ignore this for now
-  #etag = filemd5(var.index_html_filepath)
-}
+  content_type = "text/html"
+  }
 ```
-3. Repeat for `error.html` configuration.
+4. Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
 ```hcl
 resource "aws_s3_object" "error_html" {
-  bucket = aws_s3_bucket.website_bucket.bucket
-  key    = "error.html"
-  source = var.error_html_filepath
 
-  # Ignore this for now
-  #etag = filemd5(var.index_html_filepath)}
+  content_type = "text/html"
+}
 ```
-### Create Those Files and Manage with `path`
+5. tfp and tfa and check the link again.
 
-Let's explore whether Terraform console can be utilized interactively for troubleshooting purposes.
-
-1. Lets pre test path.root and see;
-> In the best-case scenario, path.module should always make sense..
-2. Create a directory and call it `public`.
-3. Create index.html and add it to `public`
-4. Create error.html and add it to `public`
-5. Remove etag from the section for now (data management magic)
-```
-  #etag = filemd5(var.index_html_filepath)
-```
-6. You have to add these to your root main module block alone the source.
-```
-  index_html_filepath = var.index_html_filepath
-  error_html_filepath = var.error_html_filepath
-```
-It will never work otherwise.
-
-7. Plan and apply your content.
-8. Double check files in S3. 
-
-Yes!
-
-![Files to S3](assets/1.4.0/from-tf.png)
-
-Two considerations come up.
-- A: You dont want to hardcode your path values.
-- B: If I make changes to the file does it work.
-#### A: Avoid Your Real Path
-You should avoid hardcoding values like this to ensure the module's portability.
-
-|💡|One approach we can employ involves the use of interpolation|
+||Still downloading the file..Why?|
 |---:|:---|
+||It's a CDN, and It caches values|
+||To ensure it functions properly|
+||You need to clear the cache|
 
-
-1. Instead of the actual path assign th path.root we spoke about.
+### Clear CloudFront Cache
+We will clear the CDN cache in AWS CloudFront by creating an invalidation.
+1. Go to CloudFront.
+2. Click on your distribution.
+3. In the Invalidations pane, select "Create Invalidation."
+4. Add the following:
 ```
-"${path.root}public/index.html"
+/*
 ```
 
-2. do the same for our erroring file.
+![Clear Cash For Real](assets/1.5.0/clear-cache.png)
 
-```
-"${path.root}public/error.html"
-```
+This will clear the cache of all items. <br>Alternatively, you can specify individual items one by one.
 
-> Make sure you dont do it for main.tf (our mistake)
 
-3. Plan it and apply it, it should now give a file!
 
-#### B: Detect File Changes
+After it's done, double-check the URL. Still dowloading.... 
 
-So this is cool. With what we reached we can take files to the s3 but does it capture the data inside?
 
-- Be aware that Terraform checks file paths but not their content.
-- Use an Etag to track content changes.
-- Add an Etag with `filemd5` for accurate content tracking.
+#### Troubleshooting
 
-1. Change the index.html file from what it was to something else.
-2. Double change the error.html
-3. Run tf plan and tf apply and go to the console.
+I have reservations about the bucket's reliability.
+1. Let's remove it, as it might lead to configuration drift – that's perfectly acceptable.
+2. Create a new index file and request an HTML file with a well-structured header and an appealing design from GPT.
+3. Ensure that the HTML is improved and any errors are corrected.
+4. Simply map out a plan and execute it to upload the files once more.
+5. Now, we need to head over to CloudFront and perform another round of validation...
 
-|👀|No File Changes!|
+||It's time to streamline these processes and automate them|
 |---:|:---|
-|🤔|BUT WE CHANGED our files!!|
-|🪄|The way this works is that it has a source but doesn't validate the data|
+||Any modifications should trigger automatic updates |
+||This is something we should explore soon|
+
+**Quick update:** We tried it from bucket—It is working;
+
+![cdn served via bucket w/new content](assets/1.5.0/content-from-bucket.png)
 
 
-Meaning Terraform state examines the path's value but not the content of the file within that path.
+Check the CloudFront URL => It's working perfectly now! 
 
-You can identify file changes by referring to the mentioned 'e tag' we removed.
-If the content changes, the etag will also change.
+![cdn served via cloudfront w/new content](assets/1.5.0/content-from-cloudfront.png)
 
-4. Add the required etag block with the 'filemd5' function. 
+We've explored various effective strategies to overcome numerous challenges. 
 
-The function creates a hash based on the content. 
-
-Good opportunity for you to start exploring about [tf functions.](https://developer.hashicorp.com/terraform/language/functions)
-
-E.g. here is a built in terraform function to [check the existance](https://developer.hashicorp.com/terraform/language/functions/fileexists) of a file.
-```tf
-condition = fileexists(var.error_html_filepath)
-```
-
-5. Now, simply specify the path to the etag in the same way you did with the source
-6. tf plan and tf apply and see.
-
-![Yay Files Data Captured](assets/1.4.0/etag-trigger.png)
-
-The file will be correctly recognized.
+If you've been following along, I must commend your excellent efforts!
 
 
-### Terraform Vars Instead of `path.root`
+#### `1.5.0` Considerations
 
-We have the `path.root` approach, but it's better to use a Terraform variable. 
+CloudFront can be quite a headache and It truly demands significant time to spin up. 
+- Consider using the `retain_on_delete` flag.
+- We can reference a created policy in IAM instead.
 
-This allows us to provide flexibility to the module, enabling anyone to change the address. e.g. if you want the `index.html` file to be stored elsewhere, you can do this effortlessly.
-
-Let's set up a variable for that purpose.
-
-1. Add the variables for index file at the module level within the `variables` block;
-```hcl
-variable "index_html_filepath" {
-  description = "The file path for index.html"
-  type        = string
-
-  validation {
-    condition     = fileexists(var.index_html_filepath)
-    error_message = "The provided path for index.html does not exist."
-  }
-}
-```
-2. Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.<br>
-(include the entire path; it's perfectly fine).
-```sh
-index_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
-```
-
-3. Add the vars for the files to the root level 
-```hcl
-variable "index_html_filepath" {
-  type = string
-}
-```
-
-**Duplicate the resource block to accommodate the error source as well.**
+We've addressed data sources, locals and now the next step is to explore further cache invalidation streamline.
 
 
-1. Add the error var in the module level
-```hcl
-variable "error_html_filepath" {
-  description = "The file path for error.html"
-  type        = string
-
-  validation {
-    condition     = fileexists(var.error_html_filepath)
-    error_message = "The provided path for error.html does not exist."
-  }
-}
-```
-
-2. Add the var defined in the root level;
-```hcl
-variable "error_html_filepath" {
-  type = string
-}
-```
-
-3. Add the error file path in `terraform.tfvars` and `terraform.tfvars.sample`;
-```
-error_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
-```
-
-
-4. Run tf plan and  see.
-
-We're encountering an error because we need to pass the variables to the root main.tf for both index and error.
-
-5. Do nothing but Run tf plan and see again.
-
-Now it works..after just reapplying. 
-
-![Works At the end](assets/1.4.0/tpa-final.png)
-
-You should remain confident.<br>
-It may give false signals due to potential latency issues or other factors very much unknown.
-
-
-#### Bonus One Captured
-We played more with tags briefly; I'll write that down for you.
-
-1. To tag old stuff run; learn [where to get the sha](https://github.com/yaya2devops/aws-cloud-project-bootcamp/blob/main/journal/resources/tagging.md).
-```
-git tag <tag_name> <commit_sha>
-```
-
-2. To delete Local and Remote Tags e.g. 1.1.0
-
-```
-git push --delete origin 1.1.0
-```
-
-3. Correct your tag
-```
-git tag 1.1.0 <correct_commit_sha>
-```
-4. Push ur corrected tag
-```
-git push origin 1.1.0
-```
-#### Bonus Two Captured
-
-Also we did this again so I must remember you;<br>
-You can hold on your work go somewhere else (diff branch, tag) and get back.
-
-1. To temporarily save changes that you're working on and return to a clean state, you can use Git stash.
-```
-git stash save "Your stash message"
-```
-
-2. When you back just apply your saved changes back
-```
-git stash apply
-```
-
-#### Bonus Three Captured
-
-For more alias and fun stuff to write your CLI;
-
-1. Include the following alias along `tf` for `terraform`;
-
-```
-alias tfa='terraform apply'
-alias tfaa='terraform apply --auto-approve'
-alias tfd='terraform destroy'
-alias tfda='terraform destroy --auto-approve'
-alias tfi='terraform init'
-alias tfim='terraform import'
-alias tfli='terraform login'
-alias tflo='terraform logout'
-alias tfo='terraform output'
-alias tfp='terraform plan'
-alias tfpr='terraform plan -refresh-only'
-```
-
-2. Take [my updated script](bin/tf-alias) and update yours🫵.
-
-3. Test it, do a `tfp` instead of `terraform plan`
-
-![tfp alias hm](assets/1.4.0/tfp-hh.png)
-
-
-Some campers assets for the `1.4.0` period;
-- [Visual on Common tf files](https://cdn.discordapp.com/attachments/1138488134003335199/1156340652829835284/Main.tf_2.png?ex=6515ef27&is=65149da7&hm=ccc1bbea386d9c88bf438dba5960147f5110f209e40052698465bf0ccf9cb4c0&)
-- [tf cloud, workspace, project?](https://cdn.discordapp.com/attachments/1138488134003335199/1156451578010685530/terraform_cloud.png?ex=6515adb6&is=65145c36&hm=c04b78eacccec15d85349061f51db12e7fe3af1edca24fed78fa96eef8662c1e&)
-
-#### Concluding
-A brief conclusion and what to expect next;
-We can see the content, it changes on apply we still cant access it;
-- Discuss the need for a bucket policy.
-- Explain the importance of unblocking from the internet.
-The only way we want to access this is using CloudFront for safer S3 access.

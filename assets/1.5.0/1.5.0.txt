@@ -1,0 +1,306 @@
+### CDN 
+
+We are going to implemet the cdn in front of it to be able to see the website which will be next hooked up to terratowns.
+
+
+ask gpt
+
+
+aws cloudfront serving static website hosting for an s3 bucket using terraform.
+
+it gave us already the bucket (we did that)
+
+
+the policy res ye  will be usng this. like we did with clickops.
+
+
+now for the origin config, it is giving us origin access identity.
+
+
+aws have new way of doing it which is origin acces controle... gpt will never about this.. this comes last year..
+
+
+- ye it can write much terraform
+- not accurate cold be junk
+
+go to tf registry and get cloudfront distru
+go aws provider-> aws-> aws_cloudfront_disrtubution
+
+it show up data (not now)
+ we went data sources..
+
+go resources expand; and do it instead.
+
+we have an eample of s3 origin to cloudfront.
+
+Looks decent to me 
+
+
+copy it  and hold on.
+
+----
+
+ create an issue: cdn  Implementation (contnet delivery network)
+
+- [] setup cloudfront distru
+- [] cloudfront origin access control setup
+- [] setup bucket policu
+
+
+### Creating an Issue: CDN Implementation
+
+- [ ] Set up CloudFront Distribution.
+- [ ] Configure CloudFront Origin Access Control.
+- [ ] Set up Bucket Policy.
+
+---branch it and gitpod it
+
+back the hold. (our main is getting much cdn is long)
+
+
+1. create resource-cdn.tf	
+2. create resource-storage.tf
+3. brin all storage stuff and paste it to resources-storage.tf
+4. grap the code in the docs from cdn and put it in res-cdn.Tf not all of it.
+5. the alias for custom domain we dont need
+6. we dont want to pass the query string alne
+7. we are not passing any cookies
+8. allow all policy is good
+9. now all this caching behavoior
+we dont need all this behavior just the default.
+
+10. specify some geo restrictioons
+change the type to none	and delete it, but we can specify if we want some coutnry only
+
+
+
+11. tag specify the uuid, like we did for before.
+
+12 specify the certification https for free.
+
+this is wont work alone because it expects in the origin {} 
+
+### Specify required vars
+ 
+
+access control id=origin_access_control 
+
+and 
+origin id= local.
+
+what local is is way to pass local variables.. we can pass it as env var but this is a good examplle to use  local..
+
+
+beore the resource in cdn.tf
+
+add 
+
+local {
+}
+
+now for the origin_access_control
+
+go registry and write 
+
+Aws_cloud_front_origin_access_control
+
+take the block to ur code;
+0. for resource name change examplle to default
+1.  change the name and do interperloation to inject bucket name
+
+2. do decription
+3. the rest network man hm idk
+that shoulld be set, whats left is bucket policy ony..
+
+### Add the bucket policy block
+
+
+
+registry aws_s3_bucket_policy
+
+i realy took much time to get that policy i jst give it to u... 
+
+
+or lets create it
+1. take the sampe sage from the registry
+2 change the name from allow.. to "bucket_policy"
+3. reference our bucket to website_bucket.bucket
+
+
+> if we have one of something we can name everything default.?!..wow	
+
+we may go back and make them all default later...but anway that the idea..
+
+
+
+coming back to our block, now  we have to specify our policy.
+
+for this we can literally
+
+policy =jsonencode(
+{write json over here lol convinient}
+)
+
+4. take the policy from aws cloudfront introduces origin access control oac blog policy in there..
+
+
+
+ok we can make exactly json here but close;
+ 
+5. change : to = for alll
+
+thats how hcl works, its the underline syntax that is use by terraform. its what makes terraform.
+
+
+ we only need on statement take the seocnd block starts wih sid
+
+
+for the first statement, we want sid, effect, version, principal, acion.
+
+
+what we want to change is the bucket. 
+
+6. add interpolations ${aws_s3_bucket.website_bucket.id}
+
+
+7. we have conditions, we need to restrict this to specify distru or acc.
+|it is asknig for an account id|
+
+
+this is a good way to use data
+
+when u go to aws provider and registry type data source u'lll have all listed
+
+
+we want to use something for aws_id in the policy 
+
+we can use the aws_caller-identity... we previously used that as a way to vlaidate our account in the cli. :)
+
+
+
+
+so using that we can grap the acc id.
+
+8. add the data resource to main module
+
+data "aws_caller_identity" "current" {} 
+
+now we can reference this wherever, this is all it takes.
+
+we can now do the value which is the data.aws_caller_identity.account_id.
+
+
+9. in our data policy,  add into the interpolation the data.aws_caller_identity.account_id.
+
+
+
+whats left now is the distruname..
+
+add trh interpolation 
+
+${}
+
+go to cloudfront distu registy link => reference  see the id add the var for the dsitru in interpolation as awell
+
+
+> we could use done arn  but we wanted to use the data source 	
+
+
+
+all good tf init and plan
+
+
+errored1: we did local instead of locals
+
+another error 2: we had the id in the bucket policy res outside {}.id , should be {.id}
+
+
+---
+for the data.aws_imag..allow_access_from_another_account.json
+
+if we have our polcy on aws we can referece it.
+(we create it in iam)
+
+
+it did work but => in downloading the file. its not launching.
+
+
+the mistery is, we referenced the file, we didnt say to tf what type of file ur dealing with.
+
+
+go registry=> aws => s3_object => content type in argument reference on the right toc
+
+
+to resource  "aws_s3_object" "index.html"
+
+add content_type="text/html"
+
+the same to: 
+to resource  "aws_s3_object" "error.html"
+
+
+
+---> still downloading the file.......Why
+
+:lamp: its cdn it caches values. for it to work u have to clear cache.
+
+
+go clloudfront=> clcik ur dstru=> invalidations pane=> create invaidation
+
+add this
+
+/* 
+
+
+will clear the cache of all.. u can also specify one bye one..
+
+
+when its done double check the url.
+
+
+still dowloading.... 
+
+
+i dont trust the bucket.
+
+delete it. it will cause config drift otaly fine
+
+use a new index file ask for htmll file wih header and pretty from gpt.
+update beter html and error.
+
+jut plan and apply to upload the files again.
+
+
+now we have to go to clloufront and do another validation.......;
+
+I mean we gotta automate this stuff. when we cahnge something it changes. (something we may look for soon)
+
+
+CHECK THE URL=> IT DOESSSSSSSSSS WORK NOW!!!
+
+
+
+### Cloudfront is a headech
+
+it realy takes a lot to spin up so we may consider
+
+the 	retain_on_delete flag
+
+
+lets destroy to test this
+
+
+commit-create cdn and serve s3 from cdn
+
+
+pr
+
+tag and check graph (plz download extension)
+
+
+#### recap next steps
+
+we did data sources, local
+
+next is to look for invalidating the cache when we want actually to invlaidte	
+
