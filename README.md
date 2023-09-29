@@ -9,7 +9,7 @@ We previously performed the setup using the AWS Console.
 ### Host Your First HTTP Server
 Let me get you going from your dev env.
 1. Create `public` directory.
-2. Add an index.html
+2. Add an `index.html`
 3. add some content of your wish.
 4. Install the `http-server` package globally on your system. 
 ```sh
@@ -104,8 +104,8 @@ We needed to reconfigure the distribution process due to our failure to define a
 
 
 Some takeaways from this;
-- distru takes too long to create
-- distrus takes too long to delete
+- Distru takes too long to create
+- Distru takes too long to delete
 
 We also noticed that we could configure that without taking too long<br>(Delete not required)..
 
@@ -249,10 +249,12 @@ But.
 
 Even though Terraform has the capability..
 
-We will also discover the existence of provisioners, which allow you to execute commands either remotely or locally.
 - Terraform discourages such actions. 
 - If you have files, it's advisable to handle data management separately. 
+
 We will use tf for all three but isnt the best case in production.
+
+We will also discover the existence of provisioners, which allow you to execute commands either remotely or locally.
 
 
 ### Using `aws_s3_object`
@@ -285,9 +287,9 @@ Let's explore whether Terraform console can be utilized interactively for troubl
 1. Lets pre test path.root and see;
 > In the best-case scenario, path.module should always make sense..
 2. Create a directory and call it `public`.
-3. Create index.html and add it to `public`
-4. Create error.html and add it to `public`
-5. Remove etag from the section for now (data management magic)
+3. Create `index.html` and add it to `public`
+4. Create `error.html` and add it to `public`
+5. Remove `etag` from the section for now (data management magic)
 ```
   #etag = filemd5(var.index_html_filepath)
 ```

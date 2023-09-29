@@ -1,0 +1,322 @@
+
+S3 Static website hosting 
+
+- configure bucket for s3 static webite hosting
+- upload an index.html via the console
+- upload an error.html via the console
+- upload an index.html via the tf
+- upload an error.html via the tf
+- update our output for static website hosting url
+
+---andrew docs
+
+
+## Considerations when using ChatGPT to write Terraform
+
+LLMs such as ChatGPT may not be trained on the latest documentation or information about Terraform.
+
+It may likely produce older examples that could be deprecated. Often affecting providers.
+
+## Working with Files in Terraform
+
+
+### Fileexists function
+
+This is a built in terraform function to check the existance of a file.
+
+```tf
+condition = fileexists(var.error_html_filepath)
+```
+
+https://developer.hashicorp.com/terraform/language/functions/fileexists
+
+### Filemd5
+
+https://developer.hashicorp.com/terraform/language/functions/filemd5
+
+### Path Variable
+
+In terraform there is a special variable called `path` that allows us to reference local paths:
+- path.module = get the path for the current module
+- path.root = get the path for the root module
+[Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+
+resource "aws_s3_object" "index_html" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+}
+
+---
+
+### S3 Static Hosting ClickOps
+ask gpt to write u a tf for static website hosting  for an s3 bucket
+...
+
+i mean this looks like something 
+
+lets grap something of this and see if it actally works.
+
+No, and i'll tell u why. but it helps.
+
+
+1. in main in ur mod add it as a new resource
+
+change the bucket 
+
+from bucket = "my-static-website-bucket" to ours aws_s3_bucket.website_bucket.bucket.
+
+
+2. try tf init  (ok)
+
+3. tf plan and see if it can do it
+
+
+--argument is deprecated---
+
+why gpt gave is the wrong thing?
+
+the aws provider for 5.0 doesnt exist in gpt.
+
+
+
+i dont find tf changes a lot but the provider change year in a year.
+
+so we cant relay on gpt => go tf registry => aws provider )> aws => aws_s3_bucket_website_configuration
+
+and get it from there instead.
+
+
+replace with this:
+
+change the example name to website_configuration
+
+and reference the bucket likek above and we dont need any routing rules.
+
+
+tf plan and see its working.!!!
+
+
+tf apply !
+
+
+a lot of people saying oh gpt gpt but not for everything bro.
+
+
+go s3 verify the bucket => properties and go below below
+
+take the url and output it in terraform. in nested module. 
+
+website_endpoint and give it th evalue.
+
+add a descrption to tis
+
+
+do the same for top level and refernce it also
+
+
+tfvars
+
+s3_website_endpoint=""
+
+
+## we want to upload the file
+
+that a reasonw hy its not working..
+
+upload an index.html file to, an s3 bucket.
+
+this is an acton that u dont want to do with ur tf because tf is about managint the staet of infra and this is a file..
+
+even if it can do it and we are doing it.. we might not want to us  to manage it..
+
+
+we gonna learn that there are things called provisioners and u can remotly or locally execute comamnds.
+
+where tf dont want u to do that.
+
+
+if u have file, u shold have data management for that..
+
+
+we will use tf for all three but its not the case for prod.
+
+
+1. go registry and use aws_s3_objet and not the aws_s3_bucket_object
+- specify the bucket
+- the key
+- the source
+
+do the same for website configuration.
+
+
+> working with files using the path
+path.cmd
+
+
+lets see if we can use teraform console is an interactive way to troubleshoot stuff
+
+include path.root and see
+
+path.module anyway it should make sense in better case..	
+
+
+2. craete public dir and add the pages
+
+3. drag the file to cli to get the absolute path
+
+4. take e tag for now in the s3 ojbect res will talk later
+
+
+
+
+looks good! plan
+
+now apply
+
+
+go to aws and see if there is a file in the bucket. and ye it is..
+
+
+### now the thing
+
+u really dont want to hardcode values like this to help the module be portable;;
+
+
+one thing we can do is interpolation	
+
+"${path.root}public/index.html"
+
+also i noticed i did took the main tf path... no wee neede the index path..
+
+
+plan and apply => the file should changed.
+
+
+test more try to change the content of the htlml and do it agian and see the content of the bucket index html
+
+
+apply => no changes to the file
+BUT WE CHANGED our file.
+
+
+Bbecause the way this work is it has a source but its not checking the data.
+
+the tf state llook for value of the path and not what it have inside the file that is in that path.
+
+
+One way to know that it with that e tag we just told u about before.
+
+if the content cahnge= etag will change.
+
+
+so we add etag= filemd5 which is a functij tat will create a hash based on the content.
+
+consult tf functions.  
+
+now just specify the path to etag like u did with source
+
+
+now it does pick it up.
+
+
+
+
+### A point Terraform Variable Instead of path.root
+
+we do have a the path root stuff but i think its better to, pass a terraform variable.	 
+because we may want to give flexinility to, this module for anyone to change the adress.
+
+So if i want it index html but i dont want it to be stored here, i still can do this easli.
+
+
+
+So lets setup a variable for that.
+
+
+add it within the variables in modules level and add it to root level (give it the whole thing its fine)
+
+
+add the path file index_html_path="/Workspace/etc/public/index and error  to TFVARS AND TF VARS SAMPLE also for the new uuid..
+
+
+double the resource block to do so for the error source 
+
+
+###var for error too in mod and top level
+
+
+
+
+allis for tfao for apply we doing it alot...
+
+tf apply..
+
+
+we get error becaise we have to pass the vars to  root main tf index +error
+
+
+now its ok good!!
+
+
+but only error is up to s3
+
+
+we still cant see our bucket but we did enough for this
+
+it worked after we did appluyagain, u have to be confident cause it may lie to u, could be a latency stuff or whatever...
+
+
+learned about funcions.
+
+edit ur commands.md file
+
+--commit: enable static wesite hosting uplodaed index and error via tf to s3.
+
+
+destroy ur shit
+
+
+pr
+
+
+tag git tag stuff url from andrew plz (how to delete local and remote tags)
+
+
+
+lets say i missclicked 1.1.0 tag
+
+delete it:
+e.g. git push --delete origin 1.1.0
+
+
+
+correct it
+
+
+u can create the tag from graph...
+
+
+git stash hash (u'll be a detached head) tag on that part
+hash is sha llol
+1.1.0 and push it
+
+git stash --save to save stuff and get it bacck
+
+
+git stash apply
+
+
+he added the tags part to  1.4.1 stupid.
+
+
+
+### conclusion to next
+the  reason we cant access it;
+- we need a bucket policy
+- u have to unblock from internet
+
+but the only way we want to access that s3 is throuw a cloudfront distru
+
+cause thats the best and ssafer way to do it!
