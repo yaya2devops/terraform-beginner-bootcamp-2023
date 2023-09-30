@@ -1,174 +1,183 @@
-# Terraform Content Versioning 
+# Invalidate CloudFront Distribution
 
-Hey Terraformer, I'll outline the process of implementing content versioning for our S3 bucket serving a website via CloudFront in this  1.6.0.
+Welcome to the  process of invalidating cache using Terraform, with a focus on local execution. 
 
-**Note:** This step should be done prior to cloudfront dsitrubution caching.
+But wait, with the latest Terraform version, cache invalidation seems elusive, right? Fear not, for we're about to unveil the solution.
 
-### Bootcamper Context
-Content versioning is essential for efficiently managing your files content and ensuring that changes to your site files only when necessary.
+We will use Terraform data blocks and null resources to achieve this task.
 
-- We want to validate the cache when the file changes.
-- We want to be more explicit about which version of the website we are serving.
-- We don't want cache is cleared entirely when any file changes
+#### GPT  Mhh
 
-The last is very expensive call.
-
-Instead, implement content versioning to cache only when desired.
-- This is version one of the site
-- This is version two of the site
-We want it to be that explicit.
-
-
-
-## Versioning Your Website
-
-We will clearly define different versions of the website (e.g., V1, V2..etc).
-
-
-Starting with **defining Content Version in Terraform Variables**
-
-1. Open the `terraform.tfvars` file and add `content_version=1` (or the desired version).
-```hcl
-content_version=1
+Lets get something out of GPT.
 ```
-2. Add `content_version` to your main Terraform module call under `source`.
-```hcl
-  content_version = var.content_version
+Hey invalidate cloudfront distrubution using Terraform 
 ```
-3. Implement a Terraform variable for `content_version` that only accepts positive integers starting from one in your modules `variables.tf`.
+
+This is using the null resource which is pretty good. <br>This is actually the way we do it.
+
+
+||Null resource served its purpose in the past|
+|---|:---|
+||But now,|
+||The torch has been passed to data |
+
+
+### Background and Context
+Invalidate cache is a critical operation in managing our CDN. 
+
+We aim to automate cache invalidation whenever our content changes, using a background CLI command if that make sense.
+
+||Provisioners such as remote exec and local exec are discouraged |
+|---:|:---|
+||Other tools like Ansible are better suited for these tasks.|
+
+Some companies are still engaged in this practice...
+
+
+Terraform is primarily used for managing the state of code rather than configuration management.
+
+We will be doing it anyway because we get to do more advanced concepts in terraform.
+
+#### Terraform Data
+Terraform data blocks are the preferred method for managing data resources in Terraform configurations. They don't require the installation of additional providers and are recommended over null resources for this purpose.
+
+
+#### Local Execution with Null Resources
+Local execution using null resources can be useful when you need to run commands on your local machine. In this case, we will use local execution to trigger cache invalidation.
+
+
+## Implement Invalidation
+
+We also want to activate a provisioner.<br>
+The local exec command runs on the **local machine** where ur running tf.
+
+If we use **Terraform Cloud**, the local machine should align with the computing resources provided by Terraform Cloud.
+
+You can also use **remote exec**, which enables you to connect to a remote computer and perform **SSH** etc..
+
+We will make it simple here with **local compute**..
+
+1. go to `resource-cd.tf` and add the reosurce terraform_data and name it `invalidate_cache`.
 ```hcl
-variable "content_version" {
-  description = "The content version. Should be a positive integer starting at 1."
-  type        = number
+resource "terraform_data" "invalidate_cache" {}
+```
+2. Trigger the content versions replace:
+```hcl
+triggers_replace = terraform_data.content_version.output
+```
+3. Create provisioner block for our local exec inside the `terraform_data`.
+```hcl
+  provisioner "local-exec" {  }
+```
 
-  validation {
-    condition     = var.content_version > 0 && floor(var.content_version) == var.content_version
-    error_message = "The content_version must be a positive integer starting at 1."
-  }
-
+4. Use a heredoc block like this to pass the command:
+```hcl
+provisioner "local-exec" {
+command = <<EOF
+# Your commands here
+# E.g. our invalidate cache
+EOF
 }
 ```
-4. Include that in the variable call in ``variables.tf`` in the module level.
+
+You can also add whatever, the point is to end it with the same, let me clarify.
+
 ```hcl
-variable "content_version" {
-  type        = number
+provisioner "local-exec" {
+command = <<command
+# Your commands
+command
+}
+```
+5. Add inside it the required invalidation api command from aws sdk:
+```sh
+    command = <<COMMAND
+aws cloudfront create-invalidation \
+--distribution-id ${aws_cloudfront_distribution.s3_distribution.id} \
+--paths '/*'
+    COMMAND
+```
+
+6. Verify your provisioner block for `local_exec`;
+```hcl
+  provisioner "local-exec" {
+    command = <<COMMAND
+aws cloudfront create-invalidation \
+--distribution-id ${aws_cloudfront_distribution.s3_distribution.id} \
+--paths '/*'
+    COMMAND  }
+```
+Be aware that Provisioners are a pragmatic approach. They have the capability..
+
+
+7. After coding `resrouce-cdn.tf`, run tfp
+
+Now it's asking for the current version..? <br>Because the content_version=x wasn't configured.
+
+![It is asking for input as result!](assets/1.7.0/ver-var-not-specified.png)
+
+To trigger cache invalidation, you must increment the content version. 
+
+5. reset the value in your `terraform.tfvars` to `content_version=2`
+6. run tfpaa this time.
+
+Good and cool.
+
+
+
+
+
+
+### Output Configuration
+One thing I'm looking for here is the CloudFront distribution output.
+
+
+To monitor the status of your cache invalidation.
+
+1. add the CloudFront distribution output to your Terraform module.
+```
+output "cloudfront_url" {
+  value = aws_cloudfront_distribution.s3_distribution.domain_name
 }
 ```
 
-### Configure Resource Lifecycle
-We want to trigger thhose in particular cases using **Lifecycle**
-
-It enables you to respond to various actions on a resource, such as its creation, deletion, and other relevant events.
-
-1. Navigate to the `resource-storage.tf` file.
-2. Look for the S3 resource lifecycle.
+2.  And add the definition in your root `variables.tf` root outputs.
 ```hcl
- resource "azurerm_resource_group" "example" {
-  # ...
-
-  lifecycle {
-    create_before_destroy = true
-  }
+output "cloudfront_url" {
+  description = "The CloudFront Distribution Domain Name"
+  value = module.terrahouse_aws.cloudfront_url
 }
 ```
-3. Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
-```hcl
-  lifecycle {
-    ignore_changes = [etag]
-  }
-```
-4. Exclude the ETag field within the lifecycle.
-```hcl
-    ignore_changes = [etag]
-```
 
-Learn more about lifecycle in terraform [from here.](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+### 7. Performing Cache Invalidation
 
-### Test 101
-Observe the behavior when changes are made:
-1. Comment both the lifecycle configurations.
-```hcl
-  #lifecycle {
-  #  ignore_changes = [etag]
-  #}
-```
-2. Make changes to the files and observe Terraform plan and apply results.
-3. Uncomment the lifecycle configurations and change file
-4. run tfp
-5. observe the behavior again.
+Lets try to change something and see.
 
+Perform the following steps to invalidate the cache:
+1. Run `terraform plan` to verify your changes.
+2. Run `terraform apply` to apply the changes and trigger the cache invalidation.
+3. Check the output to verify the new version and CloudFront distribution information.
 
-This is ignoring the etag. <br>To make it so, we have to code the trigger.
+![Distru along previous outputs we did set.](assets/1.7.0/outputs-are-here.png)
 
-### **Triggering the Changes**
-Our approach involves closely associating it with the respective resource. To trigger changes based on the content version, we'll use Terraform's `terraform_data` resource.
+4. Start visiting your cloudfront distribution.
 
-Traditionally, you would associate a null resource and a provider.. in the way offered by HashiCorp.
+![Distru with cuter description](assets/1.7.0/new-key-word.png)
 
-1. Configure the `terraform_data` resource to manage content versions as if they were regular resources.
-```hcl
-resource "terraform_data" "content_version" {
-  input = var.content_version
-}
-```
-2. Connect the content version to the resource lifecycle to trigger updates when the content version changes.
-```hcl
-    replace_triggered_by = [terraform_data.content_version.output]
-```
+5. Visit your CloudFront invalidation and observe that you have one set as directed in the command.
 
-3. make sure its place for ur index.html lifecycle like this:
-```hcl
-  lifecycle {
-    replace_triggered_by = [terraform_data.content_version.output]
-    ignore_changes = [etag]
-  }
-```
+[Verify The Accuracy](assets/1.7.0/invalidation-evidence.png)
+![Cache worked](assets/1.7.0/invalid-console.png)
 
-When we modify our version, it will be treated and managed in a manner similar to a resource.
+The cache is applied as required.
 
-### Test 202
+### Reverting Changes And More..
 
-1. Run `terraform plan` and see if it actually decide to change it;
+To back clean for our next version, revert the changes by running `terraform destroy` and setting the content version back to the previous value 1.
 
-![something](assets/1.6.0/only-adding-data.png)
+If you followed, your process is now automating the cache invalidation process using Terraform.. Making your content delivery more efficient and reliable!
 
-It does work because tf data never existed.<br>
-But. It doesn't appear to be triggering the content as expected..."
-
-2. run `tfaa` and and do `tfp` to see no change.
-3. Change some of the content and do `tfp`.
-
-It also didn't incorporate the changes...
+Consult some good stuff [we've done here.](assets/1.7.0/good-stuff.png) <br>Also a [funny error I had.](assets/1.7.0/oops-command.png)
 
 
-### Test 303
-Because we hadn't altered the version.
-
-1. let's update it to '2' in the tfvars file.
-2. run tfp and observe now.
-![No changes](assets/1.6.0/no-changes.png)
-
-> It's still not producing any changes.
-3. Do a `tpa` maybe tfp is lying to us.
-
-Still...Terraformers...
-
-### Test 404 
-The issue arises because we changed the variable in the tfvars file but didn't reference it in the module block in the our `main.tf` at the root level.
-
-1. Change content_version = 1 to var.content_version.
-2. Run 'tfp' again.
-3. Observe that the change will now take effect.
-
-[Check it out!](https://d2nrp0gajz6owu.cloudfront.net/)
-![Yeah Content Versioning works!](assets/1.6.0/resolved.png)
-
-Notice that the updated version is correctly influencing the process.
-
-
-#### Conclusion
-We can now manage and trigger changes to our website more efficiently. <br>Each content version will be handled like a resource,
-
-This implementation won't trigger cache clearing in CloudFront. <br>This aspect will be addressed in version 1.7.0 of our project.
-
-FYI again, Terraform is not be the optimal tool for this specific task but for the learning.
+And that's what `1.7.0` is for. The bootcamp is indeed a beginner level.
