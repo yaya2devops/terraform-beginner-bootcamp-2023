@@ -1,7 +1,4 @@
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket
 resource "aws_s3_bucket" "website_bucket" {
-  # Bucket Naming Rules
-  #https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html?icmpid=docs_amazons3_console
   bucket = var.bucket_name
 
   tags = {
@@ -9,7 +6,6 @@ resource "aws_s3_bucket" "website_bucket" {
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration
 resource "aws_s3_bucket_website_configuration" "website_configuration" {
   bucket = aws_s3_bucket.website_bucket.bucket
 
@@ -21,7 +17,6 @@ resource "aws_s3_bucket_website_configuration" "website_configuration" {
     key = "error.html"
   }
 }
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "index.html"
@@ -35,7 +30,6 @@ resource "aws_s3_object" "index_html" {
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object
 resource "aws_s3_object" "error_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "error.html"
@@ -73,4 +67,18 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 
 resource "terraform_data" "content_version" {
   input = var.content_version
+}
+
+resource "terraform_data" "invalidate_cache" {
+  triggers_replace = terraform_data.content_version.output
+
+  provisioner "local-exec" {
+    # https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings
+    command = <<COMMAND
+aws cloudfront create-invalidation \
+--distribution-id ${aws_cloudfront_distribution.s3_distribution.id} \
+--paths '/*'
+    COMMAND
+
+  }
 }

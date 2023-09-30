@@ -1,0 +1,145 @@
+### 1 7 0 Invalidate Cache Local Exec
+
+
+Another push note for you baby!
+
+
+now we will focus on invalidte cachce process via code in tf
+
+
+- he careatd the ticket (invalidate cloudfront distrubution
+
+-  [] Impelment data_source for content_version vs the null resource
+- [ ] triger cloudront distrubution invalidation
+- familaizer urself provisioners incl local exec and remote exec
+- implement local exec
+-create issue and make a branch out of it.
+- [] configure cloudfront disru output
+
+
+
+
+we gonna use terraform data again!!!    
+
+there is no way to invalidate cache with the latest terraform version..
+
+
+- try asking gpt :
+
+invalidate cloudfront distru using terraform 
+
+it is using the null resopurce which is pretty good. this is actuallly the way to do it.
+
+
+null resource is the old way=> tf data is the new way of doing it.
+tf data is better becaus eit doenst requrie u to install a provider..
+
+we want to have it so when we have our conten change so we have a clicommand in the background that do the invaliation.
+
+ps: provisioner like remote exec and local exec are discoured because there is other tools that can do the job like ansible.
+
+some companyu still doing it... 
+
+tf is for managing the state of code and not config manatgement but we wil do it. becaus ei want u to get comfortable with it.
+
+
+---
+
+
+
+go to resource cdn and add the reosurce tf dat and trigger the content verions
+```
+
+```
+
+we want also to triigger a priovioner... the local exec run on local machine that is running the te'rraform 
+
+if we use tf cloud 
+the local machine should be whatever tf cloud comutenis...
+
+u can use remote exec wich allows u to poiinnt to off to some kind of comptue and do ssh.
+
+but we will am=keit simple here with local compute..
+
+
+ADD Ttis stuff inside the local exec..
+heredoc  learn
+
+command <<command
+
+something
+
+command
+
+
+add inside it the required block abd see..
+
+-- andrew paused to document, go take that plzzz.;;---
+
+
+
+
+
+provisioners are just a measure of pragmatism. it have the capabiltiy but iuts better fit for ...
+
+after adding to cdn RES FILe do
+tfp
+
+now it is prompting for the conven version???
+
+BECAUSE THE content_version=2 wasnt set. 
+
+set the value tto ur tfvars
+
+and then do
+tfpaa
+
+
+
+one thing i want here is the cloudront distru output..
+
+add it to ur output in module
+
+output ..
+
+{value}
+
+
+go to ur root output and add stuff too
+
+
+tfpaa and see the new output.
+
+![New Output]()
+
+
+trey change soemthign and do tfp
+
+it would detec anything 
+
+because we haver toi increment the content version
+
+and do again tfp and tfa
+
+
+to verify we have to checj the website anbd se cache expird. meaning go to invcalidation and see u'll find validations done
+
+now u can se the link (its in the output. also)
+
+should work!
+
+
+
+tf destroy
+
+and get back the version to 1
+
+
+-commit: invalidate cloudfront stack when content version changes!!!
+
+
+go to pr and do it!!
+
+
+go main pull and tag!
+
