@@ -16,10 +16,10 @@ Hey invalidate cloudfront distrubution using Terraform
 This is using the null resource which is pretty good. <br>This is actually the way we do it.
 
 
-||Null resource served its purpose in the past|
-|---|:---|
-||But now,|
-||The torch has been passed to data |
+|💫|Null resource served its purpose in the past|
+|---:|:---|
+|💡|But now,|
+|🆕|The torch has been passed to data |
 
 
 ### Background and Context
@@ -27,9 +27,9 @@ Invalidate cache is a critical operation in managing our CDN.
 
 We aim to automate cache invalidation whenever our content changes, using a background CLI command if that make sense.
 
-||Provisioners such as remote exec and local exec are discouraged |
+|🙃|Provisioners such as remote exec and local exec are discouraged |
 |---:|:---|
-||Other tools like Ansible are better suited for these tasks.|
+|✅ |Other tools like Ansible are better suited for these tasks.|
 
 Some companies are still engaged in this practice...
 
@@ -107,7 +107,7 @@ aws cloudfront create-invalidation \
 --paths '/*'
     COMMAND  }
 ```
-Be aware that Provisioners are a pragmatic approach. They have the capability..
+> Be aware that Provisioners are a pragmatic approach. They have the capability..
 
 
 7. After coding `resrouce-cdn.tf`, run tfp
@@ -177,7 +177,7 @@ To back clean for our next version, revert the changes by running `terraform des
 
 If you followed, your process is now automating the cache invalidation process using Terraform.. Making your content delivery more efficient and reliable!
 
-Consult some good stuff [we've done here.](assets/1.7.0/good-stuff.png) <br>Also a [funny error I had.](assets/1.7.0/oops-command.png)
+Consult some good stuff [we've done here.](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/41-trigger-cdn-cache/assets/1.7.0/good-stuff.png) <br>Also a [funny error I had.](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/41-trigger-cdn-cache/assets/1.7.0/oops-command.png)
 
 
 And that's what `1.7.0` is for. The bootcamp is indeed a beginner level.
