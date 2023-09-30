@@ -2,7 +2,7 @@
 
 Hey Terraformer, I'll outline the process of implementing content versioning for our S3 bucket serving a website via CloudFront in this  1.6.0.
 
-**Note:** This step should be done prior to cloudfront dsitrubution caching.
+**Note:** This step should be done prior to cloudfront distribution caching.
 
 ### Bootcamper Context
 Content versioning is essential for efficiently managing your files content and ensuring that changes to your site files only when necessary.
@@ -11,11 +11,12 @@ Content versioning is essential for efficiently managing your files content and 
 - We want to be more explicit about which version of the website we are serving.
 - We don't want cache is cleared entirely when any file changes
 
-The last is very expensive call.
+The last is very expensive call rather only what specified.
 
 Instead, implement content versioning to cache only when desired.
-- This is version one of the site
-- This is version two of the site
+- This is version one of the site;
+- This is version two of the site;
+
 We want it to be that explicit.
 
 
@@ -77,7 +78,7 @@ It enables you to respond to various actions on a resource, such as its creation
     ignore_changes = [etag]
   }
 ```
-4. Exclude the ETag field within the lifecycle.
+4. Exclude the `etag` field within the lifecycle.
 ```hcl
     ignore_changes = [etag]
 ```
@@ -94,7 +95,7 @@ Observe the behavior when changes are made:
 ```
 2. Make changes to the files and observe Terraform plan and apply results.
 3. Uncomment the lifecycle configurations and change file
-4. run tfp
+4. run `tfp`
 5. observe the behavior again.
 
 
@@ -130,12 +131,10 @@ When we modify our version, it will be treated and managed in a manner similar t
 
 1. Run `terraform plan` and see if it actually decide to change it;
 
-![something](assets/1.6.0/only-adding-data.png)
-
 It does work because tf data never existed.<br>
 But. It doesn't appear to be triggering the content as expected..."
 
-2. run `tfaa` and and do `tfp` to see no change.
+2. run `tfaa` and do `tfp` to see no change.
 3. Change some of the content and do `tfp`.
 
 It also didn't incorporate the changes...
@@ -156,15 +155,16 @@ Still...Terraformers...
 ### Test 404 
 The issue arises because we changed the variable in the tfvars file but didn't reference it in the module block in the our `main.tf` at the root level.
 
-1. Change content_version = 1 to var.content_version.
-2. Run 'tfp' again.
+1. Change content_version = 2 to e.g. var.content_version=3.
+2. Run `tfp` again.
 3. Observe that the change will now take effect.
+![Versio Two to Three](assets/1.6.0/third-version-track.png)
 
-[Check it out!](https://d2nrp0gajz6owu.cloudfront.net/)
-![Yeah Content Versioning works!](assets/1.6.0/resolved.png)
 
 Notice that the updated version is correctly influencing the process.
 
+[Check it out!](https://d2nrp0gajz6owu.cloudfront.net/)
+![Yeah Content Versioning works!](assets/1.6.0/resolved.png)
 
 #### Conclusion
 We can now manage and trigger changes to our website more efficiently. <br>Each content version will be handled like a resource,
