@@ -1,0 +1,151 @@
+
+---
+
+More notes, more awareness!!
+
+---
+
+
+This time we re trying to get better assets in our upload.
+
+Also this is the end of our
+
+
+because when we building website, its not going to behtml page alone
+b 0
+-we want that imges, javascript, stylsheets..
+
+to make our terrahouse look very good in terra town..
+
+
+
+Create new issue: Asset Upload
+
+- [] Implement asset management as code
+- [] use for each to upload assets
+- [] explore diff data structures
+- [] terraform console explore
+- [] terraform complex and collection types explore
+
+
+
+---we support to craete page that goes to a hub..between w1 and 2..maybe..
+
+## get started with images.
+
+drag an image to public/assets and add it to html?
+
+grap another image.
+
+
+perview site; use http server, add it gitopd..
+add gitpod extensions?
+
+--- now we have the assets in the site.
+
+
+probably u shoudnt use tf to manage assets and stuff
+
+but we will too. because it give me the possiiltiy to expplre more functionality for,this beginner lefvel
+
+
+
+- we added resource for single file, e.g. index and error..
+
+what if we want to do mutlile files? => for each!
+
+
+i want to uploiad a folder full of files to s3 using terraform (ask gpt)
+
+take the output on side and lets go explore more about tf console
+
+tf init => tf console:
+
+get a list of all files in public/assets: (fileset function : check it in registy)
+
+
+
+path.root (whre i am)
+fileset("${path.root}/public/assets","*")  all files
+
+fileset("${path.root}/public/assets","*.{jpg,png,gif}") 
+
+
+list terraform functin
+
+learn about complex
+
+learn about complex types (see asset below)
+
+and then read about collectio types
+
+
+in tf u may want to cast things to other things and these things are pain to deal with and u are not crazy
+
+
+lets go back to our for each 
+
+go to res-storage.tf
+
+
+do resource ad name it upload assets
+
+
+add for_each
+
+it is hard coded we mau chang it with tf var
+
+grab the other usual stuff 
+
+bucket, key , source, content tyoe; etag
+
+for_each stuff:
+if we are using a list => will use a key
+if its more complex e.g map => we need key and value
+
+
+changfe the key to go to the assets and do interperlaton and each.key
+
+
+for source path root eachdot key
+
+e tag is same as source
+
+
+exit out of console.
+
+we could have dont map.
+
+plan and see
+
+
+we can see it is doing the assets!!
+tfaa
+
+
+
+we are done!!!
+tf console and complex type
+
+
+oh they are hardcoded we may not wnt that!!
+
+
+chang the one in the asset to vars.assets_path
+go defint it in module/var.tf
+define it in var.tf root
+do it in tfvars.sample
+
+
+===> getting connection to terratown is the challenge for week2 and custom provider..
+
+cimiit : upload assets using for each
+
+main pull tag 1.8.0
+
+
+
+https://cdn.discordapp.com/attachments/1138488134003335199/1157355946679468145/Terratown_Architecture_empty_lot.png?ex=6519a0b8&is=65184f38&hm=a648bc05a07e90c99a534bafceb6bad711289d271a7f66e3b16240e0da8619c3&
+
+
+https://cdn.discordapp.com/attachments/1138488134003335199/1157649422398791730/37667b3c-712a-4a15-a86e-6354fc57ac6c.png?ex=6519608a&is=65180f0a&hm=ac74f18110c979a381c33fc85baadf229c5a4c0eb8f804fbbac514e709b5afa9&

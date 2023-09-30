@@ -1,183 +1,189 @@
-# Invalidate CloudFront Distribution
+## Terrahouse Asset Management
 
-Welcome to the  process of invalidating cache using Terraform, with a focus on local execution. 
+Hey Terraformer, wrapping up our first week (technically second because we started from zero), we'll work on asset management process for our website to include images, JavaScript, and stylesheets and moree to make Terrahouse look impressive in TerraTown!
 
-But wait, with the latest Terraform version, cache invalidation seems elusive, right? Fear not, for we're about to unveil the solution.
+We also aim to create a page that connects W1 and W2, possibly as a hub!
 
-We will use Terraform data blocks and null resources to achieve this task.
+### Improvisation
+Let me freestyle for you my experience and what I think about this.<br>
+An asset is something that has the potential to add value to you, that is why it is called that.
 
-#### GPT  Mhh
+Computer files especially those with more visual are considered assets because once throwed to the system, they'll get consumed and you can get a benefit out of it.
 
-Lets get something out of GPT.
+Videos are the highest form of asset over there.
+
+### Getting started with assets
+1. Create an `assets` folder in your "public" directory.
+2. Drag images to the `public/assets` folder and integrate them into your HTML files.
+3. Preview the site by utilizing an HTTP server.
+> Learn more how [from here.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/35-s3-static-website-host#host-your-first-http-server)
+4. Enhance your development experience by adding the command to your `gitpod.yml` for `before`.
 ```
-Hey invalidate cloudfront distrubution using Terraform 
+      npm install --global http-server
+```
+5. add the the `http-server` in the command.
+
+#### Resolved Thought
+While Terraform is primarily used for infrastructure provisioning, it can also be used for managing assets, offering opportunities to explore more functionality for beginners like You.
+
+The question you may ask are;
+- We added resources for specific single files like 'index' and 'error' pages.
+- What if we want to add many files in a given directory e.g. `/assets` ?
+
+The answer is, to handle multiple files, use a `for_each` loop in terraform.
+
+#### Terrafoorm Console
+
+- Learn about Terraform functions and complex types.
+- Explore collection types in Terraform.
+
+In the Terraform Console, obtain a list of all files in the public/assets directory.
+1. Run `terraform init` first.
+2. Run `terraform console`.
+3. Run the following to know where you stand exact;
+```
+path.root
+```
+> A dot means you are in the root itself.
+4. Use the fileset function and explore more about it in the registry e.g. Lists all files
+```
+fileset("${path.root}/public/assets","*")  
+```
+5. Filter in the console specific file types
+```
+fileset("${path.root}/public/assets","*.{jpg,png,gif}")
 ```
 
-This is using the null resource which is pretty good. <br>This is actually the way we do it.
+6. Filter in the console only jpg files.
+```
+fileset("${path.root}/public/assets","*.{jpg}")  
+```
 
+7.  Filter in the console only png files.
+```
+fileset("${path.root}/public/assets","*.{png}")  
 
-|💫|Null resource served its purpose in the past|
-|---:|:---|
-|💡|But now,|
-|🆕|The torch has been passed to data |
+// returning..
+toset([
+  "elizabeth-7-deadly-sins.png",
+])
+```
+8. You can use Terraform's output for further exploration in the Terraform Console.
 
+In Terraform, you may find the need to cast things to other thing. <br>Calm, it's a common  Terraform development, you are not crazy.
 
-### Background and Context
-Invalidate cache is a critical operation in managing our CDN. 
+Let's get started with our `for_each`.
 
-We aim to automate cache invalidation whenever our content changes, using a background CLI command if that make sense.
+### `for_each` Configuration
 
-|🙃|Provisioners such as remote exec and local exec are discouraged |
-|---:|:---|
-|✅ |Other tools like Ansible are better suited for these tasks.|
+- if we are using a list => will use a key
+- if its more complex e.g map => we need key and value
 
-Some companies are still engaged in this practice...
+The asset paths should not be hardcoded. Avoid it to perform a best practice.
 
-
-Terraform is primarily used for managing the state of code rather than configuration management.
-
-We will be doing it anyway because we get to do more advanced concepts in terraform.
-
-#### Terraform Data
-Terraform data blocks are the preferred method for managing data resources in Terraform configurations. They don't require the installation of additional providers and are recommended over null resources for this purpose.
-
-
-#### Local Execution with Null Resources
-Local execution using null resources can be useful when you need to run commands on your local machine. In this case, we will use local execution to trigger cache invalidation.
-
-
-## Implement Invalidation
-
-We also want to activate a provisioner.<br>
-The local exec command runs on the **local machine** where ur running tf.
-
-If we use **Terraform Cloud**, the local machine should align with the computing resources provided by Terraform Cloud.
-
-You can also use **remote exec**, which enables you to connect to a remote computer and perform **SSH** etc..
-
-We will make it simple here with **local compute**..
-
-1. go to `resource-cd.tf` and add the reosurce terraform_data and name it `invalidate_cache`.
+1. Navigate to `resource-storage.tf` in your terrahouse module.
+2. Define a resource for uploading assets.
 ```hcl
-resource "terraform_data" "invalidate_cache" {}
+resource "aws_s3_object" "upload_assets" {}
 ```
-2. Trigger the content versions replace:
+3. Add the `for_each` loop.
 ```hcl
-triggers_replace = terraform_data.content_version.output
+  for_each = fileset(<the-call>)
 ```
-3. Create provisioner block for our local exec inside the `terraform_data`.
+4. Consider making it more flexible by using TF variables.
 ```hcl
-  provisioner "local-exec" {  }
+var.assets_path,"*.{jpg,png,gif}"
 ```
+Grab the usual for the resource: `bucket`, `key`, `source`, `content type`, `etag`.
 
-4. Use a heredoc block like this to pass the command:
+5. assign the bucket the same way;
 ```hcl
-provisioner "local-exec" {
-command = <<EOF
-# Your commands here
-# E.g. our invalidate cache
-EOF
+  bucket = aws_s3_bucket.website_bucket.bucket
+```
+6. **Change** the `key` to go to the assets and do **interpolation** and **each.key**.
+```hcl
+  key    = "assets/${each.key}"
+```
+7. For `source` path **root** each dot **key**.
+```hcl
+  source = "${var.assets_path}/${each.key}"
+```
+8. `etag` is **same** as `source`.
+```hcl
+  etag = filemd5("${var.assets_path}${each.key}")
+```
+9. Add the lifecycle as we previously did;
+```hcl
+  lifecycle {
+    replace_triggered_by = [terraform_data.content_version.output]
+    ignore_changes = [etag]
+  }
 }
 ```
 
-You can also add whatever, the point is to end it with the same, let me clarify.
+Also..exit out of console after **done** with the required configurations.
 
+### 10. Testing and Verification
+1. Plan and verify the Terraform configuration.
+2. Ensure it properly handles assets. We can see it is doing the assets!
+3. Execute the apply to observe the asset management process.
+
+Perfect! But.. read CamperBonus.
+
+### CamperBonus
+We have to ensure that the asset paths are set as variables. <br>
+We may not want them to be hardcoded..
+
+1. Start by adding `vars.assets_path` in the asset configuration instead.
+2. Define this variable in `module/variables.tf`.
 ```hcl
-provisioner "local-exec" {
-command = <<command
-# Your commands
-command
+variable "assets_path" {
+  description = "Path to assets folder"
+  type = string
 }
 ```
-5. Add inside it the required invalidation api command from aws sdk:
-```sh
-    command = <<COMMAND
-aws cloudfront create-invalidation \
---distribution-id ${aws_cloudfront_distribution.s3_distribution.id} \
---paths '/*'
-    COMMAND
-```
-
-6. Verify your provisioner block for `local_exec`;
+3. Add the variable to your module block in the root `main.tf`.
 ```hcl
-  provisioner "local-exec" {
-    command = <<COMMAND
-aws cloudfront create-invalidation \
---distribution-id ${aws_cloudfront_distribution.s3_distribution.id} \
---paths '/*'
-    COMMAND  }
+  assets_path = var.assets_path  # Add this line
 ```
-> Be aware that Provisioners are a pragmatic approach. They have the capability..
-
-
-7. After coding `resrouce-cdn.tf`, run tfp
-
-Now it's asking for the current version..? <br>Because the content_version=x wasn't configured.
-
-![It is asking for input as result!](assets/1.7.0/ver-var-not-specified.png)
-
-To trigger cache invalidation, you must increment the content version. 
-
-5. reset the value in your `terraform.tfvars` to `content_version=2`
-6. run tfpaa this time.
-
-Good and cool.
-
-
-
-
-
-
-### Output Configuration
-One thing I'm looking for here is the CloudFront distribution output.
-
-
-To monitor the status of your cache invalidation.
-
-1. add the CloudFront distribution output to your Terraform module.
-```
-output "cloudfront_url" {
-  value = aws_cloudfront_distribution.s3_distribution.domain_name
+4. Define it at the root level in `variables.tf`.
+```hcl
+variable "assets_path" {
+  description = "Path to assets folder"
+  type = string
 }
 ```
 
-2.  And add the definition in your root `variables.tf` root outputs.
+5. Try terraform plan here; 
+
+![You have to add it to tfdotvars](assets/1.8.0/specify-terraformdottfvars.png)
+
+6. Add the actual variable to `terraform.tfvars`.
 ```hcl
-output "cloudfront_url" {
-  description = "The CloudFront Distribution Domain Name"
-  value = module.terrahouse_aws.cloudfront_url
-}
+assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 ```
+7. Include it in `terraform.tfvars.sample` for use in your workspace.
+```hcl
+assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
+```
+8. Run tfp and observe the output.
 
-### 7. Performing Cache Invalidation
+![Assets Output](assets/1.8.0/tfp-asset-one.png)
 
-Lets try to change something and see.
+9. Check out your website with the assets;
 
-Perform the following steps to invalidate the cache:
-1. Run `terraform plan` to verify your changes.
-2. Run `terraform apply` to apply the changes and trigger the cache invalidation.
-3. Check the output to verify the new version and CloudFront distribution information.
+[Demo Two Here!](assets/1.8.0/terrahouse-demo-2.png)
+![Terrahouse Pages Demo One](assets/1.8.0/terrahouse-demo-1.png)
 
-![Distru along previous outputs we did set.](assets/1.7.0/outputs-are-here.png)
+Great and cool!
 
-4. Start visiting your cloudfront distribution.
+#### Concluding;
+Some assets from our great classmates;
+- [Terraform Beginner Bootcamp Visual](https://cdn.discordapp.com/attachments/1138488134003335199/1157355946679468145/Terratown_Architecture_empty_lot.png?ex=6519a0b8&is=65184f38&hm=a648bc05a07e90c99a534bafceb6bad711289d271a7f66e3b16240e0da8619c3&)
+- [Terraform Workflow Visual](https://cdn.discordapp.com/attachments/1138488134003335199/1157649422398791730/37667b3c-712a-4a15-a86e-6354fc57ac6c.png?ex=6519608a&is=65180f0a&hm=ac74f18110c979a381c33fc85baadf229c5a4c0eb8f804fbbac514e709b5afa9&)
 
-![Distru with cuter description](assets/1.7.0/new-key-word.png)
+TerraTown is the challenge for week 2, along with our custom provider!
 
-5. Visit your CloudFront invalidation and observe that you have one set as directed in the command.
+But before we will have to present how you can work with git graphs.
 
-[Verify The Accuracy](assets/1.7.0/invalidation-evidence.png)
-![Cache worked](assets/1.7.0/invalid-console.png)
-
-The cache is applied as required.
-
-### Reverting Changes And More..
-
-To back clean for our next version, revert the changes by running `terraform destroy` and setting the content version back to the previous value 1.
-
-If you followed, your process is now automating the cache invalidation process using Terraform.. Making your content delivery more efficient and reliable!
-
-Consult some good stuff [we've done here.](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/41-trigger-cdn-cache/assets/1.7.0/good-stuff.png) <br>Also a [funny error I had.](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/41-trigger-cdn-cache/assets/1.7.0/oops-command.png)
-
-
-And that's what `1.7.0` is for. The bootcamp is indeed a beginner level.
+> See you soon!
