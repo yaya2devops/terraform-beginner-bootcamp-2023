@@ -40,7 +40,7 @@ The extension button will be visible if installed.
 
 **`1.8.1`:**<br>
 The tag is converted as a branch commit as explained above.<br>
-**Related Commit:** Install and Add git-log--graph to Gitpod task file.
+**Related Commit:** [Install and Add git-log--graph to Gitpod task file.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commit/d67e1ef044b650dd16550bd98db15230b2f09f86)
 
 ## `1.8.2` Git Graph [Extension²](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)
 
@@ -68,14 +68,14 @@ The extension button will be visible if installed.
 
 This workflow differs from the usual stuff I do with Git X for local development, things change man.
 
-`1.8.2` Commit: Install and Add mhutchie.git-graph to Gitpod task file.
+`1.8.2` Commit: [Install and Add mhutchie.git-graph to Gitpod task file](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commit/09f3ba52821f8d348a3454e836a0f45fd0d3d622).
 
 **`1.8.1` and `1.8.2` Relationship:**<br>
 - Both are part of the same branch **git-graph-config**.
 - Both are merged to single tag `1.8.3`
 
 I used [small numbers](https://www.piliapp.com/symbol/subscript-superscript/)..Also, I made this from notes using;
-- [The notes itself]()
+- [The notes itself](assets/1.8.3/1.8.3.txt)
 - [A language prediction model](https://chat.openai.com/share/0f24f5d8-fa45-438a-95c1-99e6b733c03d)
 
 You can use [my issue template](assets/1.8.3/issue-enabler.md) for your own.
