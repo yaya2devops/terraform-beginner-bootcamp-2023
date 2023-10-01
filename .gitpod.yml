@@ -9,7 +9,7 @@ tasks:
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
     before: |
-      source .bin/install_aws_cli
+      source ./bin/install_aws_cli
       source ./bin/tf_alias
   - name: http-server
     before: |
