@@ -1,0 +1,1 @@
+This change was merged into version `1.8.3` alongside `1.8.2`.

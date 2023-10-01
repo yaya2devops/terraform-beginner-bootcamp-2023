@@ -1,0 +1,68 @@
+---1.8.1----: add git graph to gitpod config
+
+
+to see the installed u go exttesnion search and write @installed
+
+
+
+git-log--graph is the extension we needed
+
+- [] install exstenion x from vs code
+- [] install exstenion x from vs code
+- [] authomate exstenion x with gitpod
+- [] authomate exstenion x with gitpod
+
+the button will be shown on soource control when ur about to commit.
+
+add it to gitpod.yml
+
+(you can use gitlens extension)
+
+
+--- issue: add git graph to gitpod config
+
+git-log--graph
+https://marketplace.visualstudio.com/items?itemName=phil294.git-log--graph
+
+we want to add the git graph extension in hopes  of fixing our git graph issue. 
+
+
+we can use gitlens extension (explain briefly what is that)
+
+--1.8.1 tag- because we were in 1.8.0 	
+
+commit name: add the known extension to our gitpod config task file
+
+---
+
+
+1.8.2--- another extension called Git Graph (looks nice) add it to gitpod
+
+
+- mhutchie.git-graph
+https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph
+
+
+trigger same issue. 
+add another git graph alernative to ensure we an see graphong
+
+this is not my usual flow, i use program called git X. for local dev.
+
+
+--- 
+1.8.1-> first extension
+1.8.2-> second extension
+
+----hi m .gitpod.yml
+  extensions:
+    - mhutchie.git-graph
+    - phil294.git-log--graph
+---
+
+
+
+
+poc: https://chat.openai.com/share/0f24f5d8-fa45-438a-95c1-99e6b733c03d
+
+
+both part of same branch graph-config
