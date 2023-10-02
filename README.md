@@ -172,7 +172,7 @@ assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 
 9. Check out your website with the assets;
 
-[Demo Two Here!](assets/1.8.0/terrahouse-demo-2.png)
+[🌐Check It All!](https://dk9ry91vcfk4o.cloudfront.net/)
 ![Terrahouse Pages Demo One](assets/1.8.0/terrahouse-demo-1.png)
 
 Great and cool!
