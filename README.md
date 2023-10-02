@@ -202,9 +202,9 @@ resource "aws_s3_bucket_policy" "bucket_policy"
 ```
   bucket = aws_s3_bucket.website_bucket.bucket
 ```
-||If we have only one of something, we can just name it default. |
+|👌|If we have only one of something, we can just name it default. |
 |---:|:---|
-||We can [always revisit—step5](#origin-access-control-config-resource-cdntf) and make them all 'default' later|
+|✅|We can [always revisit—step5](#origin-access-control-config-resource-cdntf) and make them all 'default' later|
 
 Instead of this we will code our policy into it.
 ```
@@ -333,19 +333,22 @@ But. Our preference was to utilize the data source! And learn.
 10. Test `tf init` and `tfp`
 
 
-**Error 1:** We mistakenly used `local` instead of `locals.`
-
+**Error 1:** We mistakenly used `local` instead of `locals.`<br>
 **Error 2:** The 'id' in the bucket policy resource was placed outside the curly braces, it should be inside like this: `{.id}`.
 
 
-11. Both were corrected in the instruction. I am just saying. If so, remake step 10.
+Both are corrected now in the instruction...
+
+I am just saying. If not so, remake step 10.
+
+11. go to Cloudfront and click the URL.
 
 ![It worked by file download instead](assets/1.5.0/index-download.png)
 
-It worked, but when it comes to downloading the file, it's not launching.
+It worked we have an URL, but the site is not launching..<br> It is downloading us the `index.html` file.
 
 
-#### URL equals Download
+#### Why URL equals Download?
 
 The mystery lies in the fact that while we referenced the file, we didn't specify its file type to Terraform.
 
@@ -368,11 +371,11 @@ resource "aws_s3_object" "error_html" {
 ```
 5. tfp and tfa and check the link again.
 
-||Still downloading the file..Why?|
+|❓|Still downloading the file..Why|
 |---:|:---|
-||It's a CDN, and It caches values|
-||To ensure it functions properly|
-||You need to clear the cache|
+|💡|It's a CDN, and It caches values|
+|💡💡|To ensure it functions properly|
+|💡💡💡|You need to clear the cache|
 
 ### Clear CloudFront Cache
 We will clear the CDN cache in AWS CloudFront by creating an invalidation.
@@ -402,17 +405,17 @@ I have reservations about the bucket's reliability.
 4. Simply map out a plan and execute it to upload the files once more.
 5. Now, we need to head over to CloudFront and perform another round of validation...
 
-||It's time to streamline these processes and automate them|
+|🆗|It's time to streamline these processes and automate them|
 |---:|:---|
-||Any modifications should trigger automatic updates |
-||This is something we should explore soon|
+|✨|Any modifications should trigger automatic updates. |
+|✨✨|This is something we should explore soon|
 
-**Quick update:** We tried it from bucket—It is working;
+**✅Quick update:** We tried it from bucket—It is working;
 
 ![cdn served via bucket w/new content](assets/1.5.0/content-from-bucket.png)
 
 
-Check the CloudFront URL => It's working perfectly now! 
+**✅Check the CloudFront URL**—It's working perfectly now! 
 
 ![cdn served via cloudfront w/new content](assets/1.5.0/content-from-cloudfront.png)
 
