@@ -102,7 +102,7 @@ The error is expected which is nice because we coded validation to accept stuff 
 
 Potential reasons of this Incl;
 - We can test what happen when we lose our state 
-- Opening to imports (next ver `1.1.0`)
+- Opening to imports (next ver `1.2.0` —[Here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/1.2.0#terraform-config-drift))
 - Dig into ways to recover state
 
 
@@ -183,7 +183,7 @@ user_uuid="uuid-format" (looks like toml baby)
 ```sh
 user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
 ```
-> Looks like TOML Baby! whats that? Eeeeh [long story.]()
+> Looks like TOML Baby! whats that? Eeeeh [long story.](https://github.com/yaya2devops/aws-cloud-project-bootcamp/tree/main/ddb#toms-obvious-minimal-language-files)
 
 8. Run `tf plan` only and [it will pick](assets/1.1.0/varplan.md) it up.
 
@@ -258,15 +258,18 @@ Terraform will use the values specified in the variables.json file to override t
 ### **Variable Files** (.auto.tfvars and .auto.tfvars.json)
 
 This is cool because it helps terraform knows where to go find vars first.
-- If you have a configuration named yaya.tf
-- Terraform will automatically look for a file named yaya.auto.tfvars or yaya.auto.tfvars.json and load variable values from there. 
 
+If you have a configuration named `yaya.tf`.
+<br>Terraform will automatically look for;
+- File named `yaya.auto.tfvars` 
+- Or file named `yaya.auto.tfvars.json` 
+
+This will start the  variable load values from there.
 
 - `*.auto.tfvars`  is a plain text file where you can set variables like key-value pairs e.g.
 ```
 example_var = "new_value"
 ```
-
 - `*.auto.tfvars.json` is a JSON file where you can define variables and their values. For example:
 ```json
 {
