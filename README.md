@@ -18,11 +18,12 @@ Let me explain to you how our infrastructure will be broken down further on the 
 
 ```
 🏡 terrahouse_aws
-├── 🗄️ storage
-└── 🌐 cdn
+├── 🗄️ resource-storage.tf
+└── 🌐 resource-cdn.tf
 ```
-- We'll keep everything related to storage Incl. S3 configurations, in a separate folder called `storage`.
-- Components related to delivery, Incl. CloudFron,t will reside in another folder called `cdn`.
+- We'll keep everything related to storage Incl. S3 configurations, in a separate folder file called `resource-storage.tf`.
+- Components related to delivery, Incl. CloudFron,t will reside in another file called `resource-cdn.tf`.
+- Both are withing our 🏡 `terrahouse_aws` module.
 
 Our architectural approach involves isolating components to enhance modularity and maintainability.
 
@@ -51,11 +52,6 @@ To continue remmember;
 - If not, Terraform will raise an error.
 
 ###  Refactoring the Root Module
-
-Before coding remmember;
-- Each module requires a specified provider. 
-- If not, Terraform will raise an error.
-
 To keep our configuration clean and organized, we'll make some changes;
 1. Move the provider configuration from the root directory to `main.tf` within the module.
 2. Transfer the definition of the bucket resource to `main.tf` within the module.
@@ -113,7 +109,8 @@ The plan is an error as expetcted. And the truth will follow;
 
 When working with variables and validators, keep in mind:
 - Variables need to be defined in both the module and the root.
-- Validators, which are already integrated into the module, don't need to be included in the root. Terraform will apply them automatically.
+- Validators, which are already integrated into the module, don't need to be included in the root. 
+- Terraform will detect validators automatically.
 
 #### 1.2. Resolve Vars Root/Mod
 
