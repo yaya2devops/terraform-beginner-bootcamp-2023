@@ -6,9 +6,7 @@
 ## Weekly Journals
 - [Week 0 Journal](journal/week0.md)
 - [Week 1 Journal](journal/week1.md)
-- [Week 2 Journal](journal/week2.md)
-
 
 ## Extras
-- [Github Markdown TOC Generator](https://ecotrust-canada.github.io/markdown-toc/)
+- [Week Zero Table Of Content Perfecting](https://chat.openai.com/share/476e164b-5e15-4f30-bebb-77652955c127)
 - [Week One Table Of Content Perfecting](https://chat.openai.com/share/19ea585e-185e-4213-b7f6-d585238aabf5)
