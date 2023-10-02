@@ -293,7 +293,7 @@ Let's explore whether Terraform console can be utilized interactively for troubl
 ```
   #etag = filemd5(var.index_html_filepath)
 ```
-6. You have to add these to your root main module block alone the source.
+6. You have to add these to your root main module block along the source in your module block.
 ```
   index_html_filepath = var.index_html_filepath
   error_html_filepath = var.error_html_filepath
@@ -311,24 +311,24 @@ Two considerations come up.
 - A: You dont want to hardcode your path values.
 - B: If I make changes to the file does it work.
 #### A: Avoid Your Real Path
-You should avoid hardcoding values like this to ensure the module's portability.
+⚠️ You should avoid hardcoding values like this to ensure the module's portability.
 
 |💡|One approach we can employ involves the use of interpolation|
 |---:|:---|
 
 
-1. Instead of the actual path assign th path.root we spoke about.
+1. Instead of the actual path assign the path.root we spoke about for `index.html`
 ```
 "${path.root}public/index.html"
 ```
 
-2. do the same for our erroring file.
+2. Do the same for our `error.html` file.
 
 ```
 "${path.root}public/error.html"
 ```
 
-> Make sure you dont do it for main.tf (our mistake)
+> Make sure you dont do it for `main.tf` (our mistake)
 
 3. Plan it and apply it, it should now give a file!
 
@@ -337,12 +337,12 @@ You should avoid hardcoding values like this to ensure the module's portability.
 So this is cool. With what we reached we can take files to the s3 but does it capture the data inside?
 
 - Be aware that Terraform checks file paths but not their content.
-- Use an Etag to track content changes.
-- Add an Etag with `filemd5` for accurate content tracking.
+- Use an `etag` to track content changes.
+- Add an `etag` with `filemd5` for accurate content tracking.
 
-1. Change the index.html file from what it was to something else.
-2. Double change the error.html
-3. Run tf plan and tf apply and go to the console.
+1. Change the `index.html` file from what it was to something else.
+2. Double change the `error.html`
+3. Run `tf plan` and `tf apply` and go to the console.
 
 |👀|No File Changes!|
 |---:|:---|
@@ -352,8 +352,8 @@ So this is cool. With what we reached we can take files to the s3 but does it ca
 
 Meaning Terraform state examines the path's value but not the content of the file within that path.
 
-You can identify file changes by referring to the mentioned 'e tag' we removed.
-If the content changes, the etag will also change.
+You can identify file changes by referring to the mentioned `etag` we removed.
+If the content changes, the `etag` will also change.
 
 4. Add the required etag block with the 'filemd5' function. 
 
@@ -366,8 +366,8 @@ E.g. here is a built in terraform function to [check the existance](https://deve
 condition = fileexists(var.error_html_filepath)
 ```
 
-5. Now, simply specify the path to the etag in the same way you did with the source
-6. tf plan and tf apply and see.
+5. Now, simply specify the path to the `etag` in the same way you did with the source
+6. `tf plan` and `tf apply` and see.
 
 ![Yay Files Data Captured](assets/1.4.0/etag-trigger.png)
 
