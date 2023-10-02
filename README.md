@@ -8,7 +8,7 @@
 - Is there anyway you can recover it?
 
 |🐛 |The feasibility of this depends on the available resources.|
-|---|---|
+|---|:---|
 |📦|Store your state in a file-like format because not all resources support direct importation.|
 
 - [Bucket State Is Lost](#bucket-state-is-lost)
@@ -83,7 +83,7 @@ Terraform suggest deleting and recreating the resource along with a random compo
 
 
 |💡|Both are now in their original states.|
-|---|:---|
+|---:|:---|
 |💡💡|But in `tf plan` it seems to think it needs to be replaced.|
 |💡💡💡|It's time to terminate  random. Was nice|
 
@@ -181,7 +181,7 @@ variable "bucket_name" {
 
 ### Test Drifted Test
 Make sure you deleted previous S3s.
-1. Try giving a bucket name that violates the rule e.g. YayaToDevOps
+1. Try giving a bucket name that violates the rule e.g. Yaya2DevOps
 2. Give a tf plan a try
 
 ![Failed Validation Applied](assets/1.2.0/regex-bucket.png)
