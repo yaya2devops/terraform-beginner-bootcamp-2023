@@ -436,9 +436,7 @@ It is currently hanging, and this is expected behavior.
 
 6. Do new create to get new uuid, 
 ```json
-$ ./create 
 {"uuid":"82966322-962d-4910-b9e9-a4013a765730"}
-
 ```
 
 7. Do the read script
@@ -454,9 +452,7 @@ $ ./create
 ```
 8. Do the Update;
 ```json
-$ ./update 82966322-962d-4910-b9e9-a4013a765730
 {"uuid":"82966322-962d-4910-b9e9-a4013a765730"}
-
 ```
 
 9. And end it with Delete;
