@@ -7,14 +7,20 @@ $home = {}
 
 class Home
   include ActiveModel::Validations
+
   attr_accessor :town, :name, :description, :domain_name, :content_version
 
-  validates :town, presence: true
+  validates :town, presence: true, inclusion: { in: [
+    'melomaniac-mansion',
+    'cooker-cove',
+    'video-valley',
+    'the-nomad-pad',
+    'gamers-grotto'
+  ] }
   validates :name, presence: true
   validates :description, presence: true
   validates :domain_name, 
     format: { with: /\.cloudfront\.net\z/, message: "domain must be from .cloudfront.net" }
-    # uniqueness: true, 
 
   validates :content_version, numericality: { only_integer: true }
 end
@@ -40,14 +46,15 @@ class TerraTownsMockServer < Sinatra::Base
   end
 
   def x_access_code
-    '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
+    return '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
   end
 
   def x_user_uuid
-    'e328f4ab-b99f-421c-84c9-4ccea042c7d1'
+    return 'e328f4ab-b99f-421c-84c9-4ccea042c7d1'
   end
 
   def find_user_by_bearer_token
+    # https://swagger.io/docs/specification/authentication/bearer-authentication/
     auth_header = request.env["HTTP_AUTHORIZATION"]
     if auth_header.nil? || !auth_header.start_with?("Bearer ")
       error 401, "a1000 Failed to authenicate, bearer token invalid and/or teacherseat_user_uuid invalid"
@@ -69,8 +76,8 @@ class TerraTownsMockServer < Sinatra::Base
 
   # CREATE
   post '/api/u/:user_uuid/homes' do
-    ensure_correct_headings
-    find_user_by_bearer_token
+    ensure_correct_headings()
+    find_user_by_bearer_token()
     puts "# create - POST /api/homes"
 
     begin
@@ -79,7 +86,6 @@ class TerraTownsMockServer < Sinatra::Base
       halt 422, "Malformed JSON"
     end
 
-    # Validate payload data
     name = payload["name"]
     description = payload["description"]
     domain_name = payload["domain_name"]
@@ -123,8 +129,6 @@ class TerraTownsMockServer < Sinatra::Base
     find_user_by_bearer_token
     puts "# read - GET /api/homes/:uuid"
 
-    # checks for house limit
-
     content_type :json
     if params[:uuid] == $home[:uuid]
       return $home.to_json
@@ -139,16 +143,13 @@ class TerraTownsMockServer < Sinatra::Base
     find_user_by_bearer_token
     puts "# update - PUT /api/homes/:uuid"
     begin
-      # Parse JSON payload from the request body
       payload = JSON.parse(request.body.read)
     rescue JSON::ParserError
       halt 422, "Malformed JSON"
     end
 
-    # Validate payload data
     name = payload["name"]
     description = payload["description"]
-    domain_name = payload["domain_name"]
     content_version = payload["content_version"]
 
     unless params[:uuid] == $home[:uuid]
@@ -157,9 +158,9 @@ class TerraTownsMockServer < Sinatra::Base
 
     home = Home.new
     home.town = $home[:town]
+    home.domain_name = $home[:domain_name]
     home.name = name
     home.description = description
-    home.domain_name = domain_name
     home.content_version = content_version
 
     unless home.valid?
@@ -169,7 +170,6 @@ class TerraTownsMockServer < Sinatra::Base
     return { uuid: params[:uuid] }.to_json
   end
 
-  # DELETE
   delete '/api/u/:user_uuid/homes/:uuid' do
     ensure_correct_headings
     find_user_by_bearer_token
@@ -180,8 +180,9 @@ class TerraTownsMockServer < Sinatra::Base
       error 404, "failed to find home with provided uuid and bearer token"
     end
 
+    uuid = $home[:uuid]
     $home = {}
-    { message: "House deleted successfully" }.to_json
+    { uuid: uuid }.to_json
   end
 end
 

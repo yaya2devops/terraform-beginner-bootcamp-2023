@@ -1,6 +1,11 @@
 # Create A `2.0.0` Ruby Server
 In version `2.0.0` of our project, the primary focus is on integrating the Terratown mock server into our repository. 
 
+- [Sinatra In Gitpod](#adjust-gitpod-yaml-configuration)
+- [Code Sinatra Server](#🎩-understanding-sinatra)
+- [Bash Script for CRUDs](#bash-script-for-cruds)
+- [Final Server Testing](#relaunch-the-server)
+
 There are many ways for embedding the mock server:
 
 **A way can be;**
@@ -70,7 +75,7 @@ The `server.rb` file works with the gems listed in the `Gemfile` to make the ser
 
 ![Diagram Server](journal/architectures/week2-anatomy-request.png)
 
-Lets start coding the server in a single line to make it easier for you.
+Lets start coding the server in a single file to make it easier for you.
 
 1. **Import Required Libraries**:
    - Import the necessary libraries `pry` and `active_model`.
@@ -313,7 +318,160 @@ Add the return otherwise it wont work. and I created for you `find_user_by_beare
 end
 ```
 13. **Run the Server**:
-    - Start the Sinatra server by calling 
-```rb
-TerraTownsMockServer.run!
+    - Start the Sinatra server by calling `TerraTownsMockServer.run!`
+
+
+## Bash Script for CRUDs
+
+This originates from the LLM, which serves as the foundational source...
+
+
 ```
+The How:
+------
+Write me a bash script that will send me a post request and an endpoint 
+------
+localhost:4567/api/u/:user_uuid/homes/ with a POST it should have a headers of content type and accept application json.
+------
+It should expect a bearer authorization token
+------
+The payload json should have the follownig fileds, name description, content_version, town, domain name.
+```
+
+### Create The Create Script
+Now let's do it.
+1. Before proceeding, ensure the server is stopped, as changes require a full restart.
+Note: Consider adding a script for automatic server restart in the future.
+2. Use 'Ctrl + C' to stop the server.
+3 Write a Bash script that sends a POST request to an endpoint:
+   - Endpoint: `localhost:4567/api/u/:user_uuid/homes/`
+   - Headers: Content-Type and Accept should be set to "application/json."
+   - Expect a Bearer Authorization Token.
+   - Payload JSON fields: name, description, content_version, town, domain name.
+4. Run 'bundle exec' command to get the server back
+5. Run the 'terratowns/create' script to obtain the UUID for the house.
+```
+$ ./create
+{"uuid":"51a588f5-18c2-461b-ba97-adfd520eb9a9"}
+```
+![PoC Tab](assets/2.0.0/cruds/first-create.png)
+
+### Perform The Read Script
+
+It is the exact same. To run the script.
+1. Perform a read script using the UUID obtained from the create step.
+2. Run the command as follows `./read <uuid>`
+```json
+{
+  "uuid": "51a588f5-18c2-461b-ba97-adfd520eb9a9",
+  "name": "New House",
+  "town": "cooker-cove",
+  "description": "A new house description",
+  "domain_name": "3xf332sdfs.cloudfront.net",
+  "content_version": 1
+}
+```
+### Perform The Update Script
+
+**To run the script;**
+1. Perform a update script using the UUID obtained from the create step.
+2. Run the command as follows `./update <uuid>`
+
+When attempting an update. <br>
+It will complain. This is our code trap.<br>
+Expect an error related to domain names; this is intentional.
+
+3. Investigate and correct the issue within the update action (line 216).
+4. Add the domain name to the update action like town
+
+The domain names and the town should only be init once.<br>
+
+5. Run udpate again.. give same error because we have to rerun the server.
+6. Do new create get new uuid, read and then update.
+
+**Error. again?**
+
+The issue involves a duplicated line in the domain name, but instead of rectifying it, let's consider appending the following information at the end.
+
+
+We can employ `binding.pry` to pause the program's execution in ruby.
+
+7. Create a new record to generate a fresh `UUID`, read the data, and subsequently update it.
+
+It is currently hanging, and this is expected behavior. 
+
+8. Now, let's switch to Sinatra where it has paused.<br>Allowing us to interact directly with the code.
+
+> Should we refactor it?(maybe later) Lets just get the update.
+
+### Speak to Sinatra
+
+1. Type `home` => It is now displaying.
+2. Execute `home.domain_name`.
+3. Inspect the payload and observe that there is no domain present. It should not be set there.
+4. Execute `$home[:domain_name]`—this seems to be the issue.
+5. Realize that there is no need for `home.domain_name = domain_name`, and it's better to keep the one with `[]`.
+6. Exit the current operation.
+
+### Relaunch the server
+
+**Server Reset and Interaction Steps**
+
+1. Begin by restarting the server.
+2. Perform the sequence of actions: create, read, and update. 
+> Great, everything's in order now! Proceed to Sinatra and carefully observe all the steps.
+
+| In sinatra review the 'read' operation|
+|---|
+|Focus on the new house description|
+|You can delete it now|
+
+3. Append the UUID at the end, around line 240. (Note: This is not a code trap but a necessary fix.)
+4. Execute the 'delete' operation, and you'll see it tell you about the UUID.
+```json
+{
+  "err": "failed to find home with provided uuid and bearer token"
+}
+```
+
+6. Do new create to get new uuid, 
+```json
+$ ./create 
+{"uuid":"82966322-962d-4910-b9e9-a4013a765730"}
+
+```
+
+7. Do the read script
+```json
+{
+  "uuid": "82966322-962d-4910-b9e9-a4013a765730",
+  "name": "New House",
+  "town": "cooker-cove",
+  "description": "A new house description",
+  "domain_name": "3xf332sdfs.cloudfront.net",
+  "content_version": 1
+}
+```
+8. Do the Update;
+```json
+$ ./update 82966322-962d-4910-b9e9-a4013a765730
+{"uuid":"82966322-962d-4910-b9e9-a4013a765730"}
+
+```
+
+9. And end it with Delete;
+
+![Delete Script Winner](assets/2.0.0/cruds/delete-is-enough.png)
+
+Our CRUDs are well set.
+
+**Note:** These are all similar scripts, with slight variations such as one for POST, one for GET, and so on.
+
+#### Code Considerations
+- Create, read, update, and delete scripts have been provided.
+- Ensure that they return the expected results.
+- Has noticed another code trap that has gone unnoticed? (there is) 
+- Are there any thoughts on refactoring the code?
+
+At this point our server is well set!<br>
+Once all previous steps are completed successfully, We are ready to build the custom provider.
