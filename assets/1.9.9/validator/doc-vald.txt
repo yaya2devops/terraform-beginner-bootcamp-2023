@@ -1,0 +1,11 @@
+### validator week 0
+after deleting the stack
+
+## validator week 1
+gitpod /workspace/terraform-beginner-bootcamp-2023 (main) $ aws cloudformation create-stack \
+  --template-url "https://cpbvt-payloads.s3.amazonaws.com/terraform-bootcamp-002/user-61b3ff04-82db-4816-a894-e260a6a2383f/run-b5c56f71-4a6b-4c80-b6d8-f09194a869e2/ca-central-1/b5c56f71-4a6b-4c80-b6d8-f09194a869e2-cross-account.yaml?response-content-disposition=attachment%3B%20filename%3Drun-b5c56f71-4a6b-4c80-b6d8-f09194a869e2-cross-account.yaml&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVUO25ZPVHA24FDSI%2F20231001%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231001T150004Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=64d5af482b73f8cef9d7a986d8ca2c433fd13f0b2f541548920ebc84bd2218d8" \
+  --stack-name ExamProValidation \
+  --capabilities CAPABILITY_NAMED_IAM
+{
+    "StackId": "arn:aws:cloudformation:ca-central-1:<aws-id>:stack/ExamProValidation/9af424d0-606c-11ee-a79f-0e9a5b54b16a"
+}
