@@ -1,7 +1,15 @@
 # TerraTowns Provider Skeleton 
-Welcome to the quickstart of our completely custom terraform provider. Typically, it's recommended to develop a custom provider in a separate repository as an independent project. 
+Welcome to the quickstart of our completely custom terraform provider. <br>Typically, it's recommended to develop a custom provider in a separate repository as an independent project. 
 
 **We'll nest it, empowered, within our project for this instance.**
+
++ [Create Your Custom Provider](#create-your-custom-provider)
++ [Provider Functionality](#provider-functionality)
++ [Imports In Go Lanugage](#importing-in-go)
++ [Setup Terrtowns Plugins](#plugin-setup)
++ [Complie Your Custom Provider](#complie-your-custom-provider)
++ [`mod.go` Requirement File](#-modgo--is-a-must)
++ [Build Custom Provider Skeleton](#real-build-check)
 
 When you visit any provider on the Terraform Registry, you'll notice a consistent naming pattern.
 
@@ -259,7 +267,7 @@ First, [Verify the script from here right away.](bin/build_provider)
 
 Second. We can't build this yet<br>To really build the provider **we need something else.**
 
-#### `mod.go` Is A Must
+### `mod.go` Is A Must
 
 You need to ensure you have a `go.mod` file. 
 
@@ -339,7 +347,7 @@ This file now won't be comitted and  will be avoided by your version control!
 #### Considerations
 - The subsequent builds but the first should be faster.
 - The binary file for your provider can be large (e.g., 20MB).
-- Use .gitignore file to exclude it from version control.
+- Use `.gitignore` file to exclude it from version control.
 
 Creating a custom Terraform provider can be a complex process<br>This starts the process of generating the actual binary which is also the Skeleton For our Terratowns!
 
