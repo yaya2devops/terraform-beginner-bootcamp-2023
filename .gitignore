@@ -1,6 +1,9 @@
 # Local .terraform directories
 **/.terraform/*
 
+# Ignore Terratowns Custom Provider Binairies All versions
+terraform-provider-terratowns/terraform-provider-terratowns_v*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
