@@ -1,361 +1,143 @@
-# TerraTowns Provider Skeleton 
-Welcome to the quickstart of our completely custom terraform provider. <br>Typically, it's recommended to develop a custom provider in a separate repository as an independent project. 
+# Terratowns Terraform Block
 
-**We'll nest it, empowered, within our project for this instance.**
+Welcome to `2.2.0` our second part for working with the creation of our custom provider.
 
-+ [Create Your Custom Provider](#create-your-custom-provider)
-+ [Provider Functionality](#provider-functionality)
-+ [Imports In Go Lanugage](#importing-in-go)
-+ [Setup Terrtowns Plugins](#plugin-setup)
-+ [Complie Your Custom Provider](#complie-your-custom-provider)
-+ [`mod.go` Requirement File](#-modgo--is-a-must)
-+ [Build Custom Provider Skeleton](#real-build-check)
+To get the most of this, I highly encourage you refer to the issues we dealt with for Terratowns [starting with this.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/51)
 
-When you visit any provider on the Terraform Registry, you'll notice a consistent naming pattern.
+## Connecting Dots And Traps
 
-|terraform-provider-name|
+We have our plugin ready from previous tag. <br>Let's rebuild the binary.
+```
+./bin/build_provider
+```
+
+There is build errors. An issue occurred while attempting to set `terraformrc`.
+- There was a mistakenly executed `mkdir` command.
+- add an `=` between `include` and `["local.providers/*/*"]` in terraformrc`.
+
+Double execute the script and it should now work fine, this generates;
+- The binary which is what we want.
+- Another folder that starts with a tilde `(~)`, terminate it.
+
+If you back to my previous branch, you should notice that I got that and left it for reference.
+
+- In the script replace `(~)` with `/home/gitpod`.
+- Correct `PROJET_ROOT` with `PROJECT_ROOT`.
+- Change the second `(~)` in `rm -rf` to  `/home/gitpod`.
+
+|Please correct the script by updating the path for the 'plugin_dir' variable|
 |---|
 
-[Browse and see for yourself](https://registry.terraform.io/browse/providers?tier=community). <br>I filtered it for you on communtiy tier already. Also..
-- Consult back the custom providers stuctures and code blocks.
-- Hasicups is a very good project for learning Terraform.
-- Community often includes individuals who start and complete their providers.
+These corrections eliminated errors, resulting in the successful generation of the binary.
 
-Over the past weeks, we've been actively experimenting with a variety of exciting technologies and the fun just started.
+- **To confirm the binary was generated**<br>
+**Check it in `terraform-provider-terratowns`.**
 
-### Create Your Custom Provider
-We've successfully developed our Ruby server with the assistance of Sinatra, and now, we're diving into Go to enhance our skills as we work on creating the custom provider.
+![HERE IS IT BinBaby!](assets/2.2.0/recover-binary-built.png)
 
-1. Create a new folder and name it `terraform-provider-terratowns` at root level.
-2. Inside this folder, create a file named `main.go`. (Single file for simplicity)
-3. Consolidate the code into a single file for improved readability.
-4. In the `main.go` file, structure the code as follows:
-    ```go
-    package main
-    
-    func main() {
-        // Your code here
-    }
-    ```
-> We always have the package main.
-
-Use (done) GPT to generate a "Hello World" program using the Go package and print the result.
-
-5. Now, let's create a simple "Hello World" program in Go.
-
-```go
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("Hello, World!")
-}
-
-```
-
-- Unlike languages like Ruby, Go files are compiled into binaries 
-- Unlike languages like Ruby Go files are not dynamically executed. 
-- You compile the script, and it runs as a binary.
-
-Go is built-in on Gitpod, [locally I installed it previously](https://blog.yahya-abulhaj.dev/the-technology-titan-go-language) and it took time for vars.
-
-6. Run your first Go program.
-```sh
-(51-terratowns-skeleton)
-$ go run main.go 
-
-$ go run main.go 
-Hello, World!
-```
-
-### Provider Functionality
-Our custom Terraform provider will provide CRUD operations for a resource. 
-
-Make a Request to LLM in the meanwhile.
-```
-Generate code for a custom Terraform provider that includes API actions designed to interact with Terraform resources. Can you confirm, so I provide you with requirements.
----
-Requirements:
-
-We aim to perform the following actions;
-1. GET /api/u/:user_uuid/home
-2. POST /api/u/:user_uuid/home
-3. PUT /api/u/:user_uuid/home
-4. DELETE /api/u/:user_uuid/home
-```
-
-#### Importing in Go
-To import multiple packages in Go, you can use the following syntax:
-```go
-import (
-    "package1"
-    "package2"
-    // Add more packages here
-)
-```
-
-### Plugin Setup
-
-We'll need to set up a plugin server for our provider exactly why we coded the ruby server.
- 
-1. In the `main` function add our custom provider.
-```go
-
-	plugin.Serve(&plugin.ServeOpts{
-		ProviderFunc: Provider,
-	})
-```
-2. Below the `main` function, specify the provider as a function.
-```go
-func Provider() *schema.Provider {}
-```
-
-- A function in go is just func
-- Go doesn't use classes; instead, it relies on interfaces.
-
-We used the `developer.hashicorp.com` Terraform provider setup tutorial for this.
-
-3. Retrieve the link from the `main.go` file and incorporate it into our schema.
-4. Code the function and add the following;
-```go
-	var p *schema.Provider
-	p = &schema.Provider{
-```
-
-4. Create the provider schema 
-```go
-p = &schema.Provider{}
-```
-5. Define the resource and data sources map inside p;
-```go
-		ResourcesMap:  map[string]*schema.Resource{
-
-		},
-		DataSourcesMap:  map[string]*schema.Resource{
-
-		},
-``` 
-5. Include the necessary elements for the schema incl `endpoint`, `user_uuid` and `token`.
-```go
-		Schema: map[string]*schema.Schema{
-			"endpoint": {
-				Type: schema.TypeString,
-				Required: true,
-				Description: "The endpoint for hte external service",
-			},
-			"token": {
-				Type: schema.TypeString,
-				Sensitive: true, // make the token as sensitive to hide it the logs
-				Required: true,
-				Description: "Bearer token for authorization",
-			},
-			"user_uuid": {
-				Type: schema.TypeString,
-				Required: true,
-				Description: "UUID for configuration",
-				//ValidateFunc: validateUUID,
-			},
-		},
-	}
-```
-6. Code validateFunc like a pro by adding it like this;
-```go
-validateFunc:= validateUUID
-```
-7. Request GPT to generate the code for it.
-```
-Can you fill the validate UUID function for me?
----
-Nah.
----
-
-Okay np.
-```
-8. Google provides its own library at github.com/google/uuid, which offer a solution for validation.
-
-9. Use this [stackoverflow refernce](https://stackoverflow.com/questions/25051675/how-to-validate-uuid-v4-in-go) for more about validation.
-10. Get the prompt from GPT and lets tweak it baby.
-```go
-func validateUUID(v interface{}, k string) (ws []string, errors []error) {
-	log.Print('validateUUID:start')
-	value := v.(string)
-	if _,err = uuid.Parse(value); err != nil {
-		errors = append(error, fmt.Errorf("invalid UUID format"))
-	}
-	log.Print('validateUUID:end')
-}
-```
-
-Great and cool. Now we have to look how to make this run.
+Now that our library is configured, it's time to integrate it with our Terraform setup. This corresponds to version `2.2.0` of our project.
 
 
-### Complie Your Custom Provider
+## Configuring the Custom Provider Block
+The next step is to configure the custom provider within Terraform:
 
-To compile a custom provider, you need a `terraformrc` file.
 
-Terraform maintains a hidden directory called `.terraform.d` with a `plugins` folder to store plugin binaries. 
-
-Ensure that you have a local provider directory where you place the binary files generated.
-
-1. Run the following command to build the custom provider binary:
-
-```
-go build -o terraform-provider-terratowns-v1.0.0
-```
-
-2. Test the custom provider using the `.terraformrc` file.
-3. Create a `terraformrc` file at the root of your project. 
-
-Ensure that the file name does not contain a period as it should be placed within your custom provider code. (We will use cp command.)
-
-Inside the `terraformrc` file, add the following configuration for provider installation:
+1. Update  `main.tf` file to specify the Terraform block with our provider.
 ```hcl
-provider_installation {
-  filesystem_mirror {
-    path = "/home/gitpod/.terraform.d/plugins"
-    include ["local.providers/*/*"]
-  } 
-  direct {
-   exclude = ["local.providers/*/*"] 
+  required_providers {
+    terratowns = {
+      source = "local.providers/local/terratowns"
+      version = "1.0.0"
+    }
   }
+```
+2. Below the Terraform block, create the provider block itself.
+```hcl
+provider "terratowns" {
+ <what is next goes here>
 }
 ```
-
-Also..building the binary can be challenging (was really hard..)
-
-> Thanks to Jason for [this article.](https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10)
-
-A script-based approach is recommended:
-
-4. Navigate to the `bin` directory.
-5. Create a file named `build_provider` and add the necessary content to build the binary.
-```
-rm -rf ~/.terraform.d/plugins
-rm -rf $PROJECT_ROOT/.terraform
-rm -rf $PROJECT_ROOT/.terraform.lock.hcl
-```
-We started by removing previous dependencies in case.
-
-6. Create both compute env, once for each chipset on the target compute
-```sh
-mkrdir -p ~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0//x86_64/
-mkrdir -p ~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0//linux_amd64/
+3. Specify the required the endpoint, service UUID, and token.
+```hcl
+  endpoint = "http://localhost:4567"
+  user_uuid="get-it-from-teacherseat-profile"
+  token="get-it-from-teacherseat-settings"
 ```
 
-> This ensures compatibility with what yours may be using.
+The required UUID and token values were obtained from a mock created by the script.
 
-Now make use of environment variables in your script to simplify the build process.
+Later this will both come from the ExamPro Platform. (It is already there)
 
-7. Apply the environment variables for your plugin path.
-```sh
-PLUGIN_DIR="~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/"
+### Rebuilding the Provider After Your Code
+1. Build our provider again to get an updated binary.
 
-mkrdir -p $PLUGIN_DIR/x86_64/
-mkrdir -p $PLUGIN_DIR/linux_amd64/
-```
+2. Initialize Terraform, and execute `terraform init`.
 
-8. Apply the environment variables for your plugin name and copy it.
-```sh
-PLUGIN_NAME="terraform-provider-terratowns_v1.0.0"
-
-cp $PLUGIN_NAME $PLUGIN_DIR/x86_64
-cp $PLUGIN_NAME $PLUGIN_DIR/linux_amd64
-```
-
-First, [Verify the script from here right away.](bin/build_provider)
-
-Second. We can't build this yet<br>To really build the provider **we need something else.**
-
-### `mod.go` Is A Must
-
-You need to ensure you have a `go.mod` file. 
-
-1. Create a file named go.mod and add the necessary content. 
-2. Add  repo URL as The module and the version.
-```mod
-module github.com/ExamProCo/terraform-provider-terratowns
-
-go 1.20
-```
-3. Important to Map the repo URL to the path of your workspace.
-```sh
-replace github.com/ExamProCo/terraform-provider-terratowns => /workspace/terraform-beginner-bootcamp-2023/terraform-provider-terratowns
-```
-4. Add an open require  for what we will need.
-```
-require ()
-```
-
-Now we are ready for the build and further troubleshoot.
-
-### Real Build Check
-
-1. Run the build script.
-
-|You will get an error about a missing import path. |
+|❌ ERROR|
 |---|
-|Correct it by ensuring proper use of parentheses in your import statements.|
+An error occurred during initialization due to a missing include.
 
-> It is `()` and not `{}`
+3. The build script was executed again, followed by `terraform init`.
 
-2. Build again
+This now resolves our issue.
 
-You are now being asked to get the github repos required.
+### Idea On The Way
+When you perform actions like that, having different log levels in place can greatly simplify the process.
 
-3. Run go get to fetch any required GitHub repositories as indicated by the error message.
+
+Effective logging can make troubleshooting easier. In this release, log levels were configured for debugging purposes:
+
+1. Add the log level using the command 
 ```
-go get github-url-lib
-```
-
-![Go Get It Boi](assets/2.1.0/go-get-it.png)
-
-This installs the latest version of the module.
-
-4. Building again result in a new `go.sum` file. 
-
-The go.mod file now includes more URL paths, which you didn't have to manually write.
-
-5. Building again.. also know that the first time may be slow due to dependency downloads.
-
-You might encounter errors during this build process number too much.. <br>
-The provider schema declaration is to replace `.Resources{` with `.Schema{.`<br>
-Also add the comma.. this is not ruby.
-
-Continue building and address any unused log errors.
-
-6. Remove or uncomment the log from the import in your `main.go`
-```go
-	// "log"
+TF_LOG=DEBUG tf init
 ```
 
-Finally, after a successful build.<br>
-You will find the `terraform-provider-terratowns-v1.0.0` binary.
-
-![Binairy Is Here Baby](assets/2.1.0/go-the-bin.png)
-
-It can be quite large, so consider the following;
-
-7. Observe the `go.sum` file and [all the dependencies here](terraform-provider-terratowns/go.sum).
-8. Add your binairy to your `.gitignore`.
-```sh
-# Ignore Terratowns Custom Provider Binairies All versions
-terraform-provider-terratowns/terraform-provider-terratowns_v*
+2. Enable Debug mode was in the environment configuration within the Terraform block in GitPod file.
 ```
-This file now won't be comitted and  will be avoided by your version control!
+tasks:
+  - name: terraform
+    env:
+      TF_LOG: DEBUG
+```
 
-#### Considerations
-- The subsequent builds but the first should be faster.
-- The binary file for your provider can be large (e.g., 20MB).
-- Use `.gitignore` file to exclude it from version control.
+We can now debug and get good stuff.
 
-Creating a custom Terraform provider can be a complex process<br>This starts the process of generating the actual binary which is also the Skeleton For our Terratowns!
+When things go awry in our Go code, these logs will prove invaluable for troubleshooting.
+This verbose mode is great idea.
 
-If it is building for you, You are in a good shape for `2.2.0` !
+## Back To Plan
+
+We stopped at the init, where we resolved our issue.
+
+1. Run `tf plan` to quickstart our code.
+
+![Plan Error Outputs](assets/2.2.0/comment-outputs.png)
+
+To ensure that the changes made were effective, the following steps were taken:
+
+- Make sure module blocks were commented to avoid interference.
+- Make sure all output lines in the root also.
+
+|tf plan will [now work](assets/2.2.0/planned-as-required.png) with No changes. Your infrastructure matches the configuration.|
+|---|
+2. Run `terraform apply` or just `tfaa` again to push our code with auto approve using our [previous configured alias](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/35-s3-static-website-host#bonus-three-captured).
+
+Things are working great now!
+
+![Apply Success With Zero Resource](assets/2.2.0/apply-done.png)
+
+|Applying the configuration will produce an empty Terraform state|
+|---|
+|This is actually a positive and desired outcome|
 
 
 
+#### Good Stuff!
+Version `2.2.0` of the TerraTown Provider saw improvements in the build script, custom provider configuration, debugging capabilities, and error resolution. 
 
+We're also introducing the Terraform block for our new custom provider, ensuring its functionality. 
+
+`2.3.0` is our final step and will involve a more in-depth exploration of Go and the coding of the actual resources for our provider.
 
 
 
