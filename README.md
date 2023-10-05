@@ -4,7 +4,7 @@ Welcome to `2.2.0` our second part for working with the creation of our custom p
 
 To get the most of this, I highly encourage you refer to the issues we dealt with for Terratowns [starting with this.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/51)
 
-## Connecting Dots And Traps HEHE
+## Connecting Dots And Traps
 
 We have our plugin ready from previous tag. <br>Let's rebuild the binary.
 ```
