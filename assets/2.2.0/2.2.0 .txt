@@ -1,0 +1,84 @@
+2.2.0 
+
+we are back to same branch: terrratowns provider
+
+
+build the build script provider
+errors!!
+
+cant sat terraformrc
+
+
+mkdir miss click
+
+now do script
+
+it will give u the binairy but also a weird directory with telda..
+
+delete permanant we dont ned
+
+go corect the script.. path.. for plugin dir var annd rm
+
+no error now: we have binairy
+check if its in 
+/ho!me/hiitpod/.terraform.D/pulign/localprovider/etc..
+
+
+
+now THAT OUR lib is congirugred we have to confiugure it in our terraform
+
+## Configure Custom provider
+
+to to main.tf
+
+specify the terraform block with our aporivder.
+
+and below create the provider block itself. endpooint, ser uuid, token
+
+these are the two we need required uuid and token
+
+go take mock from create script.
+
+
+build provider again.
+terraform init
+
+error
+
+include misses include.
+
+
+build again script and init => better no errors.
+
+
+when u do stuff like that => having log levels will make things easier.
+
+
+lets set the log level to be TF_LOG=DEBUG tf init
+
+lets go to gitpod and set debug mod in env in terraform block (a little verbose but wil get job done)
+
+
+we can now debug info and good stuff. when things are messed up with out go long those logs will help.
+
+
+> tf plan we get errors.
+
+
+- make sure u comment ur module block
+- make sur eu comment all output lines in root.
+
+tf plan and no changes )=> things are working ok noww
+
+apply will generate tf state empty but its nice..
+
+=> commit to same branch 47 terratowns-provider: 
+
+title: Implement tf provider block in tf
+should be able to create run terraform provider block without errors
+
+
+Intent for conflict and resolve.
+
+branch same
+tag: 2.2.0
