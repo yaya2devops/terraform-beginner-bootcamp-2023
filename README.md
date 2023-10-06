@@ -222,7 +222,7 @@ $
 ```
 After these steps, you should have empty functions in place. This marks the completion of the skeleton setup.
 
-> These are now coded, built again and pushed to the tag.
+> These are now coded, built again and pushed to the branch.
 
 Everything later will come into a place in week-2-perfecting.
 
