@@ -337,6 +337,8 @@ if err != nil {
 ```
 Error. **HTTP error**
 
+![HTTP Hey](assets/2.4.0/http-error.png)
+
 4. import the necessary package, you can add the statement as follows:
 ```go
 import ("net/http")
@@ -361,6 +363,8 @@ FromErr
 ```
 
 Another cute error,  **the "bytes" library is required.**
+
+![Bytes Hey](assets/2.4.0/bytes.png)
 
 8. You can add the import statement like this to resolve the issue in your main.go:
 ```go
@@ -408,13 +412,33 @@ We encountered a failure while querying available provider packages.
 - Please ensure consistency in naming.
 - Use the resource name `terratowns_home` instead of `terratown_home`.
 
+2. check your terraform providers locally.
+
+```sh
+$ terraform providers
+
+Providers required by configuration:
+.
+├── provider[local.providers/local/terratowns] 1.0.0
+└── provider[registry.terraform.io/hashicorp/terratown]
+```
+
+3. do it again after the update! Perfect.
+
+```sh
+Providers required by configuration:
+.
+└── provider[local.providers/local/terratowns] 1.0.0
+```
 This change is necessary because in the provider schema function of `main.go`, it is defined as `teratown_home`.
 
 
-2. Double check `tf init` now. Works!
-3. `terraform plan` and let's see.
+3. Double check `tf init` now. Works!
+4. `terraform plan` and let's see.
 
 We've got the resource! `A custom resource has been planned`!
+
+![Plan Resource Yay!](assets/2.4.0/tf-planed.png)
 
 - The mock server is not a real server, 
 - This won't behave exactly the same way as the actual server.
@@ -437,20 +461,53 @@ We can play a little bit around before targetting the terratown.
 
 I've found a better way to present the errors I encountered in these eight steps, allowing you to tackle and resolve each one systematically.
 
-The last apply will get your resource made 
-zby terraform to be provisioned. 
+The last apply will get your custom resource to be provisioned. 
 
 Great and cool!
 
-![1 Resource Created!]()
+![1 Resource Created!](assets/2.4.0/resource-deployed-terratowns.png)
+
+**NOTE:** I had to [deal with a 401](assets/2.4.0/401-issue.png) before my last succefull apply. <br>I fixed with a simple replace of the current uuid with mine for the sinatra server.
+
+![401: Replaced and Resolved](assets/2.4.0/401-resolve.png)
 
 
 ## State File Effects
 It's retaining this state, so we should be able to continue mocking it.
 
 The state file in Terraform keeps track of the resource's status, including the `homeUUID`. It's crucial for Terraform to maintain resource mapping.
-```
-
+```json
+{
+  "version": 4,
+  "terraform_version": "1.6.0",
+  "serial": 3,
+  "lineage": "861def3e-f028-0a8f-c9bd-de51c87602fb",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "terratowns_home",
+      "name": "home",
+      "provider": "provider[\"local.providers/local/terratowns\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content_version": 1,
+            "description": "Yaya is making something so great and  so innovative.\nSomething Amazing is cooking with the greatest and only Yaya.\nFeeling Empowered.\n",
+            "domain_name": "veryveryrandomm.cloudfront.net",
+            "id": "833761b8-c2d7-4b17-91b4-0e2237184078",
+            "name": "How to play League in 2023",
+            "town": "gamers-grotto"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
 ```
 
 Examine the state file to check for sensitive data (a valuable lesson to be learned).
@@ -503,9 +560,11 @@ Terraform will detect and update the state accordingly.
 
 10. Destroy the state. All is perfect!
 
-![Destroyed Custom Resource]()
+![Destroyed League Resource](assets/2.4.0/destroy-league.png)
 
-Destroying the state will remove it completely.
+Destroying the state will remove it completely. I used to play [league of legends](https://en.wikipedia.org/wiki/League_of_Legends) from the age 16 to 20.
+
+Up from that point, I live in the cloud.
 
 ### Considerations
 
@@ -518,4 +577,7 @@ Writing a robust Terraform provider can be a challenging task. <br>It's impressi
 - The next step involves utilizing the provider with the actual Terratown endpoint.
 - This will require setting up Terratown accounts and obtaining the necessary access.
 
-We've reached a significant milestone with our progress. <br> 🛑This is a hard stop 
+We've reached a significant milestone with our progress. <br> 
+
+|🛑|This is a hard good Stop! |
+|--:|:--|
