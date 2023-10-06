@@ -1,237 +1,521 @@
-# TerraTowns Resource Skeleton
+# TerraTowns `Home` Resource
+We welcome you in this last and intense `4/4` part of our custom terraform provider creation.
 
-In the previous setup `2.2.0`, we did not define any resources for our provider but layed the required to do so!
+We will start by defining the schema for our resource.
 
-Now, let's begin with the creation of a `2.3.0` Resource Skeleton. <br>
-We'll create a basic structure for a new resource and introduce some Go programming concepts along the way.
+I want to call it home resource. <br>But since its the only resource.. <br>We call it just resource.
 
-The next `2.4.0` is where we will actually go and fill those cruds as per our requirements in go.
+Remember it is still our home 😊
 
-### Preparing and Energizing
-Take note of the extensions you'll need, such as Go and Golang tools.
-1. Before all, uncomment the validator in your `main.go` code if you didn't remove it.
 
-I did cause I want my code neat. [Take a look.](terraform-provider-terratowns/main.go). I will code it again.
-
-2. Add 	`ValidateFunc: validateUUID`, to your schema uuid block.
-
-3. Also re-enable logging.
-```
-import ("log")
-```
-4. Also, ensure that you are working within the Terraform tab,
-
-We have set up debugging for this context.
-
-5. build our provider to see, you may encounter errors. 
-6.  Replace single quotes (`''`) with double quotes (`""`) for the func validator.
-7.  Build again; if you encounter errors, include 'google' in the import statement for 'uuid' lib.
-```
-	github.com/google/uuid v1.3.0
-```
-8. Use `go get` to fetch dependencies from the specified GitHub URL
+### Compiling the Code
+To check if everything compiles correctly first, run the following command:
 
 ```
-/terraform-provider-terratowns (55-terratowns-cruds) 
-$ go get github.com/google/uuid
-
-go: upgraded github.com/google/uuid v1.3.0 => v1.3.1
+bin/build_provider
 ```
-> Make sure you are inside the correct directory.
-9. Return to the our directory and build again or stay..
-You may encounter more errors;
-- If related to `append`, adjust the error handling to `errors`
-- If related to missing returns, make sure to add them as needed.
+## Code the Terraform Resource
 
-In some cases, returning `true` may be necessary, but `return` alone can work effectively.
-
-Keep in mind that building providers in Go can be complex, and it's okay if you're just starting to get the hang of it.
-
-10. Go build again, and should work fine now.
-
-![First Build Worked Here](assets/2.3.0/first-build-success-for-this-branch.png)
-
-11. Proceed with `terterraform init`. 
-
-You should see logs indicating a successful initialization.
-
-![Logs Enabled in Terraform Tab](assets/2.3.0/logs-enabled-tf-cli-tab.png)
-
-12. run tf plan and observe
-- No errors found!
-- No infrastructure changes!
+1. Go to the `main.tf` file at the root level.
+2. Add a new Terraform resource named `terrtown_home` and name it `home`. 
+```hcl
+resource "terratown_home" "home" {}
 ```
-2023-10-05T21:52:23.756Z [INFO]  backend/local: plan operation completed
-
-No changes. Your infrastructure matches the configuration.
-
-Terraform has compared your real infrastructure against your configuration and found no
-differences, so no changes are needed.
+3. Start with Including the `name`  attributes.
+```hcl
+name = "Secrets are at the core of successful businesses"
 ```
-This is expected at this stage aka **back to black!**
+
+> Where [I read that quote?](https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296)
+
+4. choose where you want to put your page e.g.; `gamers-groto` for `town`.
+```hcl
+town = "gamers-grotto"
+```
+5. Use the `<< >>` syntax to configure the description, similar to EOF.
+```hcl
+description = <<DESCRIPTION
+Something so great and innovative.
+Something Amazing.
+As great as you.
+DESCRIPTION
+```
+6. Retrieve the domain name from your other project (CloudFront URL) 
+7. set the domain_name as an output.
+
+```
+domain_name = "very-random.cloudfront.net"
+```
+8. Specify the content_version starting with one;
+```
+content_version = 1
+```
+## Building and Initializing
+Run the following commands to prepare your Terraform environment:
+
+1. Run `terraform init`
 
 
-## Writing Provider Configuration
 
-Create a `providerConfigure` function.<br> We will start by writing some initial code.
+**ERROR:** "failed to query available provider packages," 
 
+2. review your Terraform configuration files include terraformrc.
 
+Everything looks fine..<br>We didnt finish anything with the code.. <br>We still have empty resources in `main.go` it may be why..
+
+Lets keep coding and see.
+
+## Code Implementation
+Next, we need to code the CRUD (Create, Read, Update, Delete) operations for our resource.
+
+### Create Action
+- Implement the HTTP request and endpoint for creating a resource.
 ```go
-func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
+	req, err := http.NewRequest("POST", config.Endpoint+"/u/"+config.UserUuid+"/homes", bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return diag.FromErr(err)
+	}
+```
+- Add authorization and your bearer token to the create request.
+```go
+	req.Header.Set("Authorization", "Bearer "+config.Token)
+```
+- Set headers for content type and accept.
+```go
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+```
+- Ensure that you handle any errors and parse the response.
+```go
+if err != nil {
+   return diag.FromErr(err)
+}
+defer resp.Body.Close()
+
+// parse response JSON
+var responseData map[string]interface{}
+if err := json.NewDecoder(resp.Body).Decode(&responseData);  err != nil {
+   return diag.FromErr(err)
+}
+
+// StatusOK = 200 HTTP Response Code
+if resp.StatusCode != http.StatusOK {
+   return diag.FromErr(fmt.Errorf("failed to create home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, bytes.NewBuffer(responseData)))
 }
 ```
-
-1. Add the return func nested within;
+- Return the `homeUUID` from the response and set it using `d.Set`.
 ```go
-	return func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics ) {
+homeUUID := responseData["uuid"].(string)
+d.SetId(homeUUID)
+```
+
+- Add print at the start for debugging purposes
+```go
+log.Print("resourceHouseCreate:start")
+```
+### Read Action
+- Implement the HTTP GET request for reading a resource.
+```go
+req, err := http.NewRequest("GET", config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID, nil)
+if err != nil {
+   return diag.FromErr(err)
+}
+```
+- Pass the `homeUUID` in the URL.
+- Set the headers for the read func
+```go
+req.Header.Set("Authorization", "Bearer "+config.Token)
+req.Header.Set("Content-Type", "application/json")
+req.Header.Set("Accept", "application/json")
+```
+- Parse the response data and return it.
+```go
+	client := http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+```
+Consider the code to handle errors gracefully. <br>(Coming below)
+### Update Action
+- Implement the HTTP request for updating a resource.
+```go
+	req, err := http.NewRequest("PUT", config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID, bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		return diag.FromErr(error)
+	}
+```
+- Set the header for the update
+```go
+	req.Header.Set("Authorization", "Bearer "+config.Token)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+```
+- Use the payload from the create action but exclude domain and town.
+- Set the payload data in `d.Set` for name, description, and content version.
+
+```go
+	d.Set("name",payload["name"])
+	d.Set("name",payload["description"])
+	d.Set("content_version",payload["content_version"])
+```
+
+### Delete Action
+- Implement the HTTP request for deleting a resource.
+```GO
+	req, err := http.NewRequest("DELETE", config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID, nil)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+```
+- Set the ID if the operation is successful and a print.
+```GO
+	d.SetId("")
+	log.Print("resourceHouseDelete:end")
+```
+
+
+|This repetition could potentially be refactored; try?|
+|:---|
+
+
+
+Next, we need to conduct the client call following the header, both for the delete operation and similarly for the update, read, and create operations.
+
+
+## Payload Processing and Error Handling in API Requests
+
+The message body should contain all the details, here is a design for your reference.
+
+![Diagram Goes Here](journal/architectures/week2-anatomy-request.png)
+
+1. **Pay Payload for a Post**
+   - To begin, we need to pay a payload for a post in createfunc.
+```go
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return diag.FromErr(err)
 	}
 ```
 
-2. Add the Config for `endpoint`, `token` and `uuid`;
+2. **Create Configuration**
+   - Now, let's return to the creation process.
+   - After configuring, we need to pass a payload block.
 ```go
-		config := Config{
-			Endpoint: d.Get("endpoint").(string),
-			Token: d.Get("token").(string),
-			UserUuid: d.Get("user_uuid").(string),
+	payload := map[string]interface{}
+    { }
+   ```
+3. **Payload Formatting**
+   - It's important to format the payload properly.
+   - Consider using a JSON function to convert it into bytes and add it as an argument to the next step.
+```json
+		"name": d.Get("name").(string),
+		"description": d.Get("description").(string),
+		"domain_name": d.Get("domain_namae").(string),
+		"town": d.Get("town").(string),
+		"content_version": d.Get("content_version").(int64),
+```
+4. **Handling the Response**
+   - After completing the payload and putting it in the body, we should receive a response.
+   - We'll need to perform actions based on this response.
+   - Parse the response data.
+```go
+var responseData map[string]interface{}
+if err := json.NewDecoder(resp.Body).Decode(&responseData);  err != nil {
+   return diag.FromErr(err)
+}
+```
+
+5. **Closing the Response Body**
+   - Don't forget to close the response body after you're done with it.
+   - Use `resp.Body.Close()` to accomplish this.
+```go
+	defer resp.Body.Close()
+```
+6. **Error Handling in Create**
+   - Obtain the code that will detect and handle errors from the server during the create process.
+   - Check if `resp.StatusCode` is not equal to `http.StatusOK` to determine if an error occurred.
+```go
+	if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to create home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, bytes.NewBuffer(responseData)))
+	}
+```
+7. **Handling Errors in Delete**
+   - Similarly, for the delete operation, you'll need to implement error handling.
+   - Check the response status code for errors.
+```go
+	if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to delete home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, responseData))
+	}
+```
+8. **Setting the ID Value**
+   - In Terraform, when working with resources, it's essential to return an ID.
+   - In the create step, add the following:
+     - `homeUUID := response uuid string`
+     - Set `d` to this value and print for debug.
+```go
+	d.SetId("")
+
+	log.Print("resourceHouseDelete:end")
+```
+
+###  Setting the ID Value
+In Terraform, it's important to return an ID whenever you have a resource.
+   - In the create step, add the following:
+     - `homeUUID := response uuid string`
+     - Set `d` to this value, e.g., `d.set(homeUUID)`.
+
+### Reading Resource Data
+Now, let's focus on the read operation.
+   - We need the home ID for this.
+```go
+   config := m.(*Config)
+	homeUUID := d.Id()
+```
+   - Revise the response status code to use an "if-else" structure.
+     - If it's OK, return the data.
+
+```go
+
+	if resp.StatusCode == http.StatusOK {
+		// parse response JSON
+		if err := json.NewDecoder(resp.Body).Decode(&responseData);  err != nil {
+			return diag.FromErr(err)
 		}
-		return &config, nil
+       // d.set
+	} else if resp.StatusCode != http.StatusNotFound {
+		d.SetId("")
+	} 
 ```
-
-3. Fix two prints to help in the debug;
-
-```go
-    // Before Config
-		log.Print("providerConfigure:start")
-    // Before Return
-		log.Print("providerConfigure:end")
+   - Use `d.Set` for all the content to be read, such as `name`, `content`, `desc`, `domain`, etc.
+```GO
+		d.Set("name",responseData["name"].(string))
+		d.Set("description",responseData["description"].(string))
+		d.Set("domain_name",responseData["domain_name"].(string))
+		d.Set("content_version",responseData["content_version"].(int64))
 ```
-4. Add or uncomment if the following line before returnig `p` in provider schema func;
+   - Consider handling cases where the status is not available to avoid config drift.
 ```go
-	p.ConfigureContextFunc = providerConfigure(p)
-```
-5. **Rebuild** the provider after adding the `providerConfigure` function.
- 
-you may encounter errors related to undefined elements.
-
-6. To fix that, **Import More Dependencies**
-    - Import `diag`, `context` packages.
-    ```go
-    	import (
-        "context"
-        "github.com/hashicorp/terraform-plugin-sdk/v2/diag")
-    ```
-
-7. For config, Define your own structure for the configuration after the `import`
-```go
-type Config struct {
-  Endpoint string
-  Token string
-  UserUuid string
-}
-```
-
-![Dependencies Working!](assets/2.3.0/worked-poc.png)
-
-We are all set, lets setup our resource.
-
-### Setting Up a Resource
-Next, we'll set up a resource for the provider. We will define our Cruds and code these actions as separate functions.
-
-While we could create separate files for this, we'll keep everything together for readability your ease of learn.
-
-1. **Modify Provider Schema**
-    - In the provider schema (provider.pro), add the resource name `terrtowns_home`.
-```go
-		ResourcesMap:  map[string]*schema.Resource{
-      // added the following:
-			"terratowns_home": Resource(),
-		},
-```
-
-2. **Resource Functions**
-
-Define the four basic CRUD actions for your resource block;
-```go
-func Resource() *schema.Resource {
-	log.Print("Resource:start")
-	resource := &schema.Resource{
-		CreateContext: resourceHouseCreate,
-		ReadContext: resourceHouseRead,
-		UpdateContext: resourceHouseUpdate,
-		DeleteContext: resourceHouseDelete,
+else if resp.StatusCode != http.StatusOK {
+		return diag.FromErr(fmt.Errorf("failed to read home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, responseData))
 	}
-	log.Print("Resource:start")
-	return resource
-}
-```
-These actions are standard for every resource in a Terraform provider. 
-We have to code a func  skeleton for each.
-
-**Starting with the create;**
-
-```go
-func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	return diags
-}
 ```
 
-**Proceed to the read;**
-```go
-func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	return diags
-}
-```
+Good work!
+### Updating Resources
+For the update operation, you'll need to use the payload from the create operation.
+   - Exclude the `domain` and `town` since these should not change.
+   - Return the payload values for `name`, `desc`, `description`, and `content_ver`.
+   - Use `d.Set` to update these values.
 
-**Advance to the update;**
-```go
-func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	return diags
-}
-```
+# Testing
+After implementing these actions, you should test your provider.
 
-**Wrap the skeleton with delete;**
-```go
-func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	return diags
-}
-```
-
-3. **Build Again**
-    - Rebuild the provider after defining these functions.
+1. Build and initialize Terraform.
 ```
 ./bin/build_provider
 ```
-7. **Fix Errors**
 
-Address any issue encountered during this build process;
-   
-- Ensure that interface definitions are in `{}` and not `()`. and 
-- Ensure there is no missing as missing commas.
-- Ensure you return the resource in the main function for all actions.
+We have some issues and **syntax error.**
 
-6. **Build Again**
-    - Rebuild the provider one more time to ensure everything is working as expected.
-```sh
-$ ./bin/build_provider  
+2. Replace `err != {` with `err != nil {` in your code to resolve the issue.
+```go
+// Before
+if err != {
+		return diag.FromErr(err)
+	}
 
-$ 
+// After
+if err != nil {
+		return diag.FromErr(err)
+	}
 ```
-After these steps, you should have empty functions in place. This marks the completion of the skeleton setup.
 
-> These are now coded, built again and pushed to the branch.
+3. Build again baby.
+```
+./bin/build_provider
+```
+Error. **HTTP error**
 
-Everything later will come into a place in week-2-perfecting.
+4. import the necessary package, you can add the statement as follows:
+```go
+import ("net/http")
+```
 
-#### Production Considerations
-In a real project, you wouldn't commit and create pull requests for these changes; they would typically remain in a feature branch until the entire job is finished. 
+5. Build again one more.
+```
+./bin/build_provider
+```
+Error. **We have an `undefined.FrontErr`.**
 
-In the next phase and last, we'll start filling in the resource and making the API calls.
+6. Change this with correct the usage of the identifier with this;
 
-|OpenAI plugins are great stuff|
-|:---:|
+```
+FromErr
+```
+
+7. Building building!
+
+```
+./bin/build_provider
+```
+
+Another cute error,  **the "bytes" library is required.**
+
+8. You can add the import statement like this to resolve the issue in your main.go:
+```go
+import ( "bytes")
+```
 
 
+We have gone through multiple builds, and to avoid spamming you with more build errors, I will now list the errors we encountered and how we resolved them.
+
+**The Next ERROR;**
+- The variable `payloadBytes` is declared but not utilized on line 255 because we need to pass it instead of `nil`.
+-  We should use `bytes.NewBuffer` to create the buffer since it's not reading. The same adjustment should be made for the `createAction` and `readOnly` functions.
+
+**The Next ERROR +1;**
+- We don't need `responseData` for the update operation. We are not interested in it. 
+- Please remove `responseData` and only capture the response body.
+- Take the `responseData` from the delete function as well.
+
+8. Building the great build!
+
+```
+./bin/build_provider
+```
+
+We've successfully built it now!
+
+|🤯|It's okay if it seems confusing at the moment;|
+|---:|:---|
+|💯|Things will get easier|
+|🧐|When we start examining the tfstate file|
+|💪|Don't give up King or Queen. |
+
+
+### Test The Magic
+
+Does this actually now provision anything? 
+Is it working as expected? 
+
+This is communicating with our Sinatra server.
+
+1. do `tf init` and let's see.
+
+We encountered a failure while querying available provider packages.
+
+- Please ensure consistency in naming.
+- Use the resource name `terratowns_home` instead of `terratown_home`.
+
+This change is necessary because in the provider schema function of `main.go`, it is defined as `teratown_home`.
+
+
+2. Double check `tf init` now. Works!
+3. `terraform plan` and let's see.
+
+We've got the resource! `A custom resource has been planned`!
+
+- The mock server is not a real server, 
+- This won't behave exactly the same way as the actual server.
+
+We can play a little bit around before targetting the terratown.
+
+4. Apply your changes with `terraform apply` for too much errors to come ofc.
+
+| Step | Error Description                                     | Resolution                                               |
+| ---- | ----------------------------------------------------- | -------------------------------------------------------- |
+| 1    | Spelling mistake: `domain_namae` -> `name`           | Update the variable name to "name"                       |
+| 2    | Build provider to delete files                        | Execute `./bin/build_provider`                            |
+| 3    | Initialize and apply Terraform                        | Run `terraform init` and `terraform apply`                |
+| 4    | Code block issue with `<`, related to JSON parsing   | Ensure the response is valid JSON and not HTML or other   |
+| 5    | Invalid character `<`, looking for value start       | Validate the data from the API is valid JSON             |
+| 6    | URL adjustment needed: hit "/api/home" instead       | Change the URL to "/api/home"                            |
+| 7    | Issue with endpoint in create script (only "home")   | Modify the endpoint to include "/api" in `main.tf`       |
+| 8    | Reattempt after endpoint correction                  | Rebuild, initialize, and apply                           |
+
+
+I've found a better way to present the errors I encountered in these eight steps, allowing you to tackle and resolve each one systematically.
+
+The last apply will get your resource made 
+zby terraform to be provisioned. 
+
+Great and cool!
+
+![1 Resource Created!]()
+
+
+## State File Effects
+It's retaining this state, so we should be able to continue mocking it.
+
+The state file in Terraform keeps track of the resource's status, including the `homeUUID`. It's crucial for Terraform to maintain resource mapping.
+```
+
+```
+
+Examine the state file to check for sensitive data (a valuable lesson to be learned).
+- It does not store sensitive data here.
+- We can view our schema for the resource and the provider we created.
+
+The most important aspect is the ID, as the Terraform provider relies on it to maintain the mapping accurately.
+
+## Correct and Make Changes
+You can make changes to your resource properties and apply them. 
+
+Terraform will detect and update the state accordingly.
+
+
+#### Let's Make Changes
+
+1. Change `name` to `resource name` in `main.tf` and we encounter an error.
+   - We wanted "home," but it's "House," e.g., "HouseCreate."
+2. Change `init` to `float64`.
+   - Another error occurs because of the state file.
+   - Error occurs because in one place it's `init`, and in another, it's `float64`.
+3. Data type mapping:
+   - Create: `int`
+   - Read: `float64`
+   - Update: `int`
+   - This mapping is based on how the response is received.
+4. Resolution Steps:
+   - Build.
+   - Delete state.
+   - Stop Sinatra.
+   - `tf init`.
+   - `tf apply --auto-approve`.
+   - These steps are taken to resolve the error.
+5. It was created.
+   - Go to Sinatra and verify.
+   - Confirm that it's created.
+6. Make a change, and then reapply.
+   - It detects that the description has changed and prompts for confirmation.
+   - Observe that the state now contains the updated information.
+7. There's a double name in the update; change it to "description" and double-check.
+   - Ensure that there is no duplication.
+8. Make an update to the description or name.
+   - Run `tf apply`.
+   - Ensure Sinatra is running.
+> Also, the apply do both update and show.
+9. It updates our state, and the names align as desired.
+   - Confirm that the state reflects the changes.
+
+#### Cleanup
+
+10. Destroy the state. All is perfect!
+
+![Destroyed Custom Resource]()
+
+Destroying the state will remove it completely.
+
+### Considerations
+
+- Are there any edge cases? (unknown)
+- Are there any overlooked factors? (unknown)
+
+Writing a robust Terraform provider can be a challenging task. <br>It's impressive to achieve this, and it's undeniably cool!
+
+
+- The next step involves utilizing the provider with the actual Terratown endpoint.
+- This will require setting up Terratown accounts and obtaining the necessary access.
+
+We've reached a significant milestone with our progress. <br> 🛑This is a hard stop 
