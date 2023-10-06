@@ -1,6 +1,13 @@
 # TerraTowns `Home` Resource
 We welcome you in this last and intense `4/4` part of our custom terraform provider creation.
 
+  * [Code the Terraform Resource](#code-the-terraform-resource)
+  * [Building and Initializing](#building-and-initializing)
+  * [Code Implementation](#code-implementation)
+  * [Payload Processing in API Requests](#payload-processing-and-error-handling-in-api-requests)
+* [Testing and State](#testing)
+
+
 We will start by defining the schema for our resource.
 
 I want to call it home resource. <br>But since its the only resource.. <br>We call it just resource.
@@ -57,7 +64,7 @@ Run the following commands to prepare your Terraform environment:
 
 
 
-**ERROR:** "failed to query available provider packages," 
+**ERROR:** `failed to query available provider packages` 
 
 2. review your Terraform configuration files include terraformrc.
 
@@ -208,7 +215,7 @@ The message body should contain all the details, here is a design for your refer
 3. **Payload Formatting**
    - It's important to format the payload properly.
    - Consider using a JSON function to convert it into bytes and add it as an argument to the next step.
-```json
+```yaml
 		"name": d.Get("name").(string),
 		"description": d.Get("description").(string),
 		"domain_name": d.Get("domain_namae").(string),
