@@ -1,0 +1,81 @@
+# Terraform Provider Documentation - Terratown
+
+## Introduction
+
+This documentation outlines the development process and implementation details of the Terraform provider for Terratown. The provider, named "Terratown," is designed to facilitate the management of resources within Terratown through Terraform configurations.
+
+## Schema Definition
+
+To begin with, we defined the schema for our Terraform resource. The primary resource is referred to as the "home" resource, though we sometimes use the term "resource" as a shorthand since it is the only resource at present.
+
+### Main Go File (main.go)
+
+- Inside the main.go file, we define attributes such as name, description, domain name, and town for the "home" resource.
+- Once the attributes are defined, we proceed to compile the code using the "bin/build_provider" command.
+
+## Terraform Configuration
+
+In the root-level main.tf file, we add a new resource named "terrtown_home" with the name "home." This resource includes attributes like description, town, and content_version. Users can specify the desired location for the resource (e.g., "gamers-grotto") and employ the "<< >>" syntax for description formatting.
+
+Additionally, the domain name is obtained from an external project, specifically the CloudFront URL, and is added to the resource's output.
+
+## Resource Functions
+
+After defining the schema and Terraform configuration, we proceed to implement resource functions for creating, reading, updating, and deleting resources. Each of these functions requires configuration settings.
+
+### Create Action
+
+We code the creation of a new resource, including HTTP requests, authorization, and content type headers. The response is parsed, and the resource ID is returned.
+
+### Read Action (resourcehouseread)
+
+This function retrieves resource data based on the specified homeUUID.
+
+### Update Action
+
+We implement the update function, reusing payload from the create action but excluding domain and town attributes.
+
+### Delete Action
+
+Similar to create, we code the delete function, which sets the resource ID upon successful deletion.
+
+## Payload Handling
+
+To manage data transmission, we introduce a payload block after the configuration settings. A JSON function is used to format the payload before sending it to the server. Responses are parsed to handle errors and update the Terraform state.
+
+## Testing and Debugging
+
+Throughout the development process, we encounter and resolve various issues such as syntax errors, missing imports, and undefined variables. A series of test commands are used to ensure the provider functions correctly.
+
+## Terraform Interaction
+
+We verify the provider's functionality by running Terraform commands:
+
+- `tf init`
+- `tf plan`
+- `tf apply`
+
+We identify and rectify issues such as spelling mistakes in configuration files and ensure that the provider interacts successfully with the Terratown API.
+
+## State File Management
+
+We examine the Terraform state file, which contains information about the provider's configuration and resources. Sensitive data is not stored in this file, but it is essential for maintaining resource mapping.
+
+## Making Changes
+
+As development progresses, we make changes to the resource configuration, update attributes like name, description, or content_version, and verify that Terraform applies these changes correctly.
+
+## Clean-up and Conclusion
+
+We conclude the development process by ensuring the provider handles destroy operations correctly, removing resource states when necessary, and confirming that all functions work as expected.
+
+## Considerations
+
+- **Edge Cases**: Although we have made efforts to address various issues, edge cases may exist and require further investigation.
+- **Unconsidered Factors**: As with any development project, unforeseen factors may arise during real-world usage.
+
+## In Conclusion
+
+Developing a Terraform provider for Terratown has been a challenging yet rewarding experience. The provider allows users to manage resources within Terratown efficiently through Terraform configurations, offering a powerful tool for infrastructure management.
+
+**Commit**: Finish Implementation of Terraform Provider - Terratown Provider
