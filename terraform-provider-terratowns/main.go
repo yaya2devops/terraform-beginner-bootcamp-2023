@@ -24,7 +24,9 @@ type Config struct {
 func Provider() *schema.Provider {
 	var p *schema.Provider
 	p = &schema.Provider{
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"terratowns_home": Resource(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{},
 		Schema: map[string]*schema.Schema{
 			"endpoint": {
@@ -46,6 +48,7 @@ func Provider() *schema.Provider {
 			},
 		},
 	}
+	p.ConfigureContextFunc = providerConfigure(p)
 	return p
 }
 
@@ -70,6 +73,39 @@ func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
 		log.Print("providerConfigure:end")
 		return &config, nil
 	}
+}
+
+
+func Resource() *schema.Resource {
+	log.Print("Resource:start")
+	resource := &schema.Resource{
+		CreateContext: resourceHouseCreate,
+		ReadContext: resourceHouseRead,
+		UpdateContext: resourceHouseUpdate,
+		DeleteContext: resourceHouseDelete,
+	}
+	log.Print("Resource:start")
+	return resource
+}
+
+func resourceHouseCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
+}
+
+func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
 }
 
 // main is the entry point of the application.

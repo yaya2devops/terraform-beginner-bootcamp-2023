@@ -12,6 +12,7 @@ Take note of the extensions you'll need, such as Go and Golang tools.
 1. Before all, uncomment the validator in your `main.go` code if you didn't remove it.
 
 I did cause I want my code neat. [Take a look.](terraform-provider-terratowns/main.go). I will code it again.
+
 2. Add 	`ValidateFunc: validateUUID`, to your schema uuid block.
 
 3. Also re-enable logging.
@@ -221,13 +222,16 @@ $
 ```
 After these steps, you should have empty functions in place. This marks the completion of the skeleton setup.
 
+> These are now coded, built again and pushed to the branch.
+
+Everything later will come into a place in week-2-perfecting.
+
 #### Production Considerations
 In a real project, you wouldn't commit and create pull requests for these changes; they would typically remain in a feature branch until the entire job is finished. 
 
 In the next phase and last, we'll start filling in the resource and making the API calls.
 
-|Have you heard about OpenAI plugins|
+|OpenAI plugins are great stuff|
 |:---:|
-|I think its  worth exploring|
 
 
