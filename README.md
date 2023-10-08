@@ -48,11 +48,11 @@ I thought you may forget what is that. [Get the knowledge back.](https://develop
 
 2. Configure Execution Mode:
    - Change the execution mode to "local" in Terraform Cloud. 
-   - After you picked your project, click **settings** from the left pane
+   - After you picked your project, click **settings** from the left pane<br>
 ![Settings Project Pane](assets/2.6.0/click-settings.png)
 
 **The general pane will now popup.**
-  - In the same page, swipe below and look for exec mode.
+  - In the same page, swipe below and look for exec mode.<br>
 ![General Project Settings Pane](assets/2.6.0/general-pane-popup.png)
 
 You will find that there is no option for local execution.
@@ -93,13 +93,37 @@ Remmember again that it's essential to keep your state safe in the cloud.
    - Build the plugin provider and set it to auto in the Terraform section.
 
 4. Initialize and apply the Terraform configuration:
-   - Run `terraform init` followed by `terraform apply` to deploy your configuration to Terraform Cloud.
+   - Run `terraform init` <br>
+   ![TF Init with TF Cloud](assets/2.6.0/init-tf-cloud.png)
+   
+   - Followed by `terraform apply` to deploy your configuration to Terraform Cloud.
 
-5. Monitor the Terraform Cloud dashboard:
-   - Terraform Cloud will not prompt for approvals but will display the current status of your operations. Consider pushing the provider to the registry for future use.
+Observe the state is now in your terraform dotfile.
 
-All resources are now managed by Terraform Cloud! 
+![Local Provider Proof As well..](assets/2.6.0/tf-cloud-local-exec.png)
 
-You can stop your environment and return to it later, knowing that your state is securely stored in the cloud.
+Have you also noticed? **It is damn fast as it used to.** But not only that..
+
+5. Monitor the Terraform Cloud dashboard and find your state and secure and downloadable anytime, anywhere.
+
+![Terraform Cloud Consult](assets/2.6.0/state-managed.png)
+
+**State** is now managed by **Terraform Cloud** with your **local execution** to your development environment!
+
+![Local Exec in TF Cloud again, for you..](assets/2.6.0/local-exec.png)
+
+You can stop that and return to it later, **knowing that your state is stored in the cloud.**
+
+The thing about Terraform Cloud that will not prompt for approvals but will display the current status of your operations. 
 
 
+### Additional.
+
+In order for me to do this. <br>I had to migrate to codespaces and did the entire process from the start to finish to name a few;
+- Terraform Login
+- AWS Credentials
+- Configured terraformrc dot file.
+- Explore the plugin path.
+- Dealt with too many instant error/resolve.
+
+Great, cool and easy now.<br> **Consider pushing the provider to the registry for future use.**

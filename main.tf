@@ -6,13 +6,14 @@ terraform {
     }
   }
 
-  #  cloud {
-  #  organization = "yayaintfcloud"
+    cloud {
+    organization = "yayaintfcloud"
 
-  #  workspaces {
-  #    name = "terra-house-2023"
-  #  }
-  #}
+    workspaces {
+      name = "terra-house-2023"
+    }
+  }
+}
 }
 
 provider "terratowns" {
