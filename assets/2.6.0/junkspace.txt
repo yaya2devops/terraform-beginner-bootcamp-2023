@@ -1,0 +1,31 @@
+Brief Trying stuff on codespaces;
+
+- the tf script installed terraform ok (make it exe)
+- tf login with tf cloud and token
+- get the right plugin path dir  https://chat.openai.com/share/e9931f19-23da-4ff9-abb7-d66e9b6b84c6
+
+He is not smart.
+
+
+lets see;
+```
+PLUGIN_DIR="/home/codespace/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/"
+```
+
+```
+@yaya2devops ➜ / $ ls
+bin  boot  dev  etc  go  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var  vscode  workspaces
+@yaya2devops ➜ / $ 
+```
+
+here is home, should be codespace next
+
+```
+@yaya2devops ➜ /home $ ls
+codespace  vscode
+```
+
+
+I just added the content myself
+
+@yaya2devops ➜ /workspaces/terraform-beginner-bootcamp-2023/terraform-provider-terratowns (61-tf-turbocharging) $ vim ~/.terraformrc

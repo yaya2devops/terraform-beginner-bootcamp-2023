@@ -5,7 +5,16 @@ terraform {
       version = "1.0.0"
     }
   }
+
+    cloud {
+    organization = "yayaintfcloud"
+
+    workspaces {
+      name = "terra-house-2023"
+    }
   }
+}
+}
 
 provider "terratowns" {
   endpoint = var.terratowns_endpoint
