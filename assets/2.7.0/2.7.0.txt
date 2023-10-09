@@ -1,0 +1,222 @@
+Welcome to this 2.7.0
+
+
+because we are now gettinginto shape..
+
+Another thing i want to be able to CREATE more home or more house.
+
+the platform i think now supports twelve home or house.
+
+
+
+---create issue:  Multi Home and Terraform Cloud (these could be 2 seperate issues)
+
+You probably want to itemize them two seperate tihngfs as its trying to acomplish two diff goals.
+
+(refering to tags i'll do it in branchs as well)
+
+
+-  [ ] provison more thatn one home to terrattowns
+
+
+---create branch
+
+
+## Terrhouses setup
+
+i need to make sure i can deploy more than a house at a time. many ways to handle this.
+- do two folders and deploy seperate
+- but do second home as a resource in the same maintf root.
+
+We need another module as well. 
+the paths are serving one home in the public.
+
+we need to create sub folder in public for different pages.
+take the current pages to that folder and name it something meaningful.
+
+do new page folder and create it and add its assets dire and index and error.
+
+
+back to main.Tf we have to makesome changes with terrahoiuse_aws vars.
+
+edit the blcok.? and the other block and the module etc explain it..PLZZZzz
+
+change the module name.
+
+change cloudfront to domain_name.
+
+change second module and its resource domain name; again.
+
+
+
+lets go to our vars in our modules now.
+
+change index vars to public path.
+
+take the path var and the asset??//
+go update the upload assets block in res storage.
+go do something for index htmla nd error hmlt s3 object blocks..
+
+
+"Terrahome"change the folder name for module and the module call in main root tf.
+
+get andrew readme for the module. and enhance it.
+
+
+comment ehe payday blco and its module and do npm i 
+i mean tf init and plan:
+
+
+it shoudnt ask for the bucket name (it is saying enter value.)
+
+
+do tf state list and see the res that we have in tf cloud.. in gitpod.
+
+do a tf state pull and do tf plan
+
+still prompting for var bucket name.
+
+
+this is confusing
+
+all vars are commented
+state is in .terraform and not in root; so its tf cloud
+
+ah its in our vairbales in root. delete it
+
+
+now plan again it is prompting for public path its ok we want that
+
+change it in variables to homename_pûblic_path and add another one for my second home and comment it for now;.
+
+update the tfvars public path after we inserted the page in nested project;
+
+
+add projectpage1 content verion and page2 in tfvars sample too..
+
+
+
+
+as gpt:
+----
+how do u set nested tf variables in tf vars file.
+----
+this is to make stuff look more NEAT DAMN.
+
+and so the stuff in variables.tf root using type object.
+
+
+now in our main root we can call better.
+
+
+do tf init
+
+tf plan.
+
+errorsssssssssssssssssss
+
+
+- output change it to domain_name from cloudfront_url.. we changed it
+
+
+tf plan
+
+error
+
+
+top level output.Tfange to terrhome not terrhouse.
+
+and thelast output domain_name 
+
+
+tf plan
+eeroor
+
+
+i mean we changed it to home_arcum_hosting instead...
+
+
+TF PLAN
+
+
+indefined index etag path
+
+because we cahnged it copy the one from source and put it in e tage (the previous is broke)
+
+
+error
+
+for each a numer is required add interporaltion instead.
+
+plan is now working!!!
+
+
+apply
+
+error failed to udpate home resource, status code 422 from the server...
+
+so our provider main.go. fix stuff
+
+
+
+apply error sould be greater than the previous version
+
+
+go to tfvars and increment the version.
+
+tf apply
+
+
+apply error sould be greater than the previous version
+
+we updated the version.???.?? mate!
+
+ah its hardcoded in maintf root terratowns_home "home"...
+
+call it with varsinstead
+
+
+UPDATE THE other project apge(the commented anyway)
+
+it is working now!!
+
+go check terrtown cloud u should see it there!
+
+
+i didnt see the name because i signed in as admin.
+
+
+delete it and go back to cli and apply to see if it detect cahnges..
+
+error! 404 not found body map []
+
+maybe its trying to parse body and there is no body to parse.
+it should be equals!
+
+
+build provider and tf init
+
+and tf apply and see if we have that error again.
+
+now it noticed that we have changes and the resoruce is gone so we can do check stuff back!
+
+
+### lets try the second one!
+
+
+uncomment other home blocks. just for modules and resource in main tf root.
+
+
+tf init
+
+tf apply 
+
+
+perfect! now we can see our two pages listed in misingo! town
+
+
+commit: fix issues with provider/setup two different towns/conneec to tf cloud.
+
+branch name: multi-home-tf-cloud
+
+branch 2.6.0
