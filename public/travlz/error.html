@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/tn.png" type="image/png">
+
+    <title>Wrong Place! 🌍</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #c01414;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        h1 {
+            font-size: 36px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .description {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+        }
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            align-items: center; /* Center vertically */
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            text-align: center; /* Center image and caption */
+
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        img {
+            max-width: 100%; /* Limit image width to the container's width */
+            max-height: 70vh; /* Limit image height to 70% of the viewport height */
+        }
+        .slider-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .slider-button {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .slider-button:hover {
+            background-color: #a55e5e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="title" onclick="toggleDescription()">❌You are going to the wrong place!❌</h1>
+    </header>
+    <div class="description">
+        <p id="description"> Go back to Tunisia! 🏖️</p>
+    </div>
+
+
+
+</body>
+</html>

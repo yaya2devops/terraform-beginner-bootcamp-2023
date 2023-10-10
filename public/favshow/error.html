@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #369457;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        #error {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #008CBA;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffffff;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            font-size: 14px;
+            color: #032202;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Show Not Found Page</h1>
+    </header>
+    <div id="content">
+        <h2>Oops! Something went wrong.</h2>
+        <p>We apologize, but it seems there was an error. Please try again later.</p>
+        <div id="error">
+            <p>Error code: 404</p>
+            <button onclick="goBack()">Go Back</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Yahya Abulhaj</p>
+    </footer>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

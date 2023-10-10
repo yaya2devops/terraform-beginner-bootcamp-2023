@@ -70,3 +70,60 @@ DESCRIPTION
   town = "cooker-cove"
   content_version = 1
 }
+
+
+### TV Show TerraHome
+module "home_favshow_hosting" {
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.favshow.public_path
+  content_version = var.favshow.content_version
+}
+
+resource "terratowns_home" "home_favshow" {
+  name = "The Best TV Show You'll Ever Watch"
+  description = <<DESCRIPTION
+💥Join us as we unravel the gripping tale of high-stakes crime, morality, and transformation that has captured the hearts of millions worldwide.💥
+DESCRIPTION
+  domain_name = module.home_favshow_hosting.domain_name
+  town = "video-valley"
+  content_version = 1
+}
+
+
+### Gaming TerraHome
+module "home_lolplayz_hosting" {
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.lolplayz.public_path
+  content_version = var.lolplayz.content_version
+}
+
+resource "terratowns_home" "home_lolplayz" {
+  name = "What Yahya Used To play A lot?"
+  description = <<DESCRIPTION
+Uncover Yahya's past gaming obsession and how his extensive involvement with League of Legends eventually severed that connection, enabling him to devote more time to other pursuits.
+DESCRIPTION
+  domain_name = module.home_lolplayz_hosting.domain_name
+  town = "gamers-grotto"
+  content_version = 1
+}
+
+### Travel TerraHome
+module "home_travlz_hosting" {
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.travlz.public_path
+  content_version = var.travlz.content_version
+}
+
+resource "terratowns_home" "home_travlz" {
+  name = "Could Tunisia Be Your Next Country To Explore?"
+  description = <<DESCRIPTION
+Tunisia offers incredible affordability for a fantastic vacation. 
+Don't hesitate any longer—explore this specially curated collection of destinations I've prepared just for you!
+DESCRIPTION
+  domain_name = module.home_travlz_hosting.domain_name
+  town = "the-nomad-pad"
+  content_version = 1
+}
