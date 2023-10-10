@@ -1,302 +1,292 @@
-# 🏠 TerraHomes to TerraTowns
-This is setup in `2.7.0` will lay the foundation to enable you with the creation of multiple homes or houses within the platform as it now supports up to twelve homes or houses.
+# 🏙️ TerraTowns Potential Unlocked
 
-To enable the deployment of multiple homes simultaneously on the Terratowns platform, follow these steps:
+In the earlier release tagged as `2.7.0`, originally conceived as `2.6.0`, I decided to refine the curriculum for your benefit and your understanding.
 
-**Step 1: Create TerraHomes Folders**
+![TerraTowns](assets/2.7.1/terratowns.png)
 
-Create separate folders within the "public" directory for each home and migrate all project files to them. 
+- `2.6.0` — [Work with terraform cloud and local execution.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/2.6.0)
+- `2.7.0` — [Create Two TerraHomes and adhrere to the House Theme.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/2.7.0)
+- `2.7.1` — [Create Three More Homes and Target All TerraTowns.](#terrahome-coding-a-new-home)
 
-1. Create a folder named "home1" and move your project files into it.
-2. Create a second folder named "home2" and duplicate the files in the same format.
-3. Make sure the structure is something like this;
-```sh
-📁 public
-  |─ 🏠 home1
+![All The Themes Available](assets/2.7.1/available-towns.png)
+
+Today, our aim is to address the remaining three endpoints, unlocking the full potential of Terratown.
+
+We end up with a total of six projects nested within our /public repository Incl. 1 for testing town called **Mixer** for Missingo."
+
+```
+📁./Terraformer
+  |─ 🏠 favshow
   |   └─ 📂 assets
-  |       └─ 🖼️ great-stuff.png
-  |   └─ 📄 index.html
+  |   |   └─ 🖼️ 26-july-2018-bb-ban.png
+  |   |   └─ 🖼️ august-18-2018.jpeg
+  |   |   └─ 🖼️ bb-26-july-2018.png
+  |   |   └─ 🖼️ br-ba-logo.png
   |   └─ 📄 error.html
-  └─ 🏠 home2
+  |   └─ 📄 index.html
+  |─ 🏠 lolplayz
+  |   └─ 📂 assets
+  |   |   └─ 🖼️ 2019-got-serious-to-college.jpeg
+  |   |   └─ 🖼️ favi.png
+  |   |   └─ 🖼️ gamer-ERR.png
+  |   |   └─ 🖼️ gamer-proof.jpeg
+  |   |   └─ 🖼️ gamer-webpage-somejs.png
+  |   |   └─ 🖼️ gold-lol-18-aug-2018.jpeg
+  |   |   └─ 🖼️ lol-chall.jpeg
+  |   |   └─ 🖼️ old-time.jpeg
+  |   └─ 📄 error.html
+  |   └─ 📄 index.html
+  |─ 🏠 mixer
+  |   └─ 📂 assets
+  |   |   └─ 🖼️ elizabeth-7-deadly-sins.png
+  |   |   └─ 🖼️ goku.jpg
+  |   └─ 📄 error.html
+  |   └─ 📄 index.html
+  |   └─ 📄 oldindex.html
+  |─ 🏠 tnfood
+  |   └─ 📂 assets
+  |   |   └─ 🖼️ bambalouni.jpg
+  |   |   └─ 🖼️ couscous.jpg
+  |   |   └─ 🖼️ food-error-page.png
+  |   |   └─ 🖼️ food-terrahome.png
+  |   |   └─ 🖼️ lablebi.jpg
+  |   |   └─ 🖼️ LA-MLOUKHIA.png
+  |   |   └─ 🖼️ makroud.jpg
+  |   |   └─ 🖼️ slata-mechouia.jpg
+  |   |   └─ 🖼️ tunisian-food-masfouf.jpg
+  |   └─ 📄 error.html
+  |   └─ 📄 index.html
+  |─ 🏠 tnrap
+  |   └─ 📂 assets
+  |   |   └─ 🖼️ loading-lazy.png
+  |   |   └─ 🖼️ music-terratown.png
+  |   |   └─ 🖼️ tn-music-errored.png
+  |   └─ 📄 error.html
+  |   └─ 📄 index.html
+  └─ 🏠 travlz
       └─ 📂 assets
-          └─ 🖼️ great-stuff.png
-      └─ 📄 index.html
+      |   └─ 🖼️ el-jem.jpg
+      |   └─ 🖼️ medina.jpg
+      |   └─ 🖼️ moss.jpg
+      |   └─ 🖼️ musee-bardo.JPG
+      |   └─ 🖼️ sidi.jpg
+      |   └─ 🖼️ sousse-ribat.JPG
+      |   └─ 🖼️ tn.png
+      |   └─ 🖼️ travel-err.png
+      |   └─ 🖼️ travel-page.png
+      |   └─ 🖼️ tunis.jpg
+      |   └─ 🖼️ zitounaaa.jpg
       └─ 📄 error.html
+      └─ 📄 index.html
 ```
 
+I ensured that these homes reflect my personality, allowing me to reveal more about who I am as a great person.
 
-**Step 2: Rename Module**
+### TerraHome: Coding a New Home
+In the following section, we will cover the steps necessary for you to add a new home.
 
-Since we are loving it on homes rather than houses..
+Although we've already covered this process in the previous version 2.7.0, we will do it again to assure we know what we are doing.
 
-- Rename the module from "terrahouse_aws" to `terrahome_aws.`
+| Instructions assume that you have configured your variables at the module level| [Here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/2.7.0) |
+|---:|:---:|
 
-![Renamed To TerraHome](assets/2.7.0/terrahome-love.png)
+1. Create a new **TerraHome** in the `public` directory.
 
-**Step 3: Update Configuration**
-
-Make the following updates to accommodate the changes related to `terrahome_aws` variables and modules:
-- Update the source to point to `./modules/terrahome_aws` instead of the old source to the `terrahouse`.
-```hcl
-  source = "./modules/terrahome_aws"
-```
-- Change the module name to match the theme, e.g.,
-```hcl
-module "home_tnrap_hosting" {}
-```
-
-- Modify `output.tf` to reference `home_yourhousename_hosting` instead of `terrahouse_aws.` for `bucket_name`
-```hcl
-  value = module.terrahouse_aws.bucket_name
-
-  value = module.home_tnrap_hosting.bucket_name
-  value = module.home_tnfood_hosting.bucket_name
-
-```
-- Do the same in for the output of `s3_website_endpoint`
-```
-  value = module.terrahouse_aws.website_endpoint
-
-  value = module.home_tnrap_hosting.website_endpoint
-  value = module.home_tnfood_hosting.website_endpoint
-```
-- Do the same for the `cloudfront_url` and change output to reference `domain_name`. instead
-```hcl
-  value = module.terrahouse_aws.cloudfront_url
-  value = module.home_tnrap_hosting.domain_name
-```
+I can't instruct you further what you are allowed to create inside. <br>I end up following the rules creating html files and assets. <br> Feel free to break them please.<br>Do more.
 
 
-**Step 4: Review and Update Variables in `terraform.tfvars`**
+When your projects are in place. Follow this configuration as code.
 
-Review and update variables in the module configurations. If you need to set nested Terraform variables in the tfvars file, refer to Terraform documentation for guidance.
-
-1. We asked GPT to help in this:
-```
-How do u set nested tf variables in tf vars file.
-```
-
-This is to make stuff look more damn neat.
-
-- Remove previous `bucket_name`, `index_html_filepath`, `error_html_filepath` and `content_version` absolute path.
-```sh
-index_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
-error_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
-assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets/"
-content_version=1
-```
-- Update your `terraform.tfvars` and `terraform.tfvars.sample` input for the public path and the content version in union like this;
+2. Create a module in your main.tf with the home name e.g.
 
 ```hcl
-       house-name-1 = {
-       public_path = "/workspace/terraform-beginner-bootcamp-2023/public/tnrap"
-       content_version = 1
-       }
-
-       house-name-2 = {
-       public_path = "/workspace/terraform-beginner-bootcamp-2023/public/tnfood"
-       content_version = 1 
-       }
+module "home_change-this_hosting" {}
 ```
 
-**Step 5: Modify Index Variables**
+3. Go define your Home variables in `variables.tf` for the new home.
+```hcl
+variable "change-this"
 
-- Remove previous `bucket_name`, `index_html_filepath`, `error_html_filepath` and `content_version` variables definition.
+{
+      type = object
 
-Those in tfvars will be red inlined unless you perform the following task.
+      (
+        {
+            public_path = string
 
-- Modify the variables to include references to public paths for your homes in your `variables.tf` file instead as nested.
-
-
-```
-variable "home-1" {
-  type = object({
-    public_path = string
-    content_version = number
-  })
-}
-.
-.
-.
-variable "home-n" {
-  type = object({
-    public_path = string
-    content_version = number
-  })
+            content_version = number
+        }          
+      )
 }
 ```
+4. Set the actual content of your new home variables in your `terraform.tfvars`
+```hcl
+change-this = {
 
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/change-this"
 
-**Step 6: `main.tf` root Remove Index and Error HTML References**
-
-Remove the "index_html_filepath" and "error_html_filepath" from your module block, and replace them with references to the "public_path" and "content_version" variables.
+  content_version = 1 
+}
+```
+5. Go back to your module in `main.tf` and configure your `public_path` and `content_version` with these variables.
 
 ```hcl
-module "home_tnrap_hosting" {
+module "home_change-this_hosting" {
   source = "./modules/terrahome_aws"
   user_uuid = var.teacherseat_user_uuid
-
-  public_path = var.arcanum.public_path
-  content_version = var.arcanum.content_version
+  public_path = var.change-this.public_path
+  content_version = var.change-this.content_version
 }
 ```
 
+5. To make sure your new home variables are safe, copy the content from your `terraform.tfvars` to `terraform.tfvars.sample`
+
+> Remmber we have a [cp command](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/2.7.0/.gitpod.yml#L10C1-L10C1) to get that content.
 
 
-**Step 7: `main.tf` root Update Resource Configuration**
+That it with the configuration. 
 
-In the resource section, update the call with the new variables assigned to "cloudfront" and "content_version."
+More homes? [Read this](#terrahome-coding-a-new-home) again.
 
+
+### TerraHomes Delivery
+
+Terraform configured? Project Files correctly tested? Ready to launch.
+
+1. Run the `build_provider` script to get the binairy.
+2. Make sure you sinatra server is running, if not run
 ```
-resource "terratowns_home" "home" {
-  name = "How to play Arcanum in 2023!"
-  description = <<DESCRIPTION
+bundle install
+bundle exec ruby server.rb 
+```
+3. Terraform init and make sure you are authenticated to terraform cloud, if not run and get that token.
+```
+terraform login
+```
+
+4. `terraform plan` to see the great stuff coming in.
+5. `terraform apply -lock=false` in cases your state is locked in tf cloud.
+
+![Applied Infrastructure](assets/2.7.1/apply-updates.png)
+
+- The existing homes will be updated if any updates are available. 
+- The new homes can be added with that single command.
+- The hard part is always building the infra like a symphony.
 
 
+## TerraTowns Deliverables
+
+As I mentioned before, I designed TerraHomes for every town. This section serves as a showcase of the most recent three additions.
 
 
+→ To [learn more about the methodology.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/65)
+
+
+### Breaking Bad FanPage
+
+This page is my way of expressing my admiration for the TV show. I've incorporated a quote generator and included assets that hold sentimental value from a dear friend.
+
+
+The post Title and description specified;
+```hcl
+name = "The Best TV Show You'll Ever Watch"
+
+description = <<DESCRIPTION
+💥Join us as we unravel the gripping tale of high-stakes crime, morality, and transformation that has captured the hearts of millions worldwide.💥
 DESCRIPTION
-  domain_name = module.home_arcanum_hosting.domain_name
-  town = ""
-  content_version = var.arcanum.content_version
-}
-```
-**Step 8: Storage Module Vars Update**
-
-1. Start with output.tf change the output `"cloudfront_url"` to `"domain_name"`
-
-2. In `resource-storage.tf` change the `source` and `etag` path for `index_html`, `error_html` for `aws_s3_object` to map to our new vars.
-
-```hcl
-  source = var.index_html_filepath
-  source = "${var.public_path}/index.html"
-
-  etag = filemd5(var.index_html_filepath)
-  etag = filemd5("${var.public_path}/index.html")
-
-
-
-  source = var.error_html_filepath
-  source = "${var.public_path}/error.html"
-
-  etag = filemd5(var.error_html_filepath)
-  etag = filemd5("${var.public_path}/error.html")
 ```
 
-3. In the same file update source, etag but also the `for_each` for `upload_assets`.
+
+### TerraTown Post Show Up
+
+![Breaking Bad FanPage Post](assets/2.7.1/1-bb-post.png)
+
+### The Project TerraHome
+|[Internal URL](https://terratowns.cloud/h/48154dbb-6d35-42bf-a06a-3eeb775c9bb2)|[CloudFront URL](https://ds3mmnyp4l57k.cloudfront.net/)|
+|--|--|
+
+![Breaking Bad FanPage](assets/2.7.1/2-bb-home.png)
+
+
+### Past Gaming Passion
+This project is a highlight to what I used to play a lot in the past. It gives some insights to why I am good in english? And why I find mysef a master in the cloud?
+
+The post Title and description specified;
 ```hcl
-  for_each = fileset(var.assets_path,"*.{jpg,png,gif}")
-  for_each = fileset("${var.public_path}/assets","*.{jpg,png,gif}")
+name = "What Yahya Used To play A lot?"
 
-  source = "${var.assets_path}/${each.key}"
-  etag = filemd5("${var.assets_path}${each.key}")
-
-  source = "${var.public_path}/assets/${each.key}"
-  etag = filemd5("${var.public_path}/assets/${each.key}")
-```
-
-**Step 9: Module `variables.tf` Updates**
-1. change our `index_html_filepath` variable to `public_path` instead.
-```hcl
-variable "public_path" {}
-```
-2. Remove its validation and rename its description.
-```hcl
-  description = "The file path for the public directory"
-```
-
-3. Leave it type string as it is.
-```hcl
-  type    = string
-```
-
-4. in the same file, terminate both `assets_path` and `error_html_filepath` and its validation.
-
-**Step 8: Duplicate Step 5-6-7 for Another Home**
-
-Duplicate the entire process for the module/resource to create a new home just below it.
-```hcl
-module "home_tnfood_hosting" {
-  source = "./modules/terrahome_aws"
-  user_uuid = var.teacherseat_user_uuid
-  public_path = var.tnfood.public_path
-  content_version = var.tnfood.content_version
-}
-
-resource "terratowns_home" "home_tnfood" {
-  name = "Showing you our Tunisian Food"
-  description = <<DESCRIPTION
-
-Add yours here!
-
+description = <<DESCRIPTION
+Uncover Yahya's past gaming obsession and how his extensive involvement with League of Legends eventually severed that connection, enabling him to devote more time to other pursuits.
 DESCRIPTION
-  domain_name = module.home_tnfood_hosting.domain_name
-  town = "missingo"
-  content_version = var.tnfood.content_version
+```
+
+
+### TerraTown Post Show Up
+
+![League Of Legends Post](assets/2.7.1/1-gamer-post.png)
+
+
+### The Project TerraHome
+
+|[Internal URL](https://terratowns.cloud/h/15828552-3f2e-4ffa-82ff-40a719bac5ec)|[CloudFront URL](https://d3fozmkbn0u7h4.cloudfront.net/)|
+|--|--|
+
+![League Of Legends WebPage](assets/2.7.1/2-gamer-home.png)
+
+
+### Visit Tunisia
+Our economy is a bit messed up but we have great places.
+
+I think a smart person can visit have lots of fun with dead cheap money and go back happy.
+
+
+The post Title and description specified;
+```hcl
+name = "The Best TV Show You'll Ever Watch"
+
+description = <<DESCRIPTION
+💥Join us as we unravel the gripping tale of high-stakes crime, morality, and transformation that has captured the hearts of millions worldwide.💥
+DESCRIPTION
 }
 ```
 
-**Step 9: Build and Deploy**
 
-To deploy your changes, follow these steps:
+### TerraTown Post Show Up
 
-1. Ensure you are in the project directory, go to .gitpod.yml
-2. add the following command with source below the copy command:
-  
-  ```bash
-  cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
-  source ./bin/build_provider
-  ```
-3.Run tf init to initialize your infra and new resources.
-4. Run `tf plan`, observe and run `tf apply`. 
+![Visit Tunisia Post](assets/2.7.1/1-country-post.png)
 
 
-![Terraform Applied for both resources](assets/2.7.0/two-pages-post.png)
+### The Project TerraHome
+|[Internal URL](https://terratowns.cloud/h/db7565bc-33dc-4f65-8b45-8eca2c4c628a)|[CloudFront URL](https://d1z96397cxwgol.cloudfront.net/)|
+|--|--|
 
-With these changes, you should be able to see both pages listed in your Terraform Cloud dashboard.
-
-
-## The First Music Post 
-
-![Tunisian Rap TerraHouse Post](assets/2.7.0/music-post.png)
-
-### Check out The Music Home
-
-→ [TerraTowns Independent Link](https://d2y3y5anu2c2ur.cloudfront.net/)
-
-![Tunisian Rap TerraHouse](assets/2.7.0/my-second-home.png)
-
-
-## Check Out The Tunisian Food Post
-
-![Tunisian Food TerraHouse Post](assets/2.7.0/foodhome-post.png)
-
-### Check Out The list in TerraHome
-
-→ [TerraTowns Independent Link](https://d3opm9jrs6v4zx.cloudfront.net/)
-
-![Tunisian Food TerraHouse](assets/2.7.0/food-from-terratowns.png)
-
-
-### Terraform State Management
-
-1. Execute `tf state list` to view the resources in Terraform Cloud within Gitpod.
-2. Perform `tf state pull` to get the latest from tfcloud.
-
-### Troubleshooting and Finalization
-
-1. Address any errors encountered during the plan and apply phases.
-2. Resolve undefined index, etag path, or other issues. 
-2. Update outputs to match changes made in the configuration.
-3. Ensure the plan and apply phases complete successfully.
-4. Confirm changes in the Terraform Cloud interface.
-5. Delete the Terraform Cloud resources if necessary.
+![Visit Tunisia WebPage](assets/2.7.1/2-country-home.png)
 
 
 
-### Joyful conclusion
+### Considerations
 
-Version 2.6.0 of the project focuses on integrating Terraform Cloud, enabling the creation of multiple homes or houses, and ensuring efficient configuration management.
+**Unsupported Image Format (JPEG):** <br>
+Corrected the issue where JPEG images were not supported. To resolve this, the images were converted to PNG format, which is universally supported.
 
-**Show your creativity.**<br>
-Make more homes! 
+**Image Format Conversion (JPEG to PNG):** <br>
+Converted the existing JPEG images to PNG format to ensure compatibility with the project.
+
+**File Extension Renaming (JPG to jpg): <br>
+Modified file extensions from "JPG" to "jpg" for consistent and standardized naming.
+
+**User Interface and Slider Enhancements:** <br>
+Made necessary fixes and improvements to the user interface and slider functionality to enhance the project's overall usability and appearance.
+
+
+---
+
+In case you weren't aware, all the strategies I used have been revealed.<br> 
+My relentless pursuit is your advantage.
+
+- [Chats Got TerraHomes Done](assets/2.7.1/connect.md)
+- [Tree and Beautify](public/yayauptree.md)
+
+There is no personal draft notes this time. Because there was none. <br>I freestyled my mind in this.
+
+> Creativity knows no bounds, and in the absence of drafts, the untamed mind finds its truest expression.

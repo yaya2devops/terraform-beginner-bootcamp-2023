@@ -1,9 +1,25 @@
 terratowns_endpoint="https://terratowns.cloud/api"
-arcanum = {
-  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/arcanum"
+tnrap = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/tnrap"
+  content_version = 3
+}
+
+tnfood = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/tnfood"
+  content_version = 2
+}
+
+favshow = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/favshow"
   content_version = 2 
 }
-payday = {
-  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/payday"
-  content_version = 1 
+
+lolplayz = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/lolplayz"
+  content_version = 2 
+}
+
+travlz = {
+  public_path = "/workspace/terraform-beginner-bootcamp-2023/public/travlz"
+  content_version = 2
 }

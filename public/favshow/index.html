@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="assets/br-ba-logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FanPage B.B TV Show</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures the container takes up at least the full viewport height */
+            justify-content: space-between; /* Pushes content and footer to the top and bottom */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #093009;
+            padding: 10px;
+            text-align: center; /* Center text within header */
+            justify-content: center; /* Center horizontally */
+
+        }
+        .logo {
+            margin-right: 10px;
+        } 
+        .logo img {
+            display: block; /* Removes any default image spacing */
+        }     
+        .logo-title {
+            margin-left: 10px; /* Adjust the margin as needed to separate the logo and title */
+            font-size: 24px; /* Adjust the font size as needed */
+            color: #fff;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        #content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        #quote {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #369457;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #banner {
+            text-align: center;
+            margin-top: 30px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0; /* Added more padding for a larger look */
+            background-color: #032202;
+            width: 100%;
+        }
+
+            footer p {
+            font-size: 10px; /* Reduced the font size for a smaller look */
+            color: #888;
+            margin: 1px 0; /* Added margin for spacing between links */
+        }   
+
+            .social-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 8px; /* Reduced the margin between links for a compact look */
+        }
+
+            .social-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="assets/br-ba-logo.png" alt="FanPage Logo" width="50" height="50"> <!-- Adjust the path and dimensions accordingly -->
+        <h1 class="logo-title">Breaking Bad FanPage</h1>
+    </header>
+    
+    <div id="content">
+        <p>
+            Breaking Bad is a critically acclaimed American TV show that follows the transformation of the great Walter White, a high school chemistry teacher turned methamphetamine manufacturing drug lord.
+        </p>
+        <div id="quote">
+            <button id="quote-button">Favorite Show Sayings</button>
+            <p id="quote-text"></p>
+        </div>
+        <h2>Why I Love Breaking Bad</h2>
+        <p>
+            Back in 2018, <b>at the age of just 16</b>, I immersed myself in watching the show that profoundly resonated with me and left a lasting impact on my perspective. 
+            </p>
+            <p>Its compelling characters, intense storytelling, and moral complexities..<br> A show that keeps you on the edge of your seat from start to finish.
+        </p>
+
+        <h3>A Gift from a Friend</h2>
+        <p>        
+            I watched it with a very close friend of mine I've known since <b>the fifth grade</b>. <br>He also gave this to me as a gift, a testament to our shared interest for BB! <b>I loved it.</b>
+        </p>
+
+        <div style="text-align: center;">
+        <img src="assets/august-18-2018.png" alt="JPEGGG IS DEAD!?" width="800px" allign="center">
+        <figcaption>Yaya's Teenage TV Obsessions: A Wall of Nostalgia</figcaption>
+        </div>
+
+        <p>        
+        This figure was acquired precisely on <b>July 26, 2018</b>, and the picture was taken on <b>August 18</b> of the same year. I'm also a BIG fan of anime, particularly <b>Seven Deadly Sins,</b> <b>Dragon Ball Z,</b> and the fantastic <b>Inazuma Eleven!</b>
+        </p>
+
+        <h4>Unforgettable Moments</h4>
+        <p>        
+            I've  included some of the most memorable quotes which I love and I believe truly encapsulate the unforgettable characters and moments that have left an indelible mark on my journey.
+
+        </p>
+
+        <h5>A Recommendation Worth Considering</h4>
+            <p>        
+                If you haven't given it a shot, I highly recommend watching Breaking Bad! While the first season may start off a bit slow, once you get into it, you'll find it impossible to stop until you've reached the end.
+            </p>
+            <p>
+                Thank you for visiting! <br>Hoping your time here was as enjoyable as it was for me to share something personal with you.
+            </p> 
+    </div>
+    
+
+    <script>
+        const quotes = [
+            "I am the one who knocks! - Walter White",
+            "I did it for me. I liked it. I was good at it. And I was really... I was alive. - Walter White",
+            "Tread lightly. - Walter White",
+            "Stay out of my territory. - Walter White",
+            "You know, Walt, someone needs to protect this family from the man who protects this family. - Skyler White",
+            "Yeah, science! - Jesse Pinkman",
+            "I love you more than anything. - Jesse Pinkman",
+            "You don't need a criminal lawyer. You need a criminal lawyer. - Saul Goodman",
+            "No more half-measures, Walter. - Mike Ehrmantraut",
+            "I'm in the empire business. - Walter White",
+            "I'm not a hero. I'm not a villain. I'm something you can never understand. - Jesse Pinkman",
+            "Shut the f— up and let me die in peace. -Mike",
+            "I am not in danger, Skyler. I am the danger. - Walter White",
+            "I'm not a monster. I'm just ahead of the curve. - Walter White",
+            "I’m not in the meth business. I’m in the empire business",
+            "It's not personal. It's just business. - Gus Fring",
+            "You and I, we're done. - Walter White"
+        ];
+
+        const quoteText = document.getElementById("quote-text");
+        const quoteButton = document.getElementById("quote-button");
+
+        function generateRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteText.textContent = quotes[randomIndex];
+        }
+
+        quoteButton.addEventListener("click", generateRandomQuote);
+        generateRandomQuote(); // Generate a random quote on page load
+    </script>
+
+ 
+    <footer>
+        <p>&copy; 2023 Yaya Is a B.B Fanboi</p>
+        <div class="social-links">
+            <a href="https://github.com/yaya2devops" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/yahya-abulhaj" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://twitter.com/yaya2devops" target="_blank" rel="noopener noreferrer">Twitter</a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -28,3 +28,24 @@ variable "tnfood" {
     content_version = number
   })
 }
+
+variable "favshow" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
+
+variable "lolplayz" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
+
+variable "travlz" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
