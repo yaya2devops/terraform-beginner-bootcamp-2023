@@ -4,7 +4,11 @@ In the previous setup `2.2.0`, we did not define any resources for our provider 
 
 Now, let's begin with the creation of a `2.3.0` Resource Skeleton. <br>
 We'll create a basic structure for a new resource and introduce some Go programming concepts along the way.
-
++ [Preparing and Energizing](#preparing-and-energizing)
++ [Writing Provider Configuration](#writing-provider-configuration)
++ [Setting Up a Resource](#setting-up-a-resource)
++ [Production Considerations](#production-considerations)
+      
 The next `2.4.0` is where we will actually go and fill those cruds as per our requirements in go.
 
 ### Preparing and Energizing
