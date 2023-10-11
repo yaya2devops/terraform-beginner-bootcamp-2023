@@ -11,7 +11,8 @@ The next `2.4.0` is where we will actually go and fill those cruds as per our re
 Take note of the extensions you'll need, such as Go and Golang tools.
 1. Before all, uncomment the validator in your `main.go` code if you didn't remove it.
 
-I did cause I want my code neat. [Take a look.](terraform-provider-terratowns/main.go). I will code it again.
+I did cause I want my code neat. <br>[Take a look.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/2.4.0/terraform-provider-terratowns/main.go) <br>
+I coded it again.
 
 2. Add 	`ValidateFunc: validateUUID`, to your schema uuid block.
 
@@ -57,7 +58,7 @@ You should see logs indicating a successful initialization.
 
 ![Logs Enabled in Terraform Tab](assets/2.3.0/logs-enabled-tf-cli-tab.png)
 
-12. run tf plan and observe
+12. run `tf plan` and observe
 - No errors found!
 - No infrastructure changes!
 ```
@@ -205,7 +206,7 @@ func resourceHouseDelete(ctx context.Context, d *schema.ResourceData, m interfac
 ```
 ./bin/build_provider
 ```
-7. **Fix Errors**
+4. **Fix Errors**
 
 Address any issue encountered during this build process;
    
@@ -213,7 +214,7 @@ Address any issue encountered during this build process;
 - Ensure there is no missing as missing commas.
 - Ensure you return the resource in the main function for all actions.
 
-6. **Build Again**
+5. **Build Again**
     - Rebuild the provider one more time to ensure everything is working as expected.
 ```sh
 $ ./bin/build_provider  
@@ -227,7 +228,7 @@ After these steps, you should have empty functions in place. This marks the comp
 Everything later will come into a place in week-2-perfecting.
 
 #### Production Considerations
-In a real project, you wouldn't commit and create pull requests for these changes; they would typically remain in a feature branch until the entire job is finished. 
+In a real project, you wouldn't commit and create pull requests for these changes; <br>They would typically remain in a feature branch until the entire job is finished. 
 
 In the next phase and last, we'll start filling in the resource and making the API calls.
 
