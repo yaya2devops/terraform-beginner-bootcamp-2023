@@ -1,0 +1,23 @@
+## TerraTripleHome Is Up
+
+Hello welcome to this self designed 2.7.1, as I detailed explained here about this.
+
+We will go over createing three additional homes to target all the available endpoints within teratown.
+We will also make sure the homes give something of who  i am as a person. Meaning I'll expose more of my presonality for you.
+
+
+
+
+### A New TerraHome As Code
+
+The following will go over the requried for you to add another new home.
+
+We did this already in the previous 2.7.0, but now we will go over again and we will dupliate the proces on 3 more hope as required.
+
+
+
+
+### When On tf apply
+
+The previous homes will get updated if there any.
+The new homes will get added in a single command..
