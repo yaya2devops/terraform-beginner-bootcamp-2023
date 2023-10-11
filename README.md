@@ -1,6 +1,14 @@
 # 🏠 TerraHomes to TerraTowns
 This is setup in `2.7.0` will lay the foundation to enable you with the creation of multiple homes or houses within the platform as it now supports up to twelve homes or houses.
 
+  * [The First Music Post](#the-first-music-post)
+    + [Check out The Music Home](#check-out-the-music-home)
+  * [Check Out The Tunisian Food Post](#check-out-the-tunisian-food-post)
+    + [Check Out The list in TerraHome](#check-out-the-list-in-terrahome)
++ [Terraform State Management](#terraform-state-management)
++ [Troubleshooting and Finalization](#troubleshooting-and-finalization)
++ [Joyful conclusion](#joyful-conclusion)
+
 To enable the deployment of multiple homes simultaneously on the Terratowns platform, follow these steps:
 
 **Step 1: Create TerraHomes Folders**
@@ -296,7 +304,7 @@ With these changes, you should be able to see both pages listed in your Terrafor
 
 ### Joyful conclusion
 
-Version 2.6.0 of the project focuses on integrating Terraform Cloud, enabling the creation of multiple homes or houses, and ensuring efficient configuration management.
+Version `2.7.0` originally `2.6.0` of the project focuses on integrating Terraform Cloud, enabling the creation of multiple homes or houses, and ensuring efficient configuration management.
 
 **Show your creativity.**<br>
 Make more homes! 
