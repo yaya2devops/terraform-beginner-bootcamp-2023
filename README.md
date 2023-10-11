@@ -344,7 +344,7 @@ Now let's do it.
 1. Before proceeding, ensure the server is stopped, as changes require a full restart.
 Note: Consider adding a script for automatic server restart in the future.
 2. Use 'Ctrl + C' to stop the server.
-3 Write a Bash script that sends a POST request to an endpoint:
+3. Write a Bash script that sends a POST request to an endpoint:
    - Endpoint: `localhost:4567/api/u/:user_uuid/homes/`
    - Headers: Content-Type and Accept should be set to "application/json."
    - Expect a Bearer Authorization Token.
