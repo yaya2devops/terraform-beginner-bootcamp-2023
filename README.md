@@ -12,7 +12,9 @@ In the earlier release tagged as `2.7.0`, originally conceived as `2.6.0`, I dec
 
 Today, our aim is to address the remaining three endpoints, unlocking the full potential of Terratown.
 
-We end up with a total of six projects nested within our /public repository Incl. 1 for testing town called **Mixer** for Missingo."
+We end up with a total of six projects nested within our `/public` repository.
+
+This Incl. 1 **Mixer** town for testing in Missingo.
 
 ```
 📁./Terraformer
@@ -267,14 +269,11 @@ DESCRIPTION
 ### Considerations
 
 **Unsupported Image Format (JPEG):** <br>
-Corrected the issue where JPEG images were not supported. To resolve this, the images were converted to PNG format, which is universally supported.
-
+Corrected the issue where JPEG images were not supported.<br>
 **Image Format Conversion (JPEG to PNG):** <br>
-Converted the existing JPEG images to PNG format to ensure compatibility with the project.
-
-**File Extension Renaming (JPG to jpg): <br>
-Modified file extensions from "JPG" to "jpg" for consistent and standardized naming.
-
+Converted the existing JPEG images to PNG format to ensure compatibility with the project.<br>
+**File Extension Renaming (JPG to jpg):** <br>
+Modified file extensions from "JPG" to "jpg" for consistent and standardized naming.<br>
 **User Interface and Slider Enhancements:** <br>
 Made necessary fixes and improvements to the user interface and slider functionality to enhance the project's overall usability and appearance.
 
