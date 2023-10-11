@@ -4,6 +4,7 @@ In version `2.0.0` of our project, the primary focus is on integrating the Terra
 - [Sinatra In Gitpod](#adjust-gitpod-yaml-configuration)
 - [Code Sinatra Server](#🎩-understanding-sinatra)
 - [Bash Script for CRUDs](#bash-script-for-cruds)
+- [Speak To Your Sinatra](#speak-to-sinatra)
 - [Final Server Testing](#relaunch-the-server)
 
 There are many ways for embedding the mock server:
@@ -16,7 +17,7 @@ There are many ways for embedding the mock server:
 **Another way may be;**
 |🤔|Git checkout and refrain from committing |
 |---:|:---|
-|🐛|limiting when it comes to making on-the-fly changes|
+|🚫|limiting when it comes to making on-the-fly changes|
 
 We are going with **the first.**
 
@@ -35,14 +36,14 @@ git clone https://github.com/ExamProCo/terratowns_mock_server.git
 rm -rf .git
 ```
 4. Verify the contents is gone using `ls -la`.
-5. Go a level back and verify your very critical .git folder for the entire project.
+5. Go a level back and verify your very critical `.git` folder for the entire project.
 ```
 cd .. && ls -la
 ```
 
 ![Root dotgit is Safe Plz](assets/2.0.0/root-git-safe.png)
 
-Good. Take care..
+Good. Take care.. 🤲
 
 ###  Adjust Gitpod YAML Configuration
 The Gitpod in that cloned project won't work because Gitpod operates only on the root level.
@@ -59,9 +60,9 @@ Include it in the `terraform` section.
 3. Terminate the previous Gitpod workspace because It is usless.
 ### Adjust the Repository Structure
 1. Change the `bin` folder to `terratowns`.
-2. Move scripts to our `bin` directory.
+2. Move scripts to our great `bin` directory.
 3. Perform necessary chmod operations on these files.
-4. delete the older bin directory.
+4. delete the come with server `bin` directory.
 
 ## 🎩 Understanding Sinatra
 Sinatra is a web application framework. Visit [sinatrarb.com](http://sinatrarb.com) for more..
@@ -348,7 +349,7 @@ Note: Consider adding a script for automatic server restart in the future.
    - Headers: Content-Type and Accept should be set to "application/json."
    - Expect a Bearer Authorization Token.
    - Payload JSON fields: name, description, content_version, town, domain name.
-4. Run 'bundle exec' command to get the server back
+4. Run `bundle exec` command to get the server back
 5. Run the 'terratowns/create' script to obtain the UUID for the house.
 ```
 $ ./create
