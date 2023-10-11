@@ -58,7 +58,10 @@ func main() {
 - Unlike languages like Ruby Go files are not dynamically executed. 
 - You compile the script, and it runs as a binary.
 
-Go is built-in on Gitpod, [locally I installed it previously](https://blog.yahya-abulhaj.dev/the-technology-titan-go-language) and it took time for vars.
+Go is built-in on Gitpod. 
+
+|[Locally I installed it previously](https://blog.yahya-abulhaj.dev/the-technology-titan-go-language) and it took time for vars.|
+|---|
 
 6. Run your first Go program.
 ```sh
@@ -320,7 +323,9 @@ The go.mod file now includes more URL paths, which you didn't have to manually w
 
 You might encounter errors during this build process number too much.. <br>
 The provider schema declaration is to replace `.Resources{` with `.Schema{.`<br>
-Also add the comma.. this is not ruby.
+Also add the comma.. 
+
+**This is not ruby.**
 
 Continue building and address any unused log errors.
 
@@ -331,6 +336,7 @@ Continue building and address any unused log errors.
 
 Finally, after a successful build.<br>
 You will find the `terraform-provider-terratowns-v1.0.0` binary.
+> This is so wrong. [You'll find out](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/53-terratowns-block#connecting-dots-and-traps) next release. We had traps.
 
 ![Binairy Is Here Baby](assets/2.1.0/go-the-bin.png)
 
