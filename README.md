@@ -1,6 +1,11 @@
 # Terratowns Terraform Block
 
 Welcome to `2.2.0` our second part for working with the creation of our custom provider.
+  * [Connecting Dots And Traps](#connecting-dots-and-traps)
+  * [Configuring the Custom Provider Block](#configuring-the-custom-provider-block)
+  * [Rebuilding the Provider After Your Code](#rebuilding-the-provider-after-your-code)
+  * [Idea On The Way](#idea-on-the-way)
+  * [Back To Plan](#back-to-plan)
 
 To get the most of this, I highly encourage you refer to the issues we dealt with for Terratowns [starting with this.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/51)
 
