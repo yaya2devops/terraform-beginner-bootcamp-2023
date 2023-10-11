@@ -14,6 +14,8 @@ Today, our aim is to address the remaining three endpoints, unlocking the full p
 
 We end up with a total of six projects nested within our `/public` repository.
 
+- [TerraHomes Delivery](#terrahomes-delivery)
+    
 This Incl. 1 **Mixer** town for testing in Missingo.
 
 ```
