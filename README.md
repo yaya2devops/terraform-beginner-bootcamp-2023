@@ -1,6 +1,10 @@
 # Terraform Turbocharge Workflow
 
 Welcome to the Terraform  `2.6.0` last official release with primary objective to integrate Terraform Cloud with our local development environments.
+  * [Problematic 101](#problematic-101)
+  * [Problematic 202](#problematic-202)
+  * [Resovlver Pro Max](#resovlver-pro-max)
+  * [Head over Terraform Cloud](#head-over-terraform-cloud)
 
 The following comes after an experience with different ways to work with terraform and thus coming up with the best possible solution.
 
