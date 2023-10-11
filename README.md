@@ -215,12 +215,12 @@ The message body should contain all the details, here is a design for your refer
 3. **Payload Formatting**
    - It's important to format the payload properly.
    - Consider using a JSON function to convert it into bytes and add it as an argument to the next step.
-```yaml
-		"name": d.Get("name").(string),
-		"description": d.Get("description").(string),
-		"domain_name": d.Get("domain_namae").(string),
-		"town": d.Get("town").(string),
-		"content_version": d.Get("content_version").(int64),
+```
+"name": d.Get("name").(string),
+"description": d.Get("description").(string),
+"domain_name": d.Get("domain_namae").(string),
+"town": d.Get("town").(string),
+"content_version": d.Get("content_version").(int64),
 ```
 4. **Handling the Response**
    - After completing the payload and putting it in the body, we should receive a response.
