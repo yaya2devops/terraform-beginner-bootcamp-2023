@@ -282,11 +282,14 @@ Made necessary fixes and improvements to the user interface and slider functiona
 
 ---
 
-In case you weren't aware, all the strategies I used have been revealed.<br> 
-My relentless pursuit is your advantage.
+In case you weren't aware, all the strategies I used have been revealed.
+
+**My relentless pursuit is your advantage.**
 
 - [Chats Got TerraHomes Done](assets/2.7.1/connect.md)
 - [Tree and Beautify](public/yayauptree.md)
+- [About my Perfect Gitpod usage](assets/2.7.1/gitpodxcamp/README.md)
+- [Got Badges And Stuff](assets/3.1.0/README.md)
 
 There is no personal draft notes this time. Because there was none. <br>I freestyled my mind in this.
 
