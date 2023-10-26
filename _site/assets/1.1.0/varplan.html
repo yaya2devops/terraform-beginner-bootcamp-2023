@@ -1,0 +1,284 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=8a13aad017ff6ad69fb842d026f4ce5260c12cc5">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/assets/js/script.js"></script>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Cloud Express | Your Perfect Starting Point To The Cloud with Yaya Legacy.</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Cloud Express" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/assets/1.1.0/varplan.html" />
+<meta property="og:url" content="http://localhost:4000/assets/1.1.0/varplan.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Cloud Express" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Cloud Express","url":"http://localhost:4000/assets/1.1.0/varplan.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cloud Express</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Your Perfect Starting Point To The Cloud with Yaya Legacy.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="download-button zip"><span>Download</span></a>
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">View Cloud Express on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>29-design-tf-root-module<span class="o">)</span> <span class="nv">$ </span>terraform plan <span class="nt">-var</span> <span class="nv">user_uuid</span><span class="o">=</span><span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span> 
+Running plan <span class="k">in </span>Terraform Cloud. Output will stream here. Pressing Ctrl-C
+will stop streaming the logs, but will not stop the plan running remotely.
+
+Preparing the remote plan...
+
+To view this run <span class="k">in </span>a browser, visit:
+https://app.terraform.io/app/yayaintfcloud/terra-house-2023/runs/run-4EXXusgMb9mZeD4d
+
+Waiting <span class="k">for </span>the plan to start...
+
+Terraform v1.5.7
+on linux_amd64
+Initializing plugins and modules...
+╷
+│ Warning: Value <span class="k">for </span>undeclared variable
+│ 
+│ The root module does not <span class="nb">declare </span>a variable named <span class="s2">"AWS_DEFAULT_REGION"</span> but
+│ a value was found <span class="k">in </span>file
+│ <span class="s2">"/home/tfc-agent/.tfc-agent/component/terraform/runs/run-4EXXusgMb9mZeD4d/terraform.tfvars"</span><span class="nb">.</span>
+│ If you meant to use this value, add a <span class="s2">"variable"</span> block to the
+│ configuration.
+│ 
+│ To silence these warnings, use TF_VAR_... environment variables to provide
+│ certain <span class="s2">"global"</span> settings to all configurations <span class="k">in </span>your organization. To
+│ reduce the verbosity of these warnings, use the <span class="nt">-compact-warnings</span> option.
+╵
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  <span class="c"># aws_s3_bucket.example will be created</span>
+  + resource <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="o">{</span>
+      + acceleration_status         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + acl                         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + arn                         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket                      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket_domain_name          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket_prefix               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket_regional_domain_name <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + force_destroy               <span class="o">=</span> <span class="nb">false</span>
+      + hosted_zone_id              <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + <span class="nb">id</span>                          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + object_lock_enabled         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + policy                      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + region                      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + request_payer               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + tags                        <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + tags_all                    <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + website_domain              <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + website_endpoint            <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+  <span class="c"># random_string.bucket_name will be created</span>
+  + resource <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="o">{</span>
+      + <span class="nb">id</span>          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + length      <span class="o">=</span> 32
+      + lower       <span class="o">=</span> <span class="nb">true</span>
+      + min_lower   <span class="o">=</span> 0
+      + min_numeric <span class="o">=</span> 0
+      + min_special <span class="o">=</span> 0
+      + min_upper   <span class="o">=</span> 0
+      + number      <span class="o">=</span> <span class="nb">true</span>
+      + numeric     <span class="o">=</span> <span class="nb">true</span>
+      + result      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + special     <span class="o">=</span> <span class="nb">false</span>
+      + upper       <span class="o">=</span> <span class="nb">false</span>
+    <span class="o">}</span>
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + random_bucket_name <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>After adding this var to our <code class="language-plaintext highlighter-rouge">terraform.tfvars</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
+</code></pre></div>    </div>
+  </li>
+  <li>run <code class="language-plaintext highlighter-rouge">terraform plan</code> only. Same results.
+```
+gitpod /workspace/terraform-beginner-bootcamp-2023 (29-design-tf-root-module) $ terraform plan
+Running plan in Terraform Cloud. Output will stream here. Pressing Ctrl-C
+will stop streaming the logs, but will not stop the plan running remotely.</li>
+</ul>
+
+<p>Preparing the remote plan…</p>
+
+<p>To view this run in a browser, visit:
+https://app.terraform.io/app/yayaintfcloud/terra-house-2023/runs/run-ouC6kPhvxXeTECuT</p>
+
+<p>Waiting for the plan to start…</p>
+
+<p>Terraform v1.5.7
+on linux_amd64
+Initializing plugins and modules…
+╷
+│ Warning: Value for undeclared variable
+│ 
+│ The root module does not declare a variable named “AWS_DEFAULT_REGION” but
+│ a value was found in file
+│ “/home/tfc-agent/.tfc-agent/component/terraform/runs/run-ouC6kPhvxXeTECuT/terraform.tfvars”.
+│ If you meant to use this value, add a “variable” block to the
+│ configuration.
+│ 
+│ To silence these warnings, use TF_VAR_… environment variables to provide
+│ certain “global” settings to all configurations in your organization. To
+│ reduce the verbosity of these warnings, use the -compact-warnings option.
+╵</p>
+
+<p>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated
+with the following symbols:</p>
+<ul>
+  <li>create</li>
+</ul>
+
+<p>Terraform will perform the following actions:</p>
+
+<p># aws_s3_bucket.example will be created</p>
+<ul>
+  <li>resource “aws_s3_bucket” “example” {
+    <ul>
+      <li>acceleration_status         = (known after apply)</li>
+      <li>acl                         = (known after apply)</li>
+      <li>arn                         = (known after apply)</li>
+      <li>bucket                      = (known after apply)</li>
+      <li>bucket_domain_name          = (known after apply)</li>
+      <li>bucket_prefix               = (known after apply)</li>
+      <li>bucket_regional_domain_name = (known after apply)</li>
+      <li>force_destroy               = false</li>
+      <li>hosted_zone_id              = (known after apply)</li>
+      <li>id                          = (known after apply)</li>
+      <li>object_lock_enabled         = (known after apply)</li>
+      <li>policy                      = (known after apply)</li>
+      <li>region                      = (known after apply)</li>
+      <li>request_payer               = (known after apply)</li>
+      <li>tags                        = {
+        <ul>
+          <li>“UserUuid” = “f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d”
+}</li>
+        </ul>
+      </li>
+      <li>tags_all                    = {
+        <ul>
+          <li>“UserUuid” = “f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d”
+}</li>
+        </ul>
+      </li>
+      <li>website_domain              = (known after apply)</li>
+      <li>website_endpoint            = (known after apply)
+}</li>
+    </ul>
+  </li>
+</ul>
+
+<p># random_string.bucket_name will be created</p>
+<ul>
+  <li>resource “random_string” “bucket_name” {
+    <ul>
+      <li>id          = (known after apply)</li>
+      <li>length      = 32</li>
+      <li>lower       = true</li>
+      <li>min_lower   = 0</li>
+      <li>min_numeric = 0</li>
+      <li>min_special = 0</li>
+      <li>min_upper   = 0</li>
+      <li>number      = true</li>
+      <li>numeric     = true</li>
+      <li>result      = (known after apply)</li>
+      <li>special     = false</li>
+      <li>upper       = false
+}</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Plan: 2 to add, 0 to change, 0 to destroy.</p>
+
+<p>Changes to Outputs:</p>
+<ul>
+  <li>random_bucket_name = (known after apply)
+```</li>
+</ul>
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      
+      <p><a href="https://github.com/yaya2devops" class="avatar"><img src="https://github.com/yaya2devops.png" width="48" height="48"></a> <a href="https://github.com/yaya2devops">yaya2devops</a> maintains <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">Cloud Express</a></p>
+      
+
+       
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="tar">tar</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="zip">zip</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">source code</a>
+    
+    <p class="name"></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+2.5.0 --- https://chat.openai.com/share/0fd06d4b-deaa-4393-ab7f-7c037aaca477
+
+terratown test
+
+because we will be testing our custom provider AGAINST THE real terrtowns
+
+CReate issue:
+
+- [ ] test our custom provider to work with productions erver
+ 
+
+
+
+### COUPLE OF TINGS TO CONFIGURE to use terratown do cloud
+
+access token u use it;
+- sign up to terraformcloud
+- in provider block 
+
+provider endpoint in main tf should be 
+
+terratowns.cloud/api
+
+uuser uuid from exampro acc. 
+aaccess token from platform
+
+
+
+FOR TOKEN missingo
+
+
+the domain dont go to anywhere but its ok. leave it.
+
+
+---- https://chat.openai.com/share/e2d8d606-d49c-4a6e-8180-0478a7816225
+
+./bin/build_pro
+
+tf init tf apply
+
+we have a good debug informations! as well.
+
+click yes
+
+GO TO terratowns.cloud/t/missingo
+
+u'll find ur profile as a rectangle and when u click it takes u to that usles cloudfront.
+
+
+NOW WHEN WE DO the cloudfrotn real url will that takes us to this 
+or we have to pass custom headers or headers thourght cloudfront to make it work? 
+
+we will fnd out..
+
+
+If you have domain name change then it cant be updated (by design) u have to do total tear down.
+
+
+lets do it now..
+
+tf destroy auto..
+
+------------------------------------------
+
+mising is gone now.
+
+
+
+
+update new domain.
+
+
+bnut before u dont want to strore ur token in main;tf
+
+Now instead of doing it in the file we can assign it to the export with this smart way.
+
+for that we will use TF_VARS_lower_case_rest
+
+export TF_VARS_terratowns_access_token="pastehere"
+gp env TF_VARS_terratowns_access_token="pastehere"
+
+now when we call it in main.Tf we can simply do
+
+token= var.terratowns_access_token
+
+also this:
+so add it to terraform.tfvars terratowns_endpoint="https://terratowns.cloud/api"
+
+
+user_uuid already there we can call it just var.user_uuid  
+
+but lets emoploy our trick again!!
+
+export TF_VARS_teachersear_user_uuid="pastehere"
+gp env TF_VARS_teachersear_user_uuid="pastehere"
+
+var.teachersear_user_uuid  even if it not in any file..
+
+add it to the commented terrhouse module np AND IN THE VAIRBALESdottf
+and one for the acces token
+and one fort endpoint 
+
+also call it:  var.terratowns_endpoint
+
+
+good refactor that improved our security
+
+set cloud front url.
+
+
+init
+
+
+aaply
+
+error??
+code trap looool from previous WEEK ZERO
+
+we talked about it i the office hour.. but if u still haebve it
+
+
+
+- at the end of the asset url in tfvars.sample add /
+- in module terrrhouse_aws IN MAINTF ROOT add the aset_path = var.assets._path (pass it)
+
+
+tf apply again
+
+----
+
+NOWOK -bucket name unique...
+
+lets make the bucket name randm
+
+- take bucket name from tfvars and from the terrhouse_aws
+-  go to our moudle and go to cdn 
+- comment the bucket name from website_bucket
+- update variables coment the bucket and its validation.
+- go cdn  and update it to call the bucket output normally (aws_s3_bucket.website_bucket.bucket) for OAC and its decription.
+- same for the dsitru resouce block var
+
+tf apply
+AND GO LOOK AT THE BUCKet..
+bbucket name it tell us after=> its random.
+
+all perfect
+
+now if u go u can find ur page there.
+- we want to get our pages to correct location
+- we may want to deploy miore than page
+- we want to show how to do updates
+
+for tf cloud we may go back and do some stuff there
+
+
+next we will work on doing that on tf cloud.
+
+
+commit :> 8 items without readme : test our terrahome against terretowns test town

@@ -1,0 +1,124 @@
+2.3.0 setup Skeleton for our resources (next to fill that)
+
+previouslwe didnt deffine any resoruces for our provider. welcome to : 2 3 0 Resource Skeleton
+
+back to our setup tuto from hashicorp.
+
+define own data resource for home.
+
+
+extensions; go and golang tools(we dont know how  to use it.)
+
+uncomment validator in main go and bring back the log.
+
+make sure u are on the terraform tab, because we set the debugging for that.
+
+
+- build provider.
+
+error
+
+change ' to "" for the func validator
+
+build again: error
+
+include google in the import for the uuid.
+
+we have to "go get it" aka go get githubURL ( we have to make sure we are inside that dir)
+
+cd back and build again. 
+
+build again: error
+
+change the error in append to errors
+
+build again: error
+
+missing return, add it. I thought to add true after the return but return alone worked fine for me.
+
+if someone knows Go better than me and build providers better than me PLZ tell me!
+I am just getting it to work.
+
+build => all fine now 
+tf init => u'll see the logs and all good
+
+
+tf plan => code no error but no infra
+
+
+### write infa (providerConfigure function
+
+write some junk and ask gpt if she udnersatnd
+
+
+> i heard that openai can go to internet with plugin and that would be so good to find out.
+
+
+build
+
+error, indefined stuff
+
+import more (diag, context, config).
+
+for config we need to define our own struc  for line 26
+
+
+---next thing to setup a resource
+
+in the provider schema.pro add rsource name  terrtowns_home: res
+
+
+
+func resource below (we can do it in its file but we will do it all together for readability)
+
+define the four actions CRUD
+
+everysingle res in tf provider is having these actions..
+
+lets go code these actions as seperate functions too..
+
+
+build 
+
+errror comma, at the end of someting
+
+
+build
+
+error;  interface should be {} and not ()
+
+build
+
+error:
+
+
+return resource  in our main func of all actions is missed 
+
+
+build=> good
+
+now we have those empty functions.
+
+
+
+ggood to stop here since our skeleton is done.
+
+commmit: setup skeleton for resource
+
+
+
+note: in real project; u woudnt commit and pull requesting these, u would actually leave them in feature branch and not tag them. we wait untill the whole job is done.
+
+but we are not doing it just so we tag and do more git stretech.
+
+- next is where we gonna start filling the resource, making api calls to our mock api k!
+
+
+at this point;
+- 22 branch
+- 26 tags
+
+
+
+
+

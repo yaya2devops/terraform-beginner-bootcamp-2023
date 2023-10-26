@@ -1,0 +1,177 @@
+2.1.0---What you saw in the branch docs is simply an output of my personal notes.
+
+When one's tell you life is luck. Tell him oh cool! me too.
+
+
+- start an issue: Terratowns Provider (Nope)
+
+normally we should do that in seperate repo. but we are doing it nested within our project. 
+
+
+for provider, terraforl follow specific following
+
+
+they do terraform-provider-something
+
+DO A NEW folder and call it 
+
+terraform-provider-terratowns (pattern to follow)
+
+inside it create a file called main.go (woww)
+
+we gonna put it on on single file (lol) to make it easier to read files.
+
+in go we always have the 
+package main
+
+func {}
+
+
+-> go ask gpt to write u a hello world using go package 
+do print..
+
+unlike ruby go files are compily binairy... they are not DYAMICLy run 
+
+u dont run the script. u compile the script and it run the binaiy.
+
+--work on the hello word go like 10 minutes---
+
+
+- consult commuinity providers they have package main and the fun so we doing it ok
+- community are mostly people who start and never finish their provider..
+
+
+we basically creating this crud
+
+
+also hashicups is very good project for learning..
+
+
+---
+ask gpt; write a custom teeraform provider for terraform it should have pi actions that go to 
+
+GET /api/u/:user_uuid/home 
+POST /api/u/:user_uuid/home 
+PUT /api/u/:user_uuid/home 
+DELETE /api/u/:user_uuid/home 
+
+---
+
+
+to import much in go u can do
+
+import {
+""
+""
+""
+""
+}
+
+to make this work we have to start with pulign. (plugn serverots..) 
+
+
+AND INSide provide it a provider.
+
+> go dont have classes they have interfaces.
+
+
+---now outside spccify the provider as func:
+
+go to plugin repo and go to setup in the developer.hashcipropi tuto provider/providersetup
+take the link from the main.go and add it to ours for the schema.
+
+work more on the func code.. 
+
+
+add the required, user_uuid, token etc...
+
+
+we took the uuid anded a line validateFunc: validate UUID anda sked gpt to write that for us..
+
+nah nah)> google have its own libariry github.com/google/uuid this mayhgave a way to validate it.
+
+https://stackoverflow.com/questions/25051675/how-to-validate-uuid-v4-in-go
+
+
+
+give the one from gpt and tweak it..
+
+after done 
+
+
+--see how to compile a custom providfer we need terraformrc
+
+
+- go build -o  <name-provider-dir>
+- test it using the .terraformrc
+
+
+create .terraformrc in root of our project. name the terraformrc without period because it have to be in our custom provider code.
+inside,
+
+add 
+provider_installation 
+{
+filesystem_mirror..;
+etcc..
+}
+
+when using terraform there is a hidden dir called terraform.d and it have afolder called pluging and if it find stuff from it it load.. 
+we have credentials file and checkpoint sig but ther is no plugin directory 
+and will have to create this local provider and thats where we goinna put the binairy files that we geenrate out.
+
+
+
+- to build bnainair was very hard to find.. but we end up with script idea
+go to bin and create build_provider add content to build binairy
+
+useful article: https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=17eb0663d2d0
+
+
+do it twice.. based on the chipset on the compute based on it.. so we did both in case.
+
+
+make it with env var. now! after finishing the script
+
+
+build the provider.
+- we need a go.mod file
+create a file call it go.mod and add content to it.
+
+the module doesnt matter the repo url.
+
+now the replace part is sthe hardfests add it to 
+repo url =>  path of ur workspace.
+
+build it
+
+error )> missing an import path.
+
+oh in import it is () a	nd not {}
+
+build again..
+they ask u to go get github repos
+
+do them both and bnow we have a new go.sum file.
+also the go.mod includes more url path.. we didnt had to write
+
+build again..
+
+the first time u do build is very slow. 
+
+error.
+
+Provider   comma 
+16 48 51
+
+FOR 51 instead of 33 .Resources{ make it .Schema{
+
+
+buuild
+
+log not used error (remove it uncomme it))
+
+build!! now u will find the terraform-provider-terratownsèv1. biunaryr
+its very big 20 mb add it to gitignore.
+
+---tf-provider-branch-commit1: work in progress setting up skeleton for creating terraform provider

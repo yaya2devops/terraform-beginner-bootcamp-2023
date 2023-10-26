@@ -1,0 +1,392 @@
+# Setting Up Terraform Provider for "Home" Resource
+
+Hey Next generation Developer, we welcome you in this last and intense `4/4` part of our custom terraform provider creation.
+
+We will start by defining the schema for our resource.
+
+I want to call it home resource. <br>But since its the only resource.. <br>We call it just resource.
+
+
+### Compiling the Code
+To check if everything compiles correctly first, run the following command:
+
+```
+bin/build_provider
+```
+## Code the Resource
+1. Open the `main.go` file.
+2. Inside the resource definition (name, description, domain name, town), add the necessary configuration.
+
+#### Adding a Terraform Resource
+1. Go to the `main.tf` file at the root level.
+2. Add a new Terraform resource named "terrtown_home" and name it "home." 
+3. Include attributes; description, town, and content_version.
+```
+
+```
+4. choose wher eyou want to put your page e.g.; gamers-groto.
+5. Use the `<< >>` syntax to configure the description, similar to EOC (End of Content).
+6. Retrieve the domain name from your other project (CloudFront URL) 
+7. set the domain_name as an output.
+
+## Building and Initializing
+Run the following commands to prepare your Terraform environment:
+
+1. run terraform init
+
+
+
+ERROR: "failed to query available provider packages," 
+2. review your Terraform configuration files include terraformrc.
+
+Everything looks fine..<br>We didnt finish anything with the code.. <br>We still have empty resources in `main.go` it may be why..
+
+Lets keep coding and see.
+
+## Code Implementation
+Next, we need to code the CRUD (Create, Read, Update, Delete) operations for our resource.
+
+### Create Action
+- Implement the HTTP request and endpoint for creating a resource.
+```
+
+```
+- Add authorization and your bearer token to the create request.
+```
+
+```
+- Set headers for content type and accept.
+```
+
+```
+- Ensure that you handle any errors and parse the response.
+```
+
+```
+- Return the `homeUUID` from the response and set it using `d.Set`.
+```
+
+```
+### Read Action
+- Implement the HTTP GET request for reading a resource.
+- Pass the `homeUUID` in the URL.
+```
+
+```
+- Parse the response data and return it.
+- Handle errors gracefully.
+
+
+### Update Action
+- Implement the HTTP request for updating a resource.
+- Use the payload from the create action but exclude domain and town.
+- Set the payload data in `d.Set` for name, description, and content version.
+
+### Delete Action
+- Implement the HTTP request for deleting a resource.
+```
+
+```
+- Set the ID if the operation is successful.
+
+
+
+|This repetition could potentially be refactored; try?|
+|:---|
+
+
+
+Next, we need to conduct the client call following the header, both for the delete operation and similarly for the update, read, and create operations.
+
+
+## Payload Processing and Error Handling in API Requests
+
+#### In Create
+
+1. **Pay Payload for a Post**
+   - To begin, we need to pay a payload for a post.
+
+The message body should contain all the details, here is a design for your reference.
+
+![Diagram Goes Here]()
+
+2. **Create Configuration**
+   - Now, let's return to the creation process.
+   - After configuring, we need to pass a payload block.
+
+3. **Payload Formatting**
+   - It's important to format the payload properly.
+   - Consider using a JSON function to convert it into bytes and add it as an argument to the next step.
+
+4. **Handling the Response**
+   - After completing the payload and putting it in the body, we should receive a response.
+   - We'll need to perform actions based on this response.
+   - Parse the response data.
+
+5. **Closing the Response Body**
+   - Don't forget to close the response body after you're done with it.
+   - Use `resp.Body.Close()` to accomplish this.
+
+6. **Error Handling in Create**
+   - Obtain the code that will detect and handle errors from the server during the create process.
+   - Check if `resp.StatusCode` is not equal to `http.StatusOK` to determine if an error occurred.
+
+7. **Handling Errors in Delete**
+   - Similarly, for the delete operation, you'll need to implement error handling.
+   - Check the response status code for errors.
+
+8. **Setting the ID Value**
+   - In Terraform, when working with resources, it's essential to return an ID.
+   - In the create step, add the following:
+     - `homeUUID := response uuid string`
+     - Set `d` to this value, e.g., `d.set(homeUUID)`.
+
+### Delete Operation
+
+1. **Delete Resource**
+   - We also need a delete operation.
+   - When successful, set the ID as needed.
+   - You can add this as an "else" case in your logic.
+
+### ID Handling
+
+2. **Setting the ID Value**
+   - In Terraform, it's important to return an ID whenever you have a resource.
+   - In the create step, add the following:
+     - `homeUUID := response uuid string`
+     - Set `d` to this value, e.g., `d.set(homeUUID)`.
+
+### Read Block
+
+3. **Reading Resource Data**
+   - Now, let's focus on the read operation.
+   - We need the home ID for this.
+   - Revise the response status code to use an "if-else" structure.
+     - If it's OK, return the data.
+     - Use `d.Set` for all the content to be read, such as `name`, `content`, `desc`, `domain`, etc.
+   - Consider handling cases where the status is not available to avoid config drift.
+
+### Update Block
+
+4. **Updating Resources**
+   - For the update operation, you'll need to use the payload from the create operation.
+   - Exclude the `domain` and `town` since these should not change.
+   - Return the payload values for `name`, `desc`, `description`, and `content_ver`.
+   - Use `d.Set` to update these values.
+
+## Testing
+After implementing these actions, you should test your provider.
+
+1. Build and initialize Terraform.
+```
+./bin/build_provider
+```
+
+Some issues. <br>Syntax error 
+
+You should replace `err != {` with `err != nil {` in your code to resolve the issue.
+2. Build again baby.
+```
+./bin/build_provider
+```
+Error. HTTP error 
+
+3. import the necessary package, you can add the statement as follows:
+```
+import "net/http"
+```
+
+4. Build again one more.
+```
+./bin/build_provider
+```
+Error. We have an `undefined.FrontErr`.
+
+5. Change this with correct the usage of the identifier with this;
+
+```
+FromErr
+```
+
+6. Building building!
+
+```
+./bin/build_provider
+```
+
+Another cute error,  the "bytes" library is required.
+
+7. You can add the import statement like this to resolve the issue in your main.go:
+```
+
+```
+
+
+We have gone through multiple builds, and to avoid spamming you with more build errors, I will now list the errors we encountered and how we resolved them.
+
+The Next ERROR;
+- The variable 'payloadBytes' is declared but not utilized on line 255 because we need to pass it instead of 'nil'.
+-  We should use 'bytes.NewBuffer' to create the buffer since it's not reading. The same adjustment should be made for the 'createAction' and 'readOnly' functions.
+
+The Next ERROR +1;
+- We don't need 'responseData' for the update operation. We are not interested in it. 
+- Please remove 'responseData' and only capture the response body.
+- Take the 'responseData' from the delete function as well.
+
+8. Building the great build!
+
+```
+./bin/build_provider
+```
+
+We've successfully built it now!
+
+||It's okay if it seems confusing at the moment;"|
+||:---|
+||Things will get easier|
+||When we start examining the tfstate file|
+||Don't give up King or Queen. |
+
+
+### Test The Magic
+
+Does this actually now provision anything? 
+Is it working as expected? 
+
+This is communicating with our Sinatra server.
+
+1. do `tf init` and let's see.
+
+We encountered a failure while querying available provider packages.
+
+To resolve this issue, please ensure consistency in naming. In your main.tf, use the resource name 'terratowns_home' instead of 'terratown_home.' 
+
+This change is necessary because in the provider schema function of `main.go`, it is defined as `teratown_home`.
+
+
+2. Double check `tf init` now. Works!
+3. terraform plan and let's see.
+
+We've got the resource! A custom resource has been planned!
+- The mock server is not a real server, so it won't behave exactly the same way as the actual server.
+- We can play a little bit around before targetting the terratown.
+
+4. Apply your changes with `terraform apply` for too much errors to come ofc.
+
+| Step | Error Description                                     | Resolution                                               |
+| ---- | ----------------------------------------------------- | -------------------------------------------------------- |
+| 1    | Spelling mistake: `domain_namae` -> `name`           | Update the variable name to "name"                       |
+| 2    | Build provider to delete files                        | Execute `./bin/build_provider`                            |
+| 3    | Initialize and apply Terraform                        | Run `terraform init` and `terraform apply`                |
+| 4    | Code block issue with `<`, related to JSON parsing   | Ensure the response is valid JSON and not HTML or other   |
+| 5    | Invalid character `<`, looking for value start       | Validate the data from the API is valid JSON             |
+| 6    | URL adjustment needed: hit "/api/home" instead       | Change the URL to "/api/home"                            |
+| 7    | Issue with endpoint in create script (only "home")   | Modify the endpoint to include "/api" in `main.tf`       |
+| 8    | Reattempt after endpoint correction                  | Rebuild, initialize, and apply                           |
+
+
+I've found a better way to present the errors I encountered, allowing you to tackle and resolve each one systematically.
+
+The last apply will get your resource made by terraform to be provisioned. Good stuff.
+
+![1 Resource Created!]()
+
+
+## State File Effects
+"It's retaining this state, so we should be able to continue mocking it.
+
+The state file in Terraform keeps track of the resource's status, including the `homeUUID`. It's crucial for Terraform to maintain resource mapping.
+```
+
+```
+
+Examine the state file to check for sensitive data (a valuable lesson to be learned).
+- It does not store sensitive data here.
+- We can view our schema for the resource and the provider we created.
+
+The most important aspect is the ID, as the Terraform provider relies on it to maintain the mapping accurately.
+
+## Correct and Make Changes
+You can make changes to your resource properties and apply them. 
+
+Terraform will detect and update the state accordingly.
+
+
+#### Let's Make Changes
+
+1. Change `name` to `resource name` in `main.tf` and we encounter an error.
+   - We wanted "home," but it's "House," e.g., "HouseCreate."
+
+#### Change Data Types
+
+2. Change `init` to `float64`.
+   - Another error occurs because of the state file.
+   - Error occurs because in one place it's `init`, and in another, it's `float64`.
+
+#### Data Type Mapping
+
+3. Data type mapping:
+   - Create: `int`
+   - Read: `float64`
+   - Update: `int`
+   - This mapping is based on how the response is received.
+
+#### Resolution Steps
+
+4. Resolution Steps:
+   - Build.
+   - Delete state.
+   - Stop Sinatra.
+   - `tf init`.
+   - `tf apply --auto-approve`.
+   - These steps are taken to resolve the error.
+
+#### Review Creation
+
+5. It was created.
+   - Go to Sinatra and verify.
+   - Confirm that it's created.
+
+#### Make Changes and Reapply
+
+6. Make a change, and then reapply.
+   - It detects that the description has changed and prompts for confirmation.
+   - Observe that the state now contains the updated information.
+
+#### Update Error Fix
+
+7. There's a double name in the update; change it to "description" and double-check.
+   - Ensure that there is no duplication.
+
+#### Testing Updates
+
+8. Make an update to the description or name.
+   - Run `tf apply`.
+   - Ensure Sinatra is running.
+
+Also, the apply do both update and show.
+
+#### State Update
+
+9. It updates our state, and the names align as desired.
+   - Confirm that the state reflects the changes.
+
+#### Cleanup
+
+10. Destroy the state. All is perfect!
+![Destroyed Custom Resource]()
+
+Destroying the state will remove it completely.
+
+### Considerations
+
+- Are there any edge cases? (unknown)
+- Are there any overlooked factors? (unknown)
+
+Writing a robust Terraform provider can be a challenging task. <br>It's impressive to achieve this, and it's undeniably cool!
+
+We've reached a significant milestone with our progress. This is a hard stop
+
+- The next step involves utilizing the provider with the actual Terratown endpoint.
+- This will require setting up Terratown accounts and obtaining the necessary access.
+

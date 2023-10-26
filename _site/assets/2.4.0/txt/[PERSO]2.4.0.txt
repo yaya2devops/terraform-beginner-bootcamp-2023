@@ -1,0 +1,390 @@
+we did defined our schema...
+
+we need to define the schema for our resource.
+
+
+i want to call it home resource. but since its the only resource.. we call it just resource.
+
+
+this in main.go
+
+inside the name, description, domain name, town, add the inside stuff.
+
+after that lets see if that complile..
+
+bin/build_provider
+
+go to maintf in the root level.. add new resource
+
+terrtown_home and name it "home"
+
+that have description, town,  content_version..
+
+u can choose where u want to put ur page. (e.g; gamers-groto)
+
+do the trick od description with << >> like in EOC
+
+and add domain name..we get it from our other project..cloudfront url! inn output
+
+build and init.. 
+
+error.. fqiled to query  avaialbel provider  pcakges...
+
+check thhe terraformrc... 
+
+cd etc...the file is there.
+
+
+we didnt finish anything with the code.. we still have empty resources in main.go it may be why..
+
+lets keep coding and see.
+
+- code create action.
+- code the read (called resourcehouseread in main.go)
+- code the update
+- code delete
+
+all of them need config.
+
+add http request and endpoint to the craete.
+add authorization and our brearer token to the cerate...
+set the header for the content type..c
+set the accept..	
+
+
+looks smiliar to delete...
+
+for read it is get.. and we want the homeUUID in the /home/ and update similar but put.
+
+annd for delete same as create but Delete  and also homeUUID
+
+
+add homeUUID := .. for read and update and delete
+
+
+
+next we actuall have to do the client call. AFTER THE HEADER in the delete and do the samein update, read and create.
+
+
+
+
+this is repetitive but could be a way to refactor it..........not doing it now.
+
+
+---remade here: https://chat.openai.com/share/97b6e708-03da-44d8-b5ca-41434d49a351
+
+now we need to pay a payload for a post. AND THE MESSAGE BODY TO CONTAIN all the details (refer to request diaggram))
+
+lets get back to create we need to pass payload block after the config.
+
+we need to make it a format to get it in.
+
+THERE IS A JSON FUNC that do the job just after playload. to conver to bites and add it as argment to the next;.
+
+
+after doing the playload and putint the body we should get a response there. we want to do somethign with the response. we will parse it. 
+
+after the resp.Body.Clos()
+
+
+
+
+get the code that will get the error from the server to us if it happened. in create
+
+if resp.
+tatusCode != http.statsok
+{etc}
+
+
+---- up to here.
+
+we want one for deelete as well..
+
+
+
+we need now to set a  value of ID.
+whenever u have a resource for terraform it always want u to retun id 
+
+
+IN CREATE
+ADD
+
+homeUUID:= response uuid string 
+AND d.set it
+
+
+
+
+## the read block
+
+now fo the read
+
+we have to have the home id.
+
+remake the respostatus dode  amake it if else.. 
+
+IF IT ITS OK  RETurn the data...
+d.Set
+
+for all the conten t for read... responseData[ name, content, desc, domai..]
+
+we may have the status is not there to avoid config drift.
+
+### Update block
+
+we also need the playload from create paste it to the update. BUT take the domain the town because its notallowed to change those.
+
+reutn those payload for  d.set(name, ,playload(naame)
+d.set(desc, desc description and content ver
+
+
+
+### Now code the delete
+
+set id if successul is the only thing ..
+
+we can add it as else
+
+
+but just leave it outside..
+
+
+-- fist test-- will it work.
+
+./bin/build_provider
+
+some issues. syntax error 
+
+
+MIISING THE nill here instead of err != { do err != nil {
+
+./bin/build_provider
+
+undefinfed json, add it to our import.
+
+./bin/build_provider
+
+
+http error, add it netµ/htp to import
+
+./bin/build_provider
+
+undefined.FrontErr change it to FromErr
+
+./bin/build_provider
+
+bytes is libairry add it to import 
+
+./bin/build_provider
+
+
+ERROR TYPE IS NOT AN EXPERRESIOn
+ in line 152,199 and 295 cange error to just err
+
+./bin/build_provider
+
+
+
+RESPONSE DATA IS NOT FEDINED;;
+
+take the var line from INSIDE THE FIRST If to outside otherwise it wont know what it iS (we need to edcode from enterior)
+
+
+./bin/build_provider
+
+
+playloadBytes declared but not used in line because we have to pass it instead of nill in line 255.
+
+
+
+make it bytesNewbuffer stuff becaue it wont read.
+
+do the same for craete action etc and read only.
+
+
+- ./bin/build_provider
+
+error type not found
+
+change it type to err
+
+- ./bin/build_provider
+
+unfedined responseData
+
+we dont need repsonseData fr the update. We dont care about that.
+
+Take it and take the body %
+
+- ./bin/build_provider
+
+unfedined responseData
+
+do the same for delete
+
+- ./bin/build_provider
+NOW WE HAVE IT BUILT!!
+
+if its confusing its ok(its not)=>things will get huger when we start lookinn to tfstatefile
+
+
+### This will actually provision anything?
+the question now does it actually work?
+
+this is talking to our server sintara.
+
+
+tf init => failed to query avilable provider packages.
+
+
+make the resource called terratowns_home resource in maintf instead of terratown_home.. because its called teratown_home in the func provider of the schema provider in main.go
+
+
+tf init => works now. 
+
+
+tf plan => we have the resource! a custom resource is made!
+
+mock server is not real..So it will not work the excact same
+
+we can PLAY A LITTLE BIT AROUND before trying on the real tertown.
+
+
+tf apply ! 
+------- remake: https://chat.openai.com/share/b4bc03a1-48ec-48f0-aaa7-0ba620f72db4
+
+ERRRORS
+
+spelling mistake domain_namae...make it name.
+
+now we have to build again for it to delete bunch of files.
+
+- ./bin/build_provider
+
+tf INIT AND  apply !
+
+
+It is not liking our code block fo <
+THE ERROR end up related to parsin JSON (asked gpt and now make sense)
+
+Because if u get back something that is not json andhtml and start with that char u woudnt be able to parse it.
+
+
+
+invalid char < looking for beiginning  of value...
+error
+
+we tried adding the url =congif.endpoint at "/home"  (line150)
+and we print th eurl.
+
+build, init, apply.
+
+error because we have to jhit the api/home instead
+
+so copy that and take it to read res
+
+
+
+now we have a refacctored part..
+
+
+build, init, apply.
+
+still same errror but now doing api/Home
+
+go to create script it is actually only home.
+
+go back and terminate the api leave it only ..
+
+the issue is actually in our endpoint in maintf add /api to localhost.
+
+----
+
+
+it will now work. => 1 res createed.
+
+
+its holding this state: we should be able to keep mocking it..
+
+
+
+look state file and see if ther eis senitive data (good lesson to be learn)
+- its not storing here 
+- we can see our schema for the resource and the provider we did.
+- thhe most import thing is the id, this is that terraform proivder really care about to keep the mapping in place.
+
+
+### lets make change
+
+
+
+change name to resource name. in main.tf and we got error.
+
+> we wanted home but it is House e.g. HouseCreate..
+
+change init to float64
+
+
+another erro because we have statefile..
+
+error i mean
+
+because in one plce its init in other its float64
+
+create- int
+read- float64 
+
+why? idk why it the way the response back.
+
+update -int
+
+
+build; delete sstate, stop sinatra, tf init, tf apply --auto-a
+
+
+it created
+- go sintara and see it
+
+
+
+make change and re apply
+- it notice the desccription changed. say yes.
+
+see state its now having the updated ones..
+
+we have double name in the update its doubling in statefile. make it description. and double check
+
+- do an update to the description or name and run tf apply
+- make sure sintara runnin
+
+
+update and shown at same time (the apply)
+
+
+it will update our state...and the names are like we want them to be.
+
+destory our state will be gone!! all perfect
+
+
+everythin is working guys!
+
+
+considerations
+- is there edge cases: idk.
+- is there things not considered: idk
+its very hard to write a good provider terraform. 
+Its impressive to do ths and this is cool!
+
+
+
+This is hard stop because we done a lot.
+
+- The next thing is using the provider with the real terratown endpoint
+- we will need terratown accounts and getting the access.
+
+comit: 
+
+wip : https://github.com/omenking/terraform-beginner-bootcamp-2023/pull/51/commits/46f53c2e2cc1af07b078509930d8c1490f716e60
+
+finish implementation of terraform provider. terratown provider.
+https://github.com/omenking/terraform-beginner-bootcamp-2023/commit/004a68fc3d5ef581a3c543916304c6dce23c9326#diff-c4a1f6073c6e4d82105b6e0508b745d8ed3e87df643f6b7c1ef44c22cd07975f

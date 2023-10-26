@@ -1,0 +1,221 @@
+2.0.0
+
+we will focus on bringing the terratown server.
+
+
+u gonna need to bring all this code..
+
+
+there so many ways to embeedd th emock server.. 
+- we can bring it as a git submodule (i find it very dificutl when goes wrong)
+- we could git checkout and not coomit to our repo( but if we want to change something on the fly it sucks..we cant do this)
+
+
+the preffered method: bring the code to our repo. staticaly live there.
+
+
+go our repo:
+
+Create new issue;
+
+### Step 1: Create a New Issue
+- Go to our project's repository.
+- Create a new issue titled "Terratown Mock Server."
+- Label it as an enhancement.
+
+
+Terratown mock server
+
+download terratown mock server into our repo
+
+label it as enhancement.
+
+get branch from it.
+
+(after git graph)
+
+
+
+--- how to clone a repo with the git directory its being track..
+-1: zip it
+-2 clone it and remove .git
+
+clone terratowns_mock_server
+
+after cloning get rid of the .Git direcotryy
+
+ls -la
+
+that gitpod yml wont do anything becus gitpod works only on root. and past the one from this to root and terminate it.
+
+
+---  change bin folder to terratowns and move scripts to other bin direcotory, chmod all
+
+and commit our server.
+
+#XX Copy terratowns mock server to our repo and move bin into main.
+
+
+stop wroskapce and go launch branch againi via gitpod.
+
+sinatra starts
+
+so sinatra is a single but also a framework for web apps.
+
+sinatrarb.com
+
+the file is server.rb works with the gems that are in gemfile to make the server works
+
+---docs--- get it
+
+---comment on code---
+
+learn about active model in rails as an ORM
+
+
+also learn about getter and setter.. very famous..
+
+learn about rails validations.. and it format..
+
+
+
+go to terratowns.cloud
+
+cooker-coke (the perma link in validaiton)
+
+
+---end-comment-on-code----
+
+--
+
+diagram the second diagram (downloaded and modified by me)
+
+--
+
+back to comment the manually parse stuff  l130/126 etc
+
+134 135
+
+
+142
+
+---- commit 2 to branch: document mock server and add validation for inclusion
+
+
+
+
+--next thing bash script
+we have to first stop our server.. because our server doesnt reload code..
+  if we make changes we have to completey stop and start.
+
+we can make it so..im not gonna add that in there..
+
+
+ctrl +c--->bundle exec command.
+
+
+
+--server ready back to bash scripts.
+
+write me a bash script that will send me a post request o an endpoint 
+
+
+we asked gpt;---- its nott intermediate bootcamp so we have it ready but u can see hhow i did it..
+localhost:4567/api/u/:user_uuid/homes/ with a POST it should have a headers of content type and accept  application json.
+it should expect a bearer authorization token
+
+
+the pay load json should have the follownig fileds, name descirpito, content_version, town, domain name.
+
+
+--run bin/create script --returns uuid for the house.
+(thats all the privder want for)
+
+go check sintarta ull see it gave something..
+
+
+---- do the read script and pass the uuid from create read <uuid>
+
+
+--- do the update script.--- update <uuid>
+It will will complain!!!
+
+ (that is our code trap)
+there is an issue with the code. Thats the trap  baby.
+
+
+in the update we dont the domain names. the domain names and the town should only do initially once.
+
+
+back to the server. and correct the issue.
+we need to go to udpate action.
+
+should we refactor it?( mayble later.) just lets go to th update.
+
+
+216 line add domain like town..
+
+run udpate now..  it will give same error because we have to rerun the server.
+
+
+do new create get new uuid, read and then update.
+
+error? again?
+
+the error is double line in domain name. but lets not correct it and actually add the follwoing at the end
+
+we can do binding.pry at the end and see the error btw.
+
+
+do new create get new uuid, read and then update.
+
+
+it is now hanging=> this is correct. go to sinatra now it stoppping we can interact with the code directly.
+
+type  home => it is now showing 
+
+do home.domain_name
+
+do payload and see there is no domain there.. shoudnt be set there
+
+do $home[:domain_name] --thats our problem..
+
+oh so we dont need the home.domain_name = domain_name / leave the one with []
+
+
+now exit..
+
+
+
+--start over the server
+
+create read and update.  => great now!! go to sintara and observe all steps.. 
+
+
+check read btw new house decription... 
+
+
+we can now delete it.
+
+
+add the uuid at the end line 240.. (its not code trap but we have to fix this)
+
+do delete u'll see it reutnrs the uuid now.
+
+they are all scripts smiliar scripts tho just one post one get oneetc..
+
+
+
+However; 
+- [There is another code trap no one get it??]
+- thoughts to refactor stuff?
+
+
+
+
+ready to build custom provider.
+
+
+
+--tag 2.0.0
+

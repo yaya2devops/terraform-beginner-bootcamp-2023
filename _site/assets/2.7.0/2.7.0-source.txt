@@ -1,0 +1,104 @@
+# Project Version 2.7.0 Documentation
+
+This is setup in 2.7.0 will lay the foundation to enable you with the creation of multiple homes or houses within the platform as it now supports up to twelve homes or houses.
+
+
+### Multi-Home 
+
+   
+1. **Provision More Than One Home to Terratowns**
+   - Enable the creation of multiple homes within the Terratowns platform.
+
+### Terrhouses Setup
+To enable the deployment of multiple homes simultaneously, we will create sperate folders within the public dir for each home. We will also concentrate a single root file with multiple home resources.
+
+Modify the project to deploy multiple homes simultaneously.
+
+1. create a folder within the public and migrate all your project files to it.
+2. create a second folder and dupliacate the files formatting.
+
+-- assets
+------something.png
+---index.html
+---error.html
+
+3. since we are loving homes more than houses, rename the module name from terrahouse_aws to terrahome_aws.
+
+Update configurations in the main.tf file to accommodate changes related to `terrahouses_aws` variables and modules.
+   - change the module name to be in our theme e.g. module "home_urhousename_hosting" {}
+   - change the source to now be mapped to our "./modules/terrahome_aws" instead.
+   - change output.tf to map to home_arcanum_hosting instead of terrahouse_aws
+   - change cloudfront_url output to map to domain_name instead.
+4. Update module names and domain names.
+5. Review and update variables in the module configurations.
+    - as gpt:
+----
+how do u set nested tf variables in tf vars file.
+----
+this is to make stuff look more NEAT DAMN.
+    - update your project input for the public path and the content version in union
+     ```hcl
+       house-name-1 = {
+       public_path = "/workspace/terraform-beginner-bootcamp-2023/public/house-name-1-folder"
+       content_version = 2 
+       }
+
+       house-name-2 = {
+       public_path = "/workspace/terraform-beginner-bootcamp-2023/public/house-name-2-folder"
+       content_version = 2 
+       }
+      ```
+6. Modify index variables to accommodate public paths in your variables.Tf
+```
+variable "house-name" {
+  type = object({
+    public_path = string
+    content_version = number
+  })
+}
+```
+7. Now remove the index_html_filepath and error_html_filepath from your module block and include the public bath and content_version var call instead
+```hcl
+  public_path = var.arcanum.public_path
+  content_version = var.arcanum.content_version
+```
+
+8. in the resource make the call with new var assigned to cloudfront instead and content version
+```
+  domain_name = module.home-name-1.domain_name
+  content_version = var.arcanum.content_version
+```
+
+9. duplicate the process for the module/resource for a new home just below it.
+10. streamloong binairy build via gitpod:
+ ```    
+      cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
+      source ./bin/build_provider```
+ ```
+
+some of it may be ### Module Refactoring.. Rename the "Terrahome" folder in your module and update the module call in the main root tf file. Also, consider consulting the module's README for additional guidance and enhancements.
+
+
+### Terraform State Management
+
+1. Execute `tf state list` to view the resources in Terraform Cloud within Gitpod.
+2. Perform `tf state pull` and `tf plan` to manage the Terraform state.
+3. Update variables in the tfvars file to reflect changes in public paths and page versions.
+4. Execute `tf init` and `tf plan`.
+
+### Troubleshooting and Finalization
+
+1. Address any errors encountered during the plan and apply phases.
+2. Resolve undefined index, etag path, or other issues. 
+2. Update outputs to match changes made in the configuration.
+3. Ensure the plan and apply phases complete successfully.
+4. Confirm changes in the Terraform Cloud interface.
+5. Delete the Terraform Cloud resources if necessary.
+
+To deploy multiple homes, uncomment the appropriate home blocks in your main.tf file (both modules and resources). Run `terraform init` and `terraform apply` again.
+
+With these changes, you should be able to see both pages listed in your Terraform Cloud dashboard.
+
+## Conclusion
+
+Version 2.6.0 of the project focuses on integrating Terraform Cloud, enabling the creation of multiple homes or houses, and ensuring efficient configuration management. This documentation serves as a comprehensive guide for these tasks.

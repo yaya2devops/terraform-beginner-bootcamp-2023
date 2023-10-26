@@ -1,0 +1,130 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=8a13aad017ff6ad69fb842d026f4ce5260c12cc5">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/assets/js/script.js"></script>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Cloud Express | Your Perfect Starting Point To The Cloud with Yaya Legacy.</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Cloud Express" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/assets/1.2.0/regards.html" />
+<meta property="og:url" content="http://localhost:4000/assets/1.2.0/regards.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Cloud Express" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Cloud Express","url":"http://localhost:4000/assets/1.2.0/regards.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cloud Express</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Your Perfect Starting Point To The Cloud with Yaya Legacy.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="download-button zip"><span>Download</span></a>
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">View Cloud Express on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h5 id="211-removing-random-provider">2.1.1. Removing Random Provider</h5>
+
+<ul>
+  <li>Delete the Random Provider and its associated resources from the main Terraform configuration.</li>
+</ul>
+
+<h5 id="212-adjusting-bucket-configuration">2.1.2. Adjusting Bucket Configuration</h5>
+
+<ul>
+  <li>Change the bucket configuration from <code class="language-plaintext highlighter-rouge">bucket = random_string.bucket_name.result</code> to <code class="language-plaintext highlighter-rouge">bucket = var.bucket_name</code>.</li>
+</ul>
+
+<h5 id="213-variable-configuration">2.1.3. Variable Configuration</h5>
+
+<ul>
+  <li>Add a <code class="language-plaintext highlighter-rouge">bucket_name</code> variable in the <code class="language-plaintext highlighter-rouge">tfvars</code> file and define it in <code class="language-plaintext highlighter-rouge">var.tf</code>.</li>
+  <li>Validate the <code class="language-plaintext highlighter-rouge">bucket_name</code> variable to ensure it’s a valid AWS bucket name.</li>
+</ul>
+
+<h3 id="22-resource-naming-and-output">2.2. Resource Naming and Output</h3>
+
+<ul>
+  <li>Update the resource name from <code class="language-plaintext highlighter-rouge">example</code> to <code class="language-plaintext highlighter-rouge">website_bucket</code>.</li>
+  <li>Modify the output to reflect the new resource structure: <code class="language-plaintext highlighter-rouge">value = aws_s3_bucket.website_bucket.bucket</code>.</li>
+</ul>
+
+<h3 id="23-final-steps">2.3. Final Steps</h3>
+
+<ul>
+  <li>Execute a <code class="language-plaintext highlighter-rouge">terraform plan</code> and <code class="language-plaintext highlighter-rouge">terraform apply</code> after making these changes.</li>
+  <li>Ensure that the old S3 resources have been deleted.</li>
+</ul>
+
+<h3 id="24-additional-consideration">2.4. Additional Consideration</h3>
+
+<p>Consider implementing regex validation for variables, especially when validating inputs in the <code class="language-plaintext highlighter-rouge">variables</code> block.</p>
+
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      
+      <p><a href="https://github.com/yaya2devops" class="avatar"><img src="https://github.com/yaya2devops.png" width="48" height="48"></a> <a href="https://github.com/yaya2devops">yaya2devops</a> maintains <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">Cloud Express</a></p>
+      
+
+       
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="tar">tar</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="zip">zip</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">source code</a>
+    
+    <p class="name"></p>
+  </div>
+</body>
+</html>

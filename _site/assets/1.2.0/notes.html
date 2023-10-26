@@ -1,0 +1,227 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=8a13aad017ff6ad69fb842d026f4ce5260c12cc5">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/assets/js/script.js"></script>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Task Ticket - Configuration Drift Resolution | Cloud Express</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Task Ticket - Configuration Drift Resolution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/assets/1.2.0/notes.html" />
+<meta property="og:url" content="http://localhost:4000/assets/1.2.0/notes.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Task Ticket - Configuration Drift Resolution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Task Ticket - Configuration Drift Resolution","url":"http://localhost:4000/assets/1.2.0/notes.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cloud Express</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Your Perfect Starting Point To The Cloud with Yaya Legacy.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="download-button zip"><span>Download</span></a>
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">View Cloud Express on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h2 id="task-ticket---configuration-drift-resolution">Task Ticket - Configuration Drift Resolution</h2>
+
+<p>https://github.com/omenking/terraform-beginner-bootcamp-2023/commit/6d8813285b45256d4db785942efb783c68f7e3d4
+https://github.com/omenking/terraform-beginner-bootcamp-2023/issues/23</p>
+
+<p>We need to address a configuration drift issue and ensure that the system’s state is brought back to its intended configuration.</p>
+
+<p>Here are the specific steps to be taken:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Utilize the <code class="language-plaintext highlighter-rouge">tf</code> import for the <code class="language-plaintext highlighter-rouge">random</code> module.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Implement the <code class="language-plaintext highlighter-rouge">tf</code> import for the <code class="language-plaintext highlighter-rouge">bucket</code> module.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Deliberately induce a configuration drift (terminate the state).</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rectify the configuration drift.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Restore the system to its intended state.</li>
+</ul>
+
+<p>This will be followed meticulously to resolve the configuration drift issue in the upcoming PR.</p>
+
+<p>commit can be: bucket should not use random proovider</p>
+
+<hr />
+
+<p>How to fix it when you delete your state file and if there is anyway u cann recover it…</p>
+
+<p>If u delete it u may not recover all.. depends how many resources it may be possible  but plzzz
+make sure to store ur statae in thing like state file.. because we cant import on all resources..</p>
+
+<p>https://developer.hashicorp.com/terraform/cli/import</p>
+
+<p>that bucket is no longer managed by terraform…</p>
+
+<p>how to get that state?</p>
+
+<p>–we try import</p>
+
+<p>go to tf registry=&gt; providers=&gt;aws=&gt;search: s3 go to aws_s3_bucket</p>
+
+<p>look to the right there is “ON THIS PAGE” click import to go directly. it gave this:</p>
+
+<p>import {
+  to = aws_s3_bucket.bucket
+  id = “bucket-name”
+}</p>
+
+<p>and this;
+% terraform import aws_s3_bucket.bucket bucket-name</p>
+
+<p>take the command to cli and see.</p>
+
+<p>% terraform import aws_s3_bucket.bucket <therandomoneinaws></therandomoneinaws></p>
+
+<p>we called our bucket example.</p>
+
+<p>% terraform import aws_s3_bucket.example <therandomoneinaws></therandomoneinaws></p>
+
+<p>it will import new state but consider;</p>
+<ul>
+  <li>it will not include the random config</li>
+  <li>when u plan it will prompt to delete the bucket and create a new one and a random 2+ 1-</li>
+</ul>
+
+<h3 id="import-random">Import random</h3>
+
+<p>maybe that would resolve our sissue</p>
+
+<p>go to random provider, expand resources and click random_string, look to the right and click import.</p>
+
+<p>terraform import random_string.test test</p>
+
+<p>we named it bucket_name so it goes like;
+terraform import random_string.bucket_name <paste-random-name-from-s3></paste-random-name-from-s3></p>
+
+<ul>
+  <li>now both are back to state.</li>
+</ul>
+
+<p>but when we plan it seems to think that it needs to be replaced.</p>
+
+<p>https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import
+https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string#import</p>
+
+<p>– time to stop random bybye.</p>
+
+<p>delete it from provider, delete its resource from maintf</p>
+
+<p>and for bucket namem</p>
+
+<p>change bucket =random_string.bucket_name.result</p>
+
+<p>to;</p>
+
+<p>bucket = var.bucket_name</p>
+
+<p>go tfvars and add</p>
+
+<p>bucket_name=<grap-from-s3></grap-from-s3></p>
+
+<p>define that variabele in var.tf</p>
+
+<p>ask gpt to write tf var for bucket name and to validate the string so it is a valid bucket name for aws.</p>
+
+<ul>
+  <li>
+    <p>in resources change the name of th ebucket from example to website_bucket.</p>
+  </li>
+  <li>
+    <p>change the output
+value = aws_s3_bucket.website_bucket.bucket</p>
+  </li>
+</ul>
+
+<p>plan</p>
+
+<p>apply</p>
+
+<p>(make sure u deleted the old s3)</p>
+
+<ul>
+  <li>worth ur time to write regex. (like validate stuff in variables block)</li>
+</ul>
+
+<hr />
+<p>Learned about tf drift. (if u delete stuff, the state will tell u and recover it)
+fix missing res with tf import 
+fix manual config
+—</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Successfully used the <code class="language-plaintext highlighter-rouge">tf</code> import for the <code class="language-plaintext highlighter-rouge">random</code> module.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Implemented the <code class="language-plaintext highlighter-rouge">tf</code> import for the <code class="language-plaintext highlighter-rouge">bucket</code> module.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Next step: Deliberately induce a configuration drift.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Final step: Rectify the configuration drift and restore the system to its intended state.</li>
+</ul>
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      
+      <p><a href="https://github.com/yaya2devops" class="avatar"><img src="https://github.com/yaya2devops.png" width="48" height="48"></a> <a href="https://github.com/yaya2devops">yaya2devops</a> maintains <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">Cloud Express</a></p>
+      
+
+       
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="tar">tar</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="zip">zip</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">source code</a>
+    
+    <p class="name"></p>
+  </div>
+</body>
+</html>

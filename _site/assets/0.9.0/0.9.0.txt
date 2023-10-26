@@ -1,0 +1,54 @@
+TF ALIAS FOR TERRAFORM
+
+---
+can u make a tree of this directory with emojis (one folder for folders and for files? etc.)
+
+
+inside the bin dir they are ll bash scripts.
+- bin
+--- gen_tfrc
+--- install_aws_cli
+--- install_terraform_cli
+--- tf_alias
+---
+
+set an alias to be tf in our bash script ( to have shortcut for typing terraform)
+
+--- make it branch--- go to the branch and launch gitpod
+
+
+go to bash profile with telda
+
+
+
+open shift and bak tick/.bash_profile
+
+alias tf="terraform"
+
+
+when u update the bash profile ull have to update it
+
+
+so e can write source telda§//bashprf  to reload it
+
+
+that it.
+
+
+gitpod wont make this allist presist unless we make script for it.
+
+
+
+writ a bash script that will add the following allias to our .bash_profile
+alias tf="terraform"
+
+
+add the script to both aws and tf block in gitpod to automate it(idont trust it)
+it wont have it double but we can use it in our both terminals.
+
+commit it: #nb add script to setup tf alias
+
+
+create pr
+
+tag ot 0.9.0

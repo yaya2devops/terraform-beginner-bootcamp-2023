@@ -1,0 +1,174 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=8a13aad017ff6ad69fb842d026f4ce5260c12cc5">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/assets/js/script.js"></script>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Cloud Express | Your Perfect Starting Point To The Cloud with Yaya Legacy.</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Cloud Express" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/assets/1.3.0/1.3.0-construct.html" />
+<meta property="og:url" content="http://localhost:4000/assets/1.3.0/1.3.0-construct.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Cloud Express" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Cloud Express","url":"http://localhost:4000/assets/1.3.0/1.3.0-construct.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cloud Express</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Your Perfect Starting Point To The Cloud with Yaya Legacy.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="download-button zip"><span>Download</span></a>
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">View Cloud Express on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <p>https://chat.openai.com/share/15b0e8c7-353e-4c76-86c6-f98b226832d4</p>
+
+<h1 id="creating-terrafohouse-module---organizing-and-referencing-aws-infrastructure">Creating Terrafohouse Module - Organizing and Referencing AWS Infrastructure</h1>
+
+<h2 id="1-introduction">1. Introduction</h2>
+<ul>
+  <li>Overview of the task and its importance.</li>
+</ul>
+
+<h2 id="2-directory-structure-for-terrafohouse-module">2. Directory Structure for Terrafohouse Module</h2>
+<ul>
+  <li>Creating the modules/terrahouse_aws directory.</li>
+  <li>The purpose of maintaining a private repository.</li>
+  <li>Adopting the Apache License.</li>
+</ul>
+
+<h2 id="3-modular-architecture">3. Modular Architecture</h2>
+<ul>
+  <li>Isolating storage-related components in the “storage” directory.</li>
+  <li>Segregating delivery-related components in the “cdn” directory.</li>
+  <li>The necessity of specifying providers for each module.</li>
+</ul>
+
+<h2 id="4-refactoring-the-root-module">4. Refactoring the Root Module</h2>
+<ul>
+  <li>Moving the provider configuration to the main.tf within the module.</li>
+  <li>Relocating the bucket resource definition to the main.tf within the module.</li>
+  <li>Streamlining the root provider configuration.</li>
+  <li>Relocating variables and outputs.</li>
+</ul>
+
+<h2 id="5-referencing-modules">5. Referencing Modules</h2>
+<ul>
+  <li>Importing a module within another module block.</li>
+  <li>Including input variables (bucket name and UUID).</li>
+</ul>
+
+<h2 id="6-module-sources">6. Module Sources</h2>
+<ul>
+  <li>Exploring different module source options (local, GitHub, registry).</li>
+  <li>Utilizing the <code class="language-plaintext highlighter-rouge">terraform init</code> command.</li>
+</ul>
+
+<h2 id="7-handling-variables-and-validators">7. Handling Variables and Validators</h2>
+<ul>
+  <li>Dealing with variables in both module and root.</li>
+  <li>Explaining the role of validators.</li>
+  <li>Demonstrating successful execution.</li>
+</ul>
+
+<h2 id="8-outputs-in-nested-modules">8. Outputs in Nested Modules</h2>
+<ul>
+  <li>Understanding nested module outputs.</li>
+  <li>Incorporating module outputs into the root.</li>
+  <li>Retrieving outputs from a nested module.</li>
+</ul>
+
+<h2 id="9-terraform-refresh">9. Terraform Refresh</h2>
+<ul>
+  <li>The significance of the <code class="language-plaintext highlighter-rouge">terraform refresh</code> command.</li>
+  <li>How it affects local configurations.</li>
+</ul>
+
+<h2 id="10-applying-the-configuration">10. Applying the Configuration</h2>
+<ul>
+  <li>Executing <code class="language-plaintext highlighter-rouge">terraform apply</code>.</li>
+  <li>Displaying the output.</li>
+</ul>
+
+<h2 id="11-employing-outputs-with-nested-modules">11. Employing Outputs with Nested Modules</h2>
+<ul>
+  <li>Utilizing output values from nested modules.</li>
+  <li>Incorporating variables within nested modules.</li>
+  <li>Highlighting the creation of a nested module.</li>
+</ul>
+
+<h2 id="12-conclusion">12. Conclusion</h2>
+<ul>
+  <li>Recap of the process and the successful creation of the Terrafohouse Module.</li>
+  <li>Potential next steps</li>
+</ul>
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      
+      <p><a href="https://github.com/yaya2devops" class="avatar"><img src="https://github.com/yaya2devops.png" width="48" height="48"></a> <a href="https://github.com/yaya2devops">yaya2devops</a> maintains <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">Cloud Express</a></p>
+      
+
+       
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="tar">tar</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="zip">zip</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">source code</a>
+    
+    <p class="name"></p>
+  </div>
+</body>
+</html>

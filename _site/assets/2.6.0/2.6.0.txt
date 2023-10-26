@@ -1,0 +1,65 @@
+Welcome to this 2.6.0
+
+In this one we are trying to use terraform cloud as suppose toi ur local machine..
+
+because we are now gettinginto shape..
+
+Another thing i want to be able to CREATE more home or more house.
+
+the platform i think now supports twelve home or house.
+
+
+
+---create issue:  Multi Home and Terraform Cloud (these could be 2 seperate issues)
+
+You probably want to itemize them two seperate tihngfs as its trying to acomplish two diff goals.
+
+(refering to tags i'll do it in branchs as well)
+
+
+-  [ ] Move our state back to terraform cloud with local  execution
+
+
+---create branch
+
+now lets get our way to tf cloud..
+
+click Try Terraform Cloud !(can feel the laugh...)
+
+click on our terra-house-1 project
+
+
+so in tf cloud we can change the execution mode to be local.
+- because it is slow via tf cloud if we run the commands
+- but we want to keep our state safe in the cloud.
+
+click local and update the project level plzz.
+
+Not for the oregaznization level.
+
+
+
+BACK TO GITPOD
+
+in maintf root uncomment the cloud.
+
+also build our pulgin provider.
+make it auto in gitpod. in terraform section.
+
+
+
+tf init
+
+tf apply to get it to cloud
+
+
+now back to cloud
+- tf cloud wont tell u approve or somlething it just show u whts up going on
+- mayube i push te provider to registyr and we use it all.
+
+
+now all resource are managed by tf cloud.
+
+We can stop env and come back to it because our state is safe.
+
+

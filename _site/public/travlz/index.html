@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/tn.png" type="image/png">
+    <title>Discovering Tunisia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #c01414;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        h1 {
+            font-size: 36px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .description {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+        }
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            align-items: center;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            text-align: center;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        img {
+            max-width: 100%;
+            max-height: 70vh;
+        }
+        .slider-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .slider-button {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .slider-button:hover {
+            background-color: #a55e5e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="title" onclick="toggleDescription()">Visit Tunisia ✈️</h1>
+    </header>
+    <div class="description">
+        <p id="description">Welcome to Tunisia, where history meets beauty! Our website is your ultimate guide to the top destinations in this captivating North African nation.</p>
+    </div>
+    <div class="slider">
+        <div class="slide">
+            <img src="assets/el-jem.jpg" alt="El Jem Amphitheatre: An Ancient Wonder" width="800px">
+            <figure class="image-figure">El Jem Amphitheatre: An Ancient Wonder</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/musee-bardo.jpg" alt="The Magnificent National Bardo Museum" width="800px">
+            <figure class="image-figure">The Magnificent National Bardo Museum</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/zitounaaa.jpg" alt="The Grandeur of El-Zitouna Great Mosque" width="800px">
+            <figure class="image-figure">The Grandeur of El-Zitouna Great Mosque</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/tunis.jpg" alt="Tunis: Where History and Modernity Converge" width="800px">
+            <figure class="image-figure">Tunis: Where History and Modernity Converge</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/medina.jpg" alt="The Enchanting Medina of Tunis" width="800px">
+            <figure class="image-figure">The Enchanting Medina of Tunis</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/sousse-ribat.jpg" alt="Ribat of Sousse: A Historical Gem" width="800px">
+            <figure class="image-figure">Ribat of Sousse: A Historical Gem</figure>
+        </div>
+        <div class="slide">
+            <img src="assets/sidi.jpg" alt="Sidi Bou Saïd: A Coastal Jewel in Tunisia" width="800px">
+            <figure class="image-figure">Sidi Bou Saïd: A Coastal Jewel in Tunisia</figure>
+        </div>
+        <div class="slide">
+            <figure>Thanks for watching. See you there soon! Gimme a call.</figure>
+        </div>
+    </div>
+    <div class="slider-controls">
+        <button class="slider-button" onclick="prevSlide()">Previous</button>
+        <button class="slider-button" onclick="nextSlide()">Next</button>
+    </div>
+
+    <div class="description">
+        <p id="description">As you've explored the wonders of Tunisia through our website, we hope you're inspired to embark on your own adventure to this extraordinary country.</p>
+    </div>
+
+    <script>
+        const slider = document.querySelector('.slider');
+        let slideIndex = 0;
+
+        function showSlide(index) {
+            if (index < 0) {
+                index = 0;
+            }
+            if (index >= slider.children.length) {
+                index = slider.children.length - 1;
+            }
+            slideIndex = index;
+            for (let i = 0; i < slider.children.length; i++) {
+                slider.children[i].style.display = 'none';
+            }
+            slider.children[index].style.display = 'block';
+        }
+
+        function prevSlide() {
+            showSlide(slideIndex - 1);
+        }
+
+        function nextSlide() {
+            showSlide(slideIndex + 1);
+        }
+
+        function toggleDescription() {
+            const description = document.getElementById('description');
+            if (description.style.display === 'none' || !description.style.display) {
+                description.style.display = 'block';
+            } else {
+                description.style.display = 'none';
+            }
+        }
+
+        // Initial slide
+        showSlide(slideIndex);
+    </script>
+</body>
+</html>

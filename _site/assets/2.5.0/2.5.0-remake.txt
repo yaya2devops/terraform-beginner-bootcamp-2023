@@ -1,0 +1,60 @@
+# TerraTown Custom Provider Testing Documentation
+
+## Version 2.5.0
+
+### Overview
+
+This documentation outlines the steps for testing our custom provider against real TerraTowns infrastructure. We will configure access tokens, endpoints, and other necessary settings to ensure our custom provider works seamlessly with TerraTowns.
+
+### Configuration Steps
+
+#### 1. Access Token Setup
+
+To use TerraTown, follow these steps:
+
+- Sign up for a Terraform Cloud account.
+- In your provider block, set the endpoint to `terratowns.cloud/api`.
+- Obtain your user UUID from your ExamPro account.
+- Get an access token from the Terraform platform.
+
+#### 2. Token Handling
+
+To securely handle tokens, avoid storing them directly in the `main.tf` file. Use the `TF_VARS` environment variables for token management. This will allow you to reference the access token in your `main.tf` file using `var.terratowns_access_token`.
+
+#### 3. TerraHouse Module
+
+Update the TerraHouse module by adding the user UUID, access token, and endpoint:
+
+- Add the user UUID to the `variables.tf` and `main.tf` of the TerraHouse module.
+- Add variables for the access token and endpoint as well.
+
+#### 4. CloudFront Configuration
+
+After initializing and applying Terraform configurations, you may encounter errors. Ensure that the asset URL in `tfvars.sample` ends with a `/`. Also, add the `asset_path` parameter to the TerraHouse AWS module.
+
+#### 5. Bucket Name Randomization
+
+To make the bucket name random:
+
+- Obtain the bucket name from `tfvars` and the TerraHouse AWS module.
+- Comment out the bucket name setting in the CDN module.
+- Update variables and remove bucket validation in the CDN module.
+- Modify the CDN module to reference the bucket output.
+
+After applying Terraform configurations, the bucket name should be randomized.
+
+### Deploying and Testing
+
+Now that you have configured TerraTown, you can:
+
+- Access your TerraTown page.
+- Configure multiple pages if needed.
+- Test updates to ensure everything works as expected.
+
+### Terraform Cloud Integration
+
+For further testing and collaboration, consider integrating TerraTown with Terraform Cloud.
+
+### Commit
+
+Commit message: "8 items without readme: test our TerraHome against TerraTowns test town."

@@ -1,0 +1,341 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/style.css?v=8a13aad017ff6ad69fb842d026f4ce5260c12cc5">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="/assets/js/script.js"></script>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>1.6.0 | Cloud Express</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="1.6.0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/assets/1.6.0/version-poc.html" />
+<meta property="og:url" content="http://localhost:4000/assets/1.6.0/version-poc.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="1.6.0" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"1.6.0","url":"http://localhost:4000/assets/1.6.0/version-poc.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Cloud Express</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Your Perfect Starting Point To The Cloud with Yaya Legacy.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="download-button zip"><span>Download</span></a>
+          
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">View Cloud Express on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1 id="160"><code class="language-plaintext highlighter-rouge">1.6.0</code></h1>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>39-tf-content-version<span class="o">)</span> <span class="nv">$ </span>terraform apply
+module.terrahouse_aws.terraform_data.content_version: Refreshing state... <span class="o">[</span><span class="nb">id</span><span class="o">=</span>9c0acc20-0e05-9997-df2b-af633ad04e6b]
+module.terrahouse_aws.data.aws_caller_identity.current: Reading...
+module.terrahouse_aws.aws_cloudfront_origin_access_control.default: Refreshing state... <span class="o">[</span><span class="nb">id</span><span class="o">=</span>E23IAYBQD595KW]
+module.terrahouse_aws.data.aws_caller_identity.current: Read <span class="nb">complete </span>after 0s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>&lt;aws-id&gt;]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+  ~ update <span class="k">in</span><span class="nt">-place</span>
+
+Terraform will perform the following actions:
+
+  <span class="c"># module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution will be created</span>
+  + resource <span class="s2">"aws_cloudfront_distribution"</span> <span class="s2">"s3_distribution"</span> <span class="o">{</span>
+      + arn                            <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + caller_reference               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + comment                        <span class="o">=</span> <span class="s2">"Static website hosting for: aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + default_root_object            <span class="o">=</span> <span class="s2">"index.html"</span>
+      + domain_name                    <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + enabled                        <span class="o">=</span> <span class="nb">true</span>
+      + etag                           <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + hosted_zone_id                 <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + http_version                   <span class="o">=</span> <span class="s2">"http2"</span>
+      + <span class="nb">id</span>                             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + in_progress_validation_batches <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + is_ipv6_enabled                <span class="o">=</span> <span class="nb">true</span>
+      + last_modified_time             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + price_class                    <span class="o">=</span> <span class="s2">"PriceClass_200"</span>
+      + retain_on_delete               <span class="o">=</span> <span class="nb">false</span>
+      + staging                        <span class="o">=</span> <span class="nb">false</span>
+      + status                         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + tags                           <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + tags_all                       <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + trusted_key_groups             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + trusted_signers                <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + wait_for_deployment            <span class="o">=</span> <span class="nb">true</span>
+
+      + default_cache_behavior <span class="o">{</span>
+          + allowed_methods        <span class="o">=</span> <span class="o">[</span>
+              + <span class="s2">"DELETE"</span>,
+              + <span class="s2">"GET"</span>,
+              + <span class="s2">"HEAD"</span>,
+              + <span class="s2">"OPTIONS"</span>,
+              + <span class="s2">"PATCH"</span>,
+              + <span class="s2">"POST"</span>,
+              + <span class="s2">"PUT"</span>,
+            <span class="o">]</span>
+          + cached_methods         <span class="o">=</span> <span class="o">[</span>
+              + <span class="s2">"GET"</span>,
+              + <span class="s2">"HEAD"</span>,
+            <span class="o">]</span>
+          + compress               <span class="o">=</span> <span class="nb">false</span>
+          + default_ttl            <span class="o">=</span> 3600
+          + max_ttl                <span class="o">=</span> 86400
+          + min_ttl                <span class="o">=</span> 0
+          + target_origin_id       <span class="o">=</span> <span class="s2">"MyS3Origin"</span>
+          + trusted_key_groups     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+          + trusted_signers        <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+          + viewer_protocol_policy <span class="o">=</span> <span class="s2">"allow-all"</span>
+
+          + forwarded_values <span class="o">{</span>
+              + headers                 <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+              + query_string            <span class="o">=</span> <span class="nb">false</span>
+              + query_string_cache_keys <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+
+              + cookies <span class="o">{</span>
+                  + forward           <span class="o">=</span> <span class="s2">"none"</span>
+                  + whitelisted_names <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+      + origin <span class="o">{</span>
+          + connection_attempts      <span class="o">=</span> 3
+          + connection_timeout       <span class="o">=</span> 10
+          + domain_name              <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+          + origin_access_control_id <span class="o">=</span> <span class="s2">"E23IAYBQD595KW"</span>
+          + origin_id                <span class="o">=</span> <span class="s2">"MyS3Origin"</span>
+        <span class="o">}</span>
+
+      + restrictions <span class="o">{</span>
+          + geo_restriction <span class="o">{</span>
+              + locations        <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+              + restriction_type <span class="o">=</span> <span class="s2">"none"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+      + viewer_certificate <span class="o">{</span>
+          + cloudfront_default_certificate <span class="o">=</span> <span class="nb">true</span>
+          + minimum_protocol_version       <span class="o">=</span> <span class="s2">"TLSv1"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.aws_s3_bucket.website_bucket will be created</span>
+  + resource <span class="s2">"aws_s3_bucket"</span> <span class="s2">"website_bucket"</span> <span class="o">{</span>
+      + acceleration_status         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + acl                         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + arn                         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket                      <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + bucket_domain_name          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket_prefix               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket_regional_domain_name <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + force_destroy               <span class="o">=</span> <span class="nb">false</span>
+      + hosted_zone_id              <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + <span class="nb">id</span>                          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + object_lock_enabled         <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + policy                      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + region                      <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + request_payer               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + tags                        <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + tags_all                    <span class="o">=</span> <span class="o">{</span>
+          + <span class="s2">"UserUuid"</span> <span class="o">=</span> <span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
+        <span class="o">}</span>
+      + website_domain              <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + website_endpoint            <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.aws_s3_bucket_policy.bucket_policy will be created</span>
+  + resource <span class="s2">"aws_s3_bucket_policy"</span> <span class="s2">"bucket_policy"</span> <span class="o">{</span>
+      + bucket <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + <span class="nb">id</span>     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + policy <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.aws_s3_bucket_website_configuration.website_configuration will be created</span>
+  + resource <span class="s2">"aws_s3_bucket_website_configuration"</span> <span class="s2">"website_configuration"</span> <span class="o">{</span>
+      + bucket           <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + <span class="nb">id</span>               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + routing_rules    <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + website_domain   <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + website_endpoint <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+
+      + error_document <span class="o">{</span>
+          + key <span class="o">=</span> <span class="s2">"error.html"</span>
+        <span class="o">}</span>
+
+      + index_document <span class="o">{</span>
+          + suffix <span class="o">=</span> <span class="s2">"index.html"</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.aws_s3_object.error_html will be created</span>
+  + resource <span class="s2">"aws_s3_object"</span> <span class="s2">"error_html"</span> <span class="o">{</span>
+      + acl                    <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket                 <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + bucket_key_enabled     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + content_type           <span class="o">=</span> <span class="s2">"text/html"</span>
+      + etag                   <span class="o">=</span> <span class="s2">"50f3e1933710f2d6c3123df0b4214225"</span>
+      + force_destroy          <span class="o">=</span> <span class="nb">false</span>
+      + <span class="nb">id</span>                     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + key                    <span class="o">=</span> <span class="s2">"error.html"</span>
+      + kms_key_id             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + server_side_encryption <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + <span class="nb">source</span>                 <span class="o">=</span> <span class="s2">"/workspace/terraform-beginner-bootcamp-2023/public/error.html"</span>
+      + storage_class          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + tags_all               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + version_id             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.aws_s3_object.index_html will be created</span>
+  + resource <span class="s2">"aws_s3_object"</span> <span class="s2">"index_html"</span> <span class="o">{</span>
+      + acl                    <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + bucket                 <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+      + bucket_key_enabled     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + content_type           <span class="o">=</span> <span class="s2">"text/html"</span>
+      + etag                   <span class="o">=</span> <span class="s2">"c4472aa82b612b827e5fa0c745b3ad4a"</span>
+      + force_destroy          <span class="o">=</span> <span class="nb">false</span>
+      + <span class="nb">id</span>                     <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + key                    <span class="o">=</span> <span class="s2">"index.html"</span>
+      + kms_key_id             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + server_side_encryption <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + <span class="nb">source</span>                 <span class="o">=</span> <span class="s2">"/workspace/terraform-beginner-bootcamp-2023/public/index.html"</span>
+      + storage_class          <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + tags_all               <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+      + version_id             <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+  <span class="c"># module.terrahouse_aws.terraform_data.content_version will be updated in-place</span>
+  ~ resource <span class="s2">"terraform_data"</span> <span class="s2">"content_version"</span> <span class="o">{</span>
+        <span class="nb">id</span>     <span class="o">=</span> <span class="s2">"9c0acc20-0e05-9997-df2b-af633ad04e6b"</span>
+      ~ input  <span class="o">=</span> 2 -&gt; 3
+      ~ output <span class="o">=</span> 2 -&gt; <span class="o">(</span>known after apply<span class="o">)</span>
+    <span class="o">}</span>
+
+Plan: 6 to add, 1 to change, 0 to destroy.
+
+Changes to Outputs:
+  + s3_website_endpoint <span class="o">=</span> <span class="o">(</span>known after apply<span class="o">)</span>
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only <span class="s1">'yes'</span> will be accepted to approve.
+
+  Enter a value: <span class="nb">yes
+
+</span>module.terrahouse_aws.terraform_data.content_version: Modifying... <span class="o">[</span><span class="nb">id</span><span class="o">=</span>9c0acc20-0e05-9997-df2b-af633ad04e6b]
+module.terrahouse_aws.terraform_data.content_version: Modifications <span class="nb">complete </span>after 0s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>9c0acc20-0e05-9997-df2b-af633ad04e6b]
+module.terrahouse_aws.aws_s3_bucket.website_bucket: Creating...
+module.terrahouse_aws.aws_s3_bucket.website_bucket: Creation <span class="nb">complete </span>after 3s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>aaa2w7yvypfkim1mhlp5bjbwqky9dadc]
+module.terrahouse_aws.aws_s3_bucket_website_configuration.website_configuration: Creating...
+module.terrahouse_aws.aws_s3_object.index_html: Creating...
+module.terrahouse_aws.aws_s3_object.error_html: Creating...
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Creating...
+module.terrahouse_aws.aws_s3_object.index_html: Creation <span class="nb">complete </span>after 0s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>index.html]
+module.terrahouse_aws.aws_s3_object.error_html: Creation <span class="nb">complete </span>after 0s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>error.html]
+module.terrahouse_aws.aws_s3_bucket_website_configuration.website_configuration: Creation <span class="nb">complete </span>after 1s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>aaa2w7yvypfkim1mhlp5bjbwqky9dadc]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>10s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>20s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>30s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>40s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>50s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m0s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m10s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m20s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m30s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m40s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>1m50s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m0s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m10s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m20s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m30s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m40s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>2m50s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>3m0s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>3m10s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>3m20s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>3m30s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Still creating... <span class="o">[</span>3m40s elapsed]
+module.terrahouse_aws.aws_cloudfront_distribution.s3_distribution: Creation <span class="nb">complete </span>after 3m43s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>E2EW2A1VBGV6H9]
+module.terrahouse_aws.aws_s3_bucket_policy.bucket_policy: Creating...
+module.terrahouse_aws.aws_s3_bucket_policy.bucket_policy: Creation <span class="nb">complete </span>after 1s <span class="o">[</span><span class="nb">id</span><span class="o">=</span>aaa2w7yvypfkim1mhlp5bjbwqky9dadc]
+
+Apply <span class="nb">complete</span><span class="o">!</span> Resources: 6 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+bucket_name <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc"</span>
+s3_website_endpoint <span class="o">=</span> <span class="s2">"aaa2w7yvypfkim1mhlp5bjbwqky9dadc.s3-website.ca-central-1.amazonaws.com"</span>
+</code></pre></div></div>
+
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      
+      <p><a href="https://github.com/yaya2devops" class="avatar"><img src="https://github.com/yaya2devops.png" width="48" height="48"></a> <a href="https://github.com/yaya2devops">yaya2devops</a> maintains <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">Cloud Express</a></p>
+      
+
+       
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="tar">tar</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="zip">zip</a>
+    <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="code">source code</a>
+    
+    <p class="name"></p>
+  </div>
+</body>
+</html>
