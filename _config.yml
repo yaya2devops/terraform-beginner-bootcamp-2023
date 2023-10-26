@@ -1,4 +1,4 @@
-remote_theme: pages-themes/time-machine@v0.2.0
+remote_theme: pages-themes/architect@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 
@@ -6,4 +6,4 @@ title: "Cloud Express"
 description: Your Perfect Starting Point To The Cloud with Yaya Legacy.
 show_downloads: true
 google_analytics:
-theme: jekyll-theme-time-machine
+theme: jekyll-theme-architect
