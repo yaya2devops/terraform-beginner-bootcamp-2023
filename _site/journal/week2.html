@@ -64,7 +64,7 @@
 <p>The past week was absolutely fantastic and filled with excitement.</p>
 
 <blockquote>
-  <p><a href="/">Go Back.</a></p>
+  <p><a href="/">Give me a moment.</a></p>
 </blockquote>
 
 <p>We embarked on some incredible tech adventures, such as crafting our very own Ruby server and designing a custom Terraform provider in Go.</p>
@@ -74,7 +74,7 @@
   <li><a href="#terratowns-provider-skeleton">TerraTowns Provider Skeleton</a></li>
   <li><a href="#terratowns-terraform-block">Terratowns Terraform Block</a></li>
   <li><a href="#terratowns-resource-skeleton">TerraTowns Resource Skeleton</a></li>
-  <li><a href="#terratowns--home--resource">TerraTowns <code class="language-plaintext highlighter-rouge">Home</code> Resource</a></li>
+  <li><a href="#terratowns-home-resource">TerraTowns <code class="language-plaintext highlighter-rouge">Home</code> Resource</a></li>
   <li><a href="#target-terratowns-api">Target TerraTowns API</a></li>
   <li><a href="#terraform-turbocharge-workflow">Terraform Turbocharge Workflow</a></li>
   <li><a href="#terrahomes-to-terratowns">🏠 TerraHomes to TerraTowns</a></li>
@@ -98,17 +98,42 @@
 
 <p>There are many ways for embedding the mock server:</p>
 
-<p><strong>A way can be;</strong>
-|🤔|We can include it as a submodule|
-|—:|:—|
-|🐛|Challenging to manage when issues arise|</p>
+<p><strong>A way can be;</strong></p>
 
-<p><strong>Another way may be;</strong>
-|🤔|Git checkout and refrain from committing |
-|—:|:—|
-|🚫|limiting when it comes to making on-the-fly changes|</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">🤔</th>
+      <th style="text-align: left">We can include it as a submodule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">🐛</td>
+      <td style="text-align: left">Challenging to manage when issues arise</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>We are going with <strong>the first.</strong></p>
+<p><strong>Another way may be;</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">🤔</th>
+      <th style="text-align: left">Git checkout and refrain from committing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">🚫</td>
+      <td style="text-align: left">limiting when it comes to making on-the-fly changes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+We are going with <strong>the first.</strong></p>
 
 <h3 id="bringing-terratown-mock-server-into-our-repository">Bringing Terratown Mock Server into Our Repository</h3>
 
@@ -117,12 +142,8 @@
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/ExamProCo/terratowns_mock_server.git
 </code></pre></div>    </div>
   </li>
-  <li>cd to <code class="language-plaintext highlighter-rouge">terratowns_mock_server</code> and verify the <code class="language-plaintext highlighter-rouge">.git</code> existence.</li>
-</ol>
-
-<p><img src="/assets/2.0.0/thegit-folder.png" alt="Dotgit is hidden here" /></p>
-
-<ol>
+  <li>cd to <code class="language-plaintext highlighter-rouge">terratowns_mock_server</code> and verify the <code class="language-plaintext highlighter-rouge">.git</code> existence.
+<img src="/assets/2.0.0/thegit-folder.png" alt="Dotgit is hidden here" /></li>
   <li>Remove the <code class="language-plaintext highlighter-rouge">.git</code> directory from the cloned repository.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm -rf .git
 </code></pre></div>    </div>
@@ -150,9 +171,11 @@
     <p>Include it in the <code class="language-plaintext highlighter-rouge">terraform</code> section.</p>
   </li>
   <li>Add <code class="language-plaintext highlighter-rouge">cd $PROJECT_ROOT</code> before your terraform, <code class="language-plaintext highlighter-rouge">aws-cli</code> and <code class="language-plaintext highlighter-rouge">http-server</code> section.</li>
-  <li>Terminate the previous Gitpod workspace because It is usless.
-    <h3 id="adjust-the-repository-structure">Adjust the Repository Structure</h3>
-  </li>
+  <li>Terminate the previous Gitpod workspace because It is usless.</li>
+</ol>
+
+<h3 id="adjust-the-repository-structure">Adjust the Repository Structure</h3>
+<ol>
   <li>Change the <code class="language-plaintext highlighter-rouge">bin</code> folder to <code class="language-plaintext highlighter-rouge">terratowns</code>.</li>
   <li>Move scripts to our great <code class="language-plaintext highlighter-rouge">bin</code> directory.</li>
   <li>Perform necessary chmod operations on these files.</li>
@@ -282,7 +305,8 @@
 </code></pre></div></div>
 <p>Add the return otherwise it wont work. and I created for you <code class="language-plaintext highlighter-rouge">find_user_by_bearer_token</code> method responsible for authenticating requests that use Bearer token-based authentication.</p>
 
-<ol>
+<h4 id="coding-endpoints">Coding Endpoints</h4>
+<ul>
   <li><strong>Create a POST Endpoint for Creating Homes</strong>:
     <ul>
       <li>Define a POST route <code class="language-plaintext highlighter-rouge">/api/u/:user_uuid/homes</code>.</li>
@@ -294,7 +318,7 @@
       <li>Generate a UUID, mock data, and return the UUID as JSON.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">post</span> <span class="s1">'/api/u/:user_uuid/homes'</span> <span class="k">do</span>
     <span class="n">ensure_correct_headings</span><span class="p">()</span>
@@ -360,7 +384,7 @@
     <span class="k">return</span> <span class="p">{</span> <span class="ss">uuid: </span><span class="n">uuid</span> <span class="p">}.</span><span class="nf">to_json</span>
   <span class="k">end</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li><strong>Create a GET Endpoint for Retrieving Homes</strong>:
     <ul>
       <li>Define a GET route <code class="language-plaintext highlighter-rouge">/api/u/:user_uuid/homes/:uuid</code>.</li>
@@ -369,7 +393,7 @@
       <li>Return the corresponding home data as JSON, or an error if not found.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">get</span> <span class="s1">'/api/u/:user_uuid/homes/:uuid'</span> <span class="k">do</span>
     <span class="n">ensure_correct_headings</span>
@@ -387,7 +411,7 @@
     <span class="k">end</span>
   <span class="k">end</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li><strong>Create a PUT Endpoint for Updating Homes</strong>:
     <ul>
       <li>Define a PUT route <code class="language-plaintext highlighter-rouge">/api/u/:user_uuid/homes/:uuid</code>.</li>
@@ -397,7 +421,7 @@
       <li>Return a success message as JSON.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># UPDATE</span>
   <span class="c1"># very similar to create action</span>
@@ -435,7 +459,7 @@
     <span class="k">return</span> <span class="p">{</span> <span class="ss">uuid: </span><span class="n">params</span><span class="p">[</span><span class="ss">:uuid</span><span class="p">]</span> <span class="p">}.</span><span class="nf">to_json</span>
   <span class="k">end</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li><strong>Create a DELETE Endpoint for Deleting Homes</strong>:
     <ul>
       <li>Define a DELETE route <code class="language-plaintext highlighter-rouge">/api/u/:user_uuid/homes/:uuid</code>.</li>
@@ -444,7 +468,7 @@
       <li>Return a success message as JSON.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># DELETE</span>
   <span class="n">delete</span> <span class="s1">'/api/u/:user_uuid/homes/:uuid'</span> <span class="k">do</span>
@@ -464,13 +488,13 @@
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li><strong>Run the Server</strong>:
     <ul>
       <li>Start the Sinatra server by calling <code class="language-plaintext highlighter-rouge">TerraTownsMockServer.run!</code></li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <h2 id="bash-script-for-cruds">Bash Script for CRUDs</h2>
 
@@ -532,21 +556,13 @@ Note: Consider adding a script for automatic server restart in the future.</li>
 <p><strong>To run the script;</strong></p>
 <ol>
   <li>Perform a update script using the UUID obtained from the create step.</li>
-  <li>Run the command as follows <code class="language-plaintext highlighter-rouge">./update &lt;uuid&gt;</code></li>
-</ol>
-
-<p>When attempting an update. <br />
+  <li>Run the command as follows <code class="language-plaintext highlighter-rouge">./update &lt;uuid&gt;</code><br /><br />
+When attempting an update. <br />
 It will complain. This is our code trap.<br />
-Expect an error related to domain names; this is intentional.</p>
-
-<ol>
+Expect an error related to domain names; this is intentional.<br /><br /></li>
   <li>Investigate and correct the issue within the update action (line 216).</li>
-  <li>Add the domain name to the update action like town</li>
-</ol>
-
-<p>The domain names and the town should only be init once.<br /></p>
-
-<ol>
+  <li>Add the domain name to the update action like town<br /><br />
+The domain names and the town should only be init once.<br /></li>
   <li>Run udpate again.. give same error because we have to rerun the server.</li>
   <li>Do new create get new uuid, read and then update.</li>
 </ol>
@@ -558,12 +574,8 @@ Expect an error related to domain names; this is intentional.</p>
 <p>We can employ <code class="language-plaintext highlighter-rouge">binding.pry</code> to pause the program’s execution in ruby.</p>
 
 <ol>
-  <li>Create a new record to generate a fresh <code class="language-plaintext highlighter-rouge">UUID</code>, read the data, and subsequently update it.</li>
-</ol>
-
-<p>It is currently hanging, and this is expected behavior.</p>
-
-<ol>
+  <li>Create a new record to generate a fresh <code class="language-plaintext highlighter-rouge">UUID</code>, read the data, and subsequently update it.<br />
+It is currently hanging, and <strong>this is expected behavior.</strong> <br /></li>
   <li>Now, let’s switch to Sinatra where it has paused.<br />Allowing us to interact directly with the code.</li>
 </ol>
 
@@ -584,6 +596,22 @@ Expect an error related to domain names; this is intentional.</p>
 
 <h3 id="relaunch-the-server">Relaunch the server</h3>
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">In sinatra review the ‘read’ operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Focus on the new house description</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">You can delete it now</td>
+    </tr>
+  </tbody>
+</table>
+
 <p><strong>Server Reset and Interaction Steps</strong></p>
 
 <ol>
@@ -593,25 +621,6 @@ Expect an error related to domain names; this is intentional.</p>
       <p>Great, everything’s in order now! Proceed to Sinatra and carefully observe all the steps.</p>
     </blockquote>
   </li>
-</ol>
-
-<table>
-  <thead>
-    <tr>
-      <th>In sinatra review the ‘read’ operation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Focus on the new house description</td>
-    </tr>
-    <tr>
-      <td>You can delete it now</td>
-    </tr>
-  </tbody>
-</table>
-
-<ol>
   <li>Append the UUID at the end, around line 240. (Note: This is not a code trap but a necessary fix.)</li>
   <li>Execute the ‘delete’ operation, and you’ll see it tell you about the UUID.
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
@@ -678,17 +687,19 @@ Once all previous steps are completed successfully, We are ready to build the cu
 <table>
   <thead>
     <tr>
-      <th>terraform-provider-name</th>
+      <th style="text-align: left">terraform-provider-name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td> </td>
+      <td style="text-align: left"><a href="https://registry.terraform.io/browse/providers?tier=community">Browse and see for yourself</a>.</td>
     </tr>
   </tbody>
 </table>
 
-<p><a href="https://registry.terraform.io/browse/providers?tier=community">Browse and see for yourself</a>. <br />I filtered it for you on communtiy tier already. Also..</p>
+<p>I filtered it for you on communtiy tier already.</p>
+
+<p>Also..</p>
 <ul>
   <li>Consult back the custom providers stuctures and code blocks.</li>
   <li>Hasicups is a very good project for learning Terraform.</li>
@@ -712,14 +723,10 @@ Once all previous steps are completed successfully, We are ready to build the cu
  <span class="p">}</span>
 </code></pre></div>    </div>
     <blockquote>
-      <p>We always have the package main.</p>
+      <p>We always have the package main.
+Use (done) GPT to generate a “Hello World” program using the Go package and print the result.<br /></p>
     </blockquote>
   </li>
-</ol>
-
-<p>Use (done) GPT to generate a “Hello World” program using the Go package and print the result.</p>
-
-<ol>
   <li>Now, let’s create a simple “Hello World” program in Go.</li>
 </ol>
 
@@ -730,7 +737,6 @@ Once all previous steps are completed successfully, We are ready to build the cu
 <span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">)</span>
 <span class="p">}</span>
-
 </code></pre></div></div>
 
 <ul>
@@ -749,38 +755,36 @@ Once all previous steps are completed successfully, We are ready to build the cu
   </thead>
   <tbody>
     <tr>
-      <td> </td>
+      <td>Check it out, A blog I posted on hashnode on feb of this 2023</td>
     </tr>
   </tbody>
 </table>
 
-<ol>
-  <li>Run your first Go program.
-```sh
-(51-terratowns-skeleton)
-$ go run main.go</li>
-</ol>
+<ul>
+  <li>Run your first Go program.</li>
+</ul>
 
-<p>$ go run main.go 
-Hello, World!</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-### Provider Functionality
-Our custom Terraform provider will provide CRUD operations for a resource. 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>51-terratowns-skeleton<span class="o">)</span>
+<span class="nv">$ </span>go run main.go 
 
-Make a Request to LLM in the meanwhile.
+<span class="nv">$ </span>go run main.go 
+Hello, World!
 </code></pre></div></div>
-<p>Generate code for a custom Terraform provider that includes API actions designed to interact with Terraform resources. Can you confirm, so I provide you with requirements.
-—
-Requirements:</p>
 
-<p>We aim to perform the following actions;</p>
-<ol>
-  <li>GET /api/u/:user_uuid/home</li>
-  <li>POST /api/u/:user_uuid/home</li>
-  <li>PUT /api/u/:user_uuid/home</li>
-  <li>DELETE /api/u/:user_uuid/home
-```</li>
-</ol>
+<h3 id="provider-functionality">Provider Functionality</h3>
+<p>Our custom Terraform provider will provide CRUD operations for a resource.</p>
+
+<p>Make a Request to LLM in the meanwhile.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Generate code for a custom Terraform provider that includes API actions designed to interact with Terraform resources. Can you confirm, so I provide you with requirements.
+---
+Requirements:
+
+We aim to perform the following actions;
+1. GET /api/u/:user_uuid/home
+2. POST /api/u/:user_uuid/home
+3. PUT /api/u/:user_uuid/home
+4. DELETE /api/u/:user_uuid/home
+</code></pre></div></div>
 
 <h4 id="importing-in-go">Importing in Go</h4>
 <p>To import multiple packages in Go, you can use the following syntax:</p>
@@ -813,6 +817,8 @@ Requirements:</p>
   <li>A function in go is just func</li>
   <li>Go doesn’t use classes; instead, it relies on interfaces.</li>
 </ul>
+
+<h3 id="get-help-from-hashicorp">Get Help From HashiCorp</h3>
 
 <p>We used the <code class="language-plaintext highlighter-rouge">developer.hashicorp.com</code> Terraform provider setup tutorial for this.</p>
 
@@ -872,6 +878,8 @@ Nah.
 
 Okay np.
 </code></pre></div></div>
+
+<h4 id="google-uuid-lib">Google UUID Lib</h4>
 <ol>
   <li>
     <p>Google provides its own library at github.com/google/uuid, which offer a solution for validation.</p>
@@ -906,7 +914,6 @@ Okay np.
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go build -o terraform-provider-terratowns-v1.0.0
 </code></pre></div></div>
-
 <ol>
   <li>Test the custom provider using the <code class="language-plaintext highlighter-rouge">.terraformrc</code> file.</li>
   <li>Create a <code class="language-plaintext highlighter-rouge">terraformrc</code> file at the root of your project.</li>
@@ -932,6 +939,8 @@ Okay np.
   <p>Thanks to Jason for <a href="https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10">this article.</a></p>
 </blockquote>
 
+<h4 id="scripting-the-build-process">Scripting The Build Process</h4>
+
 <p>A script-based approach is recommended:</p>
 
 <ol>
@@ -947,52 +956,41 @@ rm -rf $PROJECT_ROOT/.terraform.lock.hcl
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkrdir <span class="nt">-p</span> ~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0//x86_64/
 mkrdir <span class="nt">-p</span> ~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0//linux_amd64/
 </code></pre></div>    </div>
+    <blockquote>
+      <p>This ensures compatibility with what yours may be using.
+Now make use of environment variables in your script to simplify the build process.</p>
+    </blockquote>
   </li>
+  <li>Apply the environment variables for your plugin path.
+```sh
+PLUGIN_DIR=”~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/”</li>
 </ol>
 
-<blockquote>
-  <p>This ensures compatibility with what yours may be using.</p>
-</blockquote>
+<p>mkrdir -p $PLUGIN_DIR/x86_64/
+mkrdir -p $PLUGIN_DIR/linux_amd64/</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8. Apply the environment variables for your plugin name and copy it.
+```sh
+PLUGIN_NAME="terraform-provider-terratowns_v1.0.0"
 
-<p>Now make use of environment variables in your script to simplify the build process.</p>
-
-<ol>
-  <li>Apply the environment variables for your plugin path.</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PLUGIN_DIR</span><span class="o">=</span><span class="s2">"~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/"</span>
-
-mkrdir <span class="nt">-p</span> <span class="nv">$PLUGIN_DIR</span>/x86_64/
-mkrdir <span class="nt">-p</span> <span class="nv">$PLUGIN_DIR</span>/linux_amd64/
-</code></pre></div></div>
-
-<ol>
-  <li>Apply the environment variables for your plugin name and copy it.</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PLUGIN_NAME</span><span class="o">=</span><span class="s2">"terraform-provider-terratowns_v1.0.0"</span>
-
-<span class="nb">cp</span> <span class="nv">$PLUGIN_NAME</span> <span class="nv">$PLUGIN_DIR</span>/x86_64
-<span class="nb">cp</span> <span class="nv">$PLUGIN_NAME</span> <span class="nv">$PLUGIN_DIR</span>/linux_amd64
+cp $PLUGIN_NAME $PLUGIN_DIR/x86_64
+cp $PLUGIN_NAME $PLUGIN_DIR/linux_amd64
 </code></pre></div></div>
 
 <p>First, <a href="bin/build_provider">Verify the script from here right away.</a></p>
 
 <p>Second. We can’t build this yet<br />To really build the provider <strong>we need something else.</strong></p>
 
-<h3 id="modgo-is-a-must"><code class="language-plaintext highlighter-rouge">mod.go</code> Is A Must</h3>
+<h3 id="godotmod-is-a-must">godotmod Is A Must</h3>
 
 <p>You need to ensure you have a <code class="language-plaintext highlighter-rouge">go.mod</code> file.</p>
 
 <ol>
   <li>Create a file named go.mod and add the necessary content.</li>
-  <li>Add  repo URL as The module and the version.</li>
-</ol>
-
-<pre><code class="language-mod">module github.com/ExamProCo/terraform-provider-terratowns
+  <li>Add  repo URL as The module and the version.
+    <pre><code class="language-mod">module github.com/ExamProCo/terraform-provider-terratowns
 go 1.20
 </code></pre>
-<ol>
+  </li>
   <li>Important to Map the repo URL to the path of your workspace.
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>replace github.com/ExamProCo/terraform-provider-terratowns <span class="o">=&gt;</span> /workspace/terraform-beginner-bootcamp-2023/terraform-provider-terratowns
 </code></pre></div>    </div>
@@ -1028,32 +1026,32 @@ go 1.20
   <p>It is <code class="language-plaintext highlighter-rouge">()</code> and not <code class="language-plaintext highlighter-rouge">{}</code></p>
 </blockquote>
 
-<ol>
+<ul>
   <li>Build again</li>
-</ol>
+</ul>
 
 <p>You are now being asked to get the github repos required.</p>
 
-<ol>
+<ul>
   <li>Run go get to fetch any required GitHub repositories as indicated by the error message.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get github-url-lib
 </code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p><img src="/assets/2.1.0/go-get-it.png" alt="Go Get It Boi" /></p>
 
 <p>This installs the latest version of the module.</p>
 
-<ol>
+<ul>
   <li>Building again result in a new <code class="language-plaintext highlighter-rouge">go.sum</code> file.</li>
-</ol>
+</ul>
 
 <p>The go.mod file now includes more URL paths, which you didn’t have to manually write.</p>
 
-<ol>
+<ul>
   <li>Building again.. also know that the first time may be slow due to dependency downloads.</li>
-</ol>
+</ul>
 
 <p>You might encounter errors during this build process number too much.. <br />
 The provider schema declaration is to replace <code class="language-plaintext highlighter-rouge">.Resources{</code> with <code class="language-plaintext highlighter-rouge">.Schema{.</code><br />
@@ -1063,12 +1061,12 @@ Also add the comma..</p>
 
 <p>Continue building and address any unused log errors.</p>
 
-<ol>
+<ul>
   <li>Remove or uncomment the log from the import in your <code class="language-plaintext highlighter-rouge">main.go</code>
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">// "log"</span>
+    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">// "log"</span>
 </code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p>Finally, after a successful build.<br />
 You will find the <code class="language-plaintext highlighter-rouge">terraform-provider-terratowns-v1.0.0</code> binary.</p>
@@ -1080,7 +1078,7 @@ You will find the <code class="language-plaintext highlighter-rouge">terraform-p
 
 <p>It can be quite large, so consider the following;</p>
 
-<ol>
+<ul>
   <li>Observe the <code class="language-plaintext highlighter-rouge">go.sum</code> file and <a href="terraform-provider-terratowns/go.sum">all the dependencies here</a>.</li>
   <li>Add your binairy to your <code class="language-plaintext highlighter-rouge">.gitignore</code>.
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Ignore Terratowns Custom Provider Binairies All versions</span>
@@ -1088,7 +1086,7 @@ terraform-provider-terratowns/terraform-provider-terratowns_v<span class="k">*</
 </code></pre></div>    </div>
     <p>This file now won’t be comitted and  will be avoided by your version control!</p>
   </li>
-</ol>
+</ul>
 
 <h4 id="considerations">Considerations</h4>
 <ul>
@@ -1208,9 +1206,9 @@ terraform-provider-terratowns/terraform-provider-terratowns_v<span class="k">*</
   </tbody>
 </table>
 
-<ol>
+<ul>
   <li>The build script was executed again, followed by <code class="language-plaintext highlighter-rouge">terraform init</code>.</li>
-</ol>
+</ul>
 
 <p>This now resolves our issue.</p>
 
@@ -1255,11 +1253,22 @@ This verbose mode is great idea.</p>
   <li>Make sure all output lines in the root also.</li>
 </ul>
 
-<p>|tf plan will <a href="/assets/2.2.0/planned-as-required.png">now work</a> with No changes. Your infrastructure matches the configuration.|
-|—|</p>
-<ol>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">tf plan will <a href="/assets/2.2.0/planned-as-required.png">now work</a> with No changes. .</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Your infrastructure matches the configuration</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
   <li>Run <code class="language-plaintext highlighter-rouge">terraform apply</code> or just <code class="language-plaintext highlighter-rouge">tfaa</code> again to push our code with auto approve using our <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/35-s3-static-website-host#bonus-three-captured">previous configured alias</a>.</li>
-</ol>
+</ul>
 
 <p>Things are working great now!</p>
 
@@ -1268,12 +1277,12 @@ This verbose mode is great idea.</p>
 <table>
   <thead>
     <tr>
-      <th>Applying the configuration will produce an empty Terraform state</th>
+      <th style="text-align: right">Applying the configuration will produce an empty Terraform state</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>This is actually a positive and desired outcome</td>
+      <td style="text-align: right">This is actually a positive and desired outcome</td>
     </tr>
   </tbody>
 </table>
@@ -1310,9 +1319,7 @@ We’ll create a basic structure for a new resource and introduce some Go progra
 I coded it again.</p>
 
 <ol>
-  <li>
-    <p>Add 	<code class="language-plaintext highlighter-rouge">ValidateFunc: validateUUID</code>, to your schema uuid block.</p>
-  </li>
+  <li>Add 	<code class="language-plaintext highlighter-rouge">ValidateFunc: validateUUID</code>, to your schema uuid block.</li>
   <li>Also re-enable logging.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import ("log")
 </code></pre></div>    </div>
@@ -1322,6 +1329,7 @@ I coded it again.</p>
 
 <p>We have set up debugging for this context.</p>
 
+<h4 id="issue-processing-master">Issue Processing master</h4>
 <ol>
   <li>build our provider to see, you may encounter errors.</li>
   <li>Replace single quotes (<code class="language-plaintext highlighter-rouge">''</code>) with double quotes (<code class="language-plaintext highlighter-rouge">""</code>) for the func validator.</li>
@@ -1329,71 +1337,52 @@ I coded it again.</p>
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>github.com/google/uuid v1.3.0
 </code></pre></div>    </div>
   </li>
-  <li>Use <code class="language-plaintext highlighter-rouge">go get</code> to fetch dependencies from the specified GitHub URL</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/terraform-provider-terratowns (55-terratowns-cruds) 
-$ go get github.com/google/uuid
-
-go: upgraded github.com/google/uuid v1.3.0 =&gt; v1.3.1
-</code></pre></div></div>
-<blockquote>
-  <p>Make sure you are inside the correct directory.</p>
-  <ol>
-    <li>Return to the our directory and build again or stay..
+  <li>Use <code class="language-plaintext highlighter-rouge">go get</code> to fetch dependencies from the specified GitHub URL<br />
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">/</span><span class="k">terraform</span><span class="err">-</span><span class="k">provider</span><span class="err">-</span><span class="nx">terratowns</span> <span class="err">(</span><span class="mi">55</span><span class="err">-</span><span class="nx">terratowns</span><span class="err">-</span><span class="nx">cruds</span><span class="err">)</span> 
+<span class="nx">$</span> <span class="nx">go</span> <span class="nx">get</span> <span class="nx">github</span><span class="err">.</span><span class="nx">com</span><span class="err">/</span><span class="nx">google</span><span class="err">/</span><span class="nx">uuid</span>
+<span class="nx">go</span><span class="err">:</span> <span class="nx">upgraded</span> <span class="nx">github</span><span class="err">.</span><span class="nx">com</span><span class="err">/</span><span class="nx">google</span><span class="err">/</span><span class="nx">uuid</span> <span class="nx">v1</span><span class="err">.</span><span class="mf">3.0</span> <span class="err">=&gt;</span> <span class="nx">v1</span><span class="err">.</span><span class="mf">3.1</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>Make sure you are inside the correct directory.</p>
+    </blockquote>
+  </li>
+  <li>Return to the our directory and build again or stay..
 You may encounter more errors;
-      <ul>
-        <li>If related to <code class="language-plaintext highlighter-rouge">append</code>, adjust the error handling to <code class="language-plaintext highlighter-rouge">errors</code></li>
-        <li>If related to missing returns, make sure to add them as needed.</li>
-      </ul>
-    </li>
-  </ol>
-</blockquote>
-
-<p>In some cases, returning <code class="language-plaintext highlighter-rouge">true</code> may be necessary, but <code class="language-plaintext highlighter-rouge">return</code> alone can work effectively.</p>
-
-<p>Keep in mind that building providers in Go can be complex, and it’s okay if you’re just starting to get the hang of it.</p>
-
-<ol>
-  <li>Go build again, and should work fine now.</li>
-</ol>
-
-<p><img src="/assets/2.3.0/first-build-success-for-this-branch.png" alt="First Build Worked Here" /></p>
-
-<ol>
-  <li>Proceed with <code class="language-plaintext highlighter-rouge">terterraform init</code>.</li>
-</ol>
-
-<p>You should see logs indicating a successful initialization.</p>
-
-<p><img src="/assets/2.3.0/logs-enabled-tf-cli-tab.png" alt="Logs Enabled in Terraform Tab" /></p>
-
-<ol>
+    <ul>
+      <li>If related to <code class="language-plaintext highlighter-rouge">append</code>, adjust the error handling to <code class="language-plaintext highlighter-rouge">errors</code></li>
+      <li>If related to missing returns, make sure to add them as needed.
+In some cases, returning <code class="language-plaintext highlighter-rouge">true</code> may be necessary, but <code class="language-plaintext highlighter-rouge">return</code> alone can work effectively.<br />
+Keep in mind that building providers in Go can be complex, and it’s okay if you’re just starting to get the hang of it.<br /></li>
+    </ul>
+  </li>
+  <li>Go build again, and should work fine now.
+<img src="/assets/2.3.0/first-build-success-for-this-branch.png" alt="First Build Worked Here" /></li>
+  <li>Proceed with <code class="language-plaintext highlighter-rouge">terterraform init</code>. 
+You should see logs indicating a successful initialization. <br />
+<img src="/assets/2.3.0/logs-enabled-tf-cli-tab.png" alt="Logs Enabled in Terraform Tab" /></li>
   <li>run <code class="language-plaintext highlighter-rouge">tf plan</code> and observe
     <ul>
       <li>No errors found!</li>
-      <li>No infrastructure changes!
-```
-2023-10-05T21:52:23.756Z [INFO]  backend/local: plan operation completed</li>
+      <li>No infrastructure changes!</li>
     </ul>
   </li>
 </ol>
 
-<p>No changes. Your infrastructure matches the configuration.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2023-10-05T21:52:23.756Z <span class="o">[</span>INFO]  backend/local: plan operation completed
 
-<p>Terraform has compared your real infrastructure against your configuration and found no
-differences, so no changes are needed.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is expected at this stage aka **back to black!**
+No changes. Your infrastructure matches the configuration.
 
+Terraform has compared your real infrastructure against your configuration and found no
+differences, so no changes are needed.
+</code></pre></div></div>
+<p>This is expected at this stage aka <strong>back to black!</strong></p>
 
-## Writing Provider Configuration
+<h2 id="writing-provider-configuration">Writing Provider Configuration</h2>
 
-Create a `providerConfigure` function.&lt;br&gt; We will start by writing some initial code.
+<p>Create a <code class="language-plaintext highlighter-rouge">providerConfigure</code> function.<br /> We will start by writing some initial code.</p>
 
-
-```go
-func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
-}
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="n">providerConfigure</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span><span class="n">schema</span><span class="o">.</span><span class="n">Provider</span><span class="p">)</span> <span class="n">schema</span><span class="o">.</span><span class="n">ConfigureContextFunc</span> <span class="p">{</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <ol>
@@ -1411,25 +1400,19 @@ func providerConfigure(p *schema.Provider) schema.ConfigureContextFunc {
      <span class="k">return</span> <span class="o">&amp;</span><span class="n">config</span><span class="p">,</span> <span class="no">nil</span>
 </code></pre></div>    </div>
   </li>
-  <li>Fix two prints to help in the debug;</li>
-</ol>
-
-<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// Before Config</span>
-		<span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"providerConfigure:start"</span><span class="p">)</span>
-    <span class="c">// Before Return</span>
-		<span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"providerConfigure:end"</span><span class="p">)</span>
-</code></pre></div></div>
-<ol>
+  <li>Fix two prints to help in the debug;
+    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">// Before Config</span>
+     <span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"providerConfigure:start"</span><span class="p">)</span>
+ <span class="c">// Before Return</span>
+     <span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"providerConfigure:end"</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
   <li>Add or uncomment if the following line before returnig <code class="language-plaintext highlighter-rouge">p</code> in provider schema func;
     <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">p</span><span class="o">.</span><span class="n">ConfigureContextFunc</span> <span class="o">=</span> <span class="n">providerConfigure</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
-  <li><strong>Rebuild</strong> the provider after adding the <code class="language-plaintext highlighter-rouge">providerConfigure</code> function.</li>
-</ol>
-
-<p>you may encounter errors related to undefined elements.</p>
-
-<ol>
+  <li><strong>Rebuild</strong> the provider after adding the <code class="language-plaintext highlighter-rouge">providerConfigure</code> function.
+you may encounter errors related to undefined elements.</li>
   <li>To fix that, <strong>Import More Dependencies</strong>
     <ul>
       <li>Import <code class="language-plaintext highlighter-rouge">diag</code>, <code class="language-plaintext highlighter-rouge">context</code> packages.
@@ -1519,7 +1502,7 @@ We have to code a func  skeleton for each.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<ol>
+<ul>
   <li><strong>Build Again</strong>
     <ul>
       <li>Rebuild the provider after defining these functions.
@@ -1529,23 +1512,22 @@ We have to code a func  skeleton for each.</p>
     </ul>
   </li>
   <li><strong>Fix Errors</strong></li>
-</ol>
+</ul>
 
 <p>Address any issue encountered during this build process;</p>
 
 <ul>
   <li>Ensure that interface definitions are in <code class="language-plaintext highlighter-rouge">{}</code> and not <code class="language-plaintext highlighter-rouge">()</code>. and</li>
   <li>Ensure there is no missing as missing commas.</li>
-  <li>Ensure you return the resource in the main function for all actions.</li>
-</ul>
-
-<ol>
+  <li>
+    <p>Ensure you return the resource in the main function for all actions.</p>
+  </li>
   <li><strong>Build Again</strong>
     <ul>
       <li>Rebuild the provider one more time to ensure everything is working as expected.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/build_provider  
 </code></pre></div></div>
@@ -1565,7 +1547,7 @@ We have to code a func  skeleton for each.</p>
 <p>|OpenAI plugins are great stuff|
 |:—:|</p>
 
-<h1 id="terratowns-home-resource">TerraTowns <code class="language-plaintext highlighter-rouge">Home</code> Resource</h1>
+<h1 id="terratowns-home-resource">TerraTowns Home Resource</h1>
 <p>We welcome you in this last and intense <code class="language-plaintext highlighter-rouge">4/4</code> part of our custom terraform provider creation.</p>
 
 <ul>
@@ -1598,14 +1580,10 @@ We have to code a func  skeleton for each.</p>
   <li>Start with Including the <code class="language-plaintext highlighter-rouge">name</code>  attributes.
     <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">name</span> <span class="err">=</span> <span class="s2">"Secrets are at the core of successful businesses"</span>
 </code></pre></div>    </div>
+    <blockquote>
+      <p>Where <a href="https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296">I read that quote?</a></p>
+    </blockquote>
   </li>
-</ol>
-
-<blockquote>
-  <p>Where <a href="https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296">I read that quote?</a></p>
-</blockquote>
-
-<ol>
   <li>choose where you want to put your page e.g.; <code class="language-plaintext highlighter-rouge">gamers-groto</code> for <code class="language-plaintext highlighter-rouge">town</code>.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">town</span> <span class="err">=</span> <span class="s2">"gamers-grotto"</span>
 </code></pre></div>    </div>
@@ -1619,26 +1597,27 @@ As great as you.
 </span></code></pre></div>    </div>
   </li>
   <li>Retrieve the domain name from your other project (CloudFront URL)</li>
-  <li>set the domain_name as an output.</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>domain_name = "very-random.cloudfront.net"
-</code></pre></div></div>
-<ol>
-  <li>Specify the content_version starting with one;
+  <li>set the domain_name as an output.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>domain_name = "very-random.cloudfront.net"
+</code></pre></div>    </div>
+  </li>
+  <li>Specify the <code class="language-plaintext highlighter-rouge">content_version</code> starting with one;
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content_version = 1
 </code></pre></div>    </div>
     <h2 id="building-and-initializing">Building and Initializing</h2>
     <p>Run the following commands to prepare your Terraform environment:</p>
   </li>
-  <li>Run <code class="language-plaintext highlighter-rouge">terraform init</code></li>
 </ol>
+
+<ul>
+  <li>Run <code class="language-plaintext highlighter-rouge">terraform init</code></li>
+</ul>
 
 <p><strong>ERROR:</strong> <code class="language-plaintext highlighter-rouge">failed to query available provider packages</code></p>
 
-<ol>
+<ul>
   <li>review your Terraform configuration files include terraformrc.</li>
-</ol>
+</ul>
 
 <p>Everything looks fine..<br />We didnt finish anything with the code.. <br />We still have empty resources in <code class="language-plaintext highlighter-rouge">main.go</code> it may be why..</p>
 
@@ -1665,43 +1644,50 @@ As great as you.
   <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Accept"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
-  <li>Ensure that you handle any errors and parse the response.
-```go
-if err != nil {
- return diag.FromErr(err)
-}
-defer resp.Body.Close()</li>
+  <li>Ensure that you handle any errors and parse the response.</li>
 </ul>
 
-<p>// parse response JSON
-var responseData map[string]interface{}
-if err := json.NewDecoder(resp.Body).Decode(&amp;responseData);  err != nil {
-   return diag.FromErr(err)
-}</p>
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 
-<p>// StatusOK = 200 HTTP Response Code
-if resp.StatusCode != http.StatusOK {
-   return diag.FromErr(fmt.Errorf(“failed to create home resource, status_code: %d, status: %s, body %s”, resp.StatusCode, resp.Status, bytes.NewBuffer(responseData)))
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Return the `homeUUID` from the response and set it using `d.Set`.
-```go
-homeUUID := responseData["uuid"].(string)
-d.SetId(homeUUID)
+<span class="c">// parse response JSON</span>
+<span class="k">var</span> <span class="n">responseData</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="k">interface</span><span class="p">{}</span>
+<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">json</span><span class="o">.</span><span class="n">NewDecoder</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span><span class="o">.</span><span class="n">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">responseData</span><span class="p">);</span>  <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c">// StatusOK = 200 HTTP Response Code</span>
+<span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">StatusCode</span> <span class="o">!=</span> <span class="n">http</span><span class="o">.</span><span class="n">StatusOK</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"failed to create home resource, status_code: %d, status: %s, body %s"</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">StatusCode</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">Status</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">NewBuffer</span><span class="p">(</span><span class="n">responseData</span><span class="p">)))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<ul>
+  <li>Return the <code class="language-plaintext highlighter-rouge">homeUUID</code> from the response and set it using <code class="language-plaintext highlighter-rouge">d.Set</code>.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">homeUUID</span> <span class="o">:=</span> <span class="n">responseData</span><span class="p">[</span><span class="s">"uuid"</span><span class="p">]</span><span class="o">.</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">SetId</span><span class="p">(</span><span class="n">homeUUID</span><span class="p">)</span>
 </code></pre></div></div>
 
 <ul>
-  <li>Add print at the start for debugging purposes
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"resourceHouseCreate:start"</span><span class="p">)</span>
-</code></pre></div>    </div>
-    <h3 id="read-action">Read Action</h3>
-  </li>
-  <li>Implement the HTTP GET request for reading a resource.
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">Endpoint</span><span class="o">+</span><span class="s">"/u/"</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">UserUuid</span><span class="o">+</span><span class="s">"/homes/"</span><span class="o">+</span><span class="n">homeUUID</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
+  <li>Add print at the start for debugging purposes</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"resourceHouseCreate:start"</span><span class="p">)</span>
+</code></pre></div></div>
+<h3 id="read-action">Read Action</h3>
+<ul>
+  <li>Implement the HTTP GET request for reading a resource.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">Endpoint</span><span class="o">+</span><span class="s">"/u/"</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">UserUuid</span><span class="o">+</span><span class="s">"/homes/"</span><span class="o">+</span><span class="n">homeUUID</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
- <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+   <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
+</code></pre></div></div>
+<ul>
   <li>Pass the <code class="language-plaintext highlighter-rouge">homeUUID</code> in the URL.</li>
   <li>Set the headers for the read func
     <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer "</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">Token</span><span class="p">)</span>
@@ -1709,29 +1695,35 @@ d.SetId(homeUUID)
 <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Accept"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
-  <li>Parse the response data and return it.
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">client</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{}</span>
-  <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
-  <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-  <span class="p">}</span>
-</code></pre></div>    </div>
-    <p>Consider the code to handle errors gracefully. <br />(Coming below)</p>
-    <h3 id="update-action">Update Action</h3>
-  </li>
-  <li>Implement the HTTP request for updating a resource.
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"PUT"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">Endpoint</span><span class="o">+</span><span class="s">"/u/"</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">UserUuid</span><span class="o">+</span><span class="s">"/homes/"</span><span class="o">+</span><span class="n">homeUUID</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">NewBuffer</span><span class="p">(</span><span class="n">payloadBytes</span><span class="p">))</span>
-  <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="kt">error</span><span class="p">)</span>
-  <span class="p">}</span>
-</code></pre></div>    </div>
-  </li>
-  <li>Set the header for the update
-    <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer "</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">Token</span><span class="p">)</span>
-  <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
-  <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Accept"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
-</code></pre></div>    </div>
-  </li>
+  <li>Parse the response data and return it.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">client</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">Client</span><span class="p">{}</span>
+	<span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">client</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></div></div>
+<p>Consider the code to handle errors gracefully. <br />(Coming below)</p>
+<h3 id="update-action">Update Action</h3>
+<ul>
+  <li>Implement the HTTP request for updating a resource.</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">req</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"PUT"</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">Endpoint</span><span class="o">+</span><span class="s">"/u/"</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">UserUuid</span><span class="o">+</span><span class="s">"/homes/"</span><span class="o">+</span><span class="n">homeUUID</span><span class="p">,</span> <span class="n">bytes</span><span class="o">.</span><span class="n">NewBuffer</span><span class="p">(</span><span class="n">payloadBytes</span><span class="p">))</span>
+	<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="kt">error</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></div></div>
+<ul>
+  <li>Set the header for the update</li>
+</ul>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Authorization"</span><span class="p">,</span> <span class="s">"Bearer "</span><span class="o">+</span><span class="n">config</span><span class="o">.</span><span class="n">Token</span><span class="p">)</span>
+	<span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Content-Type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+	<span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">"Accept"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
   <li>Use the payload from the create action but exclude domain and town.</li>
   <li>Set the payload data in <code class="language-plaintext highlighter-rouge">d.Set</code> for name, description, and content version.</li>
 </ul>
@@ -1743,22 +1735,34 @@ d.SetId(homeUUID)
 
 <h3 id="delete-action">Delete Action</h3>
 <ul>
-  <li>Implement the HTTP request for deleting a resource.
-    <pre><code class="language-GO">  req, err := http.NewRequest("DELETE", config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID, nil)
-  if err != nil {
-      return diag.FromErr(err)
-  }
-</code></pre>
-  </li>
-  <li>Set the ID if the operation is successful and a print.
-    <pre><code class="language-GO">  d.SetId("")
-  log.Print("resourceHouseDelete:end")
-</code></pre>
-  </li>
+  <li>Implement the HTTP request for deleting a resource.</li>
 </ul>
 
-<p>|This repetition could potentially be refactored; try?|
-|:—|</p>
+<pre><code class="language-GO">	req, err := http.NewRequest("DELETE", config.Endpoint+"/u/"+config.UserUuid+"/homes/"+homeUUID, nil)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+</code></pre>
+<ul>
+  <li>Set the ID if the operation is successful and a print.</li>
+</ul>
+
+<pre><code class="language-GO">	d.SetId("")
+	log.Print("resourceHouseDelete:end")
+</code></pre>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">This repetition could potentially be refactored; try?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">try?</td>
+    </tr>
+  </tbody>
+</table>
 
 <p>Next, we need to conduct the client call following the header, both for the delete operation and similarly for the update, read, and create operations.</p>
 
@@ -1853,17 +1857,17 @@ d.SetId(homeUUID)
       <li>In the create step, add the following:
         <ul>
           <li><code class="language-plaintext highlighter-rouge">homeUUID := response uuid string</code></li>
-          <li>Set <code class="language-plaintext highlighter-rouge">d</code> to this value and print for debug.
-```go
- d.SetId(“”)</li>
+          <li>Set <code class="language-plaintext highlighter-rouge">d</code> to this value and print for debug.</li>
         </ul>
       </li>
     </ul>
-
-    <p>log.Print(“resourceHouseDelete:end”)
-```</p>
   </li>
 </ol>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="n">d</span><span class="o">.</span><span class="n">SetId</span><span class="p">(</span><span class="s">""</span><span class="p">)</span>
+
+	<span class="n">log</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="s">"resourceHouseDelete:end"</span><span class="p">)</span>
+</code></pre></div></div>
 
 <h3 id="setting-the-id-value">Setting the ID Value</h3>
 <p>In Terraform, it’s important to return an ID whenever you have a resource.</p>
@@ -1934,12 +1938,8 @@ d.SetId(homeUUID)
   <li>Build and initialize Terraform.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bin/build_provider
 </code></pre></div>    </div>
+    <p>We have some issues and <strong>syntax error.</strong></p>
   </li>
-</ol>
-
-<p>We have some issues and <strong>syntax error.</strong></p>
-
-<ol>
   <li>Replace <code class="language-plaintext highlighter-rouge">err != {</code> with <code class="language-plaintext highlighter-rouge">err != nil {</code> in your code to resolve the issue.</li>
 </ol>
 
@@ -1953,36 +1953,36 @@ d.SetId(homeUUID)
 		<span class="k">return</span> <span class="n">diag</span><span class="o">.</span><span class="n">FromErr</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 	<span class="p">}</span>
 </code></pre></div></div>
-
-<ol>
-  <li>Build again baby.
+<ul>
+  <li>Build again <strong>baby.</strong>
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bin/build_provider
 </code></pre></div>    </div>
-    <p>Error. <strong>HTTP error</strong></p>
   </li>
-</ol>
+</ul>
+
+<p>Error. <strong>HTTP error</strong></p>
 
 <p><img src="/assets/2.4.0/http-error.png" alt="HTTP Hey" /></p>
 
-<ol>
+<ul>
   <li>import the necessary package, you can add the statement as follows:
     <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">(</span><span class="s">"net/http"</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
-  <li>Build again one more.
+  <li>Build again <strong>one more</strong>.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bin/build_provider
 </code></pre></div>    </div>
     <p>Error. <strong>We have an <code class="language-plaintext highlighter-rouge">undefined.FrontErr</code>.</strong></p>
   </li>
   <li>Change this with correct the usage of the identifier with this;</li>
-</ol>
+</ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FromErr
 </code></pre></div></div>
 
-<ol>
-  <li>Building building!</li>
-</ol>
+<ul>
+  <li><strong>Building building</strong>!</li>
+</ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bin/build_provider
 </code></pre></div></div>
@@ -1991,12 +1991,12 @@ d.SetId(homeUUID)
 
 <p><img src="/assets/2.4.0/bytes.png" alt="Bytes Hey" /></p>
 
-<ol>
+<ul>
   <li>You can add the import statement like this to resolve the issue in your main.go:
     <div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">(</span> <span class="s">"bytes"</span><span class="p">)</span>
 </code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p>We have gone through multiple builds, and to avoid spamming you with more build errors, I will now list the errors we encountered and how we resolved them.</p>
 
@@ -2025,21 +2025,21 @@ d.SetId(homeUUID)
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">🤯</th>
+      <th style="text-align: center">🤯</th>
       <th style="text-align: left">It’s okay if it seems confusing at the moment;</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right">💯</td>
+      <td style="text-align: center">💯</td>
       <td style="text-align: left">Things will get easier</td>
     </tr>
     <tr>
-      <td style="text-align: right">🧐</td>
+      <td style="text-align: center">🧐</td>
       <td style="text-align: left">When we start examining the tfstate file</td>
     </tr>
     <tr>
-      <td style="text-align: right">💪</td>
+      <td style="text-align: center">💪</td>
       <td style="text-align: left">Don’t give up King or Queen.</td>
     </tr>
   </tbody>
@@ -2101,9 +2101,9 @@ Providers required by configuration:
 
 <p>We can play a little bit around before targetting the terratown.</p>
 
-<ol>
-  <li>Apply your changes with <code class="language-plaintext highlighter-rouge">terraform apply</code> for too much errors to come ofc.</li>
-</ol>
+<ul>
+  <li>Apply your changes with <code class="language-plaintext highlighter-rouge">terraform apply</code> for <strong>too much errors to come ofc</strong>.</li>
+</ul>
 
 <table>
   <thead>
@@ -2157,7 +2157,9 @@ Providers required by configuration:
   </tbody>
 </table>
 
-<p>I’ve found a better way to present the errors I encountered in these eight steps, allowing you to tackle and resolve each one systematically.</p>
+<p><br /></p>
+
+<p>I’ve found a better way to present the errors I encountered in <strong>these eight steps</strong> above, allowing you to tackle and resolve each one systematically.</p>
 
 <p>The last apply will get your custom resource to be provisioned.</p>
 
@@ -2316,14 +2318,14 @@ Providers required by configuration:
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">🛑</th>
+      <th style="text-align: center">🛑</th>
       <th style="text-align: left">This is a hard good Stop!</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">We</td>
+      <td style="text-align: left">did good and a lot. :D</td>
     </tr>
   </tbody>
 </table>
@@ -2356,12 +2358,8 @@ Providers required by configuration:
 
 <ol>
   <li>In your provider block, set the endpoint to <code class="language-plaintext highlighter-rouge">terratowns.cloud/api</code>.</li>
-  <li>Obtain your user UUID from your ExamPro account.</li>
-</ol>
-
-<p><img src="/assets/2.5.0/uuid-teacher-seat.png" alt="Where is my UUID" /></p>
-
-<ol>
+  <li>Obtain your user UUID from your ExamPro account.
+<img src="/assets/2.5.0/uuid-teacher-seat.png" alt="Where is my UUID" /></li>
   <li>Just there, click setting and</li>
   <li>Click Vending machine from left pane.</li>
   <li>Click on TerraTowns Access Code</li>
@@ -2377,33 +2375,22 @@ Providers required by configuration:
   <span class="nv">user_uuid</span><span class="o">=</span><span class="s2">""</span> 
   <span class="nv">token</span><span class="o">=</span><span class="s2">""</span>
 </code></pre></div>    </div>
-  </li>
-</ol>
-
-<p><strong>To</strong>;</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  endpoint <span class="o">=</span> <span class="s2">"http://terratowns.cloud/api"</span>
+    <p><strong>To</strong>;</p>
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  endpoint <span class="o">=</span> <span class="s2">"http://terratowns.cloud/api"</span>
   <span class="nv">user_uuid</span><span class="o">=</span><span class="s2">""</span> 
   <span class="nv">token</span><span class="o">=</span><span class="s2">""</span>
-</code></pre></div></div>
-<blockquote>
-  <p>⚠️Don’t commit your values. We will var them later.</p>
-  <ol>
-    <li>Fill with missingo as our first town of choice in our one and only <code class="language-plaintext highlighter-rouge">terratowns_home</code> resource.
-      <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">town</span> <span class="err">=</span> <span class="s2">"gamers-grotto"</span>
-</code></pre></div>      </div>
-      <p>This how we target where our page will be part of.</p>
-    </li>
-  </ol>
-</blockquote>
-
-<ol>
-  <li>Try a random domain url for now.</li>
-</ol>
-
-<p>The domain doesn’t lead to any destination, but that’s fine. Let it be, for now. For You</p>
-
-<ol>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>⚠️Don’t commit your values. We will var them later.</p>
+    </blockquote>
+  </li>
+  <li>Fill with missingo as our first town of choice in our one and only <code class="language-plaintext highlighter-rouge">terratowns_home</code> resource.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">town</span> <span class="err">=</span> <span class="s2">"gamers-grotto"</span>
+</code></pre></div>    </div>
+    <p>This how we target where our page will be part of.</p>
+  </li>
+  <li>Try a random domain url for now.
+The domain doesn’t lead to any destination, but that’s fine. Let it be, for now. For You</li>
   <li>Execute the following command:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bin/build_provider
 </code></pre></div>    </div>
@@ -2412,31 +2399,18 @@ Providers required by configuration:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf init
 tf apply
 </code></pre></div>    </div>
+    <p>After execution, you will receive valuable debugging information.</p>
   </li>
-</ol>
-
-<p>After execution, you will receive valuable debugging information.</p>
-
-<ol>
-  <li>Confirm by clicking <code class="language-plaintext highlighter-rouge">Yes.</code></li>
-</ol>
-
-<p>You may have another 401 error, like we had earlier.</p>
-
-<ul>
-  <li>Map the UUID again in server.rb with the one from ExamPro.</li>
-  <li>Make sure you target terraform.cloud in your endpoint.</li>
-</ul>
-
-<p><img src="/assets/2.5.0/gamers-grotto-poc.png" alt="Good Plan" /></p>
-
-<ol>
-  <li>
-    <p>Make sure you apply your changes.</p>
+  <li>Confirm by clicking <code class="language-plaintext highlighter-rouge">Yes.</code>
+You may have another 401 error, like we had earlier.
+    <ul>
+      <li>Map the UUID again in server.rb with the one from ExamPro.</li>
+      <li>Make sure you target terraform.cloud in your endpoint.
+<img src="/assets/2.5.0/gamers-grotto-poc.png" alt="Good Plan" /></li>
+    </ul>
   </li>
-  <li>
-    <p>Navigate to terratowns.cloud/t/ur-town.</p>
-  </li>
+  <li>Make sure you apply your changes.</li>
+  <li>Navigate to terratowns.cloud/t/ur-town.</li>
 </ol>
 
 <p>You will find your profile displayed as a rectangle. <br />
@@ -2444,20 +2418,14 @@ Clicking it will redirect you to the seemingly useless CloudFront.</p>
 
 <p><img src="/assets/2.5.0/on-click-wrong-url.png" alt="Terratowns url is brokie" /></p>
 
+<h3 id="cloudfront-mapping">CloudFront Mapping</h3>
+
 <p>Now, the question is whether the CloudFront real URL will take you to this location, or if we need to pass custom headers or headers through CloudFront to make it work. This will be determined.</p>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Update not allowed If you change your domain name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">By design, You will need to perform a total teardown</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong>Btw;</strong>
+|Update not allowed If you change your domain name|
+|:—|
+|By design, You will need to perform a total teardown|</p>
 
 <ol>
   <li>To proceed, execute the following command:
@@ -2494,49 +2462,43 @@ gp env TF_VARS_terratowns_access_token="your_access_token_here"
   <li>Set the TerraTowns endpoint in your <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> file:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terratowns_endpoint = "https://terratowns.cloud/api"
 </code></pre></div>    </div>
+    <p>If set wrong; verify <code class="language-plaintext highlighter-rouge">TF_VAR</code> and not <code class="language-plaintext highlighter-rouge">TF_VARS</code>.
+<img src="/assets/2.5.0/var-endpoint.png" alt="Var Error Endpoint" /><br />
+You can access the endpoint in your code using <code class="language-plaintext highlighter-rouge">var.terratowns_endpoint</code>.</p>
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_terratowns_endpoint</span><span class="o">=</span><span class="s2">"terratowns.cloud/api"</span>
+</code></pre></div>    </div>
+    <p><code class="language-plaintext highlighter-rouge">user_uuid</code> already there we can call it just var.user_uuid. Let employ this..</p>
   </li>
-</ol>
-
-<p>If set wrong; verify <code class="language-plaintext highlighter-rouge">TF_VAR</code> and not <code class="language-plaintext highlighter-rouge">TF_VARS</code>.</p>
-
-<p><img src="/assets/2.5.0/var-endpoint.png" alt="Var Error Endpoint" /></p>
-
-<p>You can access the endpoint in your code using <code class="language-plaintext highlighter-rouge">var.terratowns_endpoint</code>.</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_terratowns_endpoint</span><span class="o">=</span><span class="s2">"terratowns.cloud/api"</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">user_uuid</code> already there we can call it just var.user_uuid. Let employ this..</p>
-
-<ol>
   <li>Run the following commands in your gitpod and incldue your uuid;
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_teacherseat_user_uuid</span><span class="o">=</span><span class="s2">"pastehere"</span>
 gp <span class="nb">env </span><span class="nv">TF_VAR_teacherseat_user_uuid</span><span class="o">=</span><span class="s2">"pastehere"</span>
 </code></pre></div>    </div>
   </li>
-  <li>Define those variables in your variables.tf, otherwise it wont work.
-```hcl
-variable “terratowns_endpoint” {
- type = string
-}</li>
+  <li>Define those variables in your variables.tf, otherwise it wont work.</li>
 </ol>
 
-<p>variable “terratowns_access_token” {
- type = string
-}</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"terratowns_endpoint"</span> <span class="p">{</span>
+ <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
+<span class="p">}</span>
 
-<p>variable “teacherseat_user_uuid” {
- type = string
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4. remove the previous `uuid` assignement.
-5. Add it to the commented terrahouse module (for last tag)
-6. Employ the same for our access token.
+<span class="nx">variable</span> <span class="s2">"terratowns_access_token"</span> <span class="p">{</span>
+ <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
+<span class="p">}</span>
 
-```sh
-export TF_VAR_terratowns_access_token=""
-gp env TF_VAR_terratowns_access_token=""
+<span class="nx">variable</span> <span class="s2">"teacherseat_user_uuid"</span> <span class="p">{</span>
+ <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
+<span class="p">}</span>
 </code></pre></div></div>
+
+<h4 id="second-sprint">Second Sprint</h4>
 <ol>
+  <li>remove the previous <code class="language-plaintext highlighter-rouge">uuid</code> assignement.</li>
+  <li>Add it to the commented terrahouse module (for last tag)</li>
+  <li>Employ the same for our access token.
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">TF_VAR_terratowns_access_token</span><span class="o">=</span><span class="s2">""</span>
+gp <span class="nb">env </span><span class="nv">TF_VAR_terratowns_access_token</span><span class="o">=</span><span class="s2">""</span>
+</code></pre></div>    </div>
+  </li>
   <li>Set your real Cloudfront URL and let’s give trry
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  domain_name <span class="o">=</span> module.terrahouse_aws.cloudfront_url
 </code></pre></div>    </div>
@@ -2570,7 +2532,7 @@ gp env TF_VAR_terratowns_access_token=""
 
 <p>The sole distinctive aspect in this situation is related to the unique bucket name.</p>
 
-<h4 id="bucket-name-randomization">Bucket Name Randomization</h4>
+<h3 id="bucket-name-randomization">Bucket Name Randomization</h3>
 
 <p>I believe we’ve successfully handled validation and using a random provider, now it’s time to standardize the process for generating bucket names.</p>
 
@@ -2589,24 +2551,23 @@ gp env TF_VAR_terratowns_access_token=""
 <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-  <li>Add comment for the bucket name setting in the CDN module and change as required;</li>
+  <li>Add comment for the bucket name setting in the CDN module and change as required;
+```sh
+  comment             = “Static website hosting for: ${var.bucket_name}”</li>
 </ol>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  comment             <span class="o">=</span> <span class="s2">"Static website hosting for: </span><span class="k">${</span><span class="nv">var</span><span class="p">.bucket_name</span><span class="k">}</span><span class="s2">"</span>
-
-  comment             <span class="o">=</span> <span class="s2">"Static website hosting for: </span><span class="k">${</span><span class="nv">aws_s3_bucket</span><span class="p">.website_bucket.bucket</span><span class="k">}</span><span class="s2">"</span>
+<p>comment             = “Static website hosting for: ${aws_s3_bucket.website_bucket.bucket}”</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3. Update variables and remove bucket validation in the CDN module. (I did in previous instruction)
+4. Modify the CDN module to reference the update bucket output.
+```hcl
+  name   = "OAC ${aws_s3_bucket.website_bucket.bucket}"
+  description  = "Origin Access Controls for Static Website Hosting ${aws_s3_bucket.website_bucket.bucket}"
 </code></pre></div></div>
-<ol>
-  <li>Update variables and remove bucket validation in the CDN module. (I did in previous instruction)</li>
-  <li>Modify the CDN module to reference the update bucket output.
-    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">name</span>   <span class="err">=</span> <span class="s2">"OAC ${aws_s3_bucket.website_bucket.bucket}"</span>
-  <span class="nx">description</span>  <span class="err">=</span> <span class="s2">"Origin Access Controls for Static Website Hosting ${aws_s3_bucket.website_bucket.bucket}"</span>
-</code></pre></div>    </div>
-  </li>
-  <li>The terraform plan touchpoint will tell that the bucket name it provides afterward (know after apply)</li>
-</ol>
 
-<p><img src="/assets/2.5.0/back-to-bucket-random.png" alt="Great and Cool Plan Bucket Back To normal" /></p>
+<ul>
+  <li>The terraform plan touchpoint will tell that the bucket name it provides afterward (know after apply)
+<img src="/assets/2.5.0/back-to-bucket-random.png" alt="Great and Cool Plan Bucket Back To normal" /></li>
+</ul>
 
 <p>After applying Terraform configurations, the bucket name should be randomized.</p>
 
@@ -2614,7 +2575,7 @@ gp env TF_VAR_terratowns_access_token=""
 
 <p>This was a preivously running workspace. I ran the aws cli  again using our script briefly and get the apply going.</p>
 
-<h3 id="testing-your-first-terratown">Testing Your First TerraTown</h3>
+<h3 id="testing-your-first-terrahome">Testing Your First TerraHome</h3>
 
 <p>Now if you go you can find ur page there.
 terraform.cloud/</p>
@@ -2629,12 +2590,10 @@ terraform.cloud/</p>
   </thead>
   <tbody>
     <tr>
-      <td> </td>
+      <td>It is a mix of gaming and anime. Hope you like the creativity.</td>
     </tr>
   </tbody>
 </table>
-
-<p>It is a mix of gaming and anime. Hope you like the creativity.</p>
 
 <p>Once you have configured TerraTown, we can:</p>
 
@@ -2648,15 +2607,17 @@ terraform.cloud/</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">For further, consider integrating TerraTown with Terraform Cloud</th>
+      <th style="text-align: center">For further, consider integrating TerraTown..</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">with Terraform Cloud!</td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p>We are currently in the final stages of completing version <code class="language-plaintext highlighter-rouge">2.5.0</code> and soon.. <br />Everything😔</p>
 
@@ -2683,14 +2644,14 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">❌</th>
-      <th style="text-align: left">We encountered a challenge where our infrastructure state was lost whenever we stopped our workspace</th>
+      <th style="text-align: center">❌</th>
+      <th style="text-align: left">We encountered a challenge</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">❌</td>
+      <td style="text-align: left">our infrastructure state was lost whenever we stopped our workspace</td>
     </tr>
   </tbody>
 </table>
@@ -2701,14 +2662,14 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">❌</th>
-      <th style="text-align: left">We have observed a decrease in execution speed when utilizing Terraform Cloud’s compute resources</th>
+      <th style="text-align: center">❌</th>
+      <th style="text-align: left">When utilizing Terraform Cloud’s compute resources</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">❌</td>
+      <td style="text-align: left">We have observed a decrease in execution speed</td>
     </tr>
   </tbody>
 </table>
@@ -2721,14 +2682,14 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">⛑️</th>
+      <th style="text-align: center">⛑️</th>
       <th style="text-align: left">Preserve and manage our infrastructure state within Terraform Cloud</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">✅</td>
+      <td style="text-align: left">Use Terraform Cloud</td>
     </tr>
   </tbody>
 </table>
@@ -2738,17 +2699,19 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">🏎️</th>
-      <th style="text-align: left">Conduct our computations and executions against a local CDE infrastructure</th>
+      <th style="text-align: center">🏎️</th>
+      <th style="text-align: left">Conduct our computations and executions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: center">✅</td>
+      <td style="text-align: left">using A local CDE infrastructure</td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p>Welcome to this self-dedicated space for version <code class="language-plaintext highlighter-rouge">2.6.0</code>.</p>
 
@@ -2813,13 +2776,13 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 
 <p><strong>Note:</strong> Make sure to update the project level settings, not the organization level.</p>
 
-<ol>
+<ul>
   <li>Return to GitPod:
     <ul>
       <li>In your GitPod environment, add the “cloud” section in your main.tf file e.g.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">cloud</span> <span class="p">{</span>
 <span class="nx">organization</span> <span class="p">=</span> <span class="s2">"yayaintfcloud"</span>
@@ -2830,22 +2793,22 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <span class="p">}</span>
 </code></pre></div></div>
 <ul>
-  <li>Build the plugin provider and set it to auto in the Terraform section.</li>
-</ul>
-
-<ol>
-  <li>Initialize and apply the Terraform configuration:
+  <li>
+    <p>Build the plugin provider and set it to auto in the Terraform section.</p>
+  </li>
+  <li>
+    <p>Initialize and apply the Terraform configuration:</p>
     <ul>
       <li>
         <p>Run <code class="language-plaintext highlighter-rouge">terraform init</code> <br />
-<img src="/assets/2.6.0/init-tf-cloud.png" alt="TF Init with TF Cloud" /></p>
+ <img src="/assets/2.6.0/init-tf-cloud.png" alt="TF Init with TF Cloud" /></p>
       </li>
       <li>
         <p>Followed by <code class="language-plaintext highlighter-rouge">terraform apply</code> to deploy your configuration to Terraform Cloud.</p>
       </li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <p>Observe the state is now in your terraform dotfile.</p>
 
@@ -2853,9 +2816,9 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 
 <p>Have you also noticed? <strong>It is damn fast as it used to.</strong> But not only that..</p>
 
-<ol>
+<ul>
   <li>Monitor the Terraform Cloud dashboard and find your state and secure and downloadable anytime, anywhere.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/2.6.0/state-managed.png" alt="Terraform Cloud Consult" /></p>
 
@@ -3127,7 +3090,7 @@ DESCRIPTION
   <li>in the same file, terminate both <code class="language-plaintext highlighter-rouge">assets_path</code> and <code class="language-plaintext highlighter-rouge">error_html_filepath</code> and its validation.</li>
 </ol>
 
-<p><strong>Step 8: Duplicate Step 5-6-7 for Another Home</strong></p>
+<p><strong>Step 10: Duplicate Step 5-6-7 for Another Home</strong></p>
 
 <p>Duplicate the entire process for the module/resource to create a new home just below it.</p>
 <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">module</span> <span class="s2">"home_tnfood_hosting"</span> <span class="p">{</span>
@@ -3156,14 +3119,12 @@ DESCRIPTION
 
 <ol>
   <li>Ensure you are in the project directory, go to .gitpod.yml</li>
-  <li>add the following command with source below the copy command:</li>
-</ol>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cp</span> <span class="nv">$PROJECT_ROOT</span>/terraform.tfvars.example <span class="nv">$PROJECT_ROOT</span>/terraform.tfvars
-  <span class="nb">source</span> ./bin/build_provider
-</code></pre></div></div>
-<p>3.Run tf init to initialize your infra and new resources.</p>
-<ol>
+  <li>add the following command with source below the copy command:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nv">$PROJECT_ROOT</span>/terraform.tfvars.example <span class="nv">$PROJECT_ROOT</span>/terraform.tfvars
+<span class="nb">source</span> ./bin/build_provider
+</code></pre></div>    </div>
+  </li>
+  <li>Run tf init to initialize your infra and new resources.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">tf plan</code>, observe and run <code class="language-plaintext highlighter-rouge">tf apply</code>.</li>
 </ol>
 
@@ -3315,36 +3276,34 @@ Make more homes!</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">Instructions assume that you have configured your variables at the module level</th>
-      <th style="text-align: center"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/2.7.0">Here</a></th>
+      <th style="text-align: center">Instructions assume that you have configured your variables at the module level</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td style="text-align: center"> </td>
+      <td style="text-align: center"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/2.7.0">Here</a></td>
     </tr>
   </tbody>
 </table>
 
-<ol>
+<ul>
   <li>Create a new <strong>TerraHome</strong> in the <code class="language-plaintext highlighter-rouge">public</code> directory.</li>
-</ol>
+</ul>
 
 <p>I can’t instruct you further what you are allowed to create inside. <br />I end up following the rules creating html files and assets. <br /> Feel free to break them please.<br />Do more.</p>
 
 <p>When your projects are in place. Follow this configuration as code.</p>
 
-<ol>
+<ul>
   <li>Create a module in your main.tf with the home name e.g.</li>
-</ol>
+</ul>
 
 <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">module</span> <span class="s2">"home_change-this_hosting"</span> <span class="p">{}</span>
 </code></pre></div></div>
 
-<ol>
+<ul>
   <li>Go define your Home variables in <code class="language-plaintext highlighter-rouge">variables.tf</code> for the new home.</li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">variable</span> <span class="s2">"change-this"</span>
 
@@ -3361,9 +3320,9 @@ Make more homes!</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<ol>
+<ul>
   <li>Set the actual content of your new home variables in your <code class="language-plaintext highlighter-rouge">terraform.tfvars</code></li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">change</span><span class="err">-</span><span class="nx">this</span> <span class="err">=</span> <span class="p">{</span>
 
@@ -3373,9 +3332,9 @@ Make more homes!</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<ol>
+<ul>
   <li>Go back to your module in <code class="language-plaintext highlighter-rouge">main.tf</code> and configure your <code class="language-plaintext highlighter-rouge">public_path</code> and <code class="language-plaintext highlighter-rouge">content_version</code> with these variables.</li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="s2">"home_change-this_hosting"</span> <span class="p">{</span>
   <span class="nx">source</span> <span class="p">=</span> <span class="s2">"./modules/terrahome_aws"</span>
@@ -3385,9 +3344,9 @@ Make more homes!</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<ol>
+<ul>
   <li>To make sure your new home variables are safe, copy the content from your <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> to <code class="language-plaintext highlighter-rouge">terraform.tfvars.sample</code></li>
-</ol>
+</ul>
 
 <blockquote>
   <p>Remmber we have a <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/2.7.0/.gitpod.yml#L10C1-L10C1">cp command</a> to get that content.</p>
@@ -3447,9 +3406,19 @@ bundle exec ruby server.rb
 <p><img src="/assets/2.7.1/1-bb-post.png" alt="Breaking Bad FanPage Post" /></p>
 
 <h3 id="the-project-terrahome">The Project TerraHome</h3>
-<p>|<a href="https://terratowns.cloud/h/48154dbb-6d35-42bf-a06a-3eeb775c9bb2">Internal URL</a>|<a href="https://ds3mmnyp4l57k.cloudfront.net/">CloudFront URL</a>|
-|–|–|
-|||</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><a href="https://terratowns.cloud/h/48154dbb-6d35-42bf-a06a-3eeb775c9bb2">Internal URL</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://ds3mmnyp4l57k.cloudfront.net/">CloudFront URL</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <p><img src="/assets/2.7.1/2-bb-home.png" alt="Breaking Bad FanPage" /></p>
 
@@ -3537,7 +3506,8 @@ Made necessary fixes and improvements to the user interface and slider functiona
 
 <hr />
 
-<p>In case you weren’t aware, all the strategies I used have been revealed.<br /> 
+<p>In case you weren’t aware, all the strategies I used have been revealed<br />(Far surpassing those below).
+<br />
 My relentless pursuit is your advantage.</p>
 
 <ul>
@@ -3546,11 +3516,16 @@ My relentless pursuit is your advantage.</p>
   <li><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0">ExamProCo Snapshot</a></li>
 </ul>
 
-<p>There is no personal draft notes this time. Because there was none. <br />I freestyled my mind in this.</p>
-
 <blockquote>
   <p>Creativity knows no bounds, and in the absence of drafts, the untamed mind finds its truest expression.</p>
 </blockquote>
+
+<h3 id="measured-finish">Measured Finish</h3>
+
+<p>This is the bootcamp seen and constructed through the eyes of the author. <br />
+Experiences and methods to reach the top varies.</p>
+
+<p>The author has absolute confidence in the enormous potential of this journey for you and his commitment to your triumph remains unswerving and ever-expanding.</p>
 
 
         </section>
