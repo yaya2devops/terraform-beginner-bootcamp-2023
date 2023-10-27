@@ -5,7 +5,13 @@ Welcome to space, and I genuinely hope you discover something of value here—no
 
 > [Go Back.](../README.md)
 
+The curriculum was gradually developed, using a branch and tag-based approach, and eventually condensed into week-based timeframe, aligning with the designed methodology.
+
 To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in [the given order](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png). 
+
+
+If you ever visit my branches, you'll notice that each click reveals distinct content pertaining to the specific technology being taught. This is an idea [I first conceived and elaborated on here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27).
+
 
 ![Rounded Week Zero Diaram](../assets/1.0.0/week-0-diagram.png)
 
@@ -130,12 +136,11 @@ Semantic Versioning is a scheme for software that helps developers convey meanin
 
 To implement SemVer properly in Git, you should follow these guidelines:
 
-0. Set Up a Repository: If you don't already have a Git repository for your project, create one by initing the .git dir
+- Set Up a Repository: If you don't already have a Git repository for your project, create one by initing the .git dir
 ```sh
 git init
 ```
-
-1. **Define Your Version Number**: Start by defining your initial version number. SemVer follows the format `MAJOR.MINOR.PATCH`, where:
+- **Define Your Version Number**: Start by defining your initial version number. SemVer follows the format `MAJOR.MINOR.PATCH`, where:
 
    - `MAJOR` is incremented for significant, backward-incompatible changes.
    - `MINOR` is incremented for backward-compatible new features or improvements.
@@ -156,7 +161,6 @@ git commit -m "chore: Update dependencies"
 git tag 1.1.0
 ```
 4. **Write a Changelog**: Create a changelog that details the changes in this release, including new features, bug fixes, and any other noteworthy items. This helps users understand what has changed between versions.
-
 5. **Push to Git**: Push your changes and tags to your Git repository:
 ```sh
 git push origin master --tags
@@ -175,7 +179,7 @@ standard-version
 
 **semantic-release:** A more comprehensive tool that automates the entire release process, including versioning, changelog generation, and publishing to package registries.
 
-7. **Publish Your Release**: If your project is a library or package, you may want to publish it to a package registry like npm, PyPI, or others. 
+- **Publish Your Release**: If your project is a library or package, you may want to publish it to a package registry like npm, PyPI, or others. 
 
 If your code is already on GitHub, simply push it to your remote.
 ```
@@ -521,7 +525,7 @@ AWS_DEFAULT_REGION=YOUR_PREFERRED_REGION
 
 
 
-### 3. AWS IAM User Configuration
+###  AWS IAM User Configuration
 
 - Navigate to your AWS Management Console, specifically the IAM (Identity and Access Management) section. 
 - Create a new IAM user, naming it "yourname-terraform-beginner-bootcamp". 
@@ -674,7 +678,7 @@ You can find this provider at [hashicorp/random](https://registry.terraform.io/p
 
 ### Provider and Resource Configuration
 
-1. We declared the `random` provider in our main Terraform configuration file as follows:
+- We declared the `random` provider in our main Terraform configuration file as follows:
 
 ```tf
 terraform {
@@ -705,7 +709,6 @@ resource "random_id" "bucket_id" {
   }
 }
 ```
-
 3. Naming Conventions: Rename the resource to "bucket_id" for clarity.
 4. Navigate to the Terraform Registry and click on the "Documentation" tab located in the left-hand side second navbar, adjacent to the "Use Provider" button.
 5. Proceed to the "Resources" section and select the desired resource. Place this chosen resource immediately below the previously mentioned one.
@@ -750,7 +753,7 @@ resource "random_string" "bucket_name" {
   override_special = ""
 }
 ```
-3. Or just go back to this and put special to false and just delete the `override_special` instead:
+- Or just go back to this and put special to false and just delete the `override_special` instead:
 
 ```tf
 resource "random_string" "bucket_name" {
@@ -772,7 +775,6 @@ output "random_bucket_name" {
  value = random_string.bucket_name.id
 }
 ```
-
 3. Additionally, let's verify whether it returns a different value or remains consistent.
 
 ```tf
@@ -1025,7 +1027,7 @@ aws s3 cp s3://your-bucket-name/object-key /path/to/local/directory/
 - Replace `/path/to/local/directory/` with the directory where you want to save the downloaded file.
 
 
-6. Delete an Object from an S3 Bucket use the `rm`(remove) command
+- Delete an Object from an S3 Bucket use the `rm`(remove) command
 
 ```sh
 aws s3 rm s3://your-bucket-name/object-key
@@ -1083,14 +1085,11 @@ resource "aws_s3_bucket" "example" {
   bucket = "my-tf-test-bucket"
 }
 ```
-
 3. Comment it because we need to setup our AWS provider first.
-
 4. Verify by running a terraform init.
-
-- The failure is expected because our random bucket naming process is generating uppercase letters, which are not supported as bucket names in S3.
-
-5. Verify further plan and apply?
+- The failure is expected because our random bucket naming process is generating uppercase letters
+- Those mentioned are not supported as bucket names in S3.
+- Verify further plan and apply?
 
 > Should fail too. We lack our AWS Provider.
 
@@ -1103,8 +1102,9 @@ You need to configure the AWS provider in your Terraform configuration to provid
 1. Go to the registry and search for aws.
 https://registry.terraform.io/providers/hashicorp/aws/latest
 
-2. Click  USE PROVIDER on the second navbar on the right besides Documenation;
-```hcl
+2. Click  **"USE PROVIDER"** on the second navbar on the right besides Documenation;
+
+```tf
 terraform {
   required_providers {
     aws = {
@@ -1113,13 +1113,13 @@ terraform {
     }
   }
 }
-
 provider "aws" {
   # Configuration options
 }
 ```
 
-3. Reflect on our previous provider.
+- Reflect on our previous provider.
+
 ```tf
 terraform {
   required_providers {
@@ -1138,6 +1138,7 @@ provider "random" {
 How are we going to add that?
 
 This looks stupid. We must have a single block for each. So?
+
 ```tf
 terraform {
   required_providers {
@@ -1166,7 +1167,7 @@ provider "aws" {
 }
 
 ```
-4. Apply critical thinking and get the following results;
+- Apply critical thinking and get the following results;
 
 ```tf
 terraform {
@@ -1398,7 +1399,7 @@ Terraform Cloud organizes your infrastructure into these three levels:
 
 ## Configure Workspace Settings
 
-1. Create an organzation and call it e.g. `yayaintfcloud`.
+- Create an organzation and call it e.g. `yayaintfcloud`.
 
 After creating your organization, you'll be directed to create your first workspace and to Choose from:
 
@@ -1414,7 +1415,7 @@ We want only to see stuff.
 Go to the second. <br>Trigger remote Terraform runs from your local command line.
 
 
-2. You will be directed to page to create ur first workspace.
+- You will be directed to page to create ur first workspace.
 
 Pick a default project and create your workspace. 
 
@@ -1433,9 +1434,7 @@ In case you are confused.
 ## Create a Project
 
 1. From the top right corner, click "New" and select "Project" to create a new project for our bootcamp. 
-
-We dont have to but lets make things in its theme. 
-
+> We dont have to but lets make things in its theme. 
 2. Name our project `yaya-tf-bootcamp-2023`. This will be used next.
 
 
@@ -1444,13 +1443,13 @@ We dont have to but lets make things in its theme.
 We created a default workspace. <br>Now we will go and create the one that will apply to our bootcamp.
 
 
-1. from the left side, click create workspace and call it `terra-house-2023`
+- from the left side, click create workspace and call it `terra-house-2023`
 
 ![My Terraform Cloud Is Cool](../assets/0.7.0/tf-house-workspace.png)
 
 You should have your project in a good state.
 
-2. Pick your project and create your workspace.
+- Pick your project and create your workspace.
 
 
 ## Code the Cloud Block
@@ -1504,24 +1503,18 @@ Make sure its looks like this.
 ```
 terraform login
 ```
-
-2. Confirm yes to create a file
-
+2. Confirm yes to create a file<br>
 You will get a stupid screen.<br>
-
-3. Click `p` for print and go to the url.
-
+3. Click `p` for print and go to the url.<br>
 This takes you to Terraform Cloud. Here is the url;
 ```
 https://app.terraform.io/app/settings/tokens?source=terraform-login
 ```
 4. Create a token and pick one for one day. 
-
 5. Take the token create the file yourself.
 ```
 touch /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
-
 6. Check the file structure in GPT but dont trust it.
 7. [Go to reddit](https://www.reddit.com/r/Terraform/comments/rtl5ey/can_anyone_please_show_me_show_me_how/) and get the structure instead.
 ```JSON
@@ -1533,11 +1526,8 @@ touch /home/gitpod/.terraform.d/credentials.tfrc.json
   }
 }
 ```
-
 > HashiCorp doesn't even display the structure of that file. Please consider this, HashiCorp.
-
 8. `Open` the file that you touched it. 
-
 ```
 open  /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
@@ -1549,16 +1539,13 @@ To test its working.
 
 1. Run `terraform init`.
 2. Check your dotfile.
-
-
 3. Double check your Terraform Cloud resources;
 
 ![Infra State Resources](../assets/0.7.0/tf-cloud.png)
 
-4. Triple check your outputs in Terraform Cloud;
+- **Triple check** your outputs in Terraform Cloud;
 
 ![Infra State Output](../assets/0.7.0/mini-out.png)
-
 
 - `terraform.tfstate` is now included in the dotfile
 - an environment file is created with ur tf cloud workspace.
@@ -1567,7 +1554,7 @@ To test its working.
 
 ### `init` is now different.
 
-1. Run the `terraform init` command.
+- Run the `terraform init` command.
 
 ![Apply with tfcloud](../assets/0.7.0/apply-theme-with-tf-cloud.png)
 
@@ -1633,8 +1620,7 @@ if [ ! -d "$TARGET_DIR" ]; then
     mkdir -p "$TARGET_DIR"
 fi
 ```
-   The script checks if the target directory exists and creates it if it doesn't.
-
+The script checks if the target directory exists and creates it if it doesn't.
 5. **Generate `credentials.tfrc.json` with the Token**
 ```sh
 cat > "$TARGET_FILE" << EOF
@@ -1647,15 +1633,12 @@ cat > "$TARGET_FILE" << EOF
 }
 EOF
 ```
-
 This code uses the `cat` command with a "here document" (<< EOF) to create the `credentials.tfrc.json` file with the Terraform Cloud token provided by the `TERRAFORM_CLOUD_TOKEN` environment variable.
-
 6. **Print Success Message**
 ```sh
 echo "${TARGET_FILE} has been generated."
 ```
 After successfully generating the `credentials.tfrc.json` file, a message confirming its generation is displayed.
-
 7. **Setting Executable Permissions**
    - Ensure proper permissions by using the `chmod` command on the Bash script.
 ```
@@ -1673,12 +1656,9 @@ Before proceeding, there are a few more things we need to set up.
 ```
 https://app.terraform.io/app/settings/tokens?source=terraform-login
 ```
-
 2. **Extending Token Validity for our 4 weeks bootcamp**
    - Increase the token's lifespan to 30 days, ensuring longer usability.
-
 ![Increase Token Evidence](../assets/0.8.0/30d-tfcloud-token.png)
-
 3. **Assigning Environment Variable for Gitpod**
    - Define the variable in environment variables
 ```
@@ -1698,10 +1678,7 @@ gp env TERRAFORM_CLOUD_TOKEN='YOURS-WITH-30-DAYS-HERE'
 
 ✅ Eliminating the need for frequent adjustments.
 
-
-
-5. **Launch your gitpod and Run the Script**
-
+- **Launch your gitpod and Run the Script**
 > Double check if the file exist or its content to triple verify.
 
 ```
@@ -1715,7 +1692,7 @@ cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
 ```
 
 
-6. `cat` or `open` the token file to verify
+- `cat` or `open` the token file to verify
 ```sh
 cat /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
@@ -1809,14 +1786,11 @@ nano setup_tf_alias.sh
 ```sh
 #!/usr/bin/env bash
 ```
-
 4. Check if the alias already exists in the .bash_profile
-
 ```sh
 grep -q 'alias tf="terraform"' ~/.bash_profile
 ```
 5. Add the if statement and append the the allias with the following code
-
 ```sh
 if [ $? -ne 0 ]; then
     # If the alias does not exist, append it
@@ -1824,7 +1798,6 @@ if [ $? -ne 0 ]; then
     echo "Alias added successfully."
 ```
 > $? is a special variable in bash that holds the exit status of the last command executed
-
 6. Add the Else to Inform the user if the alias already exists
 ```sh
 else
@@ -1838,7 +1811,7 @@ source ~/.bash_profile
 
 For the sake of readability, the script does not perform line breaks.
 
-I thought to update it with the following to make it so.
+**I thought to update it with the following to make it so.**
 
 ![PoC no line jump](../assets/0.9.0/read-clearly.png)
 
@@ -1846,12 +1819,11 @@ I thought to update it with the following to make it so.
 echo -e "\nalias tf=\"terraform\"" >> ~/.bash_profile
 ```
 
-Instead of what it previously was;
+**Instead of what it previously was;**
 ```
 echo 'alias tf="terraform"' >> ~/.bash_profile
 ```
-
-8. Save your changes by pressing `Ctrl + O`, then press `Enter`.
+- Save your changes by pressing `Ctrl + O`, then press `Enter`.
 
 **Step 2: Making the Script Executable**
 You need to make the script executable. Run the following command:
@@ -1874,7 +1846,6 @@ The script will automatically add the Terraform alias to your Bash profile and u
 If you're using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it's available in both terminals.
 
 1. In your Gitpod configuration file (`.gitpod.yml`), add the following lines to both the AWS;
-
 ```yaml
   - name: aws-cli
     env:
@@ -1882,22 +1853,17 @@ If you're using Gitpod, you can integrate the alias in both AWS and Terraform bl
     before: |
       source ./bin/tf_alias
 ```
-
 2. And Terraform blocks;
 ```yaml
   - name: terraform
     before: |
       source ./bin/tf_alias
 ```
-
 This wont generate double alias line. Tested.
-
 3. Save the `.gitpod.yml` file.
-
 Now, every time you start a Gitpod workspace; 
 - the alias will be automatically set up in both AWS and Terraform environments.
 - You can now use `tf` instead of `terraform` in your commands
-
 4. Restart your workspace and observe.
 
 ![You are A Terraformer and Transformer!](../assets/0.9.0/terraformer.png)

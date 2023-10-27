@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/assets/css/style.css?v=22a0966ee6f51694bd0b10adaba3b17479c76404" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=b66d38e59dc584b6827a3bc6ef604e423505c228" media="screen" type="text/css">
     <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
 
     <!--[if lt IE 9]>
@@ -67,7 +67,11 @@
   <p><a href="/">Go Back.</a></p>
 </blockquote>
 
+<p>The curriculum was gradually developed, using a branch and tag-based approach, and eventually condensed into week-based timeframe, aligning with the designed methodology.</p>
+
 <p>To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in <a href="https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png">the given order</a>.</p>
+
+<p>If you ever visit my branches, you’ll notice that each click reveals distinct content pertaining to the specific technology being taught. This is an idea <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27">I first conceived and elaborated on here</a>.</p>
 
 <p><img src="/assets/1.0.0/week-0-diagram.png" alt="Rounded Week Zero Diaram" /></p>
 
@@ -279,7 +283,7 @@
 
 <p>To implement SemVer properly in Git, you should follow these guidelines:</p>
 
-<ol>
+<ul>
   <li>Set Up a Repository: If you don’t already have a Git repository for your project, create one by initing the .git dir
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
 </code></pre></div>    </div>
@@ -293,7 +297,7 @@
       <li><code class="language-plaintext highlighter-rouge">PATCH</code> is incremented for backward-compatible bug fixes.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <p>For example, if your project is at version 1.0.0, you might start with:</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.0.0
@@ -309,9 +313,7 @@ git commit <span class="nt">-m</span> <span class="s2">"chore: Update dependenci
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.1.0
 </code></pre></div>    </div>
   </li>
-  <li>
-    <p><strong>Write a Changelog</strong>: Create a changelog that details the changes in this release, including new features, bug fixes, and any other noteworthy items. This helps users understand what has changed between versions.</p>
-  </li>
+  <li><strong>Write a Changelog</strong>: Create a changelog that details the changes in this release, including new features, bug fixes, and any other noteworthy items. This helps users understand what has changed between versions.</li>
   <li><strong>Push to Git</strong>: Push your changes and tags to your Git repository:
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin master <span class="nt">--tags</span>
 </code></pre></div>    </div>
@@ -329,9 +331,9 @@ git commit <span class="nt">-m</span> <span class="s2">"chore: Update dependenci
 
 <p><strong>semantic-release:</strong> A more comprehensive tool that automates the entire release process, including versioning, changelog generation, and publishing to package registries.</p>
 
-<ol>
+<ul>
   <li><strong>Publish Your Release</strong>: If your project is a library or package, you may want to publish it to a package registry like npm, PyPI, or others.</li>
-</ol>
+</ul>
 
 <p>If your code is already on GitHub, simply push it to your remote.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --tags
@@ -678,7 +680,7 @@ AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
 AWS_DEFAULT_REGION=YOUR_PREFERRED_REGION
 </code></pre></div></div>
 
-<h3 id="3-aws-iam-user-configuration">3. AWS IAM User Configuration</h3>
+<h3 id="aws-iam-user-configuration">AWS IAM User Configuration</h3>
 
 <ul>
   <li>Navigate to your AWS Management Console, specifically the IAM (Identity and Access Management) section.</li>
@@ -831,9 +833,9 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
 
 <h3 id="provider-and-resource-configuration">Provider and Resource Configuration</h3>
 
-<ol>
+<ul>
   <li>We declared the <code class="language-plaintext highlighter-rouge">random</code> provider in our main Terraform configuration file as follows:</li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
@@ -920,9 +922,9 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
   <span class="nx">override_special</span> <span class="p">=</span> <span class="s2">""</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li>Or just go back to this and put special to false and just delete the <code class="language-plaintext highlighter-rouge">override_special</code> instead:</li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
   <span class="nx">length</span>           <span class="p">=</span> <span class="mi">16</span>
@@ -944,7 +946,6 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
  <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">id</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
 <ol>
   <li>Additionally, let’s verify whether it returns a different value or remains consistent.</li>
 </ol>
@@ -1198,12 +1199,11 @@ infrastructure.
 <ul>
   <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket</li>
   <li>Replace <code class="language-plaintext highlighter-rouge">object-key</code> with the key of the object you want to download</li>
-  <li>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/directory/</code> with the directory where you want to save the downloaded file.</li>
-</ul>
-
-<ol>
+  <li>
+    <p>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/directory/</code> with the directory where you want to save the downloaded file.</p>
+  </li>
   <li>Delete an Object from an S3 Bucket use the <code class="language-plaintext highlighter-rouge">rm</code>(remove) command</li>
-</ol>
+</ul>
 
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">rm </span>s3://your-bucket-name/object-key
 </code></pre></div></div>
@@ -1265,22 +1265,15 @@ These are some basic AWS S3 commands to get you started with managing buckets an
   <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">"my-tf-test-bucket"</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
 <ol>
-  <li>
-    <p>Comment it because we need to setup our AWS provider first.</p>
+  <li>Comment it because we need to setup our AWS provider first.</li>
+  <li>Verify by running a terraform init.
+    <ul>
+      <li>The failure is expected because our random bucket naming process is generating uppercase letters</li>
+      <li>Those mentioned are not supported as bucket names in S3.</li>
+      <li>Verify further plan and apply?</li>
+    </ul>
   </li>
-  <li>
-    <p>Verify by running a terraform init.</p>
-  </li>
-</ol>
-
-<ul>
-  <li>The failure is expected because our random bucket naming process is generating uppercase letters, which are not supported as bucket names in S3.</li>
-</ul>
-
-<ol>
-  <li>Verify further plan and apply?</li>
 </ol>
 
 <blockquote>
@@ -1297,42 +1290,45 @@ These are some basic AWS S3 commands to get you started with managing buckets an
 https://registry.terraform.io/providers/hashicorp/aws/latest</p>
   </li>
   <li>
-    <p>Click  USE PROVIDER on the second navbar on the right besides Documenation;
-```hcl
-terraform {
-  required_providers {
- aws = {
-   source = “hashicorp/aws”
-   version = “5.17.0”
- }
-  }
-}</p>
+    <p>Click  <strong>“USE PROVIDER”</strong> on the second navbar on the right besides Documenation;</p>
   </li>
 </ol>
 
-<p>provider “aws” {
-  # Configuration options
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-3. Reflect on our previous provider.
-```tf
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-}
+<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
+  <span class="nx">required_providers</span> <span class="p">{</span>
+    <span class="nx">aws</span> <span class="p">=</span> <span class="p">{</span>
+      <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/aws"</span>
+      <span class="nx">version</span> <span class="p">=</span> <span class="s2">"5.17.0"</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">provider</span> <span class="s2">"aws"</span> <span class="p">{</span>
+  <span class="c1"># Configuration options</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-provider "random" {
-  # Configuration options
-}
+<ul>
+  <li>Reflect on our previous provider.</li>
+</ul>
+
+<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
+  <span class="nx">required_providers</span> <span class="p">{</span>
+    <span class="nx">random</span> <span class="p">=</span> <span class="p">{</span>
+      <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/random"</span>
+      <span class="nx">version</span> <span class="p">=</span> <span class="s2">"3.5.1"</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">provider</span> <span class="s2">"random"</span> <span class="p">{</span>
+  <span class="c1"># Configuration options</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>How are we going to add that?</p>
 
 <p>This looks stupid. We must have a single block for each. So?</p>
+
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
     <span class="nx">random</span> <span class="p">=</span> <span class="p">{</span>
@@ -1360,9 +1356,9 @@ provider "random" {
 <span class="p">}</span>
 
 </code></pre></div></div>
-<ol>
+<ul>
   <li>Apply critical thinking and get the following results;</li>
-</ol>
+</ul>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
@@ -1607,9 +1603,9 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 
 <h2 id="configure-workspace-settings">Configure Workspace Settings</h2>
 
-<ol>
+<ul>
   <li>Create an organzation and call it e.g. <code class="language-plaintext highlighter-rouge">yayaintfcloud</code>.</li>
-</ol>
+</ul>
 
 <p>After creating your organization, you’ll be directed to create your first workspace and to Choose from:</p>
 
@@ -1626,9 +1622,9 @@ We want only to see stuff.</p>
 
 <p>Go to the second. <br />Trigger remote Terraform runs from your local command line.</p>
 
-<ol>
+<ul>
   <li>You will be directed to page to create ur first workspace.</li>
-</ol>
+</ul>
 
 <p>Pick a default project and create your workspace.</p>
 
@@ -1647,12 +1643,11 @@ We want only to see stuff.</p>
 <h2 id="create-a-project">Create a Project</h2>
 
 <ol>
-  <li>From the top right corner, click “New” and select “Project” to create a new project for our bootcamp.</li>
-</ol>
-
-<p>We dont have to but lets make things in its theme.</p>
-
-<ol>
+  <li>From the top right corner, click “New” and select “Project” to create a new project for our bootcamp.
+    <blockquote>
+      <p>We dont have to but lets make things in its theme.</p>
+    </blockquote>
+  </li>
   <li>Name our project <code class="language-plaintext highlighter-rouge">yaya-tf-bootcamp-2023</code>. This will be used next.</li>
 </ol>
 
@@ -1660,17 +1655,17 @@ We want only to see stuff.</p>
 
 <p>We created a default workspace. <br />Now we will go and create the one that will apply to our bootcamp.</p>
 
-<ol>
+<ul>
   <li>from the left side, click create workspace and call it <code class="language-plaintext highlighter-rouge">terra-house-2023</code></li>
-</ol>
+</ul>
 
 <p><img src="/assets/0.7.0/tf-house-workspace.png" alt="My Terraform Cloud Is Cool" /></p>
 
 <p>You should have your project in a good state.</p>
 
-<ol>
+<ul>
   <li>Pick your project and create your workspace.</li>
-</ol>
+</ul>
 
 <h2 id="code-the-cloud-block">Code the Cloud Block</h2>
 
@@ -1724,22 +1719,14 @@ We want only to see stuff.</p>
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform login
 </code></pre></div>    </div>
   </li>
-  <li>Confirm yes to create a file</li>
-</ol>
-
-<p>You will get a stupid screen.<br /></p>
-
-<ol>
-  <li>Click <code class="language-plaintext highlighter-rouge">p</code> for print and go to the url.</li>
-</ol>
-
-<p>This takes you to Terraform Cloud. Here is the url;</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://app.terraform.io/app/settings/tokens?source=terraform-login
-</code></pre></div></div>
-<ol>
-  <li>
-    <p>Create a token and pick one for one day.</p>
+  <li>Confirm yes to create a file<br />
+You will get a stupid screen.<br /></li>
+  <li>Click <code class="language-plaintext highlighter-rouge">p</code> for print and go to the url.<br />
+This takes you to Terraform Cloud. Here is the url;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://app.terraform.io/app/settings/tokens?source=terraform-login
+</code></pre></div>    </div>
   </li>
+  <li>Create a token and pick one for one day.</li>
   <li>Take the token create the file yourself.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch /home/gitpod/.terraform.d/credentials.tfrc.json
 </code></pre></div>    </div>
@@ -1754,20 +1741,14 @@ We want only to see stuff.</p>
   }
 }
 </code></pre>
+    <blockquote>
+      <p>HashiCorp doesn’t even display the structure of that file. Please consider this, HashiCorp.</p>
+    </blockquote>
   </li>
-</ol>
-
-<blockquote>
-  <p>HashiCorp doesn’t even display the structure of that file. Please consider this, HashiCorp.</p>
-</blockquote>
-
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">Open</code> the file that you touched it.</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open  /home/gitpod/.terraform.d/credentials.tfrc.json
-</code></pre></div></div>
-<ol>
+  <li><code class="language-plaintext highlighter-rouge">Open</code> the file that you touched it.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open  /home/gitpod/.terraform.d/credentials.tfrc.json
+</code></pre></div>    </div>
+  </li>
   <li>Add the content with the token you got from tf cloud.</li>
 </ol>
 
@@ -1777,17 +1758,15 @@ We want only to see stuff.</p>
 
 <ol>
   <li>Run <code class="language-plaintext highlighter-rouge">terraform init</code>.</li>
-  <li>
-    <p>Check your dotfile.</p>
-  </li>
+  <li>Check your dotfile.</li>
   <li>Double check your Terraform Cloud resources;</li>
 </ol>
 
 <p><img src="/assets/0.7.0/tf-cloud.png" alt="Infra State Resources" /></p>
 
-<ol>
-  <li>Triple check your outputs in Terraform Cloud;</li>
-</ol>
+<ul>
+  <li><strong>Triple check</strong> your outputs in Terraform Cloud;</li>
+</ul>
 
 <p><img src="/assets/0.7.0/mini-out.png" alt="Infra State Output" /></p>
 
@@ -1800,9 +1779,9 @@ We want only to see stuff.</p>
 
 <h3 id="init-is-now-different"><code class="language-plaintext highlighter-rouge">init</code> is now different.</h3>
 
-<ol>
+<ul>
   <li>Run the <code class="language-plaintext highlighter-rouge">terraform init</code> command.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/0.7.0/apply-theme-with-tf-cloud.png" alt="Apply with tfcloud" /></p>
 
@@ -1882,12 +1861,8 @@ Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in ou
 }
 </span><span class="no">EOF
 </span></code></pre></div>    </div>
+    <p>This code uses the <code class="language-plaintext highlighter-rouge">cat</code> command with a “here document” (« EOF) to create the <code class="language-plaintext highlighter-rouge">credentials.tfrc.json</code> file with the Terraform Cloud token provided by the <code class="language-plaintext highlighter-rouge">TERRAFORM_CLOUD_TOKEN</code> environment variable.</p>
   </li>
-</ol>
-
-<p>This code uses the <code class="language-plaintext highlighter-rouge">cat</code> command with a “here document” (« EOF) to create the <code class="language-plaintext highlighter-rouge">credentials.tfrc.json</code> file with the Terraform Cloud token provided by the <code class="language-plaintext highlighter-rouge">TERRAFORM_CLOUD_TOKEN</code> environment variable.</p>
-
-<ol>
   <li><strong>Print Success Message</strong>
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">TARGET_FILE</span><span class="k">}</span><span class="s2"> has been generated."</span>
 </code></pre></div>    </div>
@@ -1916,14 +1891,10 @@ Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in ou
   </li>
   <li><strong>Extending Token Validity for our 4 weeks bootcamp</strong>
     <ul>
-      <li>Increase the token’s lifespan to 30 days, ensuring longer usability.</li>
+      <li>Increase the token’s lifespan to 30 days, ensuring longer usability.
+<img src="/assets/0.8.0/30d-tfcloud-token.png" alt="Increase Token Evidence" /></li>
     </ul>
   </li>
-</ol>
-
-<p><img src="/assets/0.8.0/30d-tfcloud-token.png" alt="Increase Token Evidence" /></p>
-
-<ol>
   <li><strong>Assigning Environment Variable for Gitpod</strong>
     <ul>
       <li>Define the variable in environment variables
@@ -1951,13 +1922,13 @@ Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in ou
 
 <p>✅ Eliminating the need for frequent adjustments.</p>
 
-<ol>
-  <li><strong>Launch your gitpod and Run the Script</strong></li>
-</ol>
-
-<blockquote>
-  <p>Double check if the file exist or its content to triple verify.</p>
-</blockquote>
+<ul>
+  <li><strong>Launch your gitpod and Run the Script</strong>
+    <blockquote>
+      <p>Double check if the file exist or its content to triple verify.</p>
+    </blockquote>
+  </li>
+</ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
 </code></pre></div></div>
@@ -1970,7 +1941,7 @@ Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in ou
 <p>/home/gitpod/.terraform.d/credentials.tfrc.json has been generated.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
-6. `cat` or `open` the token file to verify
+- `cat` or `open` the token file to verify
 ```sh
 cat /home/gitpod/.terraform.d/credentials.tfrc.json
 </code></pre></div></div>
@@ -2087,25 +2058,20 @@ To automate the alias setup, you can create a bash script. Here’s how:</p>
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
 </code></pre></div>    </div>
   </li>
-  <li>Check if the alias already exists in the .bash_profile</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-q</span> <span class="s1">'alias tf="terraform"'</span> ~/.bash_profile
-</code></pre></div></div>
-<ol>
-  <li>Add the if statement and append the the allias with the following code</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="c"># If the alias does not exist, append it</span>
-    <span class="nb">echo</span> <span class="s1">'alias tf="terraform"'</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
-    <span class="nb">echo</span> <span class="s2">"Alias added successfully."</span>
-</code></pre></div></div>
-<blockquote>
-  <p>$? is a special variable in bash that holds the exit status of the last command executed</p>
-</blockquote>
-
-<ol>
+  <li>Check if the alias already exists in the .bash_profile
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-q</span> <span class="s1">'alias tf="terraform"'</span> ~/.bash_profile
+</code></pre></div>    </div>
+  </li>
+  <li>Add the if statement and append the the allias with the following code
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+ <span class="c"># If the alias does not exist, append it</span>
+ <span class="nb">echo</span> <span class="s1">'alias tf="terraform"'</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+ <span class="nb">echo</span> <span class="s2">"Alias added successfully."</span>
+</code></pre></div>    </div>
+    <blockquote>
+      <p>$? is a special variable in bash that holds the exit status of the last command executed</p>
+    </blockquote>
+  </li>
   <li>Add the Else to Inform the user if the alias already exists
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">else
  </span><span class="nb">echo</span> <span class="s2">"Alias already exists in .bash_profile."</span>
@@ -2120,20 +2086,19 @@ To automate the alias setup, you can create a bash script. Here’s how:</p>
 
 <p>For the sake of readability, the script does not perform line breaks.</p>
 
-<p>I thought to update it with the following to make it so.</p>
+<p><strong>I thought to update it with the following to make it so.</strong></p>
 
 <p><img src="/assets/0.9.0/read-clearly.png" alt="PoC no line jump" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo -e "\nalias tf=\"terraform\"" &gt;&gt; ~/.bash_profile
 </code></pre></div></div>
 
-<p>Instead of what it previously was;</p>
+<p><strong>Instead of what it previously was;</strong></p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo 'alias tf="terraform"' &gt;&gt; ~/.bash_profile
 </code></pre></div></div>
-
-<ol>
+<ul>
   <li>Save your changes by pressing <code class="language-plaintext highlighter-rouge">Ctrl + O</code>, then press <code class="language-plaintext highlighter-rouge">Enter</code>.</li>
-</ol>
+</ul>
 
 <p><strong>Step 2: Making the Script Executable</strong>
 You need to make the script executable. Run the following command:</p>
@@ -2154,38 +2119,28 @@ Now, you can execute the script to add the alias to your <code class="language-p
 If you’re using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it’s available in both terminals.</p>
 
 <ol>
-  <li>In your Gitpod configuration file (<code class="language-plaintext highlighter-rouge">.gitpod.yml</code>), add the following lines to both the AWS;</li>
-</ol>
-
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">aws-cli</span>
-    <span class="na">env</span><span class="pi">:</span>
-      <span class="na">AWS_CLI_AUTO_PROMPT</span><span class="pi">:</span> <span class="s">on-partial</span>
-    <span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
-      <span class="s">source ./bin/tf_alias</span>
-</code></pre></div></div>
-
-<ol>
+  <li>In your Gitpod configuration file (<code class="language-plaintext highlighter-rouge">.gitpod.yml</code>), add the following lines to both the AWS;
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">aws-cli</span>
+ <span class="na">env</span><span class="pi">:</span>
+   <span class="na">AWS_CLI_AUTO_PROMPT</span><span class="pi">:</span> <span class="s">on-partial</span>
+ <span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
+   <span class="s">source ./bin/tf_alias</span>
+</code></pre></div>    </div>
+  </li>
   <li>And Terraform blocks;
     <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">terraform</span>
  <span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
    <span class="s">source ./bin/tf_alias</span>
 </code></pre></div>    </div>
+    <p>This wont generate double alias line. Tested.</p>
   </li>
-</ol>
-
-<p>This wont generate double alias line. Tested.</p>
-
-<ol>
-  <li>Save the <code class="language-plaintext highlighter-rouge">.gitpod.yml</code> file.</li>
-</ol>
-
-<p>Now, every time you start a Gitpod workspace;</p>
-<ul>
-  <li>the alias will be automatically set up in both AWS and Terraform environments.</li>
-  <li>You can now use <code class="language-plaintext highlighter-rouge">tf</code> instead of <code class="language-plaintext highlighter-rouge">terraform</code> in your commands</li>
-</ul>
-
-<ol>
+  <li>Save the <code class="language-plaintext highlighter-rouge">.gitpod.yml</code> file.
+Now, every time you start a Gitpod workspace;
+    <ul>
+      <li>the alias will be automatically set up in both AWS and Terraform environments.</li>
+      <li>You can now use <code class="language-plaintext highlighter-rouge">tf</code> instead of <code class="language-plaintext highlighter-rouge">terraform</code> in your commands</li>
+    </ul>
+  </li>
   <li>Restart your workspace and observe.</li>
 </ol>
 

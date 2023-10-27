@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/assets/css/style.css?v=22a0966ee6f51694bd0b10adaba3b17479c76404" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=b66d38e59dc584b6827a3bc6ef604e423505c228" media="screen" type="text/css">
     <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
 
     <!--[if lt IE 9]>
@@ -12,9 +12,9 @@
     <![endif]-->
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Week One Of the Bootcamp | Cloud Express</title>
+<title>Week¹ of Transformation | Cloud Express</title>
 <meta name="generator" content="Jekyll v3.9.3" />
-<meta property="og:title" content="Week One Of the Bootcamp" />
+<meta property="og:title" content="Week¹ of Transformation" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
 <meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
@@ -23,9 +23,9 @@
 <meta property="og:site_name" content="Cloud Express" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Week One Of the Bootcamp" />
+<meta property="twitter:title" content="Week¹ of Transformation" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Week One Of the Bootcamp","url":"http://localhost:4000/journal/week1.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"Week¹ of Transformation","url":"http://localhost:4000/journal/week1.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -59,11 +59,25 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h1 id="week-one-of-the-bootcamp">Week One Of the Bootcamp</h1>
+          <h1 id="week-of-transformation">Week¹ of Transformation</h1>
+<p>The fun truly begins in this week.</p>
+
+<p>Once we’ve acquired the basic capabilities to advance from week zero.  <br />
+We’ll delve into more aspects of <strong>Terraform</strong> and <strong>AWS</strong>.</p>
 
 <blockquote>
-  <p><a href="/">Go Back.</a></p>
+  <p><a href="/">Take me out</a></p>
 </blockquote>
+
+<p>We will undertake a comprehensive Terraform module refactoring. <br />We will also harness the power of tf variables.</p>
+
+<ul>
+  <li>We’re stepping into Terraform Cloud.</li>
+  <li>AWS CloudFront will replace S3 for our CDN.</li>
+</ul>
+
+<p>Plus, we’ll wield regex for rule management and ETags to track code changes.<br />
+This to name just a few, the rest for you to explore.</p>
 
 <ul>
   <li><a href="#design-your-terraform-modules">Empower Your Terraform Modules</a>
@@ -305,7 +319,6 @@
     <span class="nx">Environment</span> <span class="p">=</span> <span class="s2">"Dev"</span>
   <span class="p">}</span>
 </code></pre></div></div>
-
 <ol>
   <li>change <code class="language-plaintext highlighter-rouge">Name</code> to <code class="language-plaintext highlighter-rouge">UserUuid</code> ;
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  tags = {
@@ -338,13 +351,13 @@
 However, it appears we need to revert this migration. <br />
 Nevermind, please uncomment the block.</p>
 
-<ol>
+<ul>
   <li>Let’s manually provide the variable, which should trigger an error when executing and I’ll tell you why
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform plan -var user_uuid="testingod"
 </code></pre></div>    </div>
     <p>We included validation in the variable to ensure it conforms to a specific regex pattern.</p>
   </li>
-</ol>
+</ul>
 
 <p><img src="/assets/1.1.0/regex-in-action.png" alt="Regex Baby" /></p>
 
@@ -357,18 +370,18 @@ Nevermind, please uncomment the block.</p>
 <table>
   <thead>
     <tr>
-      <th>🐌</th>
-      <th>Terraform Cloud is noticeably slower compared to local state operations!</th>
+      <th style="text-align: right">🐌</th>
+      <th style="text-align: left">Terraform Cloud is noticeably slower compared to local state operations!</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>🏃🏻</td>
-      <td>When executing a plan on a local state, the process is significantly faster.</td>
+      <td style="text-align: right">🏃🏻</td>
+      <td style="text-align: left">When executing a plan on a local state, the process is significantly faster.</td>
     </tr>
     <tr>
-      <td>💡</td>
-      <td>Let’s go back to local state.</td>
+      <td style="text-align: right">💡</td>
+      <td style="text-align: left">Let’s go back to local state.</td>
     </tr>
   </tbody>
 </table>
@@ -402,14 +415,14 @@ Nevermind, please uncomment the block.</p>
   <p>Mark the first two as sensitive, the <strong>region</strong> is ok.</p>
 </blockquote>
 
-<ol>
+<ul>
   <li>You can now go ahead and destroy your infrastructure.</li>
   <li>Observe the runs in Terraform Cloud.</li>
-</ol>
-
-<p>You can check the process in real time.</p>
+</ul>
 
 <p><img src="/assets/1.1.0/tfcloud-destroy-run.png" alt="TF Cloud Destroy Run" /></p>
+
+<p>You can check the process in real time.</p>
 
 <h3 id="local-migration-test">Local Migration Test</h3>
 
@@ -439,32 +452,22 @@ Nevermind, please uncomment the block.</p>
   <li>give an actual uuid to the var;
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform plan -var user_uuid="uuid-format" 
 </code></pre></div>    </div>
-  </li>
-</ol>
-
-<p>e.g.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform plan -var user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d" 
-</code></pre></div></div>
-
-<p>If it still doesn’t work, ensure that your validation block, along with its parent variable, are not commented out.</p>
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"user_uuid"</span> <span class="p">{</span>
+    <p><strong>e.g.</strong></p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform plan -var user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d" 
+</code></pre></div>    </div>
+    <p>If it still doesn’t work, <strong>ensure that your validation block, along with its parent variable, are not commented out.</strong></p>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"user_uuid"</span> <span class="p">{</span>
   <span class="nx">description</span> <span class="p">=</span> <span class="s2">"The UUID of the user"</span>
   <span class="nx">type</span>        <span class="p">=</span> <span class="nx">string</span>
   <span class="nx">validation</span> <span class="p">{</span>
-    <span class="nx">condition</span>        <span class="p">=</span> <span class="nx">can</span><span class="err">(</span><span class="nx">regex</span><span class="err">(</span><span class="s2">"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"</span><span class="err">,</span> <span class="nx">var</span><span class="err">.</span><span class="nx">user_uuid</span><span class="err">))</span>
-    <span class="nx">error_message</span>    <span class="p">=</span> <span class="s2">"The user_uuid value is not a valid UUID."</span>
+ <span class="nx">condition</span>        <span class="p">=</span> <span class="nx">can</span><span class="err">(</span><span class="nx">regex</span><span class="err">(</span><span class="s2">"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"</span><span class="err">,</span> <span class="nx">var</span><span class="err">.</span><span class="nx">user_uuid</span><span class="err">))</span>
+ <span class="nx">error_message</span>    <span class="p">=</span> <span class="s2">"The user_uuid value is not a valid UUID."</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div></div>
-
-<ol>
-  <li>It should work perfectly.</li>
-</ol>
-
-<p>Great and cool! Lets proceed more with our var manipulation skills.</p>
-
-<ol>
+</code></pre></div>    </div>
+  </li>
+  <li>It should work perfectly.<br />
+Great and cool! Lets proceed more with our var manipulation skills.</li>
   <li>Go to our terraform.tfvars file and include the variable there.
 user_uuid=”uuid-format” (looks like toml baby)
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">user_uuid</span><span class="o">=</span><span class="s2">"f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"</span>
@@ -473,25 +476,16 @@ user_uuid=”uuid-format” (looks like toml baby)
       <p>Looks like TOML Baby! whats that? Eeeeh <a href="https://github.com/yaya2devops/aws-cloud-project-bootcamp/tree/main/ddb#toms-obvious-minimal-language-files">long story.</a></p>
     </blockquote>
   </li>
-  <li>Run <code class="language-plaintext highlighter-rouge">tf plan</code> only and <a href="/assets/1.1.0/varplan.html">it will pick</a> it up.</li>
-</ol>
-
-<p>When doing TF Cloud, You must configure this manually as Terraform variables . ( And not the environment variable we previously used for AWS)</p>
-
-<p><img src="/assets/1.1.0/envstfvar.png" alt="TF CLOUD Env Var vs TF Vars" /></p>
-
-<ol>
+  <li>Run <code class="language-plaintext highlighter-rouge">tf plan</code> only and <a href="/assets/1.1.0/varplan.html">it will pick</a> it up.<br />
+When doing TF Cloud, You must configure this manually as Terraform variables . <br />( And not the environment variable we previously used for AWS)
+<img src="/assets/1.1.0/envstfvar.png" alt="TF CLOUD Env Var vs TF Vars" /></li>
   <li>Create an fork file of the terraform.tfvars with <code class="language-plaintext highlighter-rouge">.sample</code>extension and add the content.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
 </code></pre></div>    </div>
+    <blockquote>
+      <p>terraform.tfvars is ignored. Good alternative to not waste this.</p>
+    </blockquote>
   </li>
-</ol>
-
-<blockquote>
-  <p>terraform.tfvars is ignored. Good alternative to not waste this.</p>
-</blockquote>
-
-<ol>
   <li>Delete your  and try this command to see if it does the job.
     <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars</span>
 </code></pre></div>    </div>
@@ -518,34 +512,25 @@ user_uuid=”uuid-format” (looks like toml baby)
 <h3 id="variable-input-via-cli-and-files-flag"><strong>Variable Input via CLI and Files Flag:</strong></h3>
 
 <ol>
-  <li>Create a normal variable block wherever required;</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>variable "region" 
+  <li>Create a normal variable block wherever required;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>variable "region" 
 {
   type    = string
   default = "us-west-1"
 }
-</code></pre></div></div>
-
-<ol>
-  <li>You can override it using this command;</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply -var="region=new_value"
-</code></pre></div></div>
-
-<ol>
-  <li>Or you can create the following json (or HCL) file call it <code class="language-plaintext highlighter-rouge">variables.json</code> e.g;</li>
-</ol>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</code></pre></div>    </div>
+  </li>
+  <li>You can override it using this command;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply -var="region=new_value"
+</code></pre></div>    </div>
+  </li>
+  <li>Or you can create the following json (or HCL) file call it <code class="language-plaintext highlighter-rouge">variables.json</code> e.g;
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"region"</span><span class="p">:</span><span class="w"> </span><span class="s2">"us-east-2"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"instance_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"m5.large"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<ol>
+</span></code></pre></div>    </div>
+  </li>
   <li>Overide it using that command but with passing the file flag.
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf apply <span class="nt">-var-file</span><span class="o">=</span>variables.json
 </code></pre></div>    </div>
@@ -754,20 +739,16 @@ user_uuid=”uuid-format” (looks like toml baby)
 
 <span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"website_bucket"</span> 
 </code></pre></div></div>
-
 <ol>
   <li>Update the ouptut to not use the random provider and to call our new bucket name.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">output</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
   <span class="nx">value</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="err">.</span><span class="nx">website_bucket</span><span class="err">.</span><span class="nx">bucket</span>
 </code></pre></div>    </div>
   </li>
-  <li>add the bucket name to our <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> and keep a copy in <code class="language-plaintext highlighter-rouge">terraform.tfvars.sample</code></li>
-</ol>
-
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">bucket_name</span><span class="err">=</span><span class="s2">"from-aws"</span>
-</code></pre></div></div>
-
-<ol>
+  <li>add the bucket name to our <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> and keep a copy in <code class="language-plaintext highlighter-rouge">terraform.tfvars.sample</code>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">bucket_name</span><span class="err">=</span><span class="s2">"from-aws"</span>
+</code></pre></div>    </div>
+  </li>
   <li>Define that variable within the variables.tf file.</li>
 </ol>
 
@@ -795,16 +776,16 @@ user_uuid=”uuid-format” (looks like toml baby)
 </code></pre></div></div>
 
 <ul>
-  <li>Together, fogether to look like this;
-    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+  <li><strong>Together, fogether to look like this;</strong>
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">variable</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
 <span class="nx">description</span> <span class="p">=</span> <span class="s2">"The name of the S3 bucket"</span>
 <span class="nx">type</span>        <span class="p">=</span> <span class="nx">string</span>
 
 <span class="nx">validation</span> <span class="p">{</span>
-  <span class="nx">condition</span>     <span class="p">=</span> <span class="err">(</span>
-    <span class="nx">length</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">)</span> <span class="err">&gt;</span><span class="p">=</span> <span class="mi">3</span> <span class="err">&amp;&amp;</span> <span class="nx">length</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">)</span> <span class="err">&lt;</span><span class="p">=</span> <span class="mi">63</span> <span class="err">&amp;&amp;</span> 
-    <span class="nx">can</span><span class="err">(</span><span class="nx">regex</span><span class="err">(</span><span class="s2">"^[a-z0-9][a-z0-9-.]*[a-z0-9]$"</span><span class="err">,</span> <span class="nx">var</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">))</span>
-  <span class="err">)</span>
+  <span class="nx">condition</span>     <span class="p">=</span> <span class="p">(</span>
+    <span class="nx">length</span><span class="p">(</span><span class="kd">var</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">)</span> <span class="err">&gt;</span><span class="p">=</span> <span class="mi">3</span> <span class="err">&amp;&amp;</span> <span class="nx">length</span><span class="p">(</span><span class="kd">var</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">)</span> <span class="err">&lt;</span><span class="p">=</span> <span class="mi">63</span> <span class="err">&amp;&amp;</span> 
+    <span class="nx">can</span><span class="p">(</span><span class="nx">regex</span><span class="p">(</span><span class="s2">"^[a-z0-9][a-z0-9-.]*[a-z0-9]</span><span class="err">$</span><span class="s2">"</span><span class="p">,</span> <span class="kd">var</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">))</span>
+  <span class="p">)</span>
   <span class="nx">error_message</span> <span class="p">=</span> <span class="s2">"The bucket name must be between 3 and 63 characters, start and end with a lowercase letter or number, and can contain only lowercase letters, numbers, hyphens, and dots."</span>
 <span class="p">}</span>
 <span class="p">}</span>
@@ -816,12 +797,8 @@ user_uuid=”uuid-format” (looks like toml baby)
 <p>Make sure you deleted previous S3s.</p>
 <ol>
   <li>Try giving a bucket name that violates the rule e.g. Yaya2DevOps</li>
-  <li>Give a tf plan a try</li>
-</ol>
-
-<p><img src="/assets/1.2.0/regex-bucket.png" alt="Failed Validation Applied" /></p>
-
-<ol>
+  <li>Give a tf plan a try
+<img src="/assets/1.2.0/regex-bucket.png" alt="Failed Validation Applied" /> <br /></li>
   <li>Double assign it a correct naming.</li>
   <li>Give a tf plan a try</li>
   <li>Run tf apply</li>
@@ -835,8 +812,18 @@ user_uuid=”uuid-format” (looks like toml baby)
 
 <p>That was our <code class="language-plaintext highlighter-rouge">1.2.0</code> configuration drift.</p>
 
-<p>|Consider Regex for vars when validating inputs.|
-|—|</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Consider Regex for vars when validating inputs.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">Yes Will Do!</td>
+    </tr>
+  </tbody>
+</table>
 
 <h1 id="the-terrahouse-module">The Terrahouse Module</h1>
 
@@ -962,14 +949,9 @@ In this directory, we will have the following essential files and folders.</li>
 <p>To ensure everything is set up correctly</p>
 
 <ol>
-  <li>Use the <code class="language-plaintext highlighter-rouge">terraform init</code> command to It will validate our configuration.</li>
-</ol>
-
-<p>It is telling that our AWS bloc is empty new stuff. <br />Not that deal-Just get rid of it if you want.</p>
-
-<p><img src="/assets/1.3.0/aws-empty-block.png" alt="AWS Provider Is Empty CLI" /></p>
-
-<ol>
+  <li>Use the <code class="language-plaintext highlighter-rouge">terraform init</code> command to It will validate our configuration.<br />
+It is telling that our AWS bloc is empty new stuff. <br />Not that deal-Just get rid of it if you want.<br />
+<img src="/assets/1.3.0/aws-empty-block.png" alt="AWS Provider Is Empty CLI" /></li>
   <li>Run the <code class="language-plaintext highlighter-rouge">tf plan</code>, sometimes I miss out we have alias, to test your module configuration is correct.</li>
 </ol>
 
@@ -995,9 +977,13 @@ In this directory, we will have the following essential files and folders.</li>
  <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
 <span class="p">}</span>
 </code></pre></div>    </div>
-    <p>|Thats it💡| If the naming is accurate, it will gather more about the module|
-|—:|:—|</p>
   </li>
+</ol>
+
+<p>|💡| If the naming is accurate, it will gather more about the module|
+|—|—|
+|💡|💡|</p>
+<ol>
   <li>Now that you know, do the same for the bucket.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"bucket_name"</span> 
 <span class="p">{</span>
@@ -1058,14 +1044,9 @@ Nothing to see..Because we have it only in the module as well.</li>
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tf refresh
 </code></pre></div>    </div>
   </li>
-  <li>Run tf output you’ll be seeing the output;</li>
-</ol>
-
-<p><img src="/assets/1.3.0/output-magic.png" alt="Output is showing" /></p>
-
-<p>This will synchronize the local state with the actual AWS resources.</p>
-
-<ol>
+  <li>Run tf output you’ll be seeing the output;
+<img src="/assets/1.3.0/output-magic.png" alt="Output is showing" /><br />
+This will synchronize the local state with the actual AWS resources.<br /></li>
   <li>run the tf <code class="language-plaintext highlighter-rouge">apply</code></li>
 </ol>
 
@@ -1196,9 +1177,9 @@ Nothing to see..Because we have it only in the module as well.</li>
 
 <p>We needed to reconfigure the distribution process due to our failure to define a clear policy.</p>
 
-<ol>
+<ul>
   <li>Check your new distrubution url and see the site.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/1.4.0/clickops/second-distru-worked.png" alt="CloudFront Clickops" /></p>
 
@@ -1218,18 +1199,12 @@ Nothing to see..Because we have it only in the module as well.</li>
 <ol>
   <li>Ask GPT to write u a tf for static website hosting for an s3 bucket. <br />
 I mean this looks like something.</li>
-  <li>In your <code class="language-plaintext highlighter-rouge">main.tf</code> module, grap something from that and add it as a resource.</li>
-</ol>
-
-<p>See if it actally works. 
-No it won’t.
-I’ll tel you why.</p>
-
-<ol>
+  <li>In your <code class="language-plaintext highlighter-rouge">main.tf</code> module, grap something from that and add it as a resource.<br /><br />
+See if it actally works. <br />
+No it won’t.<br />
+I’ll tell you why.<br /><br /></li>
   <li>Run <code class="language-plaintext highlighter-rouge">tf init</code>. Error.</li>
-  <li>
-    <p>Change the bucket from <code class="language-plaintext highlighter-rouge">bucket = "my-static-website-bucket"</code> to <code class="language-plaintext highlighter-rouge">aws_s3_bucket.website_bucket.bucket</code>.</p>
-  </li>
+  <li>Change the bucket from <code class="language-plaintext highlighter-rouge">bucket = "my-static-website-bucket"</code> to <code class="language-plaintext highlighter-rouge">aws_s3_bucket.website_bucket.bucket</code>.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">tf init</code> to initialize the Terraform configuration again which should work.</li>
   <li>Execute <code class="language-plaintext highlighter-rouge">tf plan</code> to review and see if it can do it.</li>
 </ol>
@@ -1265,7 +1240,7 @@ But the provider change year in a year.</p>
   <li>Go to TF Registry</li>
   <li>AWS Provider</li>
   <li>Click on AWS and see the list.</li>
-  <li>AWS_S3_Bucket_Website_Configuration</li>
+  <li>Get the <code class="language-plaintext highlighter-rouge">AWS_S3_Bucket_Website_Configuration</code></li>
   <li><a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration">Get it from there</a> instead.</li>
 </ol>
 
@@ -1290,22 +1265,21 @@ But the provider change year in a year.</p>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li>Change the example name to <code class="language-plaintext highlighter-rouge">website_configuration</code></li>
   <li>Reference to our bucket from the module;</li>
-</ol>
+</ul>
 
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"aws_s3_bucket_website_configuration"</span> <span class="s2">"website_configuration"</span> 
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket_website_configuration"</span> <span class="s2">"website_configuration"</span> 
 
 <span class="p">{</span>
-  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="p">.</span><span class="nx">website_bucket</span><span class="p">.</span><span class="nx">bucket</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="err">.</span><span class="nx">website_bucket</span><span class="err">.</span><span class="nx">bucket</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<ol>
+<ul>
   <li>Try planning and it should now work;</li>
   <li>tf apply to have the website hosting.</li>
-</ol>
+</ul>
 
 <blockquote>
   <p>Many people mention GPT, but it’s not the solution for everything, my friend.</p>
@@ -1338,12 +1312,8 @@ But the provider change year in a year.</p>
   <li>Add a description, it is nice.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">description</span> <span class="err">=</span> <span class="s2">"The endpoint URL for the AWS S3 bucket website"</span>
 </code></pre></div>    </div>
+    <p>We also learned that we have to call the output in top level as well.<br /><br /></p>
   </li>
-</ol>
-
-<p>We also learned that we have to call the output in top level as well.</p>
-
-<ol>
   <li>Do the same for top level and reference our output.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">output</span> <span class="s2">"s3_website_endpoint"</span> <span class="p">{</span>
   <span class="nx">description</span> <span class="p">=</span> <span class="s2">"S3 Static Website hosting endpoint"</span>
@@ -1373,17 +1343,17 @@ Because still it didnt work.</p>
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">✋</th>
+      <th style="text-align: center">✋</th>
       <th style="text-align: left">This is an action you should avoid with Terraform</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right">✔</td>
+      <td style="text-align: center">✔</td>
       <td style="text-align: left">Terraform is primarily designed for managing the state of infrastructure</td>
     </tr>
     <tr>
-      <td style="text-align: right">❌</td>
+      <td style="text-align: center">❌</td>
       <td style="text-align: left">Not individual files</td>
     </tr>
   </tbody>
@@ -1406,112 +1376,148 @@ Because still it didnt work.</p>
   <li>Specify the bucket, key, and source for your <code class="language-plaintext highlighter-rouge">index.html</code>.</li>
 </ol>
 
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"index_html"</span> <span class="p">{</span>
-  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="p">.</span><span class="nx">website_bucket</span><span class="p">.</span><span class="nx">bucket</span>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"index_html"</span> <span class="p">{</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="err">.</span><span class="nx">website_bucket</span><span class="err">.</span><span class="nx">bucket</span>
   <span class="nx">key</span>    <span class="p">=</span> <span class="s2">"index.html"</span>
-  <span class="nx">source</span> <span class="p">=</span> <span class="kd">var</span><span class="p">.</span><span class="nx">index_html_filepath</span>
+  <span class="nx">source</span> <span class="p">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">index_html_filepath</span>
 
   <span class="c1"># Ignore this for now</span>
   <span class="c1">#etag = filemd5(var.index_html_filepath)</span>
 <span class="p">}</span>
 </code></pre></div></div>
+<ul>
+  <li>Repeat for <code class="language-plaintext highlighter-rouge">error.html</code> configuration. 🔁</li>
+</ul>
+
+<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"error_html"</span> <span class="p">{</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="p">.</span><span class="nx">website_bucket</span><span class="p">.</span><span class="nx">bucket</span>
+  <span class="nx">key</span>    <span class="p">=</span> <span class="s2">"error.html"</span>
+  <span class="nx">source</span> <span class="p">=</span> <span class="kd">var</span><span class="p">.</span><span class="nx">error_html_filepath</span>
+
+  <span class="c1"># Ignore this for now</span>
+  <span class="c1">#etag = filemd5(var.index_html_filepath)}</span>
+</code></pre></div></div>
+<h3 id="create-those-files-and-manage-with-path">Create Those Files and Manage with <code class="language-plaintext highlighter-rouge">path</code></h3>
+
+<p>Let’s explore whether Terraform console can be utilized interactively for troubleshooting purposes.</p>
+
 <ol>
-  <li>Repeat for <code class="language-plaintext highlighter-rouge">error.html</code> configuration.
-```tf
-resource “aws_s3_object” “error_html” {
-  bucket = aws_s3_bucket.website_bucket.bucket
-  key    = “error.html”
-  source = var.error_html_filepath</li>
+  <li>Lets pre test path.root and see;
+    <blockquote>
+      <p>In the best-case scenario, path.module should always make sense..</p>
+    </blockquote>
+  </li>
+  <li>Create a directory and call it <code class="language-plaintext highlighter-rouge">public</code>.</li>
+  <li>Create <code class="language-plaintext highlighter-rouge">index.html</code> and add it to <code class="language-plaintext highlighter-rouge">public</code></li>
+  <li>Create <code class="language-plaintext highlighter-rouge">error.html</code> and add it to <code class="language-plaintext highlighter-rouge">public</code></li>
+  <li>Remove <code class="language-plaintext highlighter-rouge">etag</code> from the section for now (data management magic)
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  #etag = filemd5(var.index_html_filepath)
+</code></pre></div>    </div>
+  </li>
+  <li>You have to add these to your root main module block along the source in your module block.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  index_html_filepath = var.index_html_filepath
+  error_html_filepath = var.error_html_filepath
+</code></pre></div>    </div>
+    <p>It will never work otherwise.</p>
+  </li>
+  <li>Plan and apply your content.</li>
+  <li>Double check files in S3.</li>
 </ol>
 
-<p># Ignore this for now
-  #etag = filemd5(var.index_html_filepath)}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>### Create Those Files and Manage with `path`
+<p>Yes!</p>
 
-Let's explore whether Terraform console can be utilized interactively for troubleshooting purposes.
+<p><img src="/assets/1.4.0/from-tf.png" alt="Files to S3" /></p>
 
-1. Lets pre test path.root and see;
-&gt; In the best-case scenario, path.module should always make sense..
-2. Create a directory and call it `public`.
-3. Create `index.html` and add it to `public`
-4. Create `error.html` and add it to `public`
-5. Remove `etag` from the section for now (data management magic)
-</code></pre></div></div>
-<p>#etag = filemd5(var.index_html_filepath)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6. You have to add these to your root main module block along the source in your module block.
-</code></pre></div></div>
-<p>index_html_filepath = var.index_html_filepath
-  error_html_filepath = var.error_html_filepath</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>It will never work otherwise.
+<p>Two considerations come up.</p>
+<ul>
+  <li>A: You dont want to hardcode your path values.</li>
+  <li>B: If I make changes to the file does it work.
+    <h4 id="a-avoid-your-real-path">A: Avoid Your Real Path</h4>
+    <p>⚠️ You should avoid hardcoding values like this to ensure the module’s portability.</p>
+  </li>
+</ul>
 
-7. Plan and apply your content.
-8. Double check files in S3. 
-
-Yes!
-
-![Files to S3](/assets/1.4.0/from-tf.png)
-
-Two considerations come up.
-- A: You dont want to hardcode your path values.
-- B: If I make changes to the file does it work.
-#### A: Avoid Your Real Path
-⚠️ You should avoid hardcoding values like this to ensure the module's portability.
-
-|💡|One approach we can employ involves the use of interpolation|
-|---:|:---|
-
-
-1. Instead of the actual path assign the path.root we spoke about for `index.html`
-</code></pre></div></div>
-<p>”${path.root}public/index.html”</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-2. Do the same for our `error.html` file.
-
-</code></pre></div></div>
-<p>”${path.root}public/error.html”</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-&gt; Make sure you dont do it for `main.tf` (our mistake)
-
-3. Plan it and apply it, it should now give a file!
-
-#### B: Detect File Changes
-
-So this is cool. With what we reached we can take files to the s3 but does it capture the data inside?
-
-- Be aware that Terraform checks file paths but not their content.
-- Use an `etag` to track content changes.
-- Add an `etag` with `filemd5` for accurate content tracking.
-
-1. Change the `index.html` file from what it was to something else.
-2. Double change the `error.html`
-3. Run `tf plan` and `tf apply` and go to the console.
-
-|👀|No File Changes!|
-|---:|:---|
-|🤔|BUT WE CHANGED our files!!|
-|🪄|The way this works is that it has a source but doesn't validate the data|
-
-
-Meaning Terraform state examines the path's value but not the content of the file within that path.
-
-You can identify file changes by referring to the mentioned `etag` we removed.
-If the content changes, the `etag` will also change.
-
-4. Add the required etag block with the 'filemd5' function. 
-
-The function creates a hash based on the content. 
-
-Good opportunity for you to start exploring about [tf functions.](https://developer.hashicorp.com/terraform/language/functions)
-
-E.g. here is a built in terraform function to [check the existance](https://developer.hashicorp.com/terraform/language/functions/fileexists) of a file.
-```tf
-condition = fileexists(var.error_html_filepath)
-</code></pre></div></div>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">💡</th>
+      <th style="text-align: left">One approach we can employ involves…</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">💡💡💡</td>
+      <td style="text-align: left">The use of <a href="https://developer.hashicorp.com/terraform/language/expressions/strings">interpolation</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <ol>
+  <li>Instead of the actual path assign the path.root we spoke about for <code class="language-plaintext highlighter-rouge">index.html</code>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"${path.root}public/index.html"
+</code></pre></div>    </div>
+  </li>
+  <li>Do the same for our <code class="language-plaintext highlighter-rouge">error.html</code> file.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"${path.root}public/error.html"
+</code></pre></div>    </div>
+    <blockquote>
+      <p>Make sure you dont do it for <code class="language-plaintext highlighter-rouge">main.tf</code> (our mistake)</p>
+    </blockquote>
+  </li>
+  <li>Plan it and apply it, it should now give a file!</li>
+</ol>
+
+<h4 id="b-detect-file-changes">B: Detect File Changes</h4>
+
+<p>So this is cool. With what we reached we can take files to the s3 but does it capture the data inside?</p>
+
+<ul>
+  <li>Be aware that Terraform checks file paths but not their content.</li>
+  <li>Use an <code class="language-plaintext highlighter-rouge">etag</code> to track content changes.</li>
+  <li>Add an <code class="language-plaintext highlighter-rouge">etag</code> with <code class="language-plaintext highlighter-rouge">filemd5</code> for accurate content tracking.</li>
+</ul>
+
+<ol>
+  <li>Change the <code class="language-plaintext highlighter-rouge">index.html</code> file from what it was to something else.</li>
+  <li>Double change the <code class="language-plaintext highlighter-rouge">error.html</code></li>
+  <li>Run <code class="language-plaintext highlighter-rouge">tf plan</code> and <code class="language-plaintext highlighter-rouge">tf apply</code> and go to the console.</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">👀</th>
+      <th style="text-align: left">No File Changes!</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">🤔</td>
+      <td style="text-align: left">BUT WE CHANGED our files!!</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">🪄</td>
+      <td style="text-align: left">The way this works is that it has a source but doesn’t validate the data</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Meaning Terraform state examines the path’s value but not the content of the file within that path.<br /><br />
+You can identify file changes by referring to the mentioned <code class="language-plaintext highlighter-rouge">etag</code> we removed.<br />
+If the content changes, the <code class="language-plaintext highlighter-rouge">etag</code> will also change.<br /><br /></p>
+<ul>
+  <li><strong>Add the required etag block with the ‘filemd5’ function</strong>.</li>
+</ul>
+
+<p>The function creates a hash based on the content. <br /><br />
+Good opportunity for you to start exploring about <a href="https://developer.hashicorp.com/terraform/language/functions">tf functions.</a> <br />
+E.g. here is a built in terraform function to <a href="https://developer.hashicorp.com/terraform/language/functions/fileexists">check the existance</a> of a file.</p>
+<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">condition</span> <span class="err">=</span> <span class="nx">fileexists</span><span class="err">(</span><span class="kd">var</span><span class="err">.</span><span class="nx">error_html_filepath</span><span class="err">)</span>
+</code></pre></div></div>
+<ul>
   <li>Now, simply specify the path to the <code class="language-plaintext highlighter-rouge">etag</code> in the same way you did with the source</li>
   <li><code class="language-plaintext highlighter-rouge">tf plan</code> and <code class="language-plaintext highlighter-rouge">tf apply</code> and see.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/1.4.0/etag-trigger.png" alt="Yay Files Data Captured" /></p>
 
@@ -1525,33 +1531,33 @@ condition = fileexists(var.error_html_filepath)
 
 <p>Let’s set up a variable for that purpose.</p>
 
-<ol>
-  <li>Add the variables for index file at the module level within the <code class="language-plaintext highlighter-rouge">variables</code> block;
-```tf
-variable “index_html_filepath” {
-  description = “The file path for index.html”
-  type        = string</li>
-</ol>
+<ul>
+  <li>Add the variables for index file at the module level within the <code class="language-plaintext highlighter-rouge">variables</code> block;</li>
+</ul>
 
-<p>validation {
-    condition     = fileexists(var.index_html_filepath)
-    error_message = “The provided path for index.html does not exist.”
-  }
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2. Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.&lt;br&gt;
-(include the entire path; it's perfectly fine).
-```sh
-index_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
+<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">variable</span> <span class="s2">"index_html_filepath"</span> <span class="p">{</span>
+  <span class="nx">description</span> <span class="p">=</span> <span class="s2">"The file path for index.html"</span>
+  <span class="nx">type</span>        <span class="p">=</span> <span class="nx">string</span>
+
+  <span class="nx">validation</span> <span class="p">{</span>
+    <span class="nx">condition</span>     <span class="p">=</span> <span class="nx">fileexists</span><span class="p">(</span><span class="kd">var</span><span class="p">.</span><span class="nx">index_html_filepath</span><span class="p">)</span>
+    <span class="nx">error_message</span> <span class="p">=</span> <span class="s2">"The provided path for index.html does not exist."</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
-
-<ol>
+<ul>
+  <li>Add the <code class="language-plaintext highlighter-rouge">index_html_path="/Workspace/etc/public/index"</code> and the error source to <code class="language-plaintext highlighter-rouge">TFVARS</code> and <code class="language-plaintext highlighter-rouge">TFVARS SAMPLE</code>, along with the new UUID.<br />
+(include the entire path; it’s perfectly fine).
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">index_html_filepath</span><span class="o">=</span><span class="s2">"/workspace/terraform-beginner-bootcamp-2023/public/index.html"</span>
+</code></pre></div>    </div>
+  </li>
   <li>Add the vars for the files to the root level
     <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">variable</span> <span class="s2">"index_html_filepath"</span> <span class="p">{</span>
-  <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
+<span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
 <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p><strong>Duplicate the resource block to accommodate the error source as well.</strong></p>
 
@@ -1568,25 +1574,19 @@ variable “error_html_filepath” {
     error_message = “The provided path for error.html does not exist.”
   }
 }</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-2. Add the var defined in the root level;
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2. Add the var defined in the root level;
 ```tf
 variable "error_html_filepath" {
   type = string
 }
 </code></pre></div></div>
-
 <ol>
   <li>Add the error file path in <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> and <code class="language-plaintext highlighter-rouge">terraform.tfvars.sample</code>;
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
 </code></pre></div>    </div>
   </li>
-  <li>Run tf plan and  see.</li>
-</ol>
-
-<p>We’re encountering an error because we need to pass the variables to the root main.tf for both index and error.</p>
-
-<ol>
+  <li>Run tf plan and  see.<br />
+We’re encountering an error because we need to pass the variables to the root main.tf for both index and error.<br /><br /></li>
   <li>Do nothing but Run tf plan and see again.</li>
 </ol>
 
@@ -1605,13 +1605,10 @@ It may give false signals due to potential latency issues or other factors very 
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag &lt;tag_name&gt; &lt;commit_sha&gt;
 </code></pre></div>    </div>
   </li>
-  <li>To delete Local and Remote Tags e.g. 1.1.0</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --delete origin 1.1.0
-</code></pre></div></div>
-
-<ol>
+  <li>To delete Local and Remote Tags e.g. 1.1.0
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push --delete origin 1.1.0
+</code></pre></div>    </div>
+  </li>
   <li>Correct your tag
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag 1.1.0 &lt;correct_commit_sha&gt;
 </code></pre></div>    </div>
@@ -1642,10 +1639,8 @@ You can hold on your work go somewhere else (diff branch, tag) and get back.</p>
 <p>For more alias and fun stuff to write your CLI;</p>
 
 <ol>
-  <li>Include the following alias along <code class="language-plaintext highlighter-rouge">tf</code> for <code class="language-plaintext highlighter-rouge">terraform</code>;</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alias tfa='terraform apply'
+  <li>Include the following alias along <code class="language-plaintext highlighter-rouge">tf</code> for <code class="language-plaintext highlighter-rouge">terraform</code>;
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alias tfa='terraform apply'
 alias tfaa='terraform apply --auto-approve'
 alias tfd='terraform destroy'
 alias tfda='terraform destroy --auto-approve'
@@ -1656,15 +1651,10 @@ alias tflo='terraform logout'
 alias tfo='terraform output'
 alias tfp='terraform plan'
 alias tfpr='terraform plan -refresh-only'
-</code></pre></div></div>
-
-<ol>
-  <li>
-    <p>Take <a href="bin/tf-alias">my updated script</a> and update yours🫵.</p>
+</code></pre></div>    </div>
   </li>
-  <li>
-    <p>Test it, do a <code class="language-plaintext highlighter-rouge">tfp</code> instead of <code class="language-plaintext highlighter-rouge">terraform plan</code></p>
-  </li>
+  <li>Take <a href="bin/tf-alias">my updated script</a> and update yours🫵.</li>
+  <li>Test it, do a <code class="language-plaintext highlighter-rouge">tfp</code> instead of <code class="language-plaintext highlighter-rouge">terraform plan</code></li>
 </ol>
 
 <p><img src="/assets/1.4.0/tfp-hh.png" alt="tfp alias hm" /></p>
@@ -1719,12 +1709,8 @@ The only way we want to access this is using CloudFront for safer S3 access.</li
   <li>Go to providers and click AWS</li>
   <li>top right click documentation</li>
   <li>In search find the AWS CloudFront Distribution</li>
-  <li>search the resource: <code class="language-plaintext highlighter-rouge">aws_cloudfront_distribution</code>.</li>
-</ol>
-
-<p>We also see data block, we may <a href="">proceed to that</a> later.</p>
-
-<ol>
+  <li>search the resource: <code class="language-plaintext highlighter-rouge">aws_cloudfront_distribution</code>.<br /><br />
+We also see data block, we may <a href="#data-block">proceed to that</a> later.</li>
   <li>From the resource take <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#example-usage">the block from there</a> instead of GPT.</li>
 </ol>
 
@@ -1736,31 +1722,33 @@ The only way we want to access this is using CloudFront for safer S3 access.</li
 <ol>
   <li>Create <code class="language-plaintext highlighter-rouge">resource-cdn.tf</code>.</li>
   <li>Create <code class="language-plaintext highlighter-rouge">resource-storage.tf</code>.</li>
-  <li>Bring all storage components and paste them into <code class="language-plaintext highlighter-rouge">resources-storage.tf</code>.
-```tf
-resource “aws_s3_bucket” “website_bucket” {
-  # etc
-}</li>
+  <li>Bring all storage components and paste them into <code class="language-plaintext highlighter-rouge">resources-storage.tf</code> to here.</li>
 </ol>
 
-<p>resource “aws_s3_bucket_website_configuration” “website_configuration” {
-    # etc
-}</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"website_bucket"</span> <span class="p">{</span>
+  <span class="c1"># etc</span>
+<span class="p">}</span>
 
-<p>resource “aws_s3_object” “index_html” {
-    # etc
-}</p>
+<span class="nx">resource</span> <span class="s2">"aws_s3_bucket_website_configuration"</span> <span class="s2">"website_configuration"</span> <span class="p">{</span>
+    <span class="c1"># etc</span>
+<span class="p">}</span>
 
-<p>resource “aws_s3_object” “error_html” {
-    # etc
-}</p>
+<span class="nx">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"index_html"</span> <span class="p">{</span>
+    <span class="c1"># etc</span>
+<span class="p">}</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4. Grab the relevant code [from the registry](#find-cloudfront-in-registry) for `res-cdn.tf`, but not all of it.
-5. Remove the alias for custom domain.
-```tf
-  aliases = ["mysite.example.com", "yoursite.example.com"]
+<span class="nx">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"error_html"</span> <span class="p">{</span>
+    <span class="c1"># etc</span>
+<span class="p">}</span>
 </code></pre></div></div>
+
+<h4 id="coding-session-quickstart">Coding Session Quickstart</h4>
 <ol>
+  <li>Grab the relevant code <a href="#find-cloudfront-in-registry">from the registry</a> for <code class="language-plaintext highlighter-rouge">res-cdn.tf</code>, but not all of it.</li>
+  <li>Remove the alias for custom domain.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">aliases</span> <span class="err">=</span> <span class="p">[</span><span class="s2">"mysite.example.com"</span><span class="p">,</span> <span class="s2">"yoursite.example.com"</span><span class="p">]</span>
+</code></pre></div>    </div>
+  </li>
   <li>Exclude query string passing is ok
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   query_string = false
 </code></pre></div>    </div>
@@ -1883,15 +1871,13 @@ origin id= local.
 <p>Let’s help you create it yourself.</p>
 
 <ol>
-  <li>Use the <code class="language-plaintext highlighter-rouge">aws_s3_bucket_policy</code> resource <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy#example-usage">from the registry</a>.</li>
-</ol>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"aws_s3_bucket_policy"</span> <span class="s2">"allow_access_from_another_account"</span> <span class="p">{</span>
+  <li>Use the <code class="language-plaintext highlighter-rouge">aws_s3_bucket_policy</code> resource <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy#example-usage">from the registry</a>.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"aws_s3_bucket_policy"</span> <span class="s2">"allow_access_from_another_account"</span> <span class="p">{</span>
   <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">aws_s3_bucket</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span>
   <span class="nx">policy</span> <span class="p">=</span> <span class="k">data</span><span class="p">.</span><span class="nx">aws_iam_policy_document</span><span class="p">.</span><span class="nx">allow_access_from_another_account</span><span class="p">.</span><span class="nx">json</span>
 <span class="p">}</span>
-</code></pre></div></div>
-<ol>
+</code></pre></div>    </div>
+  </li>
   <li>Customize the name to “bucket_policy”.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket_policy"</span> <span class="s2">"bucket_policy"</span>
 </code></pre></div>    </div>
@@ -1899,13 +1885,29 @@ origin id= local.
   <li>Reference the S3 bucket using <code class="language-plaintext highlighter-rouge">website_bucket.bucket</code>.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  bucket = aws_s3_bucket.website_bucket.bucket
 </code></pre></div>    </div>
-    <p>|👌|If we have only one of something, we can just name it default. |
-|—:|:—|
-|✅|We can <a href="#origin-access-control-config-resource-cdntf">always revisit—step5</a> and make them all ‘default’ later|</p>
   </li>
 </ol>
 
-<p>Instead of this we will code our policy into it.</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">👌</th>
+      <th style="text-align: left">If we have only one of something, we can just name it default.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">✅</td>
+      <td style="text-align: left">We can <a href="#origin-access-control-config-resource-cdntf">always revisit—step5</a> and make them all ‘default’ later</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+Instead of this we will code our policy into it.</p>
+
+<h3 id="code-and-define-policy">Code and Define Policy</h3>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data.aws_iam_policy_document.allow_access_from_another_account.json
 </code></pre></div></div>
 <ol>
@@ -1943,73 +1945,69 @@ origin id= local.
  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
+    <p>In order to include this we have to make some changes..</p>
   </li>
+  <li>Change <code class="language-plaintext highlighter-rouge">:</code> to <code class="language-plaintext highlighter-rouge">=</code> for the lines of policy<br />
+Thats more of HCL; it serves as the foundational syntax underpinning Terraform, shaping Terraform into what it is.</li>
+  <li>We only require one statement; specifically, take the second block starting with ‘sid’.”</li>
 </ol>
 
-<p>In order to include this we have to make some changes..</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="p">{</span>
+            <span class="s2">"Sid"</span> <span class="p">=</span> <span class="s2">"AllowLegacyOAIReadOnly"</span><span class="err">,</span>
+            <span class="s2">"Effect"</span> <span class="p">=</span> <span class="s2">"Allow"</span><span class="err">,</span>
+            <span class="s2">"Principal"</span> <span class="p">=</span> <span class="p">{</span>
+                <span class="s2">"AWS"</span> <span class="p">=</span> <span class="s2">"arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC"</span>
+            <span class="p">}</span><span class="err">,</span>
+            <span class="s2">"Action"</span> <span class="p">=</span> <span class="s2">"s3:GetObject"</span><span class="err">,</span>
+            <span class="s2">"Resource"</span> <span class="p">=</span> <span class="s2">"arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"</span>
+        <span class="p">}</span>
+    
+</code></pre></div></div>
+
+<p>In the initial statement, we are indeed interested in ‘sid,’ ‘effect,’ ‘version,’ ‘principal,’ and ‘action’..</p>
+
+<p>However, our target for modification is the bucket.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
+</code></pre></div></div>
+<ul>
+  <li>Incorporate interpolations using <code class="language-plaintext highlighter-rouge">${aws_s3_bucket.website_bucket.id}</code>.</li>
+</ul>
+
+<p>We have conditions that require us to narrow it down to either ‘distru’ or ‘acc’. <br />It’s requesting an account ID.</p>
+
+<p>This is an effective way to use data.</p>
+
+<h4 id="data-block">Data Block</h4>
 
 <ol>
-  <li>Change <code class="language-plaintext highlighter-rouge">:</code> to <code class="language-plaintext highlighter-rouge">=</code> for the lines of policy</li>
+  <li>When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.</li>
+  <li>In our case, we aim to utilize something for <code class="language-plaintext highlighter-rouge">aws_id</code> within the policy.</li>
+  <li>For this purpose, we can employ <code class="language-plaintext highlighter-rouge">aws_caller_identity.</code> <br /><br />
+We’ve previously used it to validate our account in the CLI. <br />
+<a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage">Check it out</a>.</li>
 </ol>
 
-<p>Thats more of HCL; it serves as the foundational syntax underpinning Terraform, shaping Terraform into what it is.</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">data</span> <span class="s2">"aws_caller_identity"</span> <span class="s2">"current"</span> <span class="p">{}</span>
 
-<ol>
-  <li>We only require one statement; specifically, take the second block starting with ‘sid’.”
-```hcl
-     {
-         “Sid” = “AllowLegacyOAIReadOnly”,
-         “Effect” = “Allow”,
-         “Principal” = {
-             “AWS” = “arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EH1HDMB1FH2TC”
-         },
-         “Action” = “s3:GetObject”,
-         “Resource” = “arn:aws:s3:::DOC-EXAMPLE-BUCKET/*”
-     }</li>
-</ol>
+<span class="nx">output</span> <span class="s2">"account_id"</span> <span class="p">{</span>
+  <span class="nx">value</span> <span class="p">=</span> <span class="nx">data</span><span class="err">.</span><span class="nx">aws_caller_identity</span><span class="err">.</span><span class="nx">current</span><span class="err">.</span><span class="nx">account_id</span>
+<span class="p">}</span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-In the initial statement, we are indeed interested in 'sid,' 'effect,' 'version,' 'principal,' and 'action'..
+<span class="nx">output</span> <span class="s2">"caller_arn"</span> <span class="p">{</span>
+  <span class="nx">value</span> <span class="p">=</span> <span class="nx">data</span><span class="err">.</span><span class="nx">aws_caller_identity</span><span class="err">.</span><span class="nx">current</span><span class="err">.</span><span class="nx">arn</span>
+<span class="p">}</span>
 
-However, our target for modification is the bucket.
+<span class="nx">output</span> <span class="s2">"caller_user"</span> <span class="p">{</span>
+  <span class="nx">value</span> <span class="p">=</span> <span class="nx">data</span><span class="err">.</span><span class="nx">aws_caller_identity</span><span class="err">.</span><span class="nx">current</span><span class="err">.</span><span class="nx">user_id</span>
+<span class="p">}</span>
 </code></pre></div></div>
-<p>“Resource”: “arn:aws:s3:::DOC-EXAMPLE-BUCKET/*”</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8. Incorporate interpolations using `${aws_s3_bucket.website_bucket.id}`.
-
-We have conditions that require us to narrow it down to either 'distru' or 'acc.' It's requesting an account ID.
-
-This is an effective way to use data.
-
-#### Data Block
-
-
-1. When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.
-2. In our case, we aim to utilize something for `aws_id` within the policy.
-3. For this purpose, we can employ `aws_caller_identity.` 
-
-We've previously used it to validate our account in the CLI. [Check it out](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage).
-```hcl
-data "aws_caller_identity" "current" {}
-
-output "account_id" {
-  value = data.aws_caller_identity.current.account_id
-}
-
-output "caller_arn" {
-  value = data.aws_caller_identity.current.arn
-}
-
-output "caller_user" {
-  value = data.aws_caller_identity.current.user_id
-}
-</code></pre></div></div>
-<p>Consequently, we can easily retrieve the account ID.</p>
-
+<h4 id="get-account-id">Get account ID</h4>
+<p>Consequently, we can easily retrieve the account ID.<br /></p>
 <ol>
   <li>Add the following to the main.tf in ur module.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>data "aws_caller_identity" "current" {} 
 </code></pre></div>    </div>
-    <p>Now, you can reference this data wherever you need it; that’s all it takes.</p>
+    <p>Now, you can reference this data wherever you need it; that’s all it takes.<br /></p>
   </li>
   <li>We can access the value, which is <code class="language-plaintext highlighter-rouge">data.aws_caller_identity.account_id</code>.</li>
   <li>In our data policy, incorporate <code class="language-plaintext highlighter-rouge">data.aws_caller_identity.account_id</code> into the interpolation.
@@ -2018,19 +2016,17 @@ output "caller_user" {
   </li>
   <li>Add the interpolation using ${}.</li>
   <li>avigate to the CloudFront distribution registry link, find the reference, and identify the ID.</li>
-  <li>Include the variable for the ‘distrubution’ in the interpolation as well.</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:distribution/${aws_cloudfront_distribution.s3_distribution.id}"
-</code></pre></div></div>
-<p>We could have opted for using an ARN..This will do the exact job with less code..</p>
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"AWS:SourceArn"</span><span class="err">:</span> <span class="nx">data</span><span class="err">.</span><span class="nx">aws_caller_identity</span><span class="err">.</span><span class="nx">current</span><span class="err">.</span><span class="nx">arn</span>
-</code></pre></div></div>
-
-<p>But. Our preference was to utilize the data source! And learn.</p>
-
-<ol>
-  <li>Test <code class="language-plaintext highlighter-rouge">tf init</code> and <code class="language-plaintext highlighter-rouge">tfp</code></li>
+  <li>Include the variable for the ‘distrubution’ in the interpolation as well.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:distribution/${aws_cloudfront_distribution.s3_distribution.id}"
+</code></pre></div>    </div>
+    <p>We could have opted for using an ARN..This will do the exact job with less code..</p>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"AWS:SourceArn"</span><span class="err">:</span> <span class="nx">data</span><span class="err">.</span><span class="nx">aws_caller_identity</span><span class="err">.</span><span class="nx">current</span><span class="err">.</span><span class="nx">arn</span>
+</code></pre></div>    </div>
+    <p>But. Our preference was to utilize the data source! And learn.</p>
+    <ul>
+      <li>Test <code class="language-plaintext highlighter-rouge">tf init</code> and <code class="language-plaintext highlighter-rouge">tfp</code></li>
+    </ul>
+  </li>
 </ol>
 
 <p><strong>Error 1:</strong> We mistakenly used <code class="language-plaintext highlighter-rouge">local</code> instead of <code class="language-plaintext highlighter-rouge">locals.</code><br />
@@ -2040,9 +2036,9 @@ output "caller_user" {
 
 <p>I am just saying. If not so, remake step 10.</p>
 
-<ol>
+<ul>
   <li>go to Cloudfront and click the URL.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/1.5.0/index-download.png" alt="It worked by file download instead" /></p>
 
@@ -2055,23 +2051,24 @@ output "caller_user" {
 <ol>
   <li>Navigate to the registry: <code class="language-plaintext highlighter-rouge">aws =&gt; s3_object</code></li>
   <li>find the “content_type” argument reference on the right table of contents (TOC).</li>
-  <li>In the resource block for <code class="language-plaintext highlighter-rouge">"aws_s3_object" "index.html"</code>, include <code class="language-plaintext highlighter-rouge">content_type="text/html"</code>.
-```hcl
-resource “aws_s3_object” “index_html” {</li>
+  <li>In the resource block for <code class="language-plaintext highlighter-rouge">"aws_s3_object" "index.html"</code>, include <code class="language-plaintext highlighter-rouge">content_type="text/html"</code>.</li>
 </ol>
 
-<p>content_type = “text/html”
-  }</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4. Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
-```hcl
-resource "aws_s3_object" "error_html" {
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"index_html"</span> <span class="p">{</span>
 
-  content_type = "text/html"
-}
+  <span class="nx">content_type</span> <span class="p">=</span> <span class="s2">"text/html"</span>
+  <span class="p">}</span>
 </code></pre></div></div>
-<ol>
+<ul>
+  <li>Similarly, for <code class="language-plaintext highlighter-rouge">"aws_s3_object" "error.html"</code>, add <code class="language-plaintext highlighter-rouge">content_type="text/html"</code> as well.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_object"</span> <span class="s2">"error_html"</span> <span class="p">{</span>
+
+<span class="nx">content_type</span> <span class="p">=</span> <span class="s2">"text/html"</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
   <li>tfp and tfa and check the link again.</li>
-</ol>
+</ul>
 
 <table>
   <thead>
@@ -2206,25 +2203,29 @@ resource "aws_s3_object" "error_html" {
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">content_version</span> <span class="err">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">content_version</span>
 </code></pre></div>    </div>
   </li>
-  <li>Implement a Terraform variable for <code class="language-plaintext highlighter-rouge">content_version</code> that only accepts positive integers starting from one in your modules <code class="language-plaintext highlighter-rouge">variables.tf</code>.
-```hcl
-variable “content_version” {
-  description = “The content version. Should be a positive integer starting at 1.”
-  type        = number</li>
+  <li>Implement a Terraform variable for <code class="language-plaintext highlighter-rouge">content_version</code> that only accepts positive integers starting from one in your modules <code class="language-plaintext highlighter-rouge">variables.tf</code>.</li>
 </ol>
 
-<p>validation {
-    condition     = var.content_version &gt; 0 &amp;&amp; floor(var.content_version) == var.content_version
-    error_message = “The content_version must be a positive integer starting at 1.”
-  }</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"content_version"</span> <span class="p">{</span>
+  <span class="nx">description</span> <span class="p">=</span> <span class="s2">"The content version. Should be a positive integer starting at 1."</span>
+  <span class="nx">type</span>        <span class="p">=</span> <span class="nx">number</span>
 
-<p>}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4. Include that in the variable call in ``variables.tf`` in the module level.
-```hcl
-variable "content_version" {
-  type        = number
-}
+  <span class="nx">validation</span> <span class="p">{</span>
+    <span class="nx">condition</span>     <span class="p">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">content_version</span> <span class="err">&gt;</span> <span class="mi">0</span> <span class="err">&amp;&amp;</span> <span class="nx">floor</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">content_version</span><span class="err">)</span> <span class="p">==</span> <span class="nx">var</span><span class="err">.</span><span class="nx">content_version</span>
+    <span class="nx">error_message</span> <span class="p">=</span> <span class="s2">"The content_version must be a positive integer starting at 1."</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
 </code></pre></div></div>
+
+<ul>
+  <li>Dont miss to Include <strong>that in the variable call</strong> in <code class="language-plaintext highlighter-rouge">variables.tf</code> in the module level.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"content_version"</span> <span class="p">{</span>
+<span class="nx">type</span>        <span class="p">=</span> <span class="nx">number</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
 
 <h3 id="configure-resource-lifecycle">Configure Resource Lifecycle</h3>
 <p>We want to trigger thhose in particular cases using <strong>Lifecycle</strong></p>
@@ -2233,28 +2234,29 @@ variable "content_version" {
 
 <ol>
   <li>Navigate to the <code class="language-plaintext highlighter-rouge">resource-storage.tf</code> file.</li>
-  <li>Look for the S3 resource lifecycle.
-```hcl
- resource “azurerm_resource_group” “example” {
-  # …</li>
+  <li>Look for the S3 resource lifecycle.</li>
 </ol>
 
-<p>lifecycle {
-    create_before_destroy = true
-  }
-}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3. Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
-```hcl
-  lifecycle {
-    ignore_changes = [etag]
-  }
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">resource</span> <span class="s2">"azurerm_resource_group"</span> <span class="s2">"example"</span> <span class="p">{</span>
+  <span class="c1"># ...</span>
+
+  <span class="nx">lifecycle</span> <span class="p">{</span>
+    <span class="nx">create_before_destroy</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div></div>
-<ol>
-  <li>Exclude the <code class="language-plaintext highlighter-rouge">etag</code> field within the lifecycle.
-    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">ignore_changes</span> <span class="err">=</span> <span class="p">[</span><span class="nx">etag</span><span class="p">]</span>
+<ul>
+  <li>Add a lifecycle configuration to the <code class="language-plaintext highlighter-rouge">index.html</code> and <code class="language-plaintext highlighter-rouge">error.html</code> resources in s3 bucket object.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">lifecycle</span> <span class="p">{</span>
+  <span class="nx">ignore_changes</span> <span class="p">=</span> <span class="p">[</span><span class="nx">etag</span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-</ol>
+  <li>Exclude the <code class="language-plaintext highlighter-rouge">etag</code> field within the lifecycle.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">ignore_changes</span> <span class="err">=</span> <span class="p">[</span><span class="nx">etag</span><span class="p">]</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
 
 <p>Learn more about lifecycle in terraform <a href="https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle">from here.</a></p>
 
@@ -2305,13 +2307,9 @@ variable "content_version" {
 <h3 id="test-202">Test 202</h3>
 
 <ol>
-  <li>Run <code class="language-plaintext highlighter-rouge">terraform plan</code> and see if it actually decide to change it;</li>
-</ol>
-
-<p>It does work because tf data never existed.<br />
-But. It doesn’t appear to be triggering the content as expected…”</p>
-
-<ol>
+  <li>Run <code class="language-plaintext highlighter-rouge">terraform plan</code> and see if it actually decide to change it;<br />
+It does work because tf data never existed.<br />
+But. It doesn’t appear to be triggering the content as expected…<br /><br /></li>
   <li>run <code class="language-plaintext highlighter-rouge">tfaa</code> and do <code class="language-plaintext highlighter-rouge">tfp</code> to see no change.</li>
   <li>Change some of the content and do <code class="language-plaintext highlighter-rouge">tfp</code>.</li>
 </ol>
@@ -2324,15 +2322,13 @@ But. It doesn’t appear to be triggering the content as expected…”</p>
 <ol>
   <li>let’s update it to ‘2’ in the tfvars file.</li>
   <li>run tfp and observe now.
-<img src="/assets/1.6.0/no-changes.png" alt="No changes" /></li>
+<img src="/assets/1.6.0/no-changes.png" alt="No changes" />
+    <blockquote>
+      <p>It’s still not producing any changes.</p>
+    </blockquote>
+  </li>
+  <li>Do a <code class="language-plaintext highlighter-rouge">tpa</code> maybe tfp is lying to us.</li>
 </ol>
-
-<blockquote>
-  <p>It’s still not producing any changes.</p>
-  <ol>
-    <li>Do a <code class="language-plaintext highlighter-rouge">tpa</code> maybe tfp is lying to us.</li>
-  </ol>
-</blockquote>
 
 <p>Still…Terraformers…</p>
 
@@ -2457,18 +2453,14 @@ The local exec command runs on the <strong>local machine</strong> where ur runni
 </span><span class="no">EOF
 </span><span class="p">}</span>
 </code></pre></div>    </div>
-  </li>
-</ol>
-
-<p>You can also add whatever, the point is to end it with the same, let me clarify.</p>
-
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">provisioner</span> <span class="s2">"local-exec"</span> <span class="p">{</span>
+    <p><strong>You can also add whatever, the point is to end it with the same, let me clarify.</strong></p>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">provisioner</span> <span class="s2">"local-exec"</span> <span class="p">{</span>
 <span class="nx">command</span> <span class="p">=</span> <span class="o">&lt;&lt;</span><span class="no">command</span><span class="sh">
 # Your commands
 </span><span class="no">command
 </span><span class="p">}</span>
-</code></pre></div></div>
-<ol>
+</code></pre></div>    </div>
+  </li>
   <li>Add inside it the required invalidation api command from aws sdk:
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">command</span> <span class="o">=</span> <span class="o">&lt;&lt;</span><span class="no">COMMAND</span><span class="sh">
 aws cloudfront create-invalidation </span><span class="se">\</span><span class="sh">
@@ -2498,10 +2490,10 @@ aws cloudfront create-invalidation \
 
 <p>To trigger cache invalidation, you must increment the content version.</p>
 
-<ol>
+<ul>
   <li>reset the value in your <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> to <code class="language-plaintext highlighter-rouge">content_version=2</code></li>
   <li>run tfpaa this time.</li>
-</ol>
+</ul>
 
 <p>Good and cool.</p>
 
@@ -2539,15 +2531,15 @@ aws cloudfront create-invalidation \
 
 <p><img src="/assets/1.7.0/outputs-are-here.png" alt="Distru along previous outputs we did set." /></p>
 
-<ol>
+<ul>
   <li>Start visiting your cloudfront distribution.</li>
-</ol>
+</ul>
 
 <p><img src="/assets/1.7.0/new-key-word.png" alt="Distru with cuter description" /></p>
 
-<ol>
+<ul>
   <li>Visit your CloudFront invalidation and observe that you have one set as directed in the command.</li>
-</ol>
+</ul>
 
 <p><a href="/assets/1.7.0/invalidation-evidence.png">Verify The Accuracy</a>
 <img src="/assets/1.7.0/invalid-console.png" alt="Cache worked" /></p>
@@ -2631,25 +2623,23 @@ An asset is something that has the potential to add value to you, that is why it
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fileset("${path.root}/public/assets","*.{jpg,png,gif}")
 </code></pre></div>    </div>
   </li>
-  <li>Filter in the console only jpg files.</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fileset("${path.root}/public/assets","*.{jpg}")  
-</code></pre></div></div>
-
-<ol>
+  <li>Filter in the console only jpg files.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fileset("${path.root}/public/assets","*.{jpg}")  
+</code></pre></div>    </div>
+  </li>
   <li>Filter in the console only png files.</li>
 </ol>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fileset<span class="o">(</span><span class="s2">"</span><span class="k">${</span><span class="nv">path</span><span class="p">.root</span><span class="k">}</span><span class="s2">/public/assets"</span>,<span class="s2">"*.{png}"</span><span class="o">)</span>  
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fileset<span class="o">(</span><span class="s2">"</span><span class="k">${</span><span class="nv">path</span><span class="p">.root</span><span class="k">}</span><span class="s2">/public/assets"</span>,<span class="s2">"*.{png}"</span><span class="o">)</span>  
 
 toset<span class="o">([</span>
   <span class="s2">"elizabeth-7-deadly-sins.png"</span>,
 <span class="o">])</span>
 </code></pre></div></div>
-<ol>
+
+<ul>
   <li>You can use Terraform’s output for further exploration in the Terraform Console.</li>
-</ol>
+</ul>
 
 <p>In Terraform, you may find the need to cast things to other thing. <br />Calm, it’s a common  Terraform development, you are not crazy.</p>
 
@@ -2740,12 +2730,8 @@ We may not want them to be hardcoded..</p>
 <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-  <li>Try terraform plan here;</li>
-</ol>
-
-<p><img src="/assets/1.8.0/specify-terraformdottfvars.png" alt="You have to add it to tfdotvars" /></p>
-
-<ol>
+  <li>Try terraform plan here; 
+<img src="/assets/1.8.0/specify-terraformdottfvars.png" alt="You have to add it to tfdotvars" /></li>
   <li>Add the actual variable to <code class="language-plaintext highlighter-rouge">terraform.tfvars</code>.
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">assets_path</span><span class="err">=</span><span class="s2">"/workspace/terraform-beginner-bootcamp-2023/public/assets"</span>
 </code></pre></div>    </div>
@@ -2754,16 +2740,12 @@ We may not want them to be hardcoded..</p>
     <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">assets_path</span><span class="err">=</span><span class="s2">"/workspace/terraform-beginner-bootcamp-2023/public/assets"</span>
 </code></pre></div>    </div>
   </li>
-  <li>Run tfp and observe the output.</li>
-</ol>
-
-<p><img src="/assets/1.8.0/tfp-asset-one.png" alt="Assets Output" /></p>
-
-<ol>
+  <li>Run tfp and observe the output.
+<img src="/assets/1.8.0/tfp-asset-one.png" alt="Assets Output" /></li>
   <li>Check out your website with the assets;</li>
 </ol>
 
-<p><a href="https://dk9ry91vcfk4o.cloudfront.net/">🌐Check It All!</a>
+<p><a href="https://dk9ry91vcfk4o.cloudfront.net/">🌐My Mixer TerraHome, Anime, Tech</a>
 <img src="/assets/1.8.0/terrahouse-demo-1.png" alt="Terrahouse Pages Demo One" /></p>
 
 <p>Great and cool!</p>
@@ -2792,10 +2774,22 @@ We may not want them to be hardcoded..</p>
   <li><code class="language-plaintext highlighter-rouge">1.8.2</code> : Installing and Adding <strong>mhutchie.git-graph</strong> Extension to Gitpod</li>
 </ul>
 
-<p>|I am merging that in <code class="language-plaintext highlighter-rouge">1.8.3</code> to maintain consistency in my project across tags, branches, and commits.|
-|:—:|</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">I am merging that in <code class="language-plaintext highlighter-rouge">1.8.3</code> to maintain consistency in my project across tags, branches, and commits.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">🤓Smart move.</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>I will split the changes into separate commits specific to this branch, allowing your clear differentiation.</p>
+<p><br /></p>
+
+<p><strong>I will split the changes into separate commits specific to this branch, allowing your clear differentiation.</strong></p>
 
 <h3 id="do-you-have-extensions">Do You have Extensions?</h3>
 <p>Extensions are stuff that empower you do better in your IDE.<br />
@@ -2814,12 +2808,8 @@ To Search for Installed Extensions, do the following;</p>
 <ol>
   <li>Search The required extension is “git-log–graph” in your IDE.</li>
   <li>Ensure that it’s installed.</li>
-  <li>Abstract the extension ID from here.</li>
-</ol>
-
-<p><img src="/assets/1.8.1/1.8.1-ext-id.png" alt="Get Extension ID" /></p>
-
-<ol>
+  <li>Abstract the extension ID from here.
+<img src="/assets/1.8.1/1.8.1-ext-id.png" alt="Get Extension ID" /></li>
   <li>Add the copied line to your <code class="language-plaintext highlighter-rouge">gitpod.yml</code> configuration file.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>phil294.git-log--graph
 </code></pre></div>    </div>
@@ -2845,20 +2835,15 @@ The tag is converted as a branch commit as explained above.<br />
 <ol>
   <li>To be specific, you can search “mhutchie.git-graph” in your IDE.</li>
   <li>Ensure that it’s installed.</li>
-  <li>Abstract the extension ID from here.</li>
-</ol>
-
-<p><img src="/assets/1.8.2/1.8.2-ext-id.png" alt="1.8.2 Extension ID" /></p>
-
-<ol>
+  <li>Abstract the extension ID from here.
+<img src="/assets/1.8.2/1.8.2-ext-id.png" alt="1.8.2 Extension ID" /></li>
   <li>Add the line copied to your <code class="language-plaintext highlighter-rouge">gitpod.yml</code> configuration file.
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mhutchie.git-graph
 </code></pre></div>    </div>
   </li>
-  <li>Verify extension existence.</li>
+  <li>Verify extension existence.
+<img src="/assets/1.8.2/work-with-1.8.2-ext.png" alt="1.8.2 IDE Button" /></li>
 </ol>
-
-<p><img src="/assets/1.8.2/work-with-1.8.2-ext.png" alt="1.8.2 IDE Button" /></p>
 
 <p>The extension button will be visible if installed.</p>
 
@@ -2883,7 +2868,7 @@ The tag is converted as a branch commit as explained above.<br />
 <p><strong>PS:</strong> GitLens is another good extension..</p>
 
 <blockquote>
-  <p><a href="/journal/week2.html">Proceed To Week Two(Last).</a></p>
+  <p><a href="/journal/week2.html">Proceed To The Grand Finale</a></p>
 </blockquote>
 
         </section>

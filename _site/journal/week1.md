@@ -1,6 +1,19 @@
-# Week One Of the Bootcamp
+# Week¹ of Transformation
+The fun truly begins in this week. 
 
-> [Go Back.](../README.md)
+Once we've acquired the basic capabilities to advance from week zero.  <br>
+We'll delve into more aspects of **Terraform** and **AWS**. 
+
+> [Take me out](../README.md)
+
+
+We will undertake a comprehensive Terraform module refactoring. <br>We will also harness the power of tf variables. 
+
+- We're stepping into Terraform Cloud. 
+- AWS CloudFront will replace S3 for our CDN.
+
+Plus, we'll wield regex for rule management and ETags to track code changes.<br>
+This to name just a few, the rest for you to explore.
 
 - [Empower Your Terraform Modules](#design-your-terraform-modules)
     + [Crafting a Terraform Directory Layout](#terraform-directory-layout)
@@ -147,7 +160,6 @@ We will use it back to create an additional custom variable.
     Environment = "Dev"
   }
 ```
-
 5. change `Name` to `UserUuid` ;
 ```
   tags = {
@@ -170,8 +182,7 @@ First, comment out the cloud block and initialize the configuration. <br>
 However, it appears we need to revert this migration. <br>
 Nevermind, please uncomment the block.
 
-
-6. Let's manually provide the variable, which should trigger an error when executing and I'll tell you why
+- Let's manually provide the variable, which should trigger an error when executing and I'll tell you why
 ```
 terraform plan -var user_uuid="testingod"
 ```
@@ -186,7 +197,7 @@ The error is expected which is nice because we coded validation to accept stuff 
 
 
 |🐌 |Terraform Cloud is noticeably slower compared to local state operations!|
-|---|---|
+|---:|:---|
 |🏃🏻|When executing a plan on a local state, the process is significantly faster.|
 |💡|Let's go back to local state.|
 
@@ -209,13 +220,12 @@ Failed because we have to configure our aws credentials in terraform cloud. We d
 
 > Mark the first two as sensitive, the **region** is ok.
 
-4. You can now go ahead and destroy your infrastructure.
-5. Observe the runs in Terraform Cloud. 
-
-You can check the process in real time.
+- You can now go ahead and destroy your infrastructure.
+- Observe the runs in Terraform Cloud. 
 
 ![TF Cloud Destroy Run](../assets/1.1.0/tfcloud-destroy-run.png)
 
+You can check the process in real time.
 
 ### Local Migration Test
 
@@ -245,14 +255,11 @@ resource "aws_s3_bucket" "example" {
 ```
 terraform plan -var user_uuid="uuid-format" 
 ```
-
-e.g.
-
+**e.g.**
 ```
 terraform plan -var user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d" 
 ```
-
-If it still doesn't work, ensure that your validation block, along with its parent variable, are not commented out.
+If it still doesn't work, **ensure that your validation block, along with its parent variable, are not commented out.**
 ```hcl
 variable "user_uuid" {
   description = "The UUID of the user"
@@ -263,11 +270,8 @@ variable "user_uuid" {
   }
 }
 ```
-
-6. It should work perfectly.
-
+6. It should work perfectly.<br>
 Great and cool! Lets proceed more with our var manipulation skills.
-
 7. Go to our terraform.tfvars file and include the variable there.
 user_uuid="uuid-format" (looks like toml baby)
 ```sh
@@ -275,24 +279,18 @@ user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
 ```
 > Looks like TOML Baby! whats that? Eeeeh [long story.](https://github.com/yaya2devops/aws-cloud-project-bootcamp/tree/main/ddb#toms-obvious-minimal-language-files)
 
-8. Run `tf plan` only and [it will pick](../assets/1.1.0/varplan.md) it up.
-
-When doing TF Cloud, You must configure this manually as Terraform variables . ( And not the environment variable we previously used for AWS)
-
+8. Run `tf plan` only and [it will pick](../assets/1.1.0/varplan.md) it up.<br>
+When doing TF Cloud, You must configure this manually as Terraform variables . <br>( And not the environment variable we previously used for AWS)
 ![TF CLOUD Env Var vs TF Vars](../assets/1.1.0/envstfvar.png)
-
 9. Create an fork file of the terraform.tfvars with `.sample`extension and add the content.
 ```
 user_uuid="f6d4a521-8a07-4b3f-9d73-2e817a8dcb3d"
 ```
-
 > terraform.tfvars is ignored. Good alternative to not waste this.
-
 10. Delete your  and try this command to see if it does the job.
 ```yaml
 cp $PROJECT_ROOT/terraform.tfvars.example $PROJECT_ROOT/terraform.tfvars
 ```
-
 11. It does, now in `gitpod.yml` add the above to the terraform block to look like:
 ```yaml
   - name: terraform
@@ -314,7 +312,6 @@ We have already showcased some of them.
 ### **Variable Input via CLI and Files Flag:**
 
 1. Create a normal variable block wherever required;
-
 ```
 variable "region" 
 {
@@ -322,22 +319,17 @@ variable "region"
   default = "us-west-1"
 }
 ```
-
 2. You can override it using this command;
-
 ```
 terraform apply -var="region=new_value"
 ```
-
 3. Or you can create the following json (or HCL) file call it `variables.json` e.g;
-
 ```json
 {
   "region": "us-east-2",
   "instance_type": "m5.large"
 }
 ```
-
 4. Overide it using that command but with passing the file flag.
 ```sh
 tf apply -var-file=variables.json
@@ -513,19 +505,15 @@ resource "aws_s3_bucket" "example"
 
 resource "aws_s3_bucket" "website_bucket" 
 ```
-
 7. Update the ouptut to not use the random provider and to call our new bucket name.
 ```hcl
 output "bucket_name" {
   value = aws_s3_bucket.website_bucket.bucket
 ```
-
 8. add the bucket name to our `terraform.tfvars` and keep a copy in `terraform.tfvars.sample`
-
 ```hcl
 bucket_name="from-aws"
 ```
-
 9. Define that variable within the variables.tf file.
 
 
@@ -551,8 +539,8 @@ variable "bucket_name" {
   }
 ```
 
-- Together, fogether to look like this;
-```hcl
+- **Together, fogether to look like this;**
+```tf
 variable "bucket_name" {
   description = "The name of the S3 bucket"
   type        = string
@@ -571,9 +559,7 @@ variable "bucket_name" {
 Make sure you deleted previous S3s.
 1. Try giving a bucket name that violates the rule e.g. Yaya2DevOps
 2. Give a tf plan a try
-
-![Failed Validation Applied](../assets/1.2.0/regex-bucket.png)
-
+![Failed Validation Applied](../assets/1.2.0/regex-bucket.png) <br>
 3. Double assign it a correct naming.
 4. Give a tf plan a try
 5. Run tf apply
@@ -589,8 +575,8 @@ That was our `1.2.0` configuration drift.
 
 
 |Consider Regex for vars when validating inputs.|
-|---|
-
+|---:|
+|Yes Will Do!|
 
 # The Terrahouse Module 
 
@@ -687,12 +673,9 @@ We linked our module and we can go ahead and give it a try.
 
 To ensure everything is set up correctly
 
-1. Use the `terraform init` command to It will validate our configuration.
-
-It is telling that our AWS bloc is empty new stuff. <br>Not that deal-Just get rid of it if you want.
-
+1. Use the `terraform init` command to It will validate our configuration.<br>
+It is telling that our AWS bloc is empty new stuff. <br>Not that deal-Just get rid of it if you want.<br>
 ![AWS Provider Is Empty CLI](../assets/1.3.0/aws-empty-block.png)
-
 2. Run the `tf plan`, sometimes I miss out we have alias, to test your module configuration is correct.
 
 ![Plan Error From Vars Only In Module](../assets/1.3.0/root-must-know.png)
@@ -715,9 +698,10 @@ variable "user_uuid"
  type = string
 }
 ```
-|Thats it💡| If the naming is accurate, it will gather more about the module|
-|---:|:---|
 
+|💡| If the naming is accurate, it will gather more about the module|
+|---|---|
+|💡|💡|
 2. Now that you know, do the same for the bucket.
 ```hcl
 variable "bucket_name" 
@@ -773,11 +757,8 @@ tf refresh
 ```
 
 2. Run tf output you'll be seeing the output;
-
-![Output is showing](../assets/1.3.0/output-magic.png)
-
-This will synchronize the local state with the actual AWS resources.
-
+![Output is showing](../assets/1.3.0/output-magic.png)<br>
+This will synchronize the local state with the actual AWS resources.<br>
 3. run the tf `apply`
 
 ![Apply with output](../assets/1.3.0/apply-and-output.png)
@@ -901,7 +882,7 @@ We want to use AWS CloudFront as a Content CDN to distribute our website
 
 We needed to reconfigure the distribution process due to our failure to define a clear policy. 
 
-6. Check your new distrubution url and see the site.
+- Check your new distrubution url and see the site.
 
 ![CloudFront Clickops](../assets/1.4.0/clickops/second-distru-worked.png)
 
@@ -920,15 +901,12 @@ I mean, guys, we all know that was planned. I just like it.
 The configuration provided above will be completely transformed into Terraform code.
 1. Ask GPT to write u a tf for static website hosting for an s3 bucket. <br>
 I mean this looks like something.
-2. In your `main.tf` module, grap something from that and add it as a resource.
-
-See if it actally works. 
-No it won't.
-I'll tel you why.
-
+2. In your `main.tf` module, grap something from that and add it as a resource.<br><br>
+See if it actally works. <br>
+No it won't.<br>
+I'll tell you why.<br><br>
 3. Run `tf init`. Error.
 4. Change the bucket from `bucket = "my-static-website-bucket"` to `aws_s3_bucket.website_bucket.bucket`.
-
 5. Run `tf init` to initialize the Terraform configuration again which should work.
 6. Execute `tf plan` to review and see if it can do it.
 
@@ -948,7 +926,7 @@ But the provider change year in a year.
 1. Go to TF Registry
 2. AWS Provider
 3. Click on AWS and see the list.
-4. AWS_S3_Bucket_Website_Configuration
+4. Get the `AWS_S3_Bucket_Website_Configuration`
 5. [Get it from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration) instead.
 
 ```hcl
@@ -973,19 +951,18 @@ resource "aws_s3_bucket_website_configuration" "example" {
   }
 }
 ```
-6. Change the example name to `website_configuration`
-7. Reference to our bucket from the module;
+- Change the example name to `website_configuration`
+- Reference to our bucket from the module;
 
-```tf
+```hcl
 resource "aws_s3_bucket_website_configuration" "website_configuration" 
 
 {
   bucket = aws_s3_bucket.website_bucket.bucket
 }
 ```
-
-8. Try planning and it should now work;
-9. tf apply to have the website hosting.
+- Try planning and it should now work;
+- tf apply to have the website hosting.
 
 > Many people mention GPT, but it's not the solution for everything, my friend.
 
@@ -1012,14 +989,11 @@ output "website_endpoint"
   value = aws_s3_bucket_website_configuration.website_configuration.website_endpoint
 }
 ```
-
 3. Add a description, it is nice.
 ```hcl
   description = "The endpoint URL for the AWS S3 bucket website"
 ```
-
-We also learned that we have to call the output in top level as well.
-
+We also learned that we have to call the output in top level as well.<br><br>
 4. Do the same for top level and reference our output.
 ```hcl
 output "s3_website_endpoint" {
@@ -1047,7 +1021,7 @@ We will create the index and error files and push them with a terraform function
 But.
 
 |✋|This is an action you should avoid with Terraform|
-|---:|:---|
+|:---:|:---|
 | ✔|Terraform is primarily designed for managing the state of infrastructure|
 |❌|Not individual files|
 
@@ -1065,7 +1039,7 @@ We will also discover the existence of provisioners, which allow you to execute 
 1. Go to the AWS registry and take `aws_s3_object` (not `aws_s3_bucket_object`).
 2. Specify the bucket, key, and source for your `index.html`.
 
-```tf
+```hcl
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "index.html"
@@ -1075,7 +1049,8 @@ resource "aws_s3_object" "index_html" {
   #etag = filemd5(var.index_html_filepath)
 }
 ```
-3. Repeat for `error.html` configuration.
+- Repeat for `error.html` configuration. 🔁 
+
 ```tf
 resource "aws_s3_object" "error_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
@@ -1118,23 +1093,19 @@ Two considerations come up.
 #### A: Avoid Your Real Path
 ⚠️ You should avoid hardcoding values like this to ensure the module's portability.
 
-|💡|One approach we can employ involves the use of interpolation|
-|---:|:---|
-
+|💡|One approach we can employ involves...|
+|:---:|:---|
+|💡💡💡|The use of [interpolation](https://developer.hashicorp.com/terraform/language/expressions/strings)|
 
 1. Instead of the actual path assign the path.root we spoke about for `index.html`
 ```
 "${path.root}public/index.html"
 ```
-
 2. Do the same for our `error.html` file.
-
 ```
 "${path.root}public/error.html"
 ```
-
 > Make sure you dont do it for `main.tf` (our mistake)
-
 3. Plan it and apply it, it should now give a file!
 
 #### B: Detect File Changes
@@ -1155,24 +1126,19 @@ So this is cool. With what we reached we can take files to the s3 but does it ca
 |🪄|The way this works is that it has a source but doesn't validate the data|
 
 
-Meaning Terraform state examines the path's value but not the content of the file within that path.
+Meaning Terraform state examines the path's value but not the content of the file within that path.<br><br>
+You can identify file changes by referring to the mentioned `etag` we removed.<br>
+If the content changes, the `etag` will also change.<br><br>
+- **Add the required etag block with the 'filemd5' function**.
 
-You can identify file changes by referring to the mentioned `etag` we removed.
-If the content changes, the `etag` will also change.
-
-4. Add the required etag block with the 'filemd5' function. 
-
-The function creates a hash based on the content. 
-
-Good opportunity for you to start exploring about [tf functions.](https://developer.hashicorp.com/terraform/language/functions)
-
-E.g. here is a built in terraform function to [check the existance](https://developer.hashicorp.com/terraform/language/functions/fileexists) of a file.
+The function creates a hash based on the content. <br><br>
+Good opportunity for you to start exploring about [tf functions.](https://developer.hashicorp.com/terraform/language/functions) <br>
+E.g. here is a built in terraform function to [check the existance](https://developer.hashicorp.com/terraform/language/functions/fileexists) of a file. 
 ```tf
 condition = fileexists(var.error_html_filepath)
 ```
-
-5. Now, simply specify the path to the `etag` in the same way you did with the source
-6. `tf plan` and `tf apply` and see.
+- Now, simply specify the path to the `etag` in the same way you did with the source
+- `tf plan` and `tf apply` and see.
 
 ![Yay Files Data Captured](../assets/1.4.0/etag-trigger.png)
 
@@ -1187,7 +1153,8 @@ This allows us to provide flexibility to the module, enabling anyone to change t
 
 Let's set up a variable for that purpose.
 
-1. Add the variables for index file at the module level within the `variables` block;
+- Add the variables for index file at the module level within the `variables` block;
+
 ```tf
 variable "index_html_filepath" {
   description = "The file path for index.html"
@@ -1199,13 +1166,13 @@ variable "index_html_filepath" {
   }
 }
 ```
-2. Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.<br>
+- Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.<br>
 (include the entire path; it's perfectly fine).
 ```sh
 index_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
 ```
 
-3. Add the vars for the files to the root level 
+- Add the vars for the files to the root level 
 ```tf
 variable "index_html_filepath" {
   type = string
@@ -1227,24 +1194,18 @@ variable "error_html_filepath" {
   }
 }
 ```
-
 2. Add the var defined in the root level;
 ```tf
 variable "error_html_filepath" {
   type = string
 }
 ```
-
 3. Add the error file path in `terraform.tfvars` and `terraform.tfvars.sample`;
 ```
 error_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
 ```
-
-
-4. Run tf plan and  see.
-
-We're encountering an error because we need to pass the variables to the root main.tf for both index and error.
-
+4. Run tf plan and  see.<br>
+We're encountering an error because we need to pass the variables to the root main.tf for both index and error.<br><br>
 5. Do nothing but Run tf plan and see again.
 
 Now it works..after just reapplying. 
@@ -1262,13 +1223,10 @@ We played more with tags briefly; I'll write that down for you.
 ```
 git tag <tag_name> <commit_sha>
 ```
-
 2. To delete Local and Remote Tags e.g. 1.1.0
-
 ```
 git push --delete origin 1.1.0
 ```
-
 3. Correct your tag
 ```
 git tag 1.1.0 <correct_commit_sha>
@@ -1286,7 +1244,6 @@ You can hold on your work go somewhere else (diff branch, tag) and get back.
 ```
 git stash save "Your stash message"
 ```
-
 2. When you back just apply your saved changes back
 ```
 git stash apply
@@ -1297,7 +1254,6 @@ git stash apply
 For more alias and fun stuff to write your CLI;
 
 1. Include the following alias along `tf` for `terraform`;
-
 ```
 alias tfa='terraform apply'
 alias tfaa='terraform apply --auto-approve'
@@ -1311,9 +1267,7 @@ alias tfo='terraform output'
 alias tfp='terraform plan'
 alias tfpr='terraform plan -refresh-only'
 ```
-
 2. Take [my updated script](bin/tf-alias) and update yours🫵.
-
 3. Test it, do a `tfp` instead of `terraform plan`
 
 ![tfp alias hm](../assets/1.4.0/tfp-hh.png)
@@ -1361,10 +1315,8 @@ GPT is not aware of this, as it was introduced only last year.
 2. Go to providers and click AWS
 3. top right click documentation
 4. In search find the AWS CloudFront Distribution 
-5. search the resource: `aws_cloudfront_distribution`.
-
-We also see data block, we may [proceed to that]() later.
-
+5. search the resource: `aws_cloudfront_distribution`.<br><br>
+We also see data block, we may [proceed to that](#data-block) later.
 6. From the resource take [the block from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#example-usage) instead of GPT.
 
 We have an example of an S3 origin configuration for CloudFront. <br>It looks to be well-structured. 
@@ -1375,8 +1327,9 @@ We thought to start with the resources to ensure they are grouped together alpha
 
 1. Create `resource-cdn.tf`.
 2. Create `resource-storage.tf`.
-3. Bring all storage components and paste them into `resources-storage.tf`.
-```tf
+3. Bring all storage components and paste them into `resources-storage.tf` to here.
+
+```hcl
 resource "aws_s3_bucket" "website_bucket" {
   # etc
 }
@@ -1392,8 +1345,9 @@ resource "aws_s3_object" "index_html" {
 resource "aws_s3_object" "error_html" {
     # etc
 }
-
 ```
+
+#### Coding Session Quickstart
 4. Grab the relevant code [from the registry](#find-cloudfront-in-registry) for `res-cdn.tf`, but not all of it.
 5. Remove the alias for custom domain.
 ```tf
@@ -1520,7 +1474,6 @@ I spent a considerable amount of time obtaining that policy.<br> Should I give i
 Let's help you create it yourself.
 
 1. Use the `aws_s3_bucket_policy` resource [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy#example-usage).
-
 ```tf
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.example.id
@@ -1535,11 +1488,16 @@ resource "aws_s3_bucket_policy" "bucket_policy"
 ```
   bucket = aws_s3_bucket.website_bucket.bucket
 ```
+
 |👌|If we have only one of something, we can just name it default. |
 |---:|:---|
 |✅|We can [always revisit—step5](#origin-access-control-config-resource-cdntf) and make them all 'default' later|
 
+<br>
 Instead of this we will code our policy into it.
+
+### Code and Define Policy
+
 ```
 data.aws_iam_policy_document.allow_access_from_another_account.json
 ```
@@ -1578,15 +1536,11 @@ policy =jsonencode()
     ]
 }
 ```
-
 In order to include this we have to make some changes..
- 
-6. Change `:` to `=` for the lines of policy
-
-
+6. Change `:` to `=` for the lines of policy<br>
 Thats more of HCL; it serves as the foundational syntax underpinning Terraform, shaping Terraform into what it is.
-
 7. We only require one statement; specifically, take the second block starting with 'sid'."
+
 ```hcl
         {
             "Sid" = "AllowLegacyOAIReadOnly",
@@ -1606,9 +1560,9 @@ However, our target for modification is the bucket.
 ```
 "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/*"
 ```
-8. Incorporate interpolations using `${aws_s3_bucket.website_bucket.id}`.
+- Incorporate interpolations using `${aws_s3_bucket.website_bucket.id}`.
 
-We have conditions that require us to narrow it down to either 'distru' or 'acc.' It's requesting an account ID.
+We have conditions that require us to narrow it down to either 'distru' or 'acc'. <br>It's requesting an account ID.
 
 This is an effective way to use data.
 
@@ -1617,9 +1571,10 @@ This is an effective way to use data.
 
 1. When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.
 2. In our case, we aim to utilize something for `aws_id` within the policy.
-3. For this purpose, we can employ `aws_caller_identity.` 
+3. For this purpose, we can employ `aws_caller_identity.` <br><br>
+We've previously used it to validate our account in the CLI. <br>
+[Check it out](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage).
 
-We've previously used it to validate our account in the CLI. [Check it out](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity#example-usage).
 ```hcl
 data "aws_caller_identity" "current" {}
 
@@ -1635,24 +1590,21 @@ output "caller_user" {
   value = data.aws_caller_identity.current.user_id
 }
 ```
-Consequently, we can easily retrieve the account ID.
-
+#### Get account ID
+Consequently, we can easily retrieve the account ID.<br>
 4. Add the following to the main.tf in ur module.
 ```
 data "aws_caller_identity" "current" {} 
 ```
-Now, you can reference this data wherever you need it; that's all it takes.
-
+Now, you can reference this data wherever you need it; that's all it takes.<br>
 5. We can access the value, which is `data.aws_caller_identity.account_id`.
 6. In our data policy, incorporate `data.aws_caller_identity.account_id` into the interpolation.
 ```
 "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}
 ```
-
 7. Add the interpolation using ${}.
 8. avigate to the CloudFront distribution registry link, find the reference, and identify the ID. 
 9. Include the variable for the 'distrubution' in the interpolation as well.
-
 ```
 :distribution/${aws_cloudfront_distribution.s3_distribution.id}"
 ```
@@ -1660,10 +1612,8 @@ We could have opted for using an ARN..This will do the exact job with less code.
 ```hcl
 "AWS:SourceArn": data.aws_caller_identity.current.arn
 ```
-
 But. Our preference was to utilize the data source! And learn.
-
-10. Test `tf init` and `tfp`
+- Test `tf init` and `tfp`
 
 
 **Error 1:** We mistakenly used `local` instead of `locals.`<br>
@@ -1674,7 +1624,7 @@ Both are corrected now in the instruction...
 
 I am just saying. If not so, remake step 10.
 
-11. go to Cloudfront and click the URL.
+- go to Cloudfront and click the URL.
 
 ![It worked by file download instead](../assets/1.5.0/index-download.png)
 
@@ -1689,20 +1639,21 @@ The mystery lies in the fact that while we referenced the file, we didn't specif
 1. Navigate to the registry: `aws => s3_object` 
 2. find the "content_type" argument reference on the right table of contents (TOC).
 3. In the resource block for `"aws_s3_object" "index.html"`, include `content_type="text/html"`.
+
 ```hcl
 resource "aws_s3_object" "index_html" {
 
   content_type = "text/html"
   }
 ```
-4. Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
+- Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
 ```hcl
 resource "aws_s3_object" "error_html" {
 
   content_type = "text/html"
 }
 ```
-5. tfp and tfa and check the link again.
+- tfp and tfa and check the link again.
 
 |❓|Still downloading the file..Why|
 |---:|:---|
@@ -1804,6 +1755,7 @@ content_version=1
   content_version = var.content_version
 ```
 3. Implement a Terraform variable for `content_version` that only accepts positive integers starting from one in your modules `variables.tf`.
+
 ```hcl
 variable "content_version" {
   description = "The content version. Should be a positive integer starting at 1."
@@ -1816,7 +1768,8 @@ variable "content_version" {
 
 }
 ```
-4. Include that in the variable call in ``variables.tf`` in the module level.
+
+- Dont miss to Include **that in the variable call** in ``variables.tf`` in the module level.
 ```hcl
 variable "content_version" {
   type        = number
@@ -1830,6 +1783,7 @@ It enables you to respond to various actions on a resource, such as its creation
 
 1. Navigate to the `resource-storage.tf` file.
 2. Look for the S3 resource lifecycle.
+
 ```hcl
  resource "azurerm_resource_group" "example" {
   # ...
@@ -1839,13 +1793,13 @@ It enables you to respond to various actions on a resource, such as its creation
   }
 }
 ```
-3. Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
+- Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
 ```hcl
   lifecycle {
     ignore_changes = [etag]
   }
 ```
-4. Exclude the `etag` field within the lifecycle.
+- Exclude the `etag` field within the lifecycle.
 ```hcl
     ignore_changes = [etag]
 ```
@@ -1883,7 +1837,6 @@ resource "terraform_data" "content_version" {
 ```hcl
     replace_triggered_by = [terraform_data.content_version.output]
 ```
-
 3. make sure its place for ur index.html lifecycle like this:
 ```hcl
   lifecycle {
@@ -1896,11 +1849,9 @@ When we modify our version, it will be treated and managed in a manner similar t
 
 ### Test 202
 
-1. Run `terraform plan` and see if it actually decide to change it;
-
+1. Run `terraform plan` and see if it actually decide to change it;<br>
 It does work because tf data never existed.<br>
-But. It doesn't appear to be triggering the content as expected..."
-
+But. It doesn't appear to be triggering the content as expected...<br><br>
 2. run `tfaa` and do `tfp` to see no change.
 3. Change some of the content and do `tfp`.
 
@@ -1913,7 +1864,6 @@ Because we hadn't altered the version.
 1. let's update it to '2' in the tfvars file.
 2. run tfp and observe now.
 ![No changes](../assets/1.6.0/no-changes.png)
-
 > It's still not producing any changes.
 3. Do a `tpa` maybe tfp is lying to us.
 
@@ -2011,7 +1961,6 @@ triggers_replace = terraform_data.content_version.output
 ```hcl
   provisioner "local-exec" {  }
 ```
-
 4. Use a heredoc block like this to pass the command:
 ```hcl
 provisioner "local-exec" {
@@ -2021,9 +1970,7 @@ command = <<EOF
 EOF
 }
 ```
-
-You can also add whatever, the point is to end it with the same, let me clarify.
-
+**You can also add whatever, the point is to end it with the same, let me clarify.**
 ```hcl
 provisioner "local-exec" {
 command = <<command
@@ -2039,7 +1986,6 @@ aws cloudfront create-invalidation \
 --paths '/*'
     COMMAND
 ```
-
 6. Verify your provisioner block for `local_exec`;
 ```hcl
   provisioner "local-exec" {
@@ -2050,8 +1996,6 @@ aws cloudfront create-invalidation \
     COMMAND  }
 ```
 > Be aware that Provisioners are a pragmatic approach. They have the capability..
-
-
 7. After coding `resrouce-cdn.tf`, run tfp
 
 Now it's asking for the current version..? <br>Because the content_version=x wasn't configured.
@@ -2060,14 +2004,10 @@ Now it's asking for the current version..? <br>Because the content_version=x was
 
 To trigger cache invalidation, you must increment the content version. 
 
-5. reset the value in your `terraform.tfvars` to `content_version=2`
-6. run tfpaa this time.
+- reset the value in your `terraform.tfvars` to `content_version=2`
+- run tfpaa this time.
 
 Good and cool.
-
-
-
-
 
 
 ### Output Configuration
@@ -2082,7 +2022,6 @@ output "cloudfront_url" {
   value = aws_cloudfront_distribution.s3_distribution.domain_name
 }
 ```
-
 2.  And add the definition in your root `variables.tf` root outputs.
 ```hcl
 output "cloudfront_url" {
@@ -2102,11 +2041,11 @@ Perform the following steps to invalidate the cache:
 
 ![Distru along previous outputs we did set.](../assets/1.7.0/outputs-are-here.png)
 
-4. Start visiting your cloudfront distribution.
+- Start visiting your cloudfront distribution.
 
 ![Distru with cuter description](../assets/1.7.0/new-key-word.png)
 
-5. Visit your CloudFront invalidation and observe that you have one set as directed in the command.
+- Visit your CloudFront invalidation and observe that you have one set as directed in the command.
 
 [Verify The Accuracy](../assets/1.7.0/invalidation-evidence.png)
 ![Cache worked](../assets/1.7.0/invalid-console.png)
@@ -2180,23 +2119,21 @@ fileset("${path.root}/public/assets","*")
 ```
 fileset("${path.root}/public/assets","*.{jpg,png,gif}")
 ```
-
 6. Filter in the console only jpg files.
-
 ```
 fileset("${path.root}/public/assets","*.{jpg}")  
 ```
-
 7.  Filter in the console only png files.
 
-```sh
+```bash
 fileset("${path.root}/public/assets","*.{png}")  
 
 toset([
   "elizabeth-7-deadly-sins.png",
 ])
 ```
-8. You can use Terraform's output for further exploration in the Terraform Console.
+
+- You can use Terraform's output for further exploration in the Terraform Console.
 
 In Terraform, you may find the need to cast things to other thing. <br>Calm, it's a common  Terraform development, you are not crazy.
 
@@ -2223,7 +2160,6 @@ resource "aws_s3_object" "upload_assets" {}
 var.assets_path,"*.{jpg,png,gif}"
 ```
 Grab the usual for the resource: `bucket`, `key`, `source`, `content type`, `etag`.
-
 5. assign the bucket the same way;
 ```hcl
   bucket = aws_s3_bucket.website_bucket.bucket
@@ -2281,11 +2217,8 @@ variable "assets_path" {
   type = string
 }
 ```
-
 5. Try terraform plan here; 
-
 ![You have to add it to tfdotvars](../assets/1.8.0/specify-terraformdottfvars.png)
-
 6. Add the actual variable to `terraform.tfvars`.
 ```hcl
 assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
@@ -2295,12 +2228,10 @@ assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 ```
 8. Run tfp and observe the output.
-
 ![Assets Output](../assets/1.8.0/tfp-asset-one.png)
-
 9. Check out your website with the assets;
 
-[🌐Check It All!](https://dk9ry91vcfk4o.cloudfront.net/)
+[🌐My Mixer TerraHome, Anime, Tech](https://dk9ry91vcfk4o.cloudfront.net/)
 ![Terrahouse Pages Demo One](../assets/1.8.0/terrahouse-demo-1.png)
 
 Great and cool!
@@ -2324,9 +2255,12 @@ Terraformer! This is a great bonus for you to make sure you have git graph setup
 - `1.8.2` : Installing and Adding **mhutchie.git-graph** Extension to Gitpod
 
 |I am merging that in `1.8.3` to maintain consistency in my project across tags, branches, and commits.|
-|:---:|
+|---:|
+| 🤓Smart move.|
 
-I will split the changes into separate commits specific to this branch, allowing your clear differentiation.
+<br>
+
+**I will split the changes into separate commits specific to this branch, allowing your clear differentiation.**
 
 ### Do You have Extensions?
 Extensions are stuff that empower you do better in your IDE.<br>
@@ -2343,9 +2277,7 @@ In this process, you have to search for and install **Git-Log-Graph Extension:**
 1. Search The required extension is "git-log--graph" in your IDE.
 2. Ensure that it's installed.
 3. Abstract the extension ID from here.
-
 ![Get Extension ID](../assets/1.8.1/1.8.1-ext-id.png)
-
 4. Add the copied line to your `gitpod.yml` configuration file.
 ```
 phil294.git-log--graph
@@ -2370,15 +2302,12 @@ Search for and install **Git Graph Extension:**
 1. To be specific, you can search "mhutchie.git-graph" in your IDE.
 2. Ensure that it's installed.
 3. Abstract the extension ID from here.
-
 ![1.8.2 Extension ID](../assets/1.8.2/1.8.2-ext-id.png)
-
 4. Add the line copied to your `gitpod.yml` configuration file.
 ```
 mhutchie.git-graph
 ```
 5. Verify extension existence.
-
 ![1.8.2 IDE Button](../assets/1.8.2/work-with-1.8.2-ext.png)
 
 The extension button will be visible if installed.
@@ -2400,4 +2329,4 @@ You can use [my issue template](../assets/1.8.3/issue-enabler.md) for your own.
 
 **PS:** GitLens is another good extension..
 
-> [Proceed To Week Two(Last).](week2.md)
+> [Proceed To The Grand Finale](week2.md)
