@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=b66d38e59dc584b6827a3bc6ef604e423505c228" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>How I Did This | Cloud Express</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="How I Did This" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<meta property="og:description" content="Your Perfect Starting Point To The Cloud with Yaya Legacy." />
+<link rel="canonical" href="http://localhost:4000/how.html" />
+<meta property="og:url" content="http://localhost:4000/how.html" />
+<meta property="og:site_name" content="Cloud Express" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How I Did This" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Your Perfect Starting Point To The Cloud with Yaya Legacy.","headline":"How I Did This","url":"http://localhost:4000/how.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <a href="http://localhost:4000/">
+          <h1>Cloud Express</h1>
+        </a>
+        <h2>Your Perfect Starting Point To The Cloud with Yaya Legacy.</h2>
+        
+          <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023" class="button"><small>View project on</small> GitHub</a>
+        
+        
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2 id="how-i-did-this">How I Did This</h2>
+
+<p>Your system should have ruby.</p>
+
+<p>If you are on gitpod, ruby is pre installed.</p>
+
+<ul>
+  <li>Create a file in your project root and name it <code class="language-plaintext highlighter-rouge">_config.yml</code></li>
+  <li>Decide the theme and based on this fill the content of ur config file.</li>
+</ul>
+
+<p><strong>Here is mine;</strong></p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">remote_theme</span><span class="pi">:</span> <span class="s">pages-themes/architect@v0.2.0</span>
+<span class="na">plugins</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="s">jekyll-remote-theme</span> <span class="c1"># add this line to the plugins list if you already have one</span>
+
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Cloud</span><span class="nv"> </span><span class="s">Express"</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Your Perfect Starting Point To The Cloud with Yaya Legacy.</span>
+<span class="na">show_downloads</span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">google_analytics</span><span class="pi">:</span>
+<span class="na">theme</span><span class="pi">:</span> <span class="s">jekyll-theme-architect</span>
+</code></pre></div></div>
+<ul>
+  <li>Create a Gemfile and add the following content
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source "https://rubygems.org"
+gem "webrick"
+gem "github-pages", group: :jekyll_plugins
+</code></pre></div>    </div>
+  </li>
+  <li>run this to get the packages from ur gemfile installed
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle install
+</code></pre></div>    </div>
+  </li>
+  <li>Run your jeykyll project using this</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle exec jekyll serve
+</code></pre></div></div>
+
+<p><img src="how.png" alt="Tracking" /><br />
+You will get a local URL where u can make and track changes in real time.</p>
+
+
+        </section>
+
+        <aside id="sidebar">
+          
+            <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/zipball/gh-pages" class="button">
+              <small>Download</small>
+              .zip file
+            </a>
+            <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tarball/gh-pages" class="button">
+              <small>Download</small>
+              .tar.gz file
+            </a>
+          
+
+          
+            <p class="repo-owner"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023">terraform-beginner-bootcamp-2023</a> is maintained by <a href="https://github.com/yaya2devops">yaya2devops</a>.</p>
+          
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  </body>
+</html>

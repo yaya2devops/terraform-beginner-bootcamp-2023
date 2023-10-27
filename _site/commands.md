@@ -14,6 +14,13 @@ git tag 0.1.0
 git push --tags
 ```
 
+#### GitHub Pages
+```sh
+bundle install
+bundle exec jekyll serve
+```
+
+
 ### Associate Branches To Issues
 
 name the commit starting with the issue number e.g.;
