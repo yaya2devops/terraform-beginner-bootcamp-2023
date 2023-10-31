@@ -17,9 +17,9 @@ We embarked on some incredible tech adventures, such as crafting our very own Ru
 - [🏠 TerraHomes to TerraTowns](#terrahomes-to-terratowns)
 - [🏙️ TerraTowns Potential Unlocked](#terratowns-potential-unlocked)
 
-To add to the thrill, I personally launched six TerraTowns projects to TerraTowns.
+To add to the thrill, [I personally launched six TerraHomes](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/pull/66) projects to TerraTowns.
 
-It was a whirlwind of productivity and innovation, and we can't wait to share the fruits of our labor with all Terraformers!
+It was a whirlwind of productivity and innovation, and we can't wait to share *the fruits of our labor with all Terraformers!*
 
 
 # Create A `2.0.0` Ruby Server

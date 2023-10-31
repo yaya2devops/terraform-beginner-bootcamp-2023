@@ -3,14 +3,14 @@
 
 Welcome to space, and I genuinely hope you discover something of value here—no doubt.
 
-> [Go Back.](../README.md)
+> [Deep Breath and Get Back. Brb!](../README.md)
 
 The curriculum was gradually developed, using a branch and tag-based approach, and eventually condensed into week-based timeframe, aligning with the designed methodology.
 
 To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in [the given order](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png). 
 
 
-If you ever visit my branches, you'll notice that each click reveals distinct content pertaining to the specific technology being taught. This is an idea [I first conceived and elaborated on here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27).
+If you ever [visit my branches](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/branches), you'll notice that each click reveals distinct content pertaining to the specific technology, [e.g.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/24-tf-alias-terraform#readme), being taught. This is an idea [I first conceived and elaborated on here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27).
 
 
 ![Rounded Week Zero Diaram](../assets/1.0.0/week-0-diagram.png)
@@ -59,9 +59,9 @@ Tasks like signing in or up for multiple platforms and becoming familiar with ba
     - [Installing AWS CLI for Quick Interaction](#installation-of-aws-cli-for-quick-interaction)
     - [Verifying Your AWS CLI Configuration](#verifying-your-aws-cli-configuration)
     - [Resolving the Unauthenticated Issue](#resolving-the-unauthenticated-issue)
-    - [Configuring AWS IAM Users](#3-aws-iam-user-configuration)
+    - [Configuring AWS IAM Users](#aws-iam-user-configuration)
         - [Making Environment Variables Persistent in Gitpod](#making-environment-variables-persistent-in-gitpod)
-        - [Security Note: Protect Your Credentials](#--security-note--do-not-leave-credentials-in--envsample---)
+        - [Security Note: Protect Your Credentials](#security-note)
         - [Verifying AWS CLI Authentication](#verify-aws-cli-authentication)
   * [Optimizing Your AWS CLI Script](#refining-aws-cli-script)
     + [Step 1: Handling Existing AWS CLI Components](#1-handling-existing-aws-cli-components)
@@ -95,14 +95,14 @@ Tasks like signing in or up for multiple platforms and becoming familiar with ba
       - [Security Reminder](#security-reminder)
 - [Transitioning to Terraform Cloud](#migrate-to-terraform-cloud)
   * [Prerequisites for Cloud Migration](#prerequisites-1)
-  * [The Benefits of Remote State Storage](#why-use-remote-state-storage-)
+  * [The Benefits of Remote State Storage](#why-use-remote-state-storage)
   * [Getting Started with Terraform Cloud](#getting-started)
-    + [Understanding Organizations, Projects, and Workspaces](#organizations--projects--and-workspaces-)
+    + [Understanding Organizations, Projects, and Workspaces](#organizations-and-projects-and-workspaces)
   * [Configuring Workspace Settings](#configure-workspace-settings)
   * [Creating a Project in Terraform Cloud](#create-a-project)
     - [Setting Up Your Real Workspace](#create-your-real-workspace)
   * [Coding in the Cloud](#code-the-cloud-block)
-    + [RESOLVED: Configuring TF Cloud with Gitpod (Token)](#resolved--configure-tf-cloud-with-gitpod--token-)
+    + [RESOLVED: Configuring TF Cloud with Gitpod (Token)](#configure-tf-cloud-with-gitpod-using-token)
     + [Running Simple Tests](#simple-test)
     + [Changes in the 'init' Process](#-init--is-now-different)
     + [Exploring Potential Actions](#potential-actions)
@@ -110,10 +110,11 @@ Tasks like signing in or up for multiple platforms and becoming familiar with ba
   * [Designing the Bash Script](#design-the-bash-script)
   * [Fetching Your Token from Terraform Cloud](#get-the-token-from-terraform-cloud)
   * [Automating Terraform Cloud Authentication](#automating-terraform-cloud-authentication)
-- [Creating a Terraformer Alias](#a-terraformer--tf--alias)
-    + [Section 1: Manual Alias Setup](#section-1--manual-alias-setup)
-    + [Section 2: Automated Alias Setup with a Bash Script](#section-2--automating-alias-setup-with-a-bash-script)
-    + [Section 3: Utilizing the Alias in Gitpod](#section-3--using-the-alias-in-gitpod)
+- [Creating a Terraformer Alias](#a-terraformer-tf-alias)
+    + [Section 1: Manual Alias Setup](#section-1-manual-alias-setup)
+    + [Section 2: Automated Alias Setup with a Bash Script](#section-2-automating-alias-setup-with-a-bash-script)
+    + [Section 3: Utilizing the Alias in Gitpod](#section-3-using-the-alias-in-gitpod)
+- [Week Cipher Conquests](#week-cipher-conquests)
 
 ## Week Zero Is The Way — [SemVer](https://semver.org/)
 
@@ -200,9 +201,11 @@ Also great bootcampers have devised the following to exhibit our project's workf
 
 Semantic Versioning helps you and your friends understand the impact of updates at a glance. 
 
-| DEVELOPERS!| You  are encouraged to follow SemVer to provide a consistent and reliable experience! |
-|---:|---|
-|||
+| DEVELOPERS—| You  are encouraged to follow SemVer  |
+|---:|:---|
+|So,|You provide a consistent and reliable experience!|
+
+<br>
 
 # Streamlining Terraform CLI Setup
 
@@ -212,7 +215,7 @@ We began our journey by identifying the Linux distribution we were using, specif
 [Check your OS Version](https://www.cyberciti.biz/faq/how-to-check-os-version-in-linux-command-line/)
 
 
-We did it [just here](../assets/os-distru.png).
+We did it [just here](../assets/0.2.0/os-distru.png).
 
 Further, the cli failed due to the following.<br>
 The point of concern was this line of code:
@@ -234,7 +237,7 @@ https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
 We meticulously followed these instructions one by one, resulting in successful installation.
 
 
-[See this asset](../assets/refactor-tf.png) to observe the comparison.
+[See this asset](../assets/0.2.0/refactor-tf.png) to observe the comparison.
 
 Subsequently, we transformed these steps into a Bash script, located at  `./bin/here`
 
@@ -261,9 +264,11 @@ To just;
 Furthermore, we established a solution to address the scenario where initializing occurs only when starting a new workspace:
 
 | Scenario                          | Initialization  |
-|-----------------------------------|------------------|
+|-----------------------------------:|------------------|
 | When starting a new workspace     | `init`           |
 | Launching an existing workspace   | No `init`        |
+
+<br>
 
 **Solution;**
 
@@ -294,13 +299,13 @@ Bash scripts start with shebang, learn more;
 https://en.wikipedia.org/wiki/Chmod
 
 
-Execute scripts;
+**Execute scripts;**
 
 Use the `./` shorthand notiation to execute the bash script.
 
 eg. `./bin/install_terraform_cli` its included above.
 
-> Refer to  [.gitpod.yml](.gitpod.yml)
+> Refer to  [.gitpod.yml](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/3-refactoring-terraform-cli/.gitpod.yml)
 
 
 ### Considerations
@@ -319,6 +324,8 @@ We will explore various practical use cases for environment variables, providing
 I commit using an emoji `:building_construction:`	from here;
 
 https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md
+
+Looking like this 🏗️, [Its use case here](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commit/347960a6916fcdbd0d4294db266d13c8f5f46e21).
 
 ### Listing Environment Variables
 To easily list all environment variables in your current environment, use the following command:
@@ -351,7 +358,7 @@ cd /workspace/terraform-beginner-bootcamp
 This approach ensures that your installation occurs in the correct location, with the CLI readily available.
 
 
-### Understanding Gitpod-Provided Environment Variables
+## Understanding Gitpod-Provided Environment Variables
 
 Gitpod automatically assigns environment variables to your workspace. To access them, execute the `env` command and look for variables like `THEIA_WORKSPACE_ROOT`, which will have values like `/workspace/terraform-beginner-bootcamp-2023`. 
 
@@ -367,38 +374,30 @@ Remember
 
 
 
-### Assigning Environment Variables in Bash
+## Assigning Environment Variables in Bash
 You can manually assign environment variables within your bash script. Follow these steps:
 
 1. At the top of your script, define the variable:
 ```
 PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 ```
-
 2. Use the variable as needed in your script:
 ```
 cd $PROJECT_ROOT
 ```
-Alternatively, you can assign the variable when executing the script:
-
+3. Alternatively, you can assign the variable when executing the script:
 ```sh
 PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023' ./bin/install_terraform_cli
 ```
-
-Or export it within your environment:
-
-
+4. Or export it within your environment:
 ```sh
 export PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 ```
-
-To persist this environment variable in Gitpod, utilize the gp env command:
-
+5. To persist this environment variable in Gitpod, utilize the gp env command:
 ```sh
 gp env PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 ```
-To remove the environment variable, use the unset command:
-
+6. To remove the environment variable, use the unset command:
 ```sh
 unset PROJECT_ROOT
 ```
@@ -407,24 +406,20 @@ unset PROJECT_ROOT
 
 ## Create Dotenv
 
-For better organization, it's recommended to centralize all environment variables in a dotenv file.
-
-
+For better organization, it's recommended to centralize all environment variables in **a dotenv file**.
 1. Create file in the `bin/` and name it `.env.sample`.
 2. Add your desired environment variables to it.
-
 ```
 Hello I am called .env
 ```
-
 3. Define your project root
 ```
 PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 ```
+> You have to remove the `.sample` from `.env` to make it work.
 
 By following this approach, you can maintain a cleaner and more organized environment variable configuration in your project.
 
-> You have to remove the `.sample` from `.env` to make it work.
 
 
 
@@ -457,7 +452,7 @@ We will update the environment variable to match the one previously established 
 You can find more information in the [branch five labeled](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable).
 
 
-This is how we previously executed these commands in Gitpod:
+- This is how we previously executed these commands in Gitpod:
 ```yaml
 before: |
   cd /workspace
@@ -467,14 +462,14 @@ before: |
   cd $THEIA_WORKSPACE_ROOT
 ```
 
-Now, instead of duplicating this code in various places, we can simply reference our newly created script like this:
+- Now, instead of duplicating this code in various places, we can simply reference our newly created script like this:
 
 ```yaml
 before: |
   source .bin/install_aws_cli
 ```
 
-This approach not only simplifies our workflow but also ensures consistency and ease of maintenance.
+This approach not only simplifies our workflow but also **ensures consistency and ease of maintenance**.
 
 
 ### Verifying Your AWS CLI Configuration
@@ -485,18 +480,17 @@ Before proceeding, it's crucial to ensure that your AWS CLI is properly configur
 aws sts get-caller-identity
 ```
 
-If you see a message indicating that you are not authenticated, it's time to address this issue.
+If you see a message indicating that you are not authenticated, **it's time to address this issue.**
 
 ![Not Auth](../assets/0.4.0/ur-not-authenticated.png)
 
-#### Resolving the Unauthenticated Issue
+### Resolving the Unauthenticated Issue
 
 To resolve the authentication issue, you have two options: 
 - follow the [official AWS documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
 ) 
-- or use me as your documentation.
+- **O**r use me as your documentation.
 
-2. Manual Configuration:
 
 You can manually set your AWS CLI credentials. 
 
@@ -510,9 +504,9 @@ $ export AWS_DEFAULT_REGION=us-west-2
 Ensure you replace them with your actual 
 - AWS access key
 - Secret key 
-- Preferred AWS region
+- Preferred AWS region (Optional Pick)
 
-Next, open your `.env` file that was created in again  [branch five](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable). 
+Next, open your `.env` file that was created in again  [branch five](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-vars#create-dotenv). 
 
 Insert the following lines with your actual credentials:
 ```
@@ -551,7 +545,7 @@ export AWS_SECRET_ACCESS_KEY=your_secret_key_here
 export AWS_DEFAULT_REGION=your_region_here
 ```
 
-#### Making Environment Variables Persistent in Gitpod
+### Making Environment Variables Persistent in Gitpod
 
 To make these environment variables persist in your Gitpod environment, use the gp env command:
 ```
@@ -560,11 +554,13 @@ gp env AWS_SECRET_ACCESS_KEY=your_secret_key_here
 gp env AWS_DEFAULT_REGION=your_region_here
 ```
 
-#### **Security Note: Do Not Leave Credentials in `.env.sample`**
+#### **Security Note**
+
+- Do Not Leave Credentials in `.env.sample`
 Ensure you do not include your actual AWS credentials in your .env.sample file. Security check to keep sensitive information like AWS keys out of version-controlled files.
 
 
-#### Verify AWS CLI Authentication
+### Verify AWS CLI Authentication
 
 Now just double-check your AWS CLI authentication by running the command:
 ```
@@ -696,9 +692,9 @@ provider "random" {
 
 Note: The `main.tf` configuration file is considered the top root module in Terraform, and we are continually building modules within it. 
 
-|:lamp:|We are technically making modules all the time|
+|💡  |We are technically making modules all the time|
 |---|---|
-|||
+|💡💡|coding main.tf is a terraform module work.|
 
 2. Resource Creation: We created a random resource named "bucket_id" put it below the provider code:
 ```tf
@@ -712,7 +708,7 @@ resource "random_id" "bucket_id" {
 3. Naming Conventions: Rename the resource to "bucket_id" for clarity.
 4. Navigate to the Terraform Registry and click on the "Documentation" tab located in the left-hand side second navbar, adjacent to the "Use Provider" button.
 5. Proceed to the "Resources" section and select the desired resource. Place this chosen resource immediately below the previously mentioned one.
-```
+```hcl
 resource "random_id" "name" {
   keepers = {
     # Generate a new id each time we switch to a new AMI id
@@ -723,7 +719,7 @@ resource "random_id" "name" {
 6. Assign the name `bucket_id` to the resource to align it with our specific use case.
 
 7. Navigate to the resource section and select the specified simple resource. Place it directly underneath the previous resource.
-```
+```hcl
 resource "random_id" "bucket_name" {
   keepers = {
     # Generate a new id each time we switch to a new AMI id
@@ -731,11 +727,10 @@ resource "random_id" "bucket_name" {
   }
 ```
 
-Looks Mh. I think we can try this with a random string.
+Looks Mh. I think **we can try this with a random string**.
 
 ### Expanding Resources
 To enhance our resources, we added a random string generator instead.
-
 1. Located the "random string" resource in the Terraform Registry, then replaced the existing resource with the following code:
 ```tf
 resource "random_string" "bucket_name" {
@@ -743,9 +738,7 @@ resource "random_string" "bucket_name" {
   special          = true
   override_special = ""
 ```
-
 2. from  `override_special =`  take the `"/@£$"` as we dont need.
-
 ```tf
 resource "random_string" "bucket_name" {
   length           = 16
@@ -753,8 +746,7 @@ resource "random_string" "bucket_name" {
   override_special = ""
 }
 ```
-- Or just go back to this and put special to false and just delete the `override_special` instead:
-
+3. Or just go back to this and put special to false and just delete the `override_special` instead:
 ```tf
 resource "random_string" "bucket_name" {
   length           = 16
@@ -769,28 +761,27 @@ resource "random_string" "bucket_name" {
 output "" {}
 ```
 2. For the value assign it the `id` of `bucket_name` of that `random_string`
-
 ```tf
 output "random_bucket_name" {
  value = random_string.bucket_name.id
 }
 ```
-3. Additionally, let's verify whether it returns a different value or remains consistent.
-
+3. Additionally, let's verify **whether it returns a different value** or remains consistent.
 ```tf
 output "random_bucket_name" {
  value = random_string.bucket_name.result
 }
 ```
 
+Code the above output block in ur `output.tf`.
+
 
 ### Pre-Verify 
 
 
-Make sure the file looks like this before actually testing terraform
+👇 Make sure **the file looks like this** before actually testing terraform;
 
-```tf
-
+```hcl
 terraform {
   required_providers {
     random = {
@@ -820,16 +811,17 @@ output "random_bucket_name" {
 }
 ```
 
-If so, nice lets go ahead.
+If so, nice **let's go ahead.**
 
 
 ## Terraform Workflow
 We reviewed essential Terraform commands and workflow steps.
 
 ### Initialization
-We executed `terraform init`, which:
+We executed `terraform init`, which after observation I am concluding:
 - Created a `.terraform` directory for Terraform configuration. (Downloaded the required provider binary)
 - Generated a `terraform.lock.hcl` file to lock the provider version.
+- The asset below shows the apply; focus on the dot terraform folder to earn its purpose.
 
 ![Outputs and Stuff](../assets/0.5.0/random-provider.png)
 
@@ -837,7 +829,7 @@ We executed `terraform init`, which:
 > If you are going for the certification, I already did [a year or something ago](https://www.credly.com/badges/81d4dcaf-2e4c-4d8e-9ef1-58ef47fe77ee). Try to remmember the path registry.terraform.io comes a lot.
 
 ### Planning
-We ran `terraform plan` to preview the infrastructure changes.
+We ran `terraform plan` to **preview the infrastructure changes**.
 ```sh
 Terraform will perform the following actions:
 
@@ -865,24 +857,21 @@ Changes to Outputs:
 ```
 
 ### Apply
-Using `terraform apply`, we applied the configuration, which returned the specified outputs.
+1. Using `terraform apply`, we applied the configuration, which returned the specified outputs.
 ```sh
 Outputs:
 random_bucket_name_id = "vvGZbRsNc3bkJ0Lg"
 random_bucket_name_result = "vvGZbRsNc3bkJ0Lg"
 ```
-
-- Go ahead and delete the id line, I prefer the result. Make sure output looks like that;
+2. Go ahead and delete the id line, I prefer the result. Make sure output looks like that;
 ```tf
 output "random_bucket_name_result" {
  value = random_string.bucket_name.result
 }
 ```
+3. Try terraform plan, **this step will referesh** the state
 
-- Try terraform plan
-
-this step will referesh the state 
-```sh
+```bash
 random_string.bucket_name: Refreshing state... [id=vvGZbRsNc3bkJ0Lg]
 
 Changes to Outputs:
@@ -891,9 +880,7 @@ Changes to Outputs:
 You can apply this plan to save these new output values to the Terraform state, without changing any real
 infrastructure.
 ```
-
-- Run terraform apply as follow to not have to confirm with Yes.
-
+- Run terraform apply as follow to **not have to confirm with Yes**.
 ```sh
 terraform apply --auto-approve
 ```
@@ -903,7 +890,7 @@ When you run a the apply you get the `terraform.tfstate`.
 
 Its ignored in our `.gitignore` but you can see it here, tell u about ur config. 
 
-Dont touch it pls. Only if required.
+**⚠️ Dont touch it pls**. Only if required.
 ```sh
 {
   "version": 4,
@@ -955,14 +942,10 @@ You should get a single random number assigned to ur variable and you are not as
 
 ### Output Check
 1. Verify outputs using `terraform output` and specific output names.
-
-Example:
 ```sh
 $ terraform output random_bucket_name_result
 "vvGZbRsNc3bkJ0Lg"
 ```
-
-
 2. Try output with the name of the output e.g.
 
 ![Outputs and Stuff](../assets/0.5.0/tf-output.png)
@@ -973,74 +956,67 @@ terraform output random_bucket_name_result
 "vvGZbRsNc3bkJ0Lg"
 ```
 
-
-
 ### Important Links To Empower You
 - [Noting Stuff realtime, Draft](../assets/0.5.0/draft-0.5.0-real-time.txt)
 - [Remake Draft with GPT](https://chat.openai.com/share/8526b242-9920-43f2-b199-0df1700ffc3a)
 - [Write Issues and more](https://chat.openai.com/share/91b1c7e4-adfd-493b-b19e-b09854a6e3bc)
 
-This page is a direct outcome of the links I've just shared. See you soon! (this was done in one of the chats)
+This page is a direct outcome of the links I've just shared. See you soon! <br>(this was done in one of these)
 
 
-# Provision S3 Using Terraform
+## Provision S3 Using Terraform
 
 Amazon S3 is an object storage service like Dropbox.
 
-You to create a bucket and throw things in and access them in the cloud that's all the idea of it.
+You create a bucket and throw things in and access them in the cloud that's all the idea of it.
 
 ### Try BucketOps
 
 1. List all your S3 buckets, use the following command:
-
 ```sh
 aws s3 ls
 ```
 ![List some of my buckets](../assets/0.6.0/bucket-ls.png)
-
 2. Create a new S3 bucket, you can use the `mb` which make bucket.
 ```sh
 aws s3 mb s3://your-bucket-name
 ```
 > We will code the above command in terraform.
-
-3.Upload a File to an S3 Bucket,  you can use the `cp` (copy) command:
+3. Upload a File to an S3 Bucket,  you can use the `cp` (copy) command:
 ```sh
 aws s3 cp /path/to/local/file s3://your-bucket-name/
 ```
 - Replace `/path/to/local/file` with the path to the file on your local machine 
 - Replace `your-bucket-name` with the name of your S3 bucket.
-
 4. List all objects within a specific S3 bucket, use the following command
 ```
 aws s3 ls s3://your-bucket-name/
 ```
 ![List My Frontend Content From S3](../assets/0.6.0/buck-object-ls.png)
-
 5. Download an Object from an S3 Bucket with the `cp` command with reverse copying
-
 ```sh
 aws s3 cp s3://your-bucket-name/object-key /path/to/local/directory/
 ```
 - Replace `your-bucket-name` with the name of your S3 bucket
 - Replace `object-key` with the key of the object you want to download
 - Replace `/path/to/local/directory/` with the directory where you want to save the downloaded file.
-
-
-- Delete an Object from an S3 Bucket use the `rm`(remove) command
-
+6. Delete an Object from an S3 Bucket use the `rm`(remove) command
 ```sh
 aws s3 rm s3://your-bucket-name/object-key
 ```
 - Replace `your-bucket-name` with the name of your S3 bucket 
 - Replace `object-key` with the key of the object you want to delete.
 
-Great and cool. 
+**Great and cool.** <br>
 These are some basic AWS S3 commands to get you started with managing buckets and objects using the AWS CLI.
 
-Let's now get back to terraform.
+Let's now get back to terraform and provision stuff.
 
-## Prerequisites
+
+## Create an S3 Bucket with Terraform
+First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.
+
+### Prerequisites
 
 Before we begin, ensure you have the following prerequisites:
 
@@ -1048,10 +1024,6 @@ Before we begin, ensure you have the following prerequisites:
 - AWS credentials properly configured, either through environment variables or AWS configuration files (`~/.aws/credentials` and `~/.aws/config`).
 
 We made both of these in previous branches. Double check.
-
-## Create an S3 Bucket with Terraform
-First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.
-
 
 ### Searching for S3 in Terraform Registry
 
@@ -1065,31 +1037,29 @@ Now, let's define the Terraform resource for the S3 bucket.
 
 You can refer to this: [The reference you've been told](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket).
 
-1. So place this right under the random resource we did earlier;
-
+1. So place this right under the random resource we did earlier.
 ```hcl
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
+    resource "aws_s3_bucket" "example" {
+      bucket = "my-tf-test-bucket"
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
-}
+      tags = {
+        Name        = "My bucket"
+        Environment = "Dev"
+      }
+    }
 ```
-
 2. Let's temporarily remove the tags since we don't require them at the moment.
-
 ```hcl
 resource "aws_s3_bucket" "example" {
   bucket = "my-tf-test-bucket"
 }
 ```
 3. Comment it because we need to setup our AWS provider first.
-4. Verify by running a terraform init.
-- The failure is expected because our random bucket naming process is generating uppercase letters
+4. Verify by running a terraform init.<br>
+Expect a failure because;
+- Our random bucket naming process is generating uppercase letters
 - Those mentioned are not supported as bucket names in S3.
-- Verify further plan and apply?
+5. Verify further plan and apply?
 
 > Should fail too. We lack our AWS Provider.
 
@@ -1099,11 +1069,8 @@ resource "aws_s3_bucket" "example" {
 You need to configure the AWS provider in your Terraform configuration to provide the necessary AWS credentials. 
 
 
-1. Go to the registry and search for aws.
-https://registry.terraform.io/providers/hashicorp/aws/latest
-
+1. Go to the registry and search for aws. https://registry.terraform.io/providers/hashicorp/aws/latest
 2. Click  **"USE PROVIDER"** on the second navbar on the right besides Documenation;
-
 ```tf
 terraform {
   required_providers {
@@ -1117,27 +1084,25 @@ provider "aws" {
   # Configuration options
 }
 ```
-
-- Reflect on our previous provider.
-
+3. Reflect on our previous provider.
 ```tf
-terraform {
-  required_providers {
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
+    terraform {
+      required_providers {
+        random = {
+          source = "hashicorp/random"
+          version = "3.5.1"
+        }
+      }
     }
-  }
-}
 
-provider "random" {
-  # Configuration options
-}
+    provider "random" {
+      # Configuration options
+    }
 ```
 
 How are we going to add that?
 
-This looks stupid. We must have a single block for each. So?
+This looks stupid. 👇
 
 ```tf
 terraform {
@@ -1167,6 +1132,8 @@ provider "aws" {
 }
 
 ```
+We must have a single block for each. So?
+
 - Apply critical thinking and get the following results;
 
 ```tf
@@ -1192,28 +1159,27 @@ provider "aws" {
   # Configuration options
 }
 ```
-We had to take aws inside previous provider and put it along the random.
+We had to **take aws inside previous provider** and put it **along the random**.
 
 Go try plan the infra. It should fail. <br>
 You added a new provider it must be mapped to your `.terraform` dotfile.
 
- Init is required.
+🎯Init is required. 
 
 ### Initialize and Plan
 1. Now, you can initialize Terraform by running the following command and should work.
-
 ```hcl
 terraform init
 ```
-
 ![dotfile with bucket](../assets/0.6.0/aws-provider-tf.png)
-
 2. Try running plan. Should gives ok while we both know it is not.
-
-The random is generating the name with capital while bucket only supports low letter.
-
+> The random is generating the name with capital while bucket only supports low letter.
 3. Run `terrafom apply` and observe the failure.
-The plan is not smart enough. Be careful. You could get a green pass and then get rejected in apply.
+
+The plan is not smart enough. 
+
+Be careful. <br>
+You could get a **green pass** and then **get rejected in apply**.
 
 We will address this issue next.
 
@@ -1222,26 +1188,24 @@ We will address this issue next.
 To resolve the bucket naming issue, modify the resource definition as follows.
 
 1. Change the bucket name from that to `random_string.bucket_name.result`
-```
+```hcl
 resource "aws_s3_bucket" "example" {
   bucket = random_string.bucket_name.result
 }
 ```
-
 Ensure you have previously defined `random_string.bucket_name.result` like I showed you.
-
 2. Update the resource definition for random as required and Set length to reduce the chance of conflicts.
 
-From this;
-```
+**From this;**
+```hcl
 resource "random_string" "bucket_name" {
   length           = 16
   special          = false
 }
 ```
 
-To that;
-```
+**To that;**
+```hcl
 resource "random_string" "bucket_name" {
   lower = true
   upper = false
@@ -1265,7 +1229,9 @@ Once you have successfully planned, apply the changes:
 ```sh
 terraform apply
 ```
-Again. Please be cautious; a successful plan does not guarantee success during the apply phase.
+Again. <br>
+Please be cautious; <br>
+A successful plan does not guarantee success during the apply phase.
 
 This is works you can verify from your terminal.
 
@@ -1276,12 +1242,12 @@ You can double verify your bucket in the console.
 ![Its Her from AWS](../assets/0.6.0/bucket-console.png)
 
 ### Double Checking Terraform State
-After applying the changes, check the state of Terraform with the following commands:
+After applying the changes, **check the state of Terraform** with the following commands:
 ```sh
 terraform show
 ```
 
-You can also find it in your current directory. 
+You can also find it in **your current directory**. 
 ```json
    {
       "mode": "managed",
@@ -1293,7 +1259,7 @@ You can also find it in your current directory.
 
 ```
 
-The code is around 117 lines you got the point. It is now having the bucket state.
+The code is around **117 lines** you got the point **.** It is now having the bucket state.
 
 ### Destroying the Bucket
 Why you may ask. Because if we push the bucket will no longer be managed by Terraform's state file, and re-importing it may be necessary.
@@ -1323,16 +1289,14 @@ Double check your `terraform.tfstate`
 Yep that is all it now!
 
 #### Security Reminder
-Never commit your AWS credentials to version control. Keep your credentials secure and use proper AWS authentication methods.
+Never commit your AWS credentials to version control. <br>Keep your credentials secure and use proper AWS authentication methods.
+
+Again;
 
 - It's essential never to hard code your AWS credentials in your Terraform configuration. 
 - Rely on AWS configuration through environment variables using the `export`. 
 
 Terraform will use these credentials in the background.
-
-
-
-
 
 # Migrate To Terraform Cloud
 
@@ -1350,7 +1314,7 @@ With simple `terraform init` and `terraform apply`.
 
 If you are using your local. The `tfdotfile` is sitting there. <br>You can attack `terraform apply` directly.
 
-## Why Use Remote State Storage?
+## Why Use Remote State Storage
 The truth is we never want to responsible for that file. 
 
 We may lose it. Also We don't want anyone to see it. 
@@ -1371,14 +1335,14 @@ When you sign up for Terraform Cloud, you'll be prompted to create your first or
 If you followed this, ignore the provision resource example resources. <br>I am your example..
 
 
-### Organizations, Projects, and Workspaces?
+### Organizations and Projects and Workspaces
 
 Terraform Cloud organizes your infrastructure into these three levels:
 
 
 |🌐|You create the project so when u create Your workspace You can specify that project..|
 |---:|---|
-|||
+||———————|
 
 ```
 🌐 Terraform Cloud Organization
@@ -1425,7 +1389,7 @@ Pick a default project and create your workspace.
 
 Now you should have ur workspace listed.
 
-In case you are confused.
+👇 In case you are confused. Give a click.
 
 ![Tricky just click it](../assets/0.7.0/use-this-if-u-stuck.png)
 
@@ -1433,7 +1397,7 @@ In case you are confused.
 
 ## Create a Project
 
-1. From the top right corner, click "New" and select "Project" to create a new project for our bootcamp. 
+1. From the top right corner, click **New** and select **Project** to create a new project for our bootcamp. 
 > We dont have to but lets make things in its theme. 
 2. Name our project `yaya-tf-bootcamp-2023`. This will be used next.
 
@@ -1469,11 +1433,8 @@ Now, let's migrate your state to Terraform Cloud for centralized management:
     }
   }
 ```
-
 We thought we needed [the remote block](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate) but its using the cloud block.
-
-[Back in the days;](https://developer.hashicorp.com/terraform/language/settings/backends/remote)
-
+2. Observe how It was [Back in the days;](https://developer.hashicorp.com/terraform/language/settings/backends/remote)
 ```
   backend "remote" {
     hostname = "app.terraform.io"
@@ -1482,10 +1443,8 @@ We thought we needed [the remote block](https://developer.hashicorp.com/terrafor
     workspaces {
       name = "terra-house-2023"
 ``` 
-
-Now it is easier for configuration;
-
-```
+3. Configure as required. Now **it is more neat;**
+```hcl
   cloud {
     organization = "yayaintfcloud"
 
@@ -1495,10 +1454,11 @@ Now it is easier for configuration;
   }
 ```
 
-Make sure its looks like this.
+Make sure its looks like this☝️
 
-### RESOLVED: Configure TF Cloud With Gitpod (Token)
+### Configure TF Cloud With Gitpod using Token
 
+(Resolved)
 1. Go back to your CLI and run to authenticate with terraform cloud;
 ```
 terraform login
@@ -1585,7 +1545,7 @@ We will then go ahead and automate it in <br>our `.gitpod` so it does it itself.
 
 
 We will also extend the token's validity to 30 days for added convenience.<br>
-Welcome to `0.8.0` in our week 1 of the Terraform Beginner Bootcamp.
+Welcome to `0.8.0` in our *Week Zero* of the Terraform Beginner Bootcamp.
 
 
 ### Design the Bash Script
@@ -1645,7 +1605,7 @@ After successfully generating the `credentials.tfrc.json` file, a message confir
 chmod u+x ./bin/gen_tfrc
 ```
 
-Great progress! Let's pause for a moment. 
+**Great progress!** Let's pause for a moment. 
 
 Before proceeding, there are a few more things we need to set up.
 
@@ -1732,7 +1692,7 @@ We thought it was necessary to include the script in both sections to ensure it 
 **Verify by restarting your workspace to ensure that the file contains your token.**
 
 
-# A Terraformer `tf` Alias
+# A Terraformer tf Alias
 
 We'll walk you through creating an alias for Terraform, making it more convenient to use. 
 
@@ -1744,7 +1704,7 @@ E.g. Instead of `terraform init`, you can write just `tf init`.
 
 We'll cover how to manually set up the alias and create a bash script to automate the process.
 
-### Section 1: Manual Alias Setup
+### **Section 1** Manual Alias Setup
 
 **Step 1: Accessing Your Bash Profile**
 To create an alias for Terraform manually, you need to edit your Bash profile.
@@ -1771,7 +1731,7 @@ source ~/.bash_profile
 ```
 Now, you have successfully set up the Terraform alias manually.
 
-### Section 2: Automating Alias Setup with a Bash Script
+### **Section 2** Automating Alias Setup with a Bash Script
 
 **Step 1: Creating a Bash Script**
 To automate the alias setup, you can create a bash script. Here's how:
@@ -1840,7 +1800,7 @@ Now, you can execute the script to add the alias to your `.bash_profile`. Run th
 ```
 The script will automatically add the Terraform alias to your Bash profile and update it.
 
-### Section 3: Using the Alias in Gitpod
+### **Section 3** Using the Alias in Gitpod
 
 **Step 1 : Integrating with Gitpod**
 If you're using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it's available in both terminals.
@@ -1870,4 +1830,14 @@ Now, every time you start a Gitpod workspace;
 
 This is `0.9.0` making your Terraform workflow more efficient and user-friendly.
 
-> [Proceed To Week One.](week1.md)
+### Week Cipher Conquests
+This initial ignite been an exhilarating and enlightening experience as we delved into the foundational aspects of AWS and Terraform.
+
+We hope you didn't overlook anything, or else **I might get upset**.
+
+The instructors have been exceptionally dedicated, leaving no stone unturned to ensure that we grasp every essential concept. 
+
+As we move to the next chapter, I look forward to **celebrating your progress**.
+
+Let's go. **One** step more.
+> [Proceed To Week **One**.](week1.md)

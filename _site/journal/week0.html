@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/assets/css/style.css?v=b66d38e59dc584b6827a3bc6ef604e423505c228" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=fedc6b2f5ea0cb3a23a2aebb3e8f7aababe1e1e1" media="screen" type="text/css">
     <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
 
     <!--[if lt IE 9]>
@@ -64,14 +64,14 @@
 <p>Welcome to space, and I genuinely hope you discover something of value here—no doubt.</p>
 
 <blockquote>
-  <p><a href="/">Go Back.</a></p>
+  <p><a href="/">Deep Breath and Get Back. Brb!</a></p>
 </blockquote>
 
 <p>The curriculum was gradually developed, using a branch and tag-based approach, and eventually condensed into week-based timeframe, aligning with the designed methodology.</p>
 
 <p>To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in <a href="https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png">the given order</a>.</p>
 
-<p>If you ever visit my branches, you’ll notice that each click reveals distinct content pertaining to the specific technology being taught. This is an idea <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27">I first conceived and elaborated on here</a>.</p>
+<p>If you ever <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/branches">visit my branches</a>, you’ll notice that each click reveals distinct content pertaining to the specific technology, <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/24-tf-alias-terraform#readme">e.g.</a>, being taught. This is an idea <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/27">I first conceived and elaborated on here</a>.</p>
 
 <p><img src="/assets/1.0.0/week-0-diagram.png" alt="Rounded Week Zero Diaram" /></p>
 
@@ -127,10 +127,10 @@
       <li><a href="#installation-of-aws-cli-for-quick-interaction">Installing AWS CLI for Quick Interaction</a></li>
       <li><a href="#verifying-your-aws-cli-configuration">Verifying Your AWS CLI Configuration</a></li>
       <li><a href="#resolving-the-unauthenticated-issue">Resolving the Unauthenticated Issue</a></li>
-      <li><a href="#3-aws-iam-user-configuration">Configuring AWS IAM Users</a>
+      <li><a href="#aws-iam-user-configuration">Configuring AWS IAM Users</a>
         <ul>
           <li><a href="#making-environment-variables-persistent-in-gitpod">Making Environment Variables Persistent in Gitpod</a></li>
-          <li><a href="#--security-note--do-not-leave-credentials-in--envsample---">Security Note: Protect Your Credentials</a></li>
+          <li><a href="#security-note">Security Note: Protect Your Credentials</a></li>
           <li><a href="#verify-aws-cli-authentication">Verifying AWS CLI Authentication</a></li>
         </ul>
       </li>
@@ -190,10 +190,10 @@
   <li><a href="#migrate-to-terraform-cloud">Transitioning to Terraform Cloud</a>
     <ul>
       <li><a href="#prerequisites-1">Prerequisites for Cloud Migration</a></li>
-      <li><a href="#why-use-remote-state-storage-">The Benefits of Remote State Storage</a></li>
+      <li><a href="#why-use-remote-state-storage">The Benefits of Remote State Storage</a></li>
       <li><a href="#getting-started">Getting Started with Terraform Cloud</a>
         <ul>
-          <li><a href="#organizations--projects--and-workspaces-">Understanding Organizations, Projects, and Workspaces</a></li>
+          <li><a href="#organizations-and-projects-and-workspaces">Understanding Organizations, Projects, and Workspaces</a></li>
         </ul>
       </li>
       <li><a href="#configure-workspace-settings">Configuring Workspace Settings</a></li>
@@ -204,7 +204,7 @@
       </li>
       <li><a href="#code-the-cloud-block">Coding in the Cloud</a>
         <ul>
-          <li><a href="#resolved--configure-tf-cloud-with-gitpod--token-">RESOLVED: Configuring TF Cloud with Gitpod (Token)</a></li>
+          <li><a href="#configure-tf-cloud-with-gitpod-using-token">RESOLVED: Configuring TF Cloud with Gitpod (Token)</a></li>
           <li><a href="#simple-test">Running Simple Tests</a></li>
           <li><a href="#-init--is-now-different">Changes in the ‘init’ Process</a></li>
           <li><a href="#potential-actions">Exploring Potential Actions</a></li>
@@ -219,13 +219,14 @@
       <li><a href="#automating-terraform-cloud-authentication">Automating Terraform Cloud Authentication</a></li>
     </ul>
   </li>
-  <li><a href="#a-terraformer--tf--alias">Creating a Terraformer Alias</a>
+  <li><a href="#a-terraformer-tf-alias">Creating a Terraformer Alias</a>
     <ul>
-      <li><a href="#section-1--manual-alias-setup">Section 1: Manual Alias Setup</a></li>
-      <li><a href="#section-2--automating-alias-setup-with-a-bash-script">Section 2: Automated Alias Setup with a Bash Script</a></li>
-      <li><a href="#section-3--using-the-alias-in-gitpod">Section 3: Utilizing the Alias in Gitpod</a></li>
+      <li><a href="#section-1-manual-alias-setup">Section 1: Manual Alias Setup</a></li>
+      <li><a href="#section-2-automating-alias-setup-with-a-bash-script">Section 2: Automated Alias Setup with a Bash Script</a></li>
+      <li><a href="#section-3-using-the-alias-in-gitpod">Section 3: Utilizing the Alias in Gitpod</a></li>
     </ul>
   </li>
+  <li><a href="#week-cipher-conquests">Week Cipher Conquests</a></li>
 </ul>
 
 <h2 id="week-zero-is-the-way--semver">Week Zero Is The Way — <a href="https://semver.org/">SemVer</a></h2>
@@ -359,17 +360,19 @@ git commit <span class="nt">-m</span> <span class="s2">"chore: Update dependenci
 <table>
   <thead>
     <tr>
-      <th style="text-align: right">DEVELOPERS!</th>
-      <th>You  are encouraged to follow SemVer to provide a consistent and reliable experience!</th>
+      <th style="text-align: right">DEVELOPERS—</th>
+      <th style="text-align: left">You  are encouraged to follow SemVer</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: right"> </td>
-      <td> </td>
+      <td style="text-align: right">So,</td>
+      <td style="text-align: left">You provide a consistent and reliable experience!</td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <h1 id="streamlining-terraform-cli-setup">Streamlining Terraform CLI Setup</h1>
 
@@ -377,7 +380,7 @@ git commit <span class="nt">-m</span> <span class="s2">"chore: Update dependenci
 
 <p><a href="https://www.cyberciti.biz/faq/how-to-check-os-version-in-linux-command-line/">Check your OS Version</a></p>
 
-<p>We did it <a href="../assets/os-distru.png">just here</a>.</p>
+<p>We did it <a href="/assets/0.2.0/os-distru.png">just here</a>.</p>
 
 <p>Further, the cli failed due to the following.<br />
 The point of concern was this line of code:</p>
@@ -394,7 +397,7 @@ The point of concern was this line of code:</p>
 
 <p>We meticulously followed these instructions one by one, resulting in successful installation.</p>
 
-<p><a href="../assets/refactor-tf.png">See this asset</a> to observe the comparison.</p>
+<p><a href="/assets/0.2.0/refactor-tf.png">See this asset</a> to observe the comparison.</p>
 
 <p>Subsequently, we transformed these steps into a Bash script, located at  <code class="language-plaintext highlighter-rouge">./bin/here</code></p>
 
@@ -420,21 +423,23 @@ The point of concern was this line of code:</p>
 <table>
   <thead>
     <tr>
-      <th>Scenario</th>
+      <th style="text-align: right">Scenario</th>
       <th>Initialization</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>When starting a new workspace</td>
+      <td style="text-align: right">When starting a new workspace</td>
       <td><code class="language-plaintext highlighter-rouge">init</code></td>
     </tr>
     <tr>
-      <td>Launching an existing workspace</td>
+      <td style="text-align: right">Launching an existing workspace</td>
       <td>No <code class="language-plaintext highlighter-rouge">init</code></td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p><strong>Solution;</strong></p>
 
@@ -459,14 +464,14 @@ The point of concern was this line of code:</p>
 <p>Bash scripts start with shebang, learn more;
 https://en.wikipedia.org/wiki/Chmod</p>
 
-<p>Execute scripts;</p>
+<p><strong>Execute scripts;</strong></p>
 
 <p>Use the <code class="language-plaintext highlighter-rouge">./</code> shorthand notiation to execute the bash script.</p>
 
 <p>eg. <code class="language-plaintext highlighter-rouge">./bin/install_terraform_cli</code> its included above.</p>
 
 <blockquote>
-  <p>Refer to  <a href=".gitpod.yml">.gitpod.yml</a></p>
+  <p>Refer to  <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/3-refactoring-terraform-cli/.gitpod.yml">.gitpod.yml</a></p>
 </blockquote>
 
 <h3 id="considerations">Considerations</h3>
@@ -485,6 +490,8 @@ https://en.wikipedia.org/wiki/Chmod</p>
 <p>I commit using an emoji <code class="language-plaintext highlighter-rouge">:building_construction:</code>	from here;</p>
 
 <p>https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md</p>
+
+<p>Looking like this 🏗️, <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commit/347960a6916fcdbd0d4294db266d13c8f5f46e21">Its use case here</a>.</p>
 
 <h3 id="listing-environment-variables">Listing Environment Variables</h3>
 <p>To easily list all environment variables in your current environment, use the following command:</p>
@@ -514,7 +521,7 @@ https://en.wikipedia.org/wiki/Chmod</p>
 
 <p>This approach ensures that your installation occurs in the correct location, with the CLI readily available.</p>
 
-<h3 id="understanding-gitpod-provided-environment-variables">Understanding Gitpod-Provided Environment Variables</h3>
+<h2 id="understanding-gitpod-provided-environment-variables">Understanding Gitpod-Provided Environment Variables</h2>
 
 <p>Gitpod automatically assigns environment variables to your workspace. To access them, execute the <code class="language-plaintext highlighter-rouge">env</code> command and look for variables like <code class="language-plaintext highlighter-rouge">THEIA_WORKSPACE_ROOT</code>, which will have values like <code class="language-plaintext highlighter-rouge">/workspace/terraform-beginner-bootcamp-2023</code>.</p>
 
@@ -529,7 +536,7 @@ https://en.wikipedia.org/wiki/Chmod</p>
   <li>To print the content of a specific environment variable, employ the <code class="language-plaintext highlighter-rouge">echo $env</code> format.</li>
 </ul>
 
-<h3 id="assigning-environment-variables-in-bash">Assigning Environment Variables in Bash</h3>
+<h2 id="assigning-environment-variables-in-bash">Assigning Environment Variables in Bash</h2>
 <p>You can manually assign environment variables within your bash script. Follow these steps:</p>
 
 <ol>
@@ -540,51 +547,44 @@ https://en.wikipedia.org/wiki/Chmod</p>
   <li>Use the variable as needed in your script:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd $PROJECT_ROOT
 </code></pre></div>    </div>
-    <p>Alternatively, you can assign the variable when executing the script:</p>
   </li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span> ./bin/install_terraform_cli
-</code></pre></div></div>
-
-<p>Or export it within your environment:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span>
-</code></pre></div></div>
-
-<p>To persist this environment variable in Gitpod, utilize the gp env command:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gp <span class="nb">env </span><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span>
-</code></pre></div></div>
-<p>To remove the environment variable, use the unset command:</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unset </span>PROJECT_ROOT
-</code></pre></div></div>
-
-<h2 id="create-dotenv">Create Dotenv</h2>
-
-<p>For better organization, it’s recommended to centralize all environment variables in a dotenv file.</p>
-
-<ol>
-  <li>Create file in the <code class="language-plaintext highlighter-rouge">bin/</code> and name it <code class="language-plaintext highlighter-rouge">.env.sample</code>.</li>
-  <li>Add your desired environment variables to it.</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello I am called .env
-</code></pre></div></div>
-
-<ol>
-  <li>Define your project root
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
+  <li>Alternatively, you can assign the variable when executing the script:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span> ./bin/install_terraform_cli
+</code></pre></div>    </div>
+  </li>
+  <li>Or export it within your environment:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span>
+</code></pre></div>    </div>
+  </li>
+  <li>To persist this environment variable in Gitpod, utilize the gp env command:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gp <span class="nb">env </span><span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="s1">'/workspace/terraform-beginner-bootcamp-2023'</span>
+</code></pre></div>    </div>
+  </li>
+  <li>To remove the environment variable, use the unset command:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">unset </span>PROJECT_ROOT
 </code></pre></div>    </div>
   </li>
 </ol>
 
-<p>By following this approach, you can maintain a cleaner and more organized environment variable configuration in your project.</p>
+<h2 id="create-dotenv">Create Dotenv</h2>
 
-<blockquote>
-  <p>You have to remove the <code class="language-plaintext highlighter-rouge">.sample</code> from <code class="language-plaintext highlighter-rouge">.env</code> to make it work.</p>
-</blockquote>
+<p>For better organization, it’s recommended to centralize all environment variables in <strong>a dotenv file</strong>.</p>
+<ol>
+  <li>Create file in the <code class="language-plaintext highlighter-rouge">bin/</code> and name it <code class="language-plaintext highlighter-rouge">.env.sample</code>.</li>
+  <li>Add your desired environment variables to it.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello I am called .env
+</code></pre></div>    </div>
+  </li>
+  <li>Define your project root
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
+</code></pre></div>    </div>
+    <blockquote>
+      <p>You have to remove the <code class="language-plaintext highlighter-rouge">.sample</code> from <code class="language-plaintext highlighter-rouge">.env</code> to make it work.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<p>By following this approach, you can maintain a cleaner and more organized environment variable configuration in your project.</p>
 
 <h2 id="installation-of-aws-cli-for-quick-interaction">Installation of AWS CLI for Quick Interaction</h2>
 
@@ -612,22 +612,24 @@ unzip awscliv2.zip
 
 <p>You can find more information in the <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable">branch five labeled</a>.</p>
 
-<p>This is how we previously executed these commands in Gitpod:</p>
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
-  <span class="s">cd /workspace</span>
-  <span class="s">curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</span>
-  <span class="s">unzip awscliv2.zip</span>
-  <span class="s">sudo ./aws/install</span>
-  <span class="s">cd $THEIA_WORKSPACE_ROOT</span>
-</code></pre></div></div>
-
-<p>Now, instead of duplicating this code in various places, we can simply reference our newly created script like this:</p>
+<ul>
+  <li>This is how we previously executed these commands in Gitpod:
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
+<span class="err">c</span><span class="s">d /workspace</span>
+<span class="err">c</span><span class="s">url "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"</span>
+<span class="err">u</span><span class="s">nzip awscliv2.zip</span>
+<span class="err">s</span><span class="s">udo ./aws/install</span>
+<span class="err">c</span><span class="s">d $THEIA_WORKSPACE_ROOT</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Now, instead of duplicating this code in various places, we can simply reference our newly created script like this:</li>
+</ul>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">before</span><span class="pi">:</span> <span class="pi">|</span>
   <span class="s">source .bin/install_aws_cli</span>
 </code></pre></div></div>
 
-<p>This approach not only simplifies our workflow but also ensures consistency and ease of maintenance.</p>
+<p>This approach not only simplifies our workflow but also <strong>ensures consistency and ease of maintenance</strong>.</p>
 
 <h3 id="verifying-your-aws-cli-configuration">Verifying Your AWS CLI Configuration</h3>
 <p>Before proceeding, it’s crucial to ensure that your AWS CLI is properly configured for authentication. Follow these detailed steps to confirm your setup:</p>
@@ -639,21 +641,17 @@ unzip awscliv2.zip
   </li>
 </ol>
 
-<p>If you see a message indicating that you are not authenticated, it’s time to address this issue.</p>
+<p>If you see a message indicating that you are not authenticated, <strong>it’s time to address this issue.</strong></p>
 
 <p><img src="/assets/0.4.0/ur-not-authenticated.png" alt="Not Auth" /></p>
 
-<h4 id="resolving-the-unauthenticated-issue">Resolving the Unauthenticated Issue</h4>
+<h3 id="resolving-the-unauthenticated-issue">Resolving the Unauthenticated Issue</h3>
 
 <p>To resolve the authentication issue, you have two options:</p>
 <ul>
   <li>follow the <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html">official AWS documentation</a></li>
-  <li>or use me as your documentation.</li>
+  <li><strong>O</strong>r use me as your documentation.</li>
 </ul>
-
-<ol>
-  <li>Manual Configuration:</li>
-</ol>
 
 <p>You can manually set your AWS CLI credentials.</p>
 
@@ -667,10 +665,10 @@ $ export AWS_DEFAULT_REGION=us-west-2
 <ul>
   <li>AWS access key</li>
   <li>Secret key</li>
-  <li>Preferred AWS region</li>
+  <li>Preferred AWS region (Optional Pick)</li>
 </ul>
 
-<p>Next, open your <code class="language-plaintext highlighter-rouge">.env</code> file that was created in again  <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-variable">branch five</a>.</p>
+<p>Next, open your <code class="language-plaintext highlighter-rouge">.env</code> file that was created in again  <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/5-project-root-environment-vars#create-dotenv">branch five</a>.</p>
 
 <p>Insert the following lines with your actual credentials:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># .env file
@@ -710,7 +708,7 @@ export AWS_DEFAULT_REGION=your_region_here
   </li>
 </ul>
 
-<h4 id="making-environment-variables-persistent-in-gitpod">Making Environment Variables Persistent in Gitpod</h4>
+<h3 id="making-environment-variables-persistent-in-gitpod">Making Environment Variables Persistent in Gitpod</h3>
 
 <p>To make these environment variables persist in your Gitpod environment, use the gp env command:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gp env AWS_ACCESS_KEY_ID=your_access_key_here
@@ -718,10 +716,14 @@ gp env AWS_SECRET_ACCESS_KEY=your_secret_key_here
 gp env AWS_DEFAULT_REGION=your_region_here
 </code></pre></div></div>
 
-<h4 id="security-note-do-not-leave-credentials-in-envsample"><strong>Security Note: Do Not Leave Credentials in <code class="language-plaintext highlighter-rouge">.env.sample</code></strong></h4>
-<p>Ensure you do not include your actual AWS credentials in your .env.sample file. Security check to keep sensitive information like AWS keys out of version-controlled files.</p>
+<h4 id="security-note"><strong>Security Note</strong></h4>
 
-<h4 id="verify-aws-cli-authentication">Verify AWS CLI Authentication</h4>
+<ul>
+  <li>Do Not Leave Credentials in <code class="language-plaintext highlighter-rouge">.env.sample</code>
+Ensure you do not include your actual AWS credentials in your .env.sample file. Security check to keep sensitive information like AWS keys out of version-controlled files.</li>
+</ul>
+
+<h3 id="verify-aws-cli-authentication">Verify AWS CLI Authentication</h3>
 
 <p>Now just double-check your AWS CLI authentication by running the command:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws sts get-caller-identity
@@ -855,14 +857,14 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
 <table>
   <thead>
     <tr>
-      <th>:lamp:</th>
+      <th>💡</th>
       <th>We are technically making modules all the time</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td> </td>
-      <td> </td>
+      <td>💡💡</td>
+      <td>coding main.tf is a terraform module work.</td>
     </tr>
   </tbody>
 </table>
@@ -880,31 +882,30 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
   <li>Naming Conventions: Rename the resource to “bucket_id” for clarity.</li>
   <li>Navigate to the Terraform Registry and click on the “Documentation” tab located in the left-hand side second navbar, adjacent to the “Use Provider” button.</li>
   <li>Proceed to the “Resources” section and select the desired resource. Place this chosen resource immediately below the previously mentioned one.
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "random_id" "name" {
-  keepers = {
- # Generate a new id each time we switch to a new AMI id
- ami_id = var.ami_id
-  }
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"random_id"</span> <span class="s2">"name"</span> <span class="p">{</span>
+  <span class="nx">keepers</span> <span class="p">=</span> <span class="p">{</span>
+ <span class="c1"># Generate a new id each time we switch to a new AMI id</span>
+ <span class="nx">ami_id</span> <span class="p">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">ami_id</span>
+  <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
   <li>
     <p>Assign the name <code class="language-plaintext highlighter-rouge">bucket_id</code> to the resource to align it with our specific use case.</p>
   </li>
   <li>Navigate to the resource section and select the specified simple resource. Place it directly underneath the previous resource.
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "random_id" "bucket_name" {
-  keepers = {
- # Generate a new id each time we switch to a new AMI id
- ami_id = var.ami_id
-  }
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"random_id"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+  <span class="nx">keepers</span> <span class="p">=</span> <span class="p">{</span>
+ <span class="c1"># Generate a new id each time we switch to a new AMI id</span>
+ <span class="nx">ami_id</span> <span class="p">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">ami_id</span>
+  <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
 </ol>
 
-<p>Looks Mh. I think we can try this with a random string.</p>
+<p>Looks Mh. I think <strong>we can try this with a random string</strong>.</p>
 
 <h3 id="expanding-resources">Expanding Resources</h3>
 <p>To enhance our resources, we added a random string generator instead.</p>
-
 <ol>
   <li>Located the “random string” resource in the Terraform Registry, then replaced the existing resource with the following code:
     <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
@@ -913,24 +914,22 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
   <span class="nx">override_special</span> <span class="p">=</span> <span class="s2">""</span>
 </code></pre></div>    </div>
   </li>
-  <li>from  <code class="language-plaintext highlighter-rouge">override_special =</code>  take the <code class="language-plaintext highlighter-rouge">"/@£$"</code> as we dont need.</li>
-</ol>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+  <li>from  <code class="language-plaintext highlighter-rouge">override_special =</code>  take the <code class="language-plaintext highlighter-rouge">"/@£$"</code> as we dont need.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
   <span class="nx">length</span>           <span class="p">=</span> <span class="mi">16</span>
   <span class="nx">special</span>          <span class="p">=</span> <span class="kc">true</span>
   <span class="nx">override_special</span> <span class="p">=</span> <span class="s2">""</span>
 <span class="p">}</span>
-</code></pre></div></div>
-<ul>
-  <li>Or just go back to this and put special to false and just delete the <code class="language-plaintext highlighter-rouge">override_special</code> instead:</li>
-</ul>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Or just go back to this and put special to false and just delete the <code class="language-plaintext highlighter-rouge">override_special</code> instead:
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
   <span class="nx">length</span>           <span class="p">=</span> <span class="mi">16</span>
   <span class="nx">special</span>          <span class="p">=</span> <span class="kc">false</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <h3 id="add-outputs">Add outputs</h3>
 
@@ -939,28 +938,27 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
     <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">""</span> <span class="p">{}</span>
 </code></pre></div>    </div>
   </li>
-  <li>For the value assign it the <code class="language-plaintext highlighter-rouge">id</code> of <code class="language-plaintext highlighter-rouge">bucket_name</code> of that <code class="language-plaintext highlighter-rouge">random_string</code></li>
-</ol>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
+  <li>For the value assign it the <code class="language-plaintext highlighter-rouge">id</code> of <code class="language-plaintext highlighter-rouge">bucket_name</code> of that <code class="language-plaintext highlighter-rouge">random_string</code>
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
  <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">id</span>
 <span class="p">}</span>
-</code></pre></div></div>
-<ol>
-  <li>Additionally, let’s verify whether it returns a different value or remains consistent.</li>
-</ol>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Additionally, let’s verify <strong>whether it returns a different value</strong> or remains consistent.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
  <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">result</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Code the above output block in ur <code class="language-plaintext highlighter-rouge">output.tf</code>.</p>
 
 <h3 id="pre-verify">Pre-Verify</h3>
 
-<p>Make sure the file looks like this before actually testing terraform</p>
+<p>👇 Make sure <strong>the file looks like this</strong> before actually testing terraform;</p>
 
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="k">terraform</span> <span class="p">{</span>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
     <span class="nx">random</span> <span class="p">=</span> <span class="p">{</span>
       <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/random"</span>
@@ -969,36 +967,37 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
   <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="k">provider</span> <span class="s2">"random"</span> <span class="p">{</span>
+<span class="nx">provider</span> <span class="s2">"random"</span> <span class="p">{</span>
   <span class="c1"># Configuration options</span>
 <span class="p">}</span>
 
   
-<span class="k">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+<span class="nx">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
   <span class="nx">length</span>           <span class="p">=</span> <span class="mi">16</span>
   <span class="nx">special</span>          <span class="p">=</span> <span class="kc">false</span>
 <span class="p">}</span>
 
 
-<span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
- <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">id</span>
+<span class="nx">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
+ <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">.</span><span class="nx">id</span>
 <span class="p">}</span>
 
-<span class="k">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
- <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">result</span>
+<span class="nx">output</span> <span class="s2">"random_bucket_name"</span> <span class="p">{</span>
+ <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">.</span><span class="nx">result</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>If so, nice lets go ahead.</p>
+<p>If so, nice <strong>let’s go ahead.</strong></p>
 
 <h2 id="terraform-workflow">Terraform Workflow</h2>
 <p>We reviewed essential Terraform commands and workflow steps.</p>
 
 <h3 id="initialization">Initialization</h3>
-<p>We executed <code class="language-plaintext highlighter-rouge">terraform init</code>, which:</p>
+<p>We executed <code class="language-plaintext highlighter-rouge">terraform init</code>, which after observation I am concluding:</p>
 <ul>
   <li>Created a <code class="language-plaintext highlighter-rouge">.terraform</code> directory for Terraform configuration. (Downloaded the required provider binary)</li>
   <li>Generated a <code class="language-plaintext highlighter-rouge">terraform.lock.hcl</code> file to lock the provider version.</li>
+  <li>The asset below shows the apply; focus on the dot terraform folder to earn its purpose.</li>
 </ul>
 
 <p><img src="/assets/0.5.0/random-provider.png" alt="Outputs and Stuff" /></p>
@@ -1008,7 +1007,7 @@ This step may seem insignificant, but it can be quite beneficial for beginners t
 </blockquote>
 
 <h3 id="planning">Planning</h3>
-<p>We ran <code class="language-plaintext highlighter-rouge">terraform plan</code> to preview the infrastructure changes.</p>
+<p>We ran <code class="language-plaintext highlighter-rouge">terraform plan</code> to <strong>preview the infrastructure changes</strong>.</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Terraform will perform the following actions:
 
   <span class="c"># random_string.bucket_name will be created</span>
@@ -1035,24 +1034,23 @@ Changes to Outputs:
 </code></pre></div></div>
 
 <h3 id="apply">Apply</h3>
-<p>Using <code class="language-plaintext highlighter-rouge">terraform apply</code>, we applied the configuration, which returned the specified outputs.</p>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Outputs:
+<ol>
+  <li>Using <code class="language-plaintext highlighter-rouge">terraform apply</code>, we applied the configuration, which returned the specified outputs.
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Outputs:
 random_bucket_name_id <span class="o">=</span> <span class="s2">"vvGZbRsNc3bkJ0Lg"</span>
 random_bucket_name_result <span class="o">=</span> <span class="s2">"vvGZbRsNc3bkJ0Lg"</span>
-</code></pre></div></div>
-
-<ul>
+</code></pre></div>    </div>
+  </li>
   <li>Go ahead and delete the id line, I prefer the result. Make sure output looks like that;
     <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">output</span> <span class="s2">"random_bucket_name_result"</span> <span class="p">{</span>
  <span class="nx">value</span> <span class="p">=</span> <span class="nx">random_string</span><span class="p">.</span><span class="nx">bucket_name</span><span class="p">.</span><span class="nx">result</span>
 <span class="p">}</span>
 </code></pre></div>    </div>
   </li>
-  <li>Try terraform plan</li>
-</ul>
+  <li>Try terraform plan, <strong>this step will referesh</strong> the state</li>
+</ol>
 
-<p>this step will referesh the state</p>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>random_string.bucket_name: Refreshing state... <span class="o">[</span><span class="nb">id</span><span class="o">=</span>vvGZbRsNc3bkJ0Lg]
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>random_string.bucket_name: Refreshing state... <span class="o">[</span><span class="nb">id</span><span class="o">=</span>vvGZbRsNc3bkJ0Lg]
 
 Changes to Outputs:
   - random_bucket_name_id     <span class="o">=</span> <span class="s2">"vvGZbRsNc3bkJ0Lg"</span> -&gt; null
@@ -1060,20 +1058,19 @@ Changes to Outputs:
 You can apply this plan to save these new output values to the Terraform state, without changing any real
 infrastructure.
 </code></pre></div></div>
-
 <ul>
-  <li>Run terraform apply as follow to not have to confirm with Yes.</li>
+  <li>Run terraform apply as follow to <strong>not have to confirm with Yes</strong>.
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply <span class="nt">--auto-approve</span>
+</code></pre></div>    </div>
+    <p><img src="/assets/0.5.0/auto-approve-single-random.png" alt="Auto Approve Not Always" /></p>
+  </li>
 </ul>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply <span class="nt">--auto-approve</span>
-</code></pre></div></div>
-<p><img src="/assets/0.5.0/auto-approve-single-random.png" alt="Auto Approve Not Always" /></p>
 
 <p>When you run a the apply you get the <code class="language-plaintext highlighter-rouge">terraform.tfstate</code>.</p>
 
 <p>Its ignored in our <code class="language-plaintext highlighter-rouge">.gitignore</code> but you can see it here, tell u about ur config.</p>
 
-<p>Dont touch it pls. Only if required.</p>
+<p><strong>⚠️ Dont touch it pls</strong>. Only if required.</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
   <span class="s2">"version"</span>: 4,
   <span class="s2">"terraform_version"</span>: <span class="s2">"1.5.7"</span>,
@@ -1123,15 +1120,11 @@ infrastructure.
 
 <h3 id="output-check">Output Check</h3>
 <ol>
-  <li>Verify outputs using <code class="language-plaintext highlighter-rouge">terraform output</code> and specific output names.</li>
-</ol>
-
-<p>Example:</p>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>terraform output random_bucket_name_result
+  <li>Verify outputs using <code class="language-plaintext highlighter-rouge">terraform output</code> and specific output names.
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>terraform output random_bucket_name_result
 <span class="s2">"vvGZbRsNc3bkJ0Lg"</span>
-</code></pre></div></div>
-
-<ol>
+</code></pre></div>    </div>
+  </li>
   <li>Try output with the name of the output e.g.</li>
 </ol>
 
@@ -1149,25 +1142,22 @@ infrastructure.
   <li><a href="https://chat.openai.com/share/91b1c7e4-adfd-493b-b19e-b09854a6e3bc">Write Issues and more</a></li>
 </ul>
 
-<p>This page is a direct outcome of the links I’ve just shared. See you soon! (this was done in one of the chats)</p>
+<p>This page is a direct outcome of the links I’ve just shared. See you soon! <br />(this was done in one of these)</p>
 
-<h1 id="provision-s3-using-terraform">Provision S3 Using Terraform</h1>
+<h2 id="provision-s3-using-terraform">Provision S3 Using Terraform</h2>
 
 <p>Amazon S3 is an object storage service like Dropbox.</p>
 
-<p>You to create a bucket and throw things in and access them in the cloud that’s all the idea of it.</p>
+<p>You create a bucket and throw things in and access them in the cloud that’s all the idea of it.</p>
 
 <h3 id="try-bucketops">Try BucketOps</h3>
 
 <ol>
-  <li>List all your S3 buckets, use the following command:</li>
-</ol>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">ls</span>
-</code></pre></div></div>
-<p><img src="/assets/0.6.0/bucket-ls.png" alt="List some of my buckets" /></p>
-
-<ol>
+  <li>List all your S3 buckets, use the following command:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">ls</span>
+</code></pre></div>    </div>
+    <p><img src="/assets/0.6.0/bucket-ls.png" alt="List some of my buckets" /></p>
+  </li>
   <li>Create a new S3 bucket, you can use the <code class="language-plaintext highlighter-rouge">mb</code> which make bucket.
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 mb s3://your-bucket-name
 </code></pre></div>    </div>
@@ -1175,49 +1165,47 @@ infrastructure.
       <p>We will code the above command in terraform.</p>
     </blockquote>
   </li>
-</ol>
-
-<p>3.Upload a File to an S3 Bucket,  you can use the <code class="language-plaintext highlighter-rouge">cp</code> (copy) command:</p>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">cp</span> /path/to/local/file s3://your-bucket-name/
-</code></pre></div></div>
-<ul>
-  <li>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/file</code> with the path to the file on your local machine</li>
-  <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket.</li>
-</ul>
-
-<ol>
+  <li>Upload a File to an S3 Bucket,  you can use the <code class="language-plaintext highlighter-rouge">cp</code> (copy) command:
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">cp</span> /path/to/local/file s3://your-bucket-name/
+</code></pre></div>    </div>
+    <ul>
+      <li>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/file</code> with the path to the file on your local machine</li>
+      <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket.</li>
+    </ul>
+  </li>
   <li>List all objects within a specific S3 bucket, use the following command
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 ls s3://your-bucket-name/
 </code></pre></div>    </div>
     <p><img src="/assets/0.6.0/buck-object-ls.png" alt="List My Frontend Content From S3" /></p>
   </li>
-  <li>Download an Object from an S3 Bucket with the <code class="language-plaintext highlighter-rouge">cp</code> command with reverse copying</li>
+  <li>Download an Object from an S3 Bucket with the <code class="language-plaintext highlighter-rouge">cp</code> command with reverse copying
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">cp </span>s3://your-bucket-name/object-key /path/to/local/directory/
+</code></pre></div>    </div>
+    <ul>
+      <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket</li>
+      <li>Replace <code class="language-plaintext highlighter-rouge">object-key</code> with the key of the object you want to download</li>
+      <li>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/directory/</code> with the directory where you want to save the downloaded file.</li>
+    </ul>
+  </li>
+  <li>Delete an Object from an S3 Bucket use the <code class="language-plaintext highlighter-rouge">rm</code>(remove) command
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">rm </span>s3://your-bucket-name/object-key
+</code></pre></div>    </div>
+    <ul>
+      <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket</li>
+      <li>Replace <code class="language-plaintext highlighter-rouge">object-key</code> with the key of the object you want to delete.</li>
+    </ul>
+  </li>
 </ol>
 
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">cp </span>s3://your-bucket-name/object-key /path/to/local/directory/
-</code></pre></div></div>
-<ul>
-  <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket</li>
-  <li>Replace <code class="language-plaintext highlighter-rouge">object-key</code> with the key of the object you want to download</li>
-  <li>
-    <p>Replace <code class="language-plaintext highlighter-rouge">/path/to/local/directory/</code> with the directory where you want to save the downloaded file.</p>
-  </li>
-  <li>Delete an Object from an S3 Bucket use the <code class="language-plaintext highlighter-rouge">rm</code>(remove) command</li>
-</ul>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws s3 <span class="nb">rm </span>s3://your-bucket-name/object-key
-</code></pre></div></div>
-<ul>
-  <li>Replace <code class="language-plaintext highlighter-rouge">your-bucket-name</code> with the name of your S3 bucket</li>
-  <li>Replace <code class="language-plaintext highlighter-rouge">object-key</code> with the key of the object you want to delete.</li>
-</ul>
-
-<p>Great and cool. 
+<p><strong>Great and cool.</strong> <br />
 These are some basic AWS S3 commands to get you started with managing buckets and objects using the AWS CLI.</p>
 
-<p>Let’s now get back to terraform.</p>
+<p>Let’s now get back to terraform and provision stuff.</p>
 
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="create-an-s3-bucket-with-terraform">Create an S3 Bucket with Terraform</h2>
+<p>First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.</p>
+
+<h3 id="prerequisites">Prerequisites</h3>
 
 <p>Before we begin, ensure you have the following prerequisites:</p>
 
@@ -1227,9 +1215,6 @@ These are some basic AWS S3 commands to get you started with managing buckets an
 </ul>
 
 <p>We made both of these in previous branches. Double check.</p>
-
-<h2 id="create-an-s3-bucket-with-terraform">Create an S3 Bucket with Terraform</h2>
-<p>First of all, the naming conventions between CloudFormation  and Terraform  resources may occasionally align, but this alignment is not always guaranteed. Double-check.</p>
 
 <h3 id="searching-for-s3-in-terraform-registry">Searching for S3 in Terraform Registry</h3>
 
@@ -1244,36 +1229,32 @@ These are some basic AWS S3 commands to get you started with managing buckets an
 <p>You can refer to this: <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket">The reference you’ve been told</a>.</p>
 
 <ol>
-  <li>So place this right under the random resource we did earlier;</li>
-</ol>
+  <li>So place this right under the random resource we did earlier.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="p">{</span>
+   <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">"my-tf-test-bucket"</span>
 
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="p">{</span>
-  <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">"my-tf-test-bucket"</span>
-
-  <span class="nx">tags</span> <span class="p">=</span> <span class="p">{</span>
-    <span class="nx">Name</span>        <span class="p">=</span> <span class="s2">"My bucket"</span>
-    <span class="nx">Environment</span> <span class="p">=</span> <span class="s2">"Dev"</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<ol>
-  <li>Let’s temporarily remove the tags since we don’t require them at the moment.</li>
-</ol>
-
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="p">{</span>
+   <span class="nx">tags</span> <span class="p">=</span> <span class="p">{</span>
+     <span class="nx">Name</span>        <span class="p">=</span> <span class="s2">"My bucket"</span>
+     <span class="nx">Environment</span> <span class="p">=</span> <span class="s2">"Dev"</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Let’s temporarily remove the tags since we don’t require them at the moment.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="p">{</span>
   <span class="nx">bucket</span> <span class="p">=</span> <span class="s2">"my-tf-test-bucket"</span>
 <span class="p">}</span>
-</code></pre></div></div>
-<ol>
+</code></pre></div>    </div>
+  </li>
   <li>Comment it because we need to setup our AWS provider first.</li>
-  <li>Verify by running a terraform init.
+  <li>Verify by running a terraform init.<br />
+Expect a failure because;
     <ul>
-      <li>The failure is expected because our random bucket naming process is generating uppercase letters</li>
+      <li>Our random bucket naming process is generating uppercase letters</li>
       <li>Those mentioned are not supported as bucket names in S3.</li>
-      <li>Verify further plan and apply?</li>
     </ul>
   </li>
+  <li>Verify further plan and apply?</li>
 </ol>
 
 <blockquote>
@@ -1285,49 +1266,41 @@ These are some basic AWS S3 commands to get you started with managing buckets an
 <p>You need to configure the AWS provider in your Terraform configuration to provide the necessary AWS credentials.</p>
 
 <ol>
-  <li>
-    <p>Go to the registry and search for aws.
-https://registry.terraform.io/providers/hashicorp/aws/latest</p>
-  </li>
-  <li>
-    <p>Click  <strong>“USE PROVIDER”</strong> on the second navbar on the right besides Documenation;</p>
-  </li>
-</ol>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
+  <li>Go to the registry and search for aws. https://registry.terraform.io/providers/hashicorp/aws/latest</li>
+  <li>Click  <strong>“USE PROVIDER”</strong> on the second navbar on the right besides Documenation;
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
-    <span class="nx">aws</span> <span class="p">=</span> <span class="p">{</span>
-      <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/aws"</span>
-      <span class="nx">version</span> <span class="p">=</span> <span class="s2">"5.17.0"</span>
-    <span class="p">}</span>
+ <span class="nx">aws</span> <span class="p">=</span> <span class="p">{</span>
+   <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/aws"</span>
+   <span class="nx">version</span> <span class="p">=</span> <span class="s2">"5.17.0"</span>
+ <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
 <span class="k">provider</span> <span class="s2">"aws"</span> <span class="p">{</span>
   <span class="c1"># Configuration options</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></div>    </div>
+  </li>
+  <li>Reflect on our previous provider.
+    <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">terraform</span> <span class="p">{</span>
+   <span class="nx">required_providers</span> <span class="p">{</span>
+     <span class="nx">random</span> <span class="p">=</span> <span class="p">{</span>
+       <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/random"</span>
+       <span class="nx">version</span> <span class="p">=</span> <span class="s2">"3.5.1"</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
 
-<ul>
-  <li>Reflect on our previous provider.</li>
-</ul>
-
-<div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
-  <span class="nx">required_providers</span> <span class="p">{</span>
-    <span class="nx">random</span> <span class="p">=</span> <span class="p">{</span>
-      <span class="nx">source</span> <span class="p">=</span> <span class="s2">"hashicorp/random"</span>
-      <span class="nx">version</span> <span class="p">=</span> <span class="s2">"3.5.1"</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">provider</span> <span class="s2">"random"</span> <span class="p">{</span>
-  <span class="c1"># Configuration options</span>
-<span class="p">}</span>
-</code></pre></div></div>
+ <span class="k">provider</span> <span class="s2">"random"</span> <span class="p">{</span>
+   <span class="c1"># Configuration options</span>
+ <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <p>How are we going to add that?</p>
 
-<p>This looks stupid. We must have a single block for each. So?</p>
+<p>This looks stupid. 👇</p>
 
 <div class="language-tf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">terraform</span> <span class="p">{</span>
   <span class="nx">required_providers</span> <span class="p">{</span>
@@ -1356,6 +1329,8 @@ https://registry.terraform.io/providers/hashicorp/aws/latest</p>
 <span class="p">}</span>
 
 </code></pre></div></div>
+<p>We must have a single block for each. So?</p>
+
 <ul>
   <li>Apply critical thinking and get the following results;</li>
 </ul>
@@ -1382,33 +1357,32 @@ https://registry.terraform.io/providers/hashicorp/aws/latest</p>
   <span class="c1"># Configuration options</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<p>We had to take aws inside previous provider and put it along the random.</p>
+<p>We had to <strong>take aws inside previous provider</strong> and put it <strong>along the random</strong>.</p>
 
 <p>Go try plan the infra. It should fail. <br />
 You added a new provider it must be mapped to your <code class="language-plaintext highlighter-rouge">.terraform</code> dotfile.</p>
 
-<p>Init is required.</p>
+<p>🎯Init is required.</p>
 
 <h3 id="initialize-and-plan">Initialize and Plan</h3>
 <ol>
-  <li>Now, you can initialize Terraform by running the following command and should work.</li>
+  <li>Now, you can initialize Terraform by running the following command and should work.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="nx">init</span>
+</code></pre></div>    </div>
+    <p><img src="/assets/0.6.0/aws-provider-tf.png" alt="dotfile with bucket" /></p>
+  </li>
+  <li>Try running plan. Should gives ok while we both know it is not.
+    <blockquote>
+      <p>The random is generating the name with capital while bucket only supports low letter.</p>
+    </blockquote>
+  </li>
+  <li>Run <code class="language-plaintext highlighter-rouge">terrafom apply</code> and observe the failure.</li>
 </ol>
 
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">terraform</span> <span class="nx">init</span>
-</code></pre></div></div>
+<p>The plan is not smart enough.</p>
 
-<p><img src="/assets/0.6.0/aws-provider-tf.png" alt="dotfile with bucket" /></p>
-
-<ol>
-  <li>Try running plan. Should gives ok while we both know it is not.</li>
-</ol>
-
-<p>The random is generating the name with capital while bucket only supports low letter.</p>
-
-<ol>
-  <li>Run <code class="language-plaintext highlighter-rouge">terrafom apply</code> and observe the failure.
-The plan is not smart enough. Be careful. You could get a green pass and then get rejected in apply.</li>
-</ol>
+<p>Be careful. <br />
+You could get a <strong>green pass</strong> and then <strong>get rejected in apply</strong>.</p>
 
 <p>We will address this issue next.</p>
 
@@ -1418,33 +1392,29 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 
 <ol>
   <li>Change the bucket name from that to <code class="language-plaintext highlighter-rouge">random_string.bucket_name.result</code>
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "aws_s3_bucket" "example" {
-  bucket = random_string.bucket_name.result
-}
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_s3_bucket"</span> <span class="s2">"example"</span> <span class="p">{</span>
+  <span class="nx">bucket</span> <span class="p">=</span> <span class="nx">random_string</span><span class="err">.</span><span class="nx">bucket_name</span><span class="err">.</span><span class="nx">result</span>
+<span class="p">}</span>
 </code></pre></div>    </div>
+    <p>Ensure you have previously defined <code class="language-plaintext highlighter-rouge">random_string.bucket_name.result</code> like I showed you.</p>
   </li>
-</ol>
-
-<p>Ensure you have previously defined <code class="language-plaintext highlighter-rouge">random_string.bucket_name.result</code> like I showed you.</p>
-
-<ol>
   <li>Update the resource definition for random as required and Set length to reduce the chance of conflicts.</li>
 </ol>
 
-<p>From this;</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "random_string" "bucket_name" {
-  length           = 16
-  special          = false
-}
+<p><strong>From this;</strong></p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+  <span class="nx">length</span>           <span class="p">=</span> <span class="mi">16</span>
+  <span class="nx">special</span>          <span class="p">=</span> <span class="kc">false</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>To that;</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "random_string" "bucket_name" {
-  lower = true
-  upper = false
-  length   = 32
-  special  = false
-}
+<p><strong>To that;</strong></p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"random_string"</span> <span class="s2">"bucket_name"</span> <span class="p">{</span>
+  <span class="nx">lower</span> <span class="p">=</span> <span class="kc">true</span>
+  <span class="nx">upper</span> <span class="p">=</span> <span class="kc">false</span>
+  <span class="nx">length</span>   <span class="p">=</span> <span class="mi">32</span>
+  <span class="nx">special</span>  <span class="p">=</span> <span class="kc">false</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <h3 id="re-run-terraform-plan">Re-run Terraform Plan</h3>
@@ -1463,7 +1433,9 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 <p>Once you have successfully planned, apply the changes:</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply
 </code></pre></div></div>
-<p>Again. Please be cautious; a successful plan does not guarantee success during the apply phase.</p>
+<p>Again. <br />
+Please be cautious; <br />
+A successful plan does not guarantee success during the apply phase.</p>
 
 <p>This is works you can verify from your terminal.</p>
 
@@ -1474,11 +1446,11 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 <p><img src="/assets/0.6.0/bucket-console.png" alt="Its Her from AWS" /></p>
 
 <h3 id="double-checking-terraform-state">Double Checking Terraform State</h3>
-<p>After applying the changes, check the state of Terraform with the following commands:</p>
+<p>After applying the changes, <strong>check the state of Terraform</strong> with the following commands:</p>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform show
 </code></pre></div></div>
 
-<p>You can also find it in your current directory.</p>
+<p>You can also find it in <strong>your current directory</strong>.</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">   </span><span class="p">{</span><span class="w">
       </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"managed"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aws_s3_bucket"</span><span class="p">,</span><span class="w">
@@ -1489,7 +1461,7 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 
 </span></code></pre></div></div>
 
-<p>The code is around 117 lines you got the point. It is now having the bucket state.</p>
+<p>The code is around <strong>117 lines</strong> you got the point <strong>.</strong> It is now having the bucket state.</p>
 
 <h3 id="destroying-the-bucket">Destroying the Bucket</h3>
 <p>Why you may ask. Because if we push the bucket will no longer be managed by Terraform’s state file, and re-importing it may be necessary.</p>
@@ -1517,7 +1489,9 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 <p>Yep that is all it now!</p>
 
 <h4 id="security-reminder">Security Reminder</h4>
-<p>Never commit your AWS credentials to version control. Keep your credentials secure and use proper AWS authentication methods.</p>
+<p>Never commit your AWS credentials to version control. <br />Keep your credentials secure and use proper AWS authentication methods.</p>
+
+<p>Again;</p>
 
 <ul>
   <li>It’s essential never to hard code your AWS credentials in your Terraform configuration.</li>
@@ -1542,7 +1516,7 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 
 <p>If you are using your local. The <code class="language-plaintext highlighter-rouge">tfdotfile</code> is sitting there. <br />You can attack <code class="language-plaintext highlighter-rouge">terraform apply</code> directly.</p>
 
-<h2 id="why-use-remote-state-storage">Why Use Remote State Storage?</h2>
+<h2 id="why-use-remote-state-storage">Why Use Remote State Storage</h2>
 <p>The truth is we never want to responsible for that file.</p>
 
 <p>We may lose it. Also We don’t want anyone to see it.</p>
@@ -1565,7 +1539,7 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
 
 <p>If you followed this, ignore the provision resource example resources. <br />I am your example..</p>
 
-<h3 id="organizations-projects-and-workspaces">Organizations, Projects, and Workspaces?</h3>
+<h3 id="organizations-and-projects-and-workspaces">Organizations and Projects and Workspaces</h3>
 
 <p>Terraform Cloud organizes your infrastructure into these three levels:</p>
 
@@ -1579,7 +1553,7 @@ The plan is not smart enough. Be careful. You could get a green pass and then ge
   <tbody>
     <tr>
       <td style="text-align: right"> </td>
-      <td> </td>
+      <td>———————</td>
     </tr>
   </tbody>
 </table>
@@ -1636,14 +1610,14 @@ We want only to see stuff.</p>
 
 <p>Now you should have ur workspace listed.</p>
 
-<p>In case you are confused.</p>
+<p>👇 In case you are confused. Give a click.</p>
 
 <p><img src="/assets/0.7.0/use-this-if-u-stuck.png" alt="Tricky just click it" /></p>
 
 <h2 id="create-a-project">Create a Project</h2>
 
 <ol>
-  <li>From the top right corner, click “New” and select “Project” to create a new project for our bootcamp.
+  <li>From the top right corner, click <strong>New</strong> and select <strong>Project</strong> to create a new project for our bootcamp.
     <blockquote>
       <p>We dont have to but lets make things in its theme.</p>
     </blockquote>
@@ -1684,36 +1658,34 @@ We want only to see stuff.</p>
  }
   }
 </code></pre></div>    </div>
+    <p>We thought we needed <a href="https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate">the remote block</a> but its using the cloud block.</p>
+  </li>
+  <li>Observe how It was <a href="https://developer.hashicorp.com/terraform/language/settings/backends/remote">Back in the days;</a>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  backend "remote" {
+ hostname = "app.terraform.io"
+ organization = "yayaintfcloud"
+
+ workspaces {
+   name = "terra-house-2023"
+</code></pre></div>    </div>
+  </li>
+  <li>Configure as required. Now <strong>it is more neat;</strong>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">cloud</span> <span class="p">{</span>
+ <span class="nx">organization</span> <span class="p">=</span> <span class="s2">"yayaintfcloud"</span>
+
+ <span class="nx">workspaces</span> <span class="p">{</span>
+   <span class="nx">name</span> <span class="p">=</span> <span class="s2">"terra-house-2023"</span>
+ <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
   </li>
 </ol>
 
-<p>We thought we needed <a href="https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate">the remote block</a> but its using the cloud block.</p>
+<p>Make sure its looks like this☝️</p>
 
-<p><a href="https://developer.hashicorp.com/terraform/language/settings/backends/remote">Back in the days;</a></p>
+<h3 id="configure-tf-cloud-with-gitpod-using-token">Configure TF Cloud With Gitpod using Token</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  backend "remote" {
-    hostname = "app.terraform.io"
-    organization = "yayaintfcloud"
-
-    workspaces {
-      name = "terra-house-2023"
-</code></pre></div></div>
-
-<p>Now it is easier for configuration;</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  cloud {
-    organization = "yayaintfcloud"
-
-    workspaces {
-      name = "terra-house-2023"
-    }
-  }
-</code></pre></div></div>
-
-<p>Make sure its looks like this.</p>
-
-<h3 id="resolved-configure-tf-cloud-with-gitpod-token">RESOLVED: Configure TF Cloud With Gitpod (Token)</h3>
-
+<p>(Resolved)</p>
 <ol>
   <li>Go back to your CLI and run to authenticate with terraform cloud;
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform login
@@ -1816,7 +1788,7 @@ We will then go ahead and automate it in <br />our <code class="language-plainte
 </ul>
 
 <p>We will also extend the token’s validity to 30 days for added convenience.<br />
-Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in our week 1 of the Terraform Beginner Bootcamp.</p>
+Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in our <em>Week Zero</em> of the Terraform Beginner Bootcamp.</p>
 
 <h3 id="design-the-bash-script">Design the Bash Script</h3>
 
@@ -1878,7 +1850,7 @@ Welcome to <code class="language-plaintext highlighter-rouge">0.8.0</code> in ou
   </li>
 </ol>
 
-<p>Great progress! Let’s pause for a moment.</p>
+<p><strong>Great progress!</strong> Let’s pause for a moment.</p>
 
 <p>Before proceeding, there are a few more things we need to set up.</p>
 
@@ -1997,7 +1969,7 @@ cat /home/gitpod/.terraform.d/credentials.tfrc.json
 
 <p><strong>Verify by restarting your workspace to ensure that the file contains your token.</strong></p>
 
-<h1 id="a-terraformer-tf-alias">A Terraformer <code class="language-plaintext highlighter-rouge">tf</code> Alias</h1>
+<h1 id="a-terraformer-tf-alias">A Terraformer tf Alias</h1>
 
 <p>We’ll walk you through creating an alias for Terraform, making it more convenient to use.</p>
 
@@ -2011,7 +1983,7 @@ cat /home/gitpod/.terraform.d/credentials.tfrc.json
 
 <p>We’ll cover how to manually set up the alias and create a bash script to automate the process.</p>
 
-<h3 id="section-1-manual-alias-setup">Section 1: Manual Alias Setup</h3>
+<h3 id="section-1-manual-alias-setup"><strong>Section 1</strong> Manual Alias Setup</h3>
 
 <p><strong>Step 1: Accessing Your Bash Profile</strong>
 To create an alias for Terraform manually, you need to edit your Bash profile.</p>
@@ -2041,7 +2013,7 @@ After adding the alias, you need to update your Bash profile. Run this command:<
 </code></pre></div></div>
 <p>Now, you have successfully set up the Terraform alias manually.</p>
 
-<h3 id="section-2-automating-alias-setup-with-a-bash-script">Section 2: Automating Alias Setup with a Bash Script</h3>
+<h3 id="section-2-automating-alias-setup-with-a-bash-script"><strong>Section 2</strong> Automating Alias Setup with a Bash Script</h3>
 
 <p><strong>Step 1: Creating a Bash Script</strong>
 To automate the alias setup, you can create a bash script. Here’s how:</p>
@@ -2113,7 +2085,7 @@ Now, you can execute the script to add the alias to your <code class="language-p
 </code></pre></div></div>
 <p>The script will automatically add the Terraform alias to your Bash profile and update it.</p>
 
-<h3 id="section-3-using-the-alias-in-gitpod">Section 3: Using the Alias in Gitpod</h3>
+<h3 id="section-3-using-the-alias-in-gitpod"><strong>Section 3</strong> Using the Alias in Gitpod</h3>
 
 <p><strong>Step 1 : Integrating with Gitpod</strong>
 If you’re using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it’s available in both terminals.</p>
@@ -2148,8 +2120,18 @@ Now, every time you start a Gitpod workspace;
 
 <p>This is <code class="language-plaintext highlighter-rouge">0.9.0</code> making your Terraform workflow more efficient and user-friendly.</p>
 
+<h3 id="week-cipher-conquests">Week Cipher Conquests</h3>
+<p>This initial ignite been an exhilarating and enlightening experience as we delved into the foundational aspects of AWS and Terraform.</p>
+
+<p>We hope you didn’t overlook anything, or else <strong>I might get upset</strong>.</p>
+
+<p>The instructors have been exceptionally dedicated, leaving no stone unturned to ensure that we grasp every essential concept.</p>
+
+<p>As we move to the next chapter, I look forward to <strong>celebrating your progress</strong>.</p>
+
+<p>Let’s go. <strong>One</strong> step more.</p>
 <blockquote>
-  <p><a href="/journal/week1.html">Proceed To Week One.</a></p>
+  <p><a href="/journal/week1.html">Proceed To Week <strong>One</strong>.</a></p>
 </blockquote>
 
         </section>
