@@ -1,10 +1,10 @@
 # Week¹ of Transformation
 The fun truly begins in this week. 
 
-Once we've acquired the basic capabilities to advance from week zero.  <br>
-We'll delve into more aspects of **Terraform** and **AWS**. 
+Once we've acquired the basic capabilities to advance from week zero. <br>
+We'll delve into more, more aspects of **Terraform** and **AWS**. 
 
-> [Take me out](../README.md)
+> [Take me out Briefly..](../README.md)
 
 
 We will undertake a comprehensive Terraform module refactoring. <br>We will also harness the power of tf variables. 
@@ -20,8 +20,8 @@ This to name just a few, the rest for you to explore.
     + [Migrating from Terraform Cloud Back to Local State](#from-terraform-cloud-back-to-local-state)
     + [Local Migration Test Strategies](#local-migration-test)
     + [Mastering Terraform Variables](#terraform-variables-101)
-    + [Flexible Variable Input via CLI and Files Flag](#--variable-input-via-cli-and-files-flag---)
-    + [Utilizing Variable Files (.auto.tfvars and .auto.tfvars.json)](#--variable-files----autotfvars-and-autotfvarsjson-)
+    + [Flexible Variable Input via CLI and Files Flag](#variable-input-via-cli-and-files-flag)
+    + [Utilizing Variable Files (.auto.tfvars and .auto.tfvars.json)](#terraform-variable-files)
 - [Navigating Terraform Config Drift](#terraform-config-drift)
   * [Recovering Lost Bucket State](#bucket-state-is-lost)
   * [Reintroducing the Random Element](#get-random-back)
@@ -33,7 +33,7 @@ This to name just a few, the rest for you to explore.
     + [Elevating Your Root Module: A Refactoring Guide](#refactoring-the-root-module)
     + [Modules as Reliable Sources](#modules-are-sources)
     + [The Art of Module Testing](#start-testing-your-module)
-      - [1.1. Handling Variables and Validators in Nested Modules](#11-handling-variables--validators-in-nested-modules)
+      - [1.1. Handling Variables and Validators in Nested Modules](#11-handling-variables-validators-in-nested-modules)
       - [1.2. Resolving Vars at the Root/Module Level](#12-resolve-vars-root-mod)
       - [2.1. Mastering Outputs in Nested Modules](#21-outputs-in-nested-modules)
       - [2.2. Skillful Resolution of Outputs](#22-resolve-outputs)
@@ -42,20 +42,20 @@ This to name just a few, the rest for you to explore.
   * [Background Insights](#background)
     + [Hosting Your First HTTP Server Like a Pro](#host-your-first-http-server)
     - [Why Use S3 for Hosting](#use-s3-for-that-instead)
-    - [STEP 1: Creating an S3 Bucket for Static Website Hosting](#step-1---create-an-s3-bucket-for-static-website-hosting)
-    - [Step 2: Uploading Your Static Website Files with Ease](#step-2--upload-your-static-website-files)
-    - [Step 3: Configuring Your S3 Bucket for Static Website Hosting](#step-3--configure-your-s3-bucket-for-static-website-hosting)
-    - [Step 4: Crafting an AWS CloudFront Distribution](#step-4--create-an-aws-cloudfront-distribution)
+    - [Step 1: Creating an S3 Bucket for Static Website Hosting](#step-1-create-an-s3-bucket-for-static-website-hosting)
+    - [Step 2: Uploading Your Static Website Files with Ease](#step-2-upload-your-static-website-files)
+    - [Step 3: Configuring Your S3 Bucket for Static Website Hosting](#step-3-configure-your-s3-bucket-for-static-website-hosting)
+    - [Step 4: Crafting an AWS CloudFront Distribution](#step-4-create-an-aws-cloudfront-distribution)
   * [Translating It into Terraform Code](#code-that-in-terraform)
     + [Journey Back to Home](#back-to-home)
     + [Verification Straight from AWS](#verify-from-aws)
     + [Discover Your Website Endpoint](#website-endpoint)
   * [Delving into Files Content Touchpoints](#files-content-touchpoint)
-    + [Harnessing the Power of `aws_s3_object`](#using--aws-s3-object-)
-    + [Creating and Managing Files with `path` Wisdom](#create-those-files-and-manage-with--path-)
-      - [A: Navigating Your Real Path](#a--avoid-your-real-path)
-      - [B: Detecting File Changes Like a Pro](#b--detect-file-changes)
-    + [Embracing Terraform Vars Over `path.root`](#terraform-vars-instead-of--pathroot-)
+    + [Harnessing the Power of `aws_s3_object`](#using-aws-s3-object)
+    + [Creating and Managing Files with `path` Wisdom](#create-those-files-and-manage-with-path)
+      - [A: Navigating Your Real Path](#a-avoid-your-real-path)
+      - [B: Detecting File Changes Like a Pro](#b-detect-file-changes)
+    + [Embracing Terraform Vars Over `path.root`](#terraform-vars-instead-of-pathroot)
       - [Capturing Bonus One](#bonus-one-captured)
       - [Capturing Bonus Two](#bonus-two-captured)
       - [Capturing Bonus Three](#bonus-three-captured)
@@ -64,14 +64,14 @@ This to name just a few, the rest for you to explore.
       + [Fine-Tuning Origin Configuration](#origin-configuration)
     + [Hunting Down CloudFront in the Registry](#find-cloudfront-in-registry)
   * [Masterful Resource Structuring](#resource-structuring)
-    + [Defining Required Variables in `resource-cdn.tf`](#specifying-required-variables--resource-cdntf-)
-    + [Crafting Origin Access Control Configuration in `resource-cdn.tf`](#origin-access-control-config--resource-cdntf-)
-    + [Adding the Bucket Policy Block with Finesse in `resource-storage.tf`](#adding-the-bucket-policy-block--resource-storagetf-)
+    + [Defining Required Variables in `resource-cdn.tf`](#specifying-required-variables-resource-cdntf)
+    + [Crafting Origin Access Control Configuration in `resource-cdn.tf`](#origin-access-control-config-resource-cdntf)
+    + [Adding the Bucket Policy Block with Finesse in `resource-storage.tf`](#adding-the-bucket-policy-block-resource-storagetf)
       - [Navigating the Data Block](#data-block)
-      - [Why Does URL Equal Download? Unveiled](#why-url-equals-download-)
+      - [Why Does URL Equal Download? Unveiled](#why-url-equals-download)
     + [Efficiently Clearing CloudFront Cache](#clear-cloudfront-cache)
       - [Troubleshooting Like a Pro](#troubleshooting)
-      - [Considerations for `1.5.0`](#-150--considerations)
+      - [Considerations for `1.5.0`](#150-considerations)
 - [Terraform Content Versioning Strategies](#terraform-content-versioning)
     + [In the Realm of Bootcampers](#bootcamper-context)
   * [Versioning Your Website Content](#versioning-your-website)
@@ -95,15 +95,17 @@ This to name just a few, the rest for you to explore.
     + [Getting Started with Assets](#getting-started-with-assets)
       - [Resolving the Thought Process](#resolved-thought)
       - [Navigating the Terraform Console](#terrafoorm-console)
-      - [Harnessing `for_each` Configuration](#-for-each--configuration)
+      - [Harnessing `for_each` Configuration](#for-each-configuration)
     + [Testing and Verification Like a Pro](#10-testing-and-verification)
     + [Unlocking the CamperBonus](#camperbonus)
 - [Visual Delights with Git Graph](#visuals-with-git-graph)
-    + [Exploring Available Extensions](#do-you-have-extensions-)
+    + [Exploring Available Extensions](#do-you-have-extensions)
+
 
 # Design Your Terraform Modules
 
-Welcome to 1.0.0 of our week one of the bootcamp where we delve into structuring our Terraform root modules.
+<br>
+Welcome to `1.0.0` of our week one of the bootcamp where we delve into structuring our Terraform root modules.
 
 We've already begun with `main.tf`. we can accomplish everything within that single file. We can also call that a module.
 
@@ -120,9 +122,9 @@ The key is that when we adopt the correct approach to module design, our code wi
 
 Others can take that and adapt it to suit their specific requirements. <br>And this is beautiful!
 
-### Terraform Directory Layout
+## Terraform Directory Layout
 
-1. Create the following strucutre in your project root.
+- Create the following strucutre in your project root 👇
 ```sh
 🌳 Module Components:
 ├── 📄main.t: The Core Configuration
@@ -151,8 +153,7 @@ Others can take that and adapt it to suit their specific requirements. <br>And t
 
 2. Please proceed with migrating the `tf` block for providers to the `providers.tf` file.
 3. Let's relocate the output configurations to the `output.tf` file.
-4. Bring back the tags we [took out previously.]() 
-
+4. Bring back the tags we [took out previously.](honestly-i-forgot-:-D) <br>
 We will use it back to create an additional custom variable.
 ```hcl
   tags = {
@@ -227,7 +228,7 @@ Failed because we have to configure our aws credentials in terraform cloud. We d
 
 You can check the process in real time.
 
-### Local Migration Test
+## Local Migration Test
 
 We considered the migration is possible now.
 
@@ -309,7 +310,7 @@ I considered adding this part to showcase the different ways you can deal with v
 
 We have already showcased some of them.
 
-### **Variable Input via CLI and Files Flag:**
+### Variable Input via CLI and Files Flag
 
 1. Create a normal variable block wherever required;
 ```
@@ -337,7 +338,9 @@ tf apply -var-file=variables.json
 
 Terraform will use the values specified in the variables.json file to override the defaults defined in your example.tf configuration. 
 
-### **Variable Files** (.auto.tfvars and .auto.tfvars.json)
+### Terraform Variable Files
+
+(.auto.tfvars and .auto.tfvars.json)
 
 This is cool because it helps terraform knows where to go find vars first.
 
@@ -499,11 +502,9 @@ bucket = random_string.bucket_name.result
 bucket = var.bucket_name
 ```
 6. In  bucket resource change its name from `example` to `website_bucket`.
-
-```hcl
-resource "aws_s3_bucket" "example" 
-
-resource "aws_s3_bucket" "website_bucket" 
+```tf
+    resource "aws_s3_bucket" "example" 
+    resource "aws_s3_bucket" "website_bucket" 
 ```
 7. Update the ouptut to not use the random provider and to call our new bucket name.
 ```hcl
@@ -514,21 +515,15 @@ output "bucket_name" {
 ```hcl
 bucket_name="from-aws"
 ```
-9. Define that variable within the variables.tf file.
-
-
-Ask GPT to generate a Terraform variable definition for the bucket name with validation logic to ensure it conforms to the requirements for a valid AWS bucket name.
-
-
-- Start with the variable definition with a great description;
-
+9. Define that variable within the variables.tf file.<br><br>
+Ask GPT to generate a Terraform variable definition for the bucket name with **validation logic**.<br> Meaning. Ensure **it conforms** to the requirements for a valid AWS bucket name.<br><br>
+10. Start with the variable definition with a great description;
 ```hcl
 variable "bucket_name" {
   description = "The name of the S3 bucket"
   type        = string
 ```
-- Go ahead with the validation after considering [the following rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
-
+11. Go ahead with the validation after considering [the following rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html).
 ```hcl
   validation {
     condition     = (
@@ -538,13 +533,11 @@ variable "bucket_name" {
     error_message = "The bucket name must be between 3 and 63 characters, start and end with a lowercase letter or number, and can contain only lowercase letters, numbers, hyphens, and dots."
   }
 ```
-
-- **Together, fogether to look like this;**
+12. **Together, fogether to look like this;**
 ```tf
 variable "bucket_name" {
   description = "The name of the S3 bucket"
   type        = string
-
   validation {
     condition     = (
       length(var.bucket_name) >= 3 && length(var.bucket_name) <= 63 && 
@@ -555,7 +548,7 @@ variable "bucket_name" {
 }
 ```
 
-### Test Drifted Test
+## Test Drifted Test
 Make sure you deleted previous S3s.
 1. Try giving a bucket name that violates the rule e.g. Yaya2DevOps
 2. Give a tf plan a try
@@ -575,14 +568,16 @@ That was our `1.2.0` configuration drift.
 
 
 |Consider Regex for vars when validating inputs.|
-|---:|
-|Yes Will Do!|
+|---|
+|And Yes we did just this!|
+
+<br>
 
 # The Terrahouse Module 
 
-We will walk through the process of creating a Terrafohouse Nested Module and migrate our S3 bucket. This includes experiencing output/vars calls.
+We will walk through the process of creating a Terrafohouse Nested Module and migrate our S3 bucket. <br>This includes experiencing **output/vars calls**.
 
-To Recap Just For You we'll be;
+To Recap Just, **For You**, we'll be;
 - Creating our initial nested module 
 - Transferring our S3 bucket from the root module to the module.
 - Experiencing with output and variable calls working with nested modules.
@@ -625,7 +620,7 @@ In this directory, we will have the following essential files and folders.
 |👨‍💻|Anton Babenko is known for creating many Terraform modules.|
 |✔️| We can use an Apache License from his work.|
 
-He also [likes to travel](https://twitter.com/antonbabenko/status/1208503560733896706). I mean yeah. Me too!
+He also [likes to travel](https://twitter.com/antonbabenko/status/1208503560733896706). I mean yeah. ***M**e* too**!**
 
 To continue remmember;
 - Each module requires a specified provider. 
@@ -666,7 +661,7 @@ module "terrahouse_aws" {
 
 These can be local paths-our case, GitHub repos, or the Terraform Registry.. 
 
-> Check it up. The link; I provided you.
+> Check it up. The link; I provided you with..
 
 ## Start Testing Your Module
 We linked our module and we can go ahead and give it a try.
@@ -682,16 +677,16 @@ It is telling that our AWS bloc is empty new stuff. <br>Not that deal-Just get r
 
 The plan is an error as expetcted. And the truth will follow;
 
-#### 1.1. Handling Variables, Validators In Nested Modules
+### 1.1. Handling Variables Validators In Nested Modules
 
 When working with variables and validators, keep in mind:
 - Variables need to be defined in both the module and the root.
 - Validators, which are already integrated into the module, don't need to be included in the root. 
 - Terraform will detect validators automatically.
 
-#### 1.2. Resolve Vars Root/Mod
+### 1.2. Resolve Vars Root Mod
 
-1. To resolve that, simply define the variables in the root and give it description.
+To resolve that, **simply define the variables** in the **root** and give it *description*.
 ```hcl
 variable "user_uuid" 
 {
@@ -699,17 +694,18 @@ variable "user_uuid"
 }
 ```
 
-|💡| If the naming is accurate, it will gather more about the module|
+|💡| If the naming is accurate..|
 |---|---|
-|💡|💡|
-2. Now that you know, do the same for the bucket.
+|💡💡|It will gather more about the module like magic.|
+
+1. Now that you know, do the same for the bucket.
 ```hcl
 variable "bucket_name" 
 {
  type = string
 }
 ```
-3. Let's run `terraform plan` to observe the plan without errors 
+2. Let's run `terraform plan` to observe the plan without errors 
 
 Now everything works smoothly.<br> But I see no outputs. 
 
@@ -717,35 +713,33 @@ I am sure I configured my module...
 
 ![Bucket without Output Planned](../assets/1.3.0/vars-works.png)
 
-#### 2.1. Outputs In nested Modules
+Chill. The turth will follow.
+
+## 2.1. Outputs In nested Modules
 
 After applying the configuration, you might notice that outputs aren't visible. 
 
 - Run `terraform output` to verify.
 Nothing to see..Because we have it only in the module as well.
 
-#### 2.2. Resolve Outputs
+### 2.2. Resolve Outputs
 Outputs defined within a nested module allow us to access them at that level. 
 
 To see outputs, they must also be added to the root output. The difference is now we will get it from the module.
 
 1. You can access the nested module's output like this: `module.name-dir.bucket_name`.
-
 2. Give it a great description;
 ```hcl
   description = "Bucket name for our static website hosting"
 ```
-
 3. Combine code to be as follows;
-
 ```hcl
 output "bucket_name" {
   description = "Bucket name for our static website hosting"
-
   value = module.terrahouse_aws.bucket_name
 }
 ```
-> Random; nested for a good reason, because its literally nested wihtin this project.
+**Reflected Thought**; nested for a good reason, because its literally nested wihtin this project.
 
 ## 10. Terraform Refresh and Wrap
 
@@ -811,9 +805,9 @@ $ http-server
 
 Now, we aim to take this to s3.
 
-### Use S3 For That Instead
+## Use S3 For That Instead
 
-#### STEP 1 : Create an S3 Bucket for Static Website Hosting
+### **STEP 1**  Create an S3 Bucket for Static Website Hosting
 
 1. Log in to your AWS Console.
 2. Navigate to the S3 service.
@@ -821,7 +815,7 @@ Now, we aim to take this to s3.
 4. Choose a unique name for your bucket (e.g., "ya-ya") and select a region.
 5. Leave the default settings for the rest of the options and click "Create bucket."
 
-#### Step 2: Upload Your Static Website Files
+### **Step 2** Upload Your Static Website Files
 
 1. In the S3 bucket you just created, navigate to the "Upload" button.
 2. Select the "index.html" file from your local system and upload it to the S3 bucket.
@@ -830,9 +824,9 @@ I did it via the CLI.
 
 ![Upload From CLI](../assets/1.4.0/clickops/index-to-bucket.png)
 
-I suggest you go do it too.
+I suggest **you go do it too.**
 
-#### Step 3: Configure Your S3 Bucket for Static Website Hosting
+### **Step 3** Configure Your S3 Bucket for Static Website Hosting
 
 1. In your S3 bucket, click on the "Properties" tab.
 2. Scroll down to the "Static website hosting" card and click "Edit."
@@ -845,7 +839,7 @@ I suggest you go do it too.
 
 ![Issue CDN required](../assets/1.4.0/clickops/issue.png)
 
-#### Step 4: Create an AWS CloudFront Distribution
+### **Step 4** Create an AWS CloudFront Distribution
 
 We want to use AWS CloudFront as a Content CDN to distribute our website
 
@@ -915,10 +909,12 @@ I'll tell you why.<br><br>
 |❓ |why gpt gave is the wrong thing?|
 |✅ |The aws provider for 5.0 doesnt exist in gpt.|
 
-GPT is not doing it to nowdays. 
+<br>
+
+GPT **is not doing it** to nowdays. 
 
 I personally don't find terraform changes a lot. <br>
-But the provider change year in a year.
+But the provider change year in a year.— **Andrew Brown**
 
 ### Back to Home
 
@@ -928,19 +924,15 @@ But the provider change year in a year.
 3. Click on AWS and see the list.
 4. Get the `AWS_S3_Bucket_Website_Configuration`
 5. [Get it from there](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration) instead.
-
 ```hcl
 resource "aws_s3_bucket_website_configuration" "example" {
   bucket = aws_s3_bucket.example.id
-
   index_document {
     suffix = "index.html"
   }
-
   error_document {
     key = "error.html"
   }
-
   routing_rule {
     condition {
       key_prefix_equals = "docs/"
@@ -951,20 +943,20 @@ resource "aws_s3_bucket_website_configuration" "example" {
   }
 }
 ```
-- Change the example name to `website_configuration`
-- Reference to our bucket from the module;
-
+6. Change the example name to `website_configuration`
+7. Reference to our bucket from the module;
 ```hcl
 resource "aws_s3_bucket_website_configuration" "website_configuration" 
-
 {
   bucket = aws_s3_bucket.website_bucket.bucket
 }
 ```
-- Try planning and it should now work;
-- tf apply to have the website hosting.
+8. Try planning and it should now work;
+9. tf apply to have the website hosting.
 
-> Many people mention GPT, but it's not the solution for everything, my friend.
+Many people say **GPT is god** etc, but it's not the solution for everything, my friend.
+
+This statement is just because this thing is really doing a lot of things already.
 
 
 ### Verify From AWS
@@ -975,7 +967,7 @@ resource "aws_s3_bucket_website_configuration" "website_configuration"
 4. Scroll down down down.
 5. You'll find the url.
 
-This is good. <br>But it wont work.
+This is good. <br>But it **wont work**.
 
 
 #### Website Endpoint
@@ -1035,32 +1027,39 @@ We will use tf for all three but isnt the best case in production.
 We will also discover the existence of provisioners, which allow you to execute commands either remotely or locally.
 
 
-### Using `aws_s3_object`
+### Using **aws_s3_object**
 1. Go to the AWS registry and take `aws_s3_object` (not `aws_s3_bucket_object`).
 2. Specify the bucket, key, and source for your `index.html`.
-
 ```hcl
 resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "index.html"
   source = var.index_html_filepath
-
   # Ignore this for now
   #etag = filemd5(var.index_html_filepath)
 }
 ```
-- Repeat for `error.html` configuration. 🔁 
-
+3. Repeat for `error.html` configuration. 🔁 
 ```tf
 resource "aws_s3_object" "error_html" {
   bucket = aws_s3_bucket.website_bucket.bucket
   key    = "error.html"
   source = var.error_html_filepath
-
   # Ignore this for now
   #etag = filemd5(var.index_html_filepath)}
 ```
-### Create Those Files and Manage with `path`
+
+4. Keep it looking as follow;
+```tf
+resource "aws_s3_object" "error_html" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "error.html"
+  source = var.error_html_filepath
+```
+
+You need to learn the etag progressively.
+
+## Create Those Files and Manage with path
 
 Let's explore whether Terraform console can be utilized interactively for troubleshooting purposes.
 
@@ -1090,7 +1089,8 @@ Yes!
 Two considerations come up.
 - A: You dont want to hardcode your path values.
 - B: If I make changes to the file does it work.
-#### A: Avoid Your Real Path
+
+### **A** Avoid Your Real Path
 ⚠️ You should avoid hardcoding values like this to ensure the module's portability.
 
 |💡|One approach we can employ involves...|
@@ -1108,7 +1108,7 @@ Two considerations come up.
 > Make sure you dont do it for `main.tf` (our mistake)
 3. Plan it and apply it, it should now give a file!
 
-#### B: Detect File Changes
+### **B** Detect File Changes
 
 So this is cool. With what we reached we can take files to the s3 but does it capture the data inside?
 
@@ -1145,7 +1145,7 @@ condition = fileexists(var.error_html_filepath)
 The file will be correctly recognized.
 
 
-### Terraform Vars Instead of `path.root`
+## Terraform Vars Instead of path.root
 
 We have the `path.root` approach, but it's better to use a Terraform variable. 
 
@@ -1153,26 +1153,23 @@ This allows us to provide flexibility to the module, enabling anyone to change t
 
 Let's set up a variable for that purpose.
 
-- Add the variables for index file at the module level within the `variables` block;
-
+1. Add the variables for index file at the module level within the `variables` block;
 ```tf
 variable "index_html_filepath" {
   description = "The file path for index.html"
   type        = string
-
   validation {
     condition     = fileexists(var.index_html_filepath)
     error_message = "The provided path for index.html does not exist."
   }
 }
 ```
-- Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.<br>
+2. Add the `index_html_path="/Workspace/etc/public/index"` and the error source to `TFVARS` and `TFVARS SAMPLE`, along with the new UUID.<br>
 (include the entire path; it's perfectly fine).
 ```sh
 index_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/index.html"
 ```
-
-- Add the vars for the files to the root level 
+3. Add the vars for the files to the root level 
 ```tf
 variable "index_html_filepath" {
   type = string
@@ -1187,7 +1184,6 @@ variable "index_html_filepath" {
 variable "error_html_filepath" {
   description = "The file path for error.html"
   type        = string
-
   validation {
     condition     = fileexists(var.error_html_filepath)
     error_message = "The provided path for error.html does not exist."
@@ -1204,8 +1200,8 @@ variable "error_html_filepath" {
 ```
 error_html_filepath="/workspace/terraform-beginner-bootcamp-2023/public/error.html"
 ```
-4. Run tf plan and  see.<br>
-We're encountering an error because we need to pass the variables to the root main.tf for both index and error.<br><br>
+4. Run tf plan and  see.<br><br>
+We're encountering an error because we need to pass the variables to the root `main.tf` for both index and error.<br><br>
 5. Do nothing but Run tf plan and see again.
 
 Now it works..after just reapplying. 
@@ -1216,7 +1212,7 @@ You should remain confident.<br>
 It may give false signals due to potential latency issues or other factors very much unknown.
 
 
-#### Bonus One Captured
+### Bonus One Captured
 We played more with tags briefly; I'll write that down for you.
 
 1. To tag old stuff run; learn [where to get the sha](https://github.com/yaya2devops/aws-cloud-project-bootcamp/blob/main/journal/resources/tagging.md).
@@ -1235,7 +1231,7 @@ git tag 1.1.0 <correct_commit_sha>
 ```
 git push origin 1.1.0
 ```
-#### Bonus Two Captured
+### Bonus Two Captured
 
 Also we did this again so I must remember you;<br>
 You can hold on your work go somewhere else (diff branch, tag) and get back.
@@ -1249,7 +1245,7 @@ git stash save "Your stash message"
 git stash apply
 ```
 
-#### Bonus Three Captured
+### Bonus Three Captured
 
 For more alias and fun stuff to write your CLI;
 
@@ -1272,12 +1268,11 @@ alias tfpr='terraform plan -refresh-only'
 
 ![tfp alias hm](../assets/1.4.0/tfp-hh.png)
 
-
 Some campers assets for the `1.4.0` period;
 - [Visual on Common tf files](https://cdn.discordapp.com/attachments/1138488134003335199/1156340652829835284/Main.tf_2.png?ex=6515ef27&is=65149da7&hm=ccc1bbea386d9c88bf438dba5960147f5110f209e40052698465bf0ccf9cb4c0&)
 - [tf cloud, workspace, project?](https://cdn.discordapp.com/attachments/1138488134003335199/1156451578010685530/terraform_cloud.png?ex=6515adb6&is=65145c36&hm=c04b78eacccec15d85349061f51db12e7fe3af1edca24fed78fa96eef8662c1e&)
 
-#### Concluding
+### Concluding
 A brief conclusion and what to expect next;
 We can see the content, it changes on apply we still cant access it;
 - Discuss the need for a bucket policy.
@@ -1414,7 +1409,7 @@ Note that this won't work alone because it expects configuration within the `ori
 
 Lets do it.
 
-### Specifying Required Variables `resource-cdn.tf`
+### Specifying Required Variables **resource-cdn.tf**
 We will now apply a use case for **locals.** The block serves as a method for passing local variables.
 
 Note that these in the block from registry require definitions.  
@@ -1438,7 +1433,7 @@ locals {
 }
 ```
 
-### Origin Access Control Config `resource-cdn.tf`
+### Origin Access Control Config **resource-cdn.tf**
 
 
 1. Utilize the `aws_cloudfront_origin_access_control` block [from the registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control#example-usage).
@@ -1468,7 +1463,7 @@ That should be set, whats left is bucket policy ony..
 
 5. change the name of the block to `default`.
 
-### Adding the Bucket Policy Block `resource-storage.tf`
+### Adding the Bucket Policy Block **resource-storage.tf**
 I spent a considerable amount of time obtaining that policy.<br> Should I give it to you? 
 
 Let's help you create it yourself.
@@ -1566,7 +1561,7 @@ We have conditions that require us to narrow it down to either 'distru' or 'acc'
 
 This is an effective way to use data.
 
-#### Data Block
+### Data Block
 
 
 1. When navigating to the AWS provider and exploring the registry, you will find a comprehensive list of data sources available.
@@ -1590,7 +1585,7 @@ output "caller_user" {
   value = data.aws_caller_identity.current.user_id
 }
 ```
-#### Get account ID
+### Get account ID
 Consequently, we can easily retrieve the account ID.<br>
 4. Add the following to the main.tf in ur module.
 ```
@@ -1631,7 +1626,7 @@ I am just saying. If not so, remake step 10.
 It worked we have an URL, but the site is not launching..<br> It is downloading us the `index.html` file.
 
 
-#### Why URL equals Download?
+### Why URL equals Download
 
 The mystery lies in the fact that while we referenced the file, we didn't specify its file type to Terraform.
 
@@ -1639,21 +1634,18 @@ The mystery lies in the fact that while we referenced the file, we didn't specif
 1. Navigate to the registry: `aws => s3_object` 
 2. find the "content_type" argument reference on the right table of contents (TOC).
 3. In the resource block for `"aws_s3_object" "index.html"`, include `content_type="text/html"`.
-
 ```hcl
 resource "aws_s3_object" "index_html" {
-
   content_type = "text/html"
   }
 ```
-- Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
+4. Similarly, for `"aws_s3_object" "error.html"`, add `content_type="text/html"` as well.
 ```hcl
 resource "aws_s3_object" "error_html" {
-
   content_type = "text/html"
 }
 ```
-- tfp and tfa and check the link again.
+5. tfp and tfa and check the link again.
 
 |❓|Still downloading the file..Why|
 |---:|:---|
@@ -1708,7 +1700,7 @@ We've explored various effective strategies to overcome numerous challenges.
 If you've been following along, I must commend your excellent efforts!
 
 
-#### `1.5.0` Considerations
+#### **1.5.0** Considerations
 
 CloudFront can be quite a headache and It truly demands significant time to spin up. 
 - Consider using the `retain_on_delete` flag.
@@ -1755,21 +1747,17 @@ content_version=1
   content_version = var.content_version
 ```
 3. Implement a Terraform variable for `content_version` that only accepts positive integers starting from one in your modules `variables.tf`.
-
 ```hcl
 variable "content_version" {
   description = "The content version. Should be a positive integer starting at 1."
   type        = number
-
   validation {
     condition     = var.content_version > 0 && floor(var.content_version) == var.content_version
     error_message = "The content_version must be a positive integer starting at 1."
   }
-
 }
 ```
-
-- Dont miss to Include **that in the variable call** in ``variables.tf`` in the module level.
+4.  Include **that in the variable call** in ``variables.tf`` in the module level.
 ```hcl
 variable "content_version" {
   type        = number
@@ -1783,30 +1771,28 @@ It enables you to respond to various actions on a resource, such as its creation
 
 1. Navigate to the `resource-storage.tf` file.
 2. Look for the S3 resource lifecycle.
-
 ```hcl
  resource "azurerm_resource_group" "example" {
   # ...
-
   lifecycle {
     create_before_destroy = true
   }
 }
 ```
-- Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
+3. Add a lifecycle configuration to the `index.html` and `error.html` resources in s3 bucket object.
 ```hcl
   lifecycle {
     ignore_changes = [etag]
   }
 ```
-- Exclude the `etag` field within the lifecycle.
+4. Exclude the `etag` field within the lifecycle.
 ```hcl
     ignore_changes = [etag]
 ```
 
 Learn more about lifecycle in terraform [from here.](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
 
-### Test 101
+## Test 101
 Observe the behavior when changes are made:
 1. Comment both the lifecycle configurations.
 ```hcl
@@ -1822,7 +1808,7 @@ Observe the behavior when changes are made:
 
 This is ignoring the etag. <br>To make it so, we have to code the trigger.
 
-### **Triggering the Changes**
+## **Triggering the Changes**
 Our approach involves closely associating it with the respective resource. To trigger changes based on the content version, we'll use Terraform's `terraform_data` resource.
 
 Traditionally, you would associate a null resource and a provider.. in the way offered by HashiCorp.
@@ -1847,7 +1833,7 @@ resource "terraform_data" "content_version" {
 
 When we modify our version, it will be treated and managed in a manner similar to a resource.
 
-### Test 202
+## Test 202
 
 1. Run `terraform plan` and see if it actually decide to change it;<br>
 It does work because tf data never existed.<br>
@@ -1858,7 +1844,7 @@ But. It doesn't appear to be triggering the content as expected...<br><br>
 It also didn't incorporate the changes...
 
 
-### Test 303
+## Test 303
 Because we hadn't altered the version.
 
 1. let's update it to '2' in the tfvars file.
@@ -1869,7 +1855,7 @@ Because we hadn't altered the version.
 
 Still...Terraformers...
 
-### Test 404 
+## Test 404 
 The issue arises because we changed the variable in the tfvars file but didn't reference it in the module block in the our `main.tf` at the root level.
 
 1. Change content_version = 2 to e.g. var.content_version=3.
@@ -1883,10 +1869,11 @@ Notice that the updated version is correctly influencing the process.
 [Check it out!](https://d2nrp0gajz6owu.cloudfront.net/)
 ![Yeah Content Versioning works!](../assets/1.6.0/resolved.png)
 
-#### Conclusion
+### Conclusion
 We can now manage and trigger changes to our website more efficiently. <br>Each content version will be handled like a resource,
 
-This implementation won't trigger cache clearing in CloudFront. <br>This aspect will be addressed in version 1.7.0 of our project.
+- This implementation won't trigger cache clearing in CloudFront.
+- This aspect will be addressed in version `1.7.0` of our project.
 
 FYI again, Terraform is not be the optimal tool for this specific task but for the learning.
 
@@ -1894,11 +1881,11 @@ FYI again, Terraform is not be the optimal tool for this specific task but for t
 
 Welcome to the  process of invalidating cache using Terraform, with a focus on local execution. 
 
-But wait, with the latest Terraform version, cache invalidation seems elusive, right? Fear not, for we're about to unveil the solution.
+But wait, with the latest Terraform version, cache invalidation seems elusive, right? <br>Fear not, for we're about to unveil the solution.
 
-We will use Terraform data blocks and null resources to achieve this task.
+We will learn about Terraform data blocks and null resources to achieve this task.
 
-#### GPT  Mhh
+#### GPT  is again Mhh
 
 Lets get something out of GPT.
 ```
@@ -1923,8 +1910,7 @@ We aim to automate cache invalidation whenever our content changes, using a back
 |---:|:---|
 |✅ |Other tools like Ansible are better suited for these tasks.|
 
-Some companies are still engaged in this practice...
-
+Some companies are **still engaged** in this practice...
 
 Terraform is primarily used for managing the state of code rather than configuration management.
 
@@ -1938,7 +1924,7 @@ Terraform data blocks are the preferred method for managing data resources in Te
 Local execution using null resources can be useful when you need to run commands on your local machine. In this case, we will use local execution to trigger cache invalidation.
 
 
-## Implement Invalidation
+# Implement Invalidation
 
 We also want to activate a provisioner.<br>
 The local exec command runs on the **local machine** where ur running tf.
@@ -2038,21 +2024,17 @@ Perform the following steps to invalidate the cache:
 1. Run `terraform plan` to verify your changes.
 2. Run `terraform apply` to apply the changes and trigger the cache invalidation.
 3. Check the output to verify the new version and CloudFront distribution information.
-
 ![Distru along previous outputs we did set.](../assets/1.7.0/outputs-are-here.png)
-
-- Start visiting your cloudfront distribution.
-
+4. Start visiting your cloudfront distribution.
 ![Distru with cuter description](../assets/1.7.0/new-key-word.png)
-
-- Visit your CloudFront invalidation and observe that you have one set as directed in the command.
+5. Visit your CloudFront invalidation and observe that you have one set as directed in the command.
 
 [Verify The Accuracy](../assets/1.7.0/invalidation-evidence.png)
 ![Cache worked](../assets/1.7.0/invalid-console.png)
 
 The cache is applied as required.
 
-### Reverting Changes And More..
+## Reverting Changes And More..
 
 To back clean for our next version, revert the changes by running `terraform destroy` and setting the content version back to the previous value 1.
 
@@ -2064,7 +2046,7 @@ Consult some good stuff [we've done here.](https://raw.githubusercontent.com/yay
 And that's what `1.7.0` is for. The bootcamp is indeed a beginner level.
 
 
-## Terrahouse Asset Management
+# Terrahouse Asset Management
 
 Hey Terraformer, wrapping up our first week (technically second because we started from zero), we'll work on asset management process for our website to include images, JavaScript, and stylesheets and moree to make Terrahouse look impressive in TerraTown!
 
@@ -2078,7 +2060,10 @@ Computer files especially those with more visual are considered assets because o
 
 Videos are the highest form of asset over there.
 
-### Getting started with assets
+But you have to consider one critical point.<br>
+Text is foundation to everything online.
+
+## Getting started with assets
 1. Create an `assets` folder in your "public" directory.
 2. Drag images to the `public/assets` folder and integrate them into your HTML files.
 3. Preview the site by utilizing an HTTP server.
@@ -2089,7 +2074,7 @@ Videos are the highest form of asset over there.
 ```
 5. add the the `http-server` in the command.
 
-#### Resolved Thought
+### Resolved Thought
 While Terraform is primarily used for infrastructure provisioning, it can also be used for managing assets, offering opportunities to explore more functionality for beginners like You.
 
 The question you may ask are;
@@ -2098,7 +2083,7 @@ The question you may ask are;
 
 The answer is, to handle multiple files, use a `for_each` loop in terraform.
 
-#### Terrafoorm Console
+### Terrafoorm Console
 
 - Learn about Terraform functions and complex types.
 - Explore collection types in Terraform.
@@ -2139,7 +2124,7 @@ In Terraform, you may find the need to cast things to other thing. <br>Calm, it'
 
 Let's get started with our `for_each`.
 
-### `for_each` Configuration
+## **for_each** Configuration
 
 - if we are using a list => will use a key
 - if its more complex e.g map => we need key and value
@@ -2194,7 +2179,7 @@ Also..exit out of console after **done** with the required configurations.
 
 Perfect! But.. read CamperBonus.
 
-### CamperBonus
+## CamperBonus
 We have to ensure that the asset paths are set as variables. <br>
 We may not want them to be hardcoded..
 
@@ -2231,12 +2216,14 @@ assets_path="/workspace/terraform-beginner-bootcamp-2023/public/assets"
 ![Assets Output](../assets/1.8.0/tfp-asset-one.png)
 9. Check out your website with the assets;
 
-[🌐My Mixer TerraHome, Anime, Tech](https://dk9ry91vcfk4o.cloudfront.net/)
+
+### My First TerraHome, Mixer
+[🌐Random, Anime, Tech, Books](https://dk9ry91vcfk4o.cloudfront.net/)
 ![Terrahouse Pages Demo One](../assets/1.8.0/terrahouse-demo-1.png)
 
 Great and cool!
 
-#### Concluding;
+### Concluding;
 Some assets from our great classmates;
 - [Terraform Beginner Bootcamp Visual](https://cdn.discordapp.com/attachments/1138488134003335199/1157355946679468145/Terratown_Architecture_empty_lot.png?ex=6519a0b8&is=65184f38&hm=a648bc05a07e90c99a534bafceb6bad711289d271a7f66e3b16240e0da8619c3&)
 - [Terraform Workflow Visual](https://cdn.discordapp.com/attachments/1138488134003335199/1157649422398791730/37667b3c-712a-4a15-a86e-6354fc57ac6c.png?ex=6519608a&is=65180f0a&hm=ac74f18110c979a381c33fc85baadf229c5a4c0eb8f804fbbac514e709b5afa9&)
@@ -2254,15 +2241,15 @@ Terraformer! This is a great bonus for you to make sure you have git graph setup
 - `1.8.1` : Installing and Adding **git-log--graph** Extension to Gitpod
 - `1.8.2` : Installing and Adding **mhutchie.git-graph** Extension to Gitpod
 
-|I am merging that in `1.8.3` to maintain consistency in my project across tags, branches, and commits.|
-|---:|
-| 🤓Smart move.|
+|I am merging that in `1.8.3`..|
+|---|
+|To maintain consistency in my project across tags, branches, and commits.|
 
 <br>
 
-**I will split the changes into separate commits specific to this branch, allowing your clear differentiation.**
+**Also. I will split the changes commits-based, specific to this branch, allowing your clear differentiation.**
 
-### Do You have Extensions?
+### Do You have Extensions
 Extensions are stuff that empower you do better in your IDE.<br>
 To Search for Installed Extensions, do the following;
 1. Go to the Extensions section in Visual Studio Code.
@@ -2328,5 +2315,22 @@ I used [small numbers](https://www.piliapp.com/symbol/subscript-superscript/)..A
 You can use [my issue template](../assets/1.8.3/issue-enabler.md) for your own.
 
 **PS:** GitLens is another good extension..
+
+
+
+### Well This Is Good
+
+This week marks a significant phase in our journey.<br>
+I've chosen to call it a "transformation" for a very good reason.
+
+During these past days, we've jumped deep into the heart of our project, immersing ourselves in the intricacies and complexities of our work. It's been an opportunity to roll up our sleeves, dig into the nitty-gritty details, and truly understand the fundamental components.
+
+As we move forward, you'll find that your skills and understanding have expanded, enabling you to construct even more intricate terrahomes and undertake more ambitious projects.
+
+Make sure to follow the last set, **one last step**, of instructions carefully.<br> Week 2 is pretty cool and crucial for mastering the intricacies of our craft  
+
+Go build the expertise needed to tackle challenges with confidence in your own universe.
+
+
 
 > [Proceed To The Grand Finale](week2.md)
