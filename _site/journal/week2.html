@@ -117,6 +117,8 @@
   </tbody>
 </table>
 
+<p><br /></p>
+
 <p><strong>Another way may be;</strong></p>
 
 <table>
@@ -184,8 +186,10 @@ We are going with <strong>the first.</strong></p>
   <li>delete the come with server <code class="language-plaintext highlighter-rouge">bin</code> directory.</li>
 </ol>
 
-<h2 id="-understanding-sinatra">🎩 Understanding Sinatra</h2>
+<h1 id="-understanding-sinatra">🎩 Understanding Sinatra</h1>
 <p>Sinatra is a web application framework. Visit <a href="http://sinatrarb.com">sinatrarb.com</a> for more..</p>
+
+<p><img src="https://sinatrarb.com/images/logo.png" alt="Hey Sinatra" /></p>
 
 <p>The <code class="language-plaintext highlighter-rouge">server.rb</code> file works with the gems listed in the <code class="language-plaintext highlighter-rouge">Gemfile</code> to make the server work.</p>
 
@@ -307,7 +311,7 @@ We are going with <strong>the first.</strong></p>
 </code></pre></div></div>
 <p>Add the return otherwise it wont work. and I created for you <code class="language-plaintext highlighter-rouge">find_user_by_bearer_token</code> method responsible for authenticating requests that use Bearer token-based authentication.</p>
 
-<h4 id="coding-endpoints">Coding Endpoints</h4>
+<h2 id="coding-endpoints">Coding Endpoints</h2>
 <ul>
   <li><strong>Create a POST Endpoint for Creating Homes</strong>:
     <ul>
@@ -606,13 +610,15 @@ It is currently hanging, and <strong>this is expected behavior.</strong> <br /><
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">Focus on the new house description</td>
+      <td style="text-align: left">!Focus on the new house description</td>
     </tr>
     <tr>
-      <td style="text-align: left">You can delete it now</td>
+      <td style="text-align: left">.You can delete it now</td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p><strong>Server Reset and Interaction Steps</strong></p>
 
@@ -670,7 +676,7 @@ It is currently hanging, and <strong>this is expected behavior.</strong> <br /><
 Once all previous steps are completed successfully, We are ready to build the custom provider.</p>
 
 <h1 id="terratowns-provider-skeleton">TerraTowns Provider Skeleton</h1>
-<p>Welcome to the quickstart of our completely custom terraform provider. <br />Typically, it’s recommended to develop a custom provider in a separate repository as an independent project.</p>
+<p>Welcome to the quickstart of our completely custom terraform provider. <br />Typically, it’s recommended to..<br /> Develop a custom provider in a separate repository as an independent project.</p>
 
 <p><strong>We’ll nest it, empowered, within our project for this instance.</strong></p>
 
@@ -680,7 +686,7 @@ Once all previous steps are completed successfully, We are ready to build the cu
   <li><a href="#importing-in-go">Imports In Go Lanugage</a></li>
   <li><a href="#plugin-setup">Setup Terrtowns Plugins</a></li>
   <li><a href="#complie-your-custom-provider">Complie Your Custom Provider</a></li>
-  <li><a href="#-modgo--is-a-must"><code class="language-plaintext highlighter-rouge">mod.go</code> Requirement File</a></li>
+  <li><a href="#moddotgo-is-a-must"><code class="language-plaintext highlighter-rouge">mod.go</code> Requirement File</a></li>
   <li><a href="#real-build-check">Build Custom Provider Skeleton</a></li>
 </ul>
 
@@ -689,15 +695,19 @@ Once all previous steps are completed successfully, We are ready to build the cu
 <table>
   <thead>
     <tr>
+      <th>🖊️</th>
       <th style="text-align: left">terraform-provider-name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td>🌐</td>
       <td style="text-align: left"><a href="https://registry.terraform.io/browse/providers?tier=community">Browse and see for yourself</a>.</td>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p>I filtered it for you on communtiy tier already.</p>
 
@@ -705,7 +715,8 @@ Once all previous steps are completed successfully, We are ready to build the cu
 <ul>
   <li>Consult back the custom providers stuctures and code blocks.</li>
   <li>Hasicups is a very good project for learning Terraform.</li>
-  <li>Community often includes individuals who start and complete their providers.</li>
+  <li>Community often includes individuals who start and don’t complete their providers.<br />
+But that’s not us. we are doing it till the very end.</li>
 </ul>
 
 <p>Over the past weeks, we’ve been actively experimenting with a variety of exciting technologies and the fun just started.</p>
@@ -742,8 +753,8 @@ Use (done) GPT to generate a “Hello World” program using the Go package and 
 </code></pre></div></div>
 
 <ul>
-  <li>Unlike languages like Ruby, Go files are compiled into binaries</li>
-  <li>Unlike languages like Ruby Go files are not dynamically executed.</li>
+  <li>Unlike languages like <strong>Ruby,</strong> <strong>Go</strong> files are compiled into binaries</li>
+  <li>Unlike languages like <strong>Ruby,</strong> <strong>Go</strong> files are not dynamically executed.</li>
   <li>You compile the script, and it runs as a binary.</li>
 </ul>
 
@@ -881,7 +892,7 @@ Nah.
 Okay np.
 </code></pre></div></div>
 
-<h4 id="google-uuid-lib">Google UUID Lib</h4>
+<h3 id="google-uuid-lib">Google UUID Lib</h3>
 <ol>
   <li>
     <p>Google provides its own library at github.com/google/uuid, which offer a solution for validation.</p>
@@ -911,12 +922,10 @@ Okay np.
 <p>Ensure that you have a local provider directory where you place the binary files generated.</p>
 
 <ol>
-  <li>Run the following command to build the custom provider binary:</li>
-</ol>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go build -o terraform-provider-terratowns-v1.0.0
-</code></pre></div></div>
-<ol>
+  <li>Run the following command to build the custom provider binary:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go build -o terraform-provider-terratowns-v1.0.0
+</code></pre></div>    </div>
+  </li>
   <li>Test the custom provider using the <code class="language-plaintext highlighter-rouge">.terraformrc</code> file.</li>
   <li>Create a <code class="language-plaintext highlighter-rouge">terraformrc</code> file at the root of your project.</li>
 </ol>
@@ -938,7 +947,7 @@ Okay np.
 <p>Also..building the binary can be challenging (was really hard..)</p>
 
 <blockquote>
-  <p>Thanks to Jason for <a href="https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10">this article.</a></p>
+  <p>🙏 Thanks to Jason for <a href="https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10">this article.</a></p>
 </blockquote>
 
 <h4 id="scripting-the-build-process">Scripting The Build Process</h4>
@@ -964,25 +973,24 @@ Now make use of environment variables in your script to simplify the build proce
     </blockquote>
   </li>
   <li>Apply the environment variables for your plugin path.
-```sh
-PLUGIN_DIR=”~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/”</li>
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PLUGIN_DIR</span><span class="o">=</span><span class="s2">"~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/"</span>
+mkrdir <span class="nt">-p</span> <span class="nv">$PLUGIN_DIR</span>/x86_64/
+mkrdir <span class="nt">-p</span> <span class="nv">$PLUGIN_DIR</span>/linux_amd64/
+</code></pre></div>    </div>
+  </li>
+  <li>Apply the environment variables for your plugin name and copy it.
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PLUGIN_NAME</span><span class="o">=</span><span class="s2">"terraform-provider-terratowns_v1.0.0"</span>
+<span class="nb">cp</span> <span class="nv">$PLUGIN_NAME</span> <span class="nv">$PLUGIN_DIR</span>/x86_64
+<span class="nb">cp</span> <span class="nv">$PLUGIN_NAME</span> <span class="nv">$PLUGIN_DIR</span>/linux_amd64
+</code></pre></div>    </div>
+  </li>
 </ol>
-
-<p>mkrdir -p $PLUGIN_DIR/x86_64/
-mkrdir -p $PLUGIN_DIR/linux_amd64/</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8. Apply the environment variables for your plugin name and copy it.
-```sh
-PLUGIN_NAME="terraform-provider-terratowns_v1.0.0"
-
-cp $PLUGIN_NAME $PLUGIN_DIR/x86_64
-cp $PLUGIN_NAME $PLUGIN_DIR/linux_amd64
-</code></pre></div></div>
 
 <p>First, <a href="bin/build_provider">Verify the script from here right away.</a></p>
 
 <p>Second. We can’t build this yet<br />To really build the provider <strong>we need something else.</strong></p>
 
-<h3 id="godotmod-is-a-must">godotmod Is A Must</h3>
+<h3 id="moddotgo-is-a-must">moddotgo Is A Must</h3>
 
 <p>You need to ensure you have a <code class="language-plaintext highlighter-rouge">go.mod</code> file.</p>
 
@@ -1007,9 +1015,9 @@ go 1.20
 
 <h3 id="real-build-check">Real Build Check</h3>
 
-<ol>
-  <li>Run the build script.</li>
-</ol>
+<ul>
+  <li>Run the <strong>build script</strong>. We called it <code class="language-plaintext highlighter-rouge">build_provider</code></li>
+</ul>
 
 <table>
   <thead>
@@ -1289,7 +1297,7 @@ This verbose mode is great idea.</p>
   </tbody>
 </table>
 
-<h4 id="good-stuff">Good Stuff!</h4>
+<h3 id="good-stuff">Good Stuff!</h3>
 <p>Version <code class="language-plaintext highlighter-rouge">2.2.0</code> of the TerraTown Provider saw improvements in the build script, custom provider configuration, debugging capabilities, and error resolution.</p>
 
 <p>We’re also introducing the Terraform block for our new custom provider, ensuring its functionality.</p>
@@ -1311,7 +1319,7 @@ We’ll create a basic structure for a new resource and introduce some Go progra
 
 <p>The next <code class="language-plaintext highlighter-rouge">2.4.0</code> is where we will actually go and fill those cruds as per our requirements in go.</p>
 
-<h3 id="preparing-and-energizing">Preparing and Energizing</h3>
+<h2 id="preparing-and-energizing">Preparing and Energizing</h2>
 <p>Take note of the extensions you’ll need, such as Go and Golang tools.</p>
 <ol>
   <li>Before all, uncomment the validator in your <code class="language-plaintext highlighter-rouge">main.go</code> code if you didn’t remove it.</li>
@@ -1331,7 +1339,7 @@ I coded it again.</p>
 
 <p>We have set up debugging for this context.</p>
 
-<h4 id="issue-processing-master">Issue Processing master</h4>
+<h3 id="issue-processing-master">Issue Processing master</h3>
 <ol>
   <li>build our provider to see, you may encounter errors.</li>
   <li>Replace single quotes (<code class="language-plaintext highlighter-rouge">''</code>) with double quotes (<code class="language-plaintext highlighter-rouge">""</code>) for the func validator.</li>
@@ -1541,7 +1549,7 @@ We have to code a func  skeleton for each.</p>
 
 <p>Everything later will come into a place in week-2-perfecting.</p>
 
-<h4 id="production-considerations">Production Considerations</h4>
+<h3 id="production-considerations">Production Considerations</h3>
 <p>In a real project, you wouldn’t commit and create pull requests for these changes; <br />They would typically remain in a feature branch until the entire job is finished.</p>
 
 <p>In the next phase and last, we’ll start filling in the resource and making the API calls.</p>
@@ -1756,7 +1764,7 @@ As great as you.
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">This repetition could potentially be refactored; try?</th>
+      <th style="text-align: left">..This repetition could potentially be refactored</th>
     </tr>
   </thead>
   <tbody>
@@ -2169,14 +2177,14 @@ Providers required by configuration:
 
 <p><img src="/assets/2.4.0/resource-deployed-terratowns.png" alt="1 Resource Created!" /></p>
 
-<p><strong>NOTE:</strong> I had to <a href="/assets/2.4.0/401-issue.png">deal with a 401</a> before my last succefull apply. <br />I fixed with a simple replace of the current uuid with mine for the sinatra server.</p>
+<p><strong>NOTE:</strong> I had to <a href="/assets/2.4.0/401-issue.png">deal with a 401</a> before my last succefull apply. <br />I fixed it with a <em>simple replace</em> of the current uuid with mine for the sinatra server.</p>
 
 <p><img src="/assets/2.4.0/401-resolve.png" alt="401: Replaced and Resolved" /></p>
 
 <h2 id="state-file-effects">State File Effects</h2>
 <p>It’s retaining this state, so we should be able to continue mocking it.</p>
 
-<p>The state file in Terraform keeps track of the resource’s status, including the <code class="language-plaintext highlighter-rouge">homeUUID</code>. It’s crucial for Terraform to maintain resource mapping.</p>
+<p>The state file in Terraform keeps track of the resource’s status, including the <code class="language-plaintext highlighter-rouge">homeUUID</code>. <br />It’s crucial for Terraform to maintain resource mapping.</p>
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
   </span><span class="nl">"terraform_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.6.0"</span><span class="p">,</span><span class="w">
@@ -2289,11 +2297,11 @@ Providers required by configuration:
   </li>
 </ol>
 
-<h4 id="cleanup">Cleanup</h4>
+<h3 id="cleanup">Cleanup</h3>
 
-<ol>
+<ul>
   <li>Destroy the state. All is perfect!</li>
-</ol>
+</ul>
 
 <p><img src="/assets/2.4.0/destroy-league.png" alt="Destroyed League Resource" /></p>
 
@@ -2370,7 +2378,7 @@ Providers required by configuration:
 
 <p><img src="/assets/2.5.0/access-code-get.png" alt="Where is my access token" /></p>
 
-<h3 id="initial-terratowns-testing">Initial Terratowns Testing</h3>
+<h2 id="initial-terratowns-testing">Initial Terratowns Testing</h2>
 <ol>
   <li>Go to your <code class="language-plaintext highlighter-rouge">main.tf</code> custom provider and fill in the uuid values.
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  endpoint <span class="o">=</span> <span class="s2">"http://localhost:4567/api"</span>
@@ -2420,14 +2428,26 @@ Clicking it will redirect you to the seemingly useless CloudFront.</p>
 
 <p><img src="/assets/2.5.0/on-click-wrong-url.png" alt="Terratowns url is brokie" /></p>
 
-<h3 id="cloudfront-mapping">CloudFront Mapping</h3>
+<h2 id="cloudfront-mapping">CloudFront Mapping</h2>
 
 <p>Now, the question is whether the CloudFront real URL will take you to this location, or if we need to pass custom headers or headers through CloudFront to make it work. This will be determined.</p>
 
-<p><strong>Btw;</strong>
-|Update not allowed If you change your domain name|
-|:—|
-|By design, You will need to perform a total teardown|</p>
+<p><strong>Btw;</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>💡</th>
+      <th style="text-align: left">Update not allowed If you change your domain name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>💡💡</td>
+      <td style="text-align: left">By design, You will need to perform a total teardown</td>
+    </tr>
+  </tbody>
+</table>
 
 <ol>
   <li>To proceed, execute the following command:
@@ -2443,7 +2463,7 @@ Clicking it will redirect you to the seemingly useless CloudFront.</p>
 
 <p>It is now directing to my page. It has anime in it with</p>
 
-<h3 id="token-handling">Token Handling</h3>
+<h2 id="token-handling">Token Handling</h2>
 
 <p>To securely handle tokens, do the following:</p>
 
@@ -2459,7 +2479,7 @@ gp env TF_VARS_terratowns_access_token="your_access_token_here"
 
 <p>This will allow you to reference the access token in your <code class="language-plaintext highlighter-rouge">main.tf</code> file using <code class="language-plaintext highlighter-rouge">var.terratowns_access_token</code>.</p>
 
-<h4 id="endpoint-and-uuid-configuration">Endpoint and UUID Configuration</h4>
+<h2 id="endpoint-and-uuid-configuration">Endpoint and UUID Configuration</h2>
 <ol>
   <li>Set the TerraTowns endpoint in your <code class="language-plaintext highlighter-rouge">terraform.tfvars</code> file:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terratowns_endpoint = "https://terratowns.cloud/api"
@@ -2492,7 +2512,7 @@ gp <span class="nb">env </span><span class="nv">TF_VAR_teacherseat_user_uuid</sp
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="second-sprint">Second Sprint</h4>
+<h3 id="second-sprint">Second Sprint</h3>
 <ol>
   <li>remove the previous <code class="language-plaintext highlighter-rouge">uuid</code> assignement.</li>
   <li>Add it to the commented terrahouse module (for last tag)</li>
@@ -2520,7 +2540,7 @@ gp <span class="nb">env </span><span class="nv">TF_VAR_terratowns_access_token</
 
 <p>This can help <code class="language-plaintext highlighter-rouge">env | grep TF_VAR</code></p>
 
-<h4 id="master-resolve-for-you">Master Resolve For You</h4>
+<h3 id="master-resolve-for-you">Master Resolve For You</h3>
 
 <p>After initializing and applying Terraform configurations, you may encounter errors.</p>
 
@@ -2534,7 +2554,7 @@ gp <span class="nb">env </span><span class="nv">TF_VAR_terratowns_access_token</
 
 <p>The sole distinctive aspect in this situation is related to the unique bucket name.</p>
 
-<h3 id="bucket-name-randomization">Bucket Name Randomization</h3>
+<h2 id="bucket-name-randomization">Bucket Name Randomization</h2>
 
 <p>I believe we’ve successfully handled validation and using a random provider, now it’s time to standardize the process for generating bucket names.</p>
 
@@ -2554,17 +2574,17 @@ gp <span class="nb">env </span><span class="nv">TF_VAR_terratowns_access_token</
 </code></pre></div>    </div>
   </li>
   <li>Add comment for the bucket name setting in the CDN module and change as required;
-```sh
-  comment             = “Static website hosting for: ${var.bucket_name}”</li>
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  comment             <span class="o">=</span> <span class="s2">"Static website hosting for: </span><span class="k">${</span><span class="nv">var</span><span class="p">.bucket_name</span><span class="k">}</span><span class="s2">"</span>
+  comment             <span class="o">=</span> <span class="s2">"Static website hosting for: </span><span class="k">${</span><span class="nv">aws_s3_bucket</span><span class="p">.website_bucket.bucket</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Update variables and remove bucket validation in the CDN module. (I did in previous instruction)</li>
+  <li>Modify the CDN module to reference the update bucket output.
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">name</span>   <span class="err">=</span> <span class="s2">"OAC ${aws_s3_bucket.website_bucket.bucket}"</span>
+  <span class="nx">description</span>  <span class="err">=</span> <span class="s2">"Origin Access Controls for Static Website Hosting ${aws_s3_bucket.website_bucket.bucket}"</span>
+</code></pre></div>    </div>
+  </li>
 </ol>
-
-<p>comment             = “Static website hosting for: ${aws_s3_bucket.website_bucket.bucket}”</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3. Update variables and remove bucket validation in the CDN module. (I did in previous instruction)
-4. Modify the CDN module to reference the update bucket output.
-```hcl
-  name   = "OAC ${aws_s3_bucket.website_bucket.bucket}"
-  description  = "Origin Access Controls for Static Website Hosting ${aws_s3_bucket.website_bucket.bucket}"
-</code></pre></div></div>
 
 <ul>
   <li>The terraform plan touchpoint will tell that the bucket name it provides afterward (know after apply)
@@ -2577,7 +2597,7 @@ gp <span class="nb">env </span><span class="nv">TF_VAR_terratowns_access_token</
 
 <p>This was a preivously running workspace. I ran the aws cli  again using our script briefly and get the apply going.</p>
 
-<h3 id="testing-your-first-terrahome">Testing Your First TerraHome</h3>
+<h2 id="testing-your-first-terrahome">Testing Your First TerraHome</h2>
 
 <p>Now if you go you can find ur page there.
 terraform.cloud/</p>
@@ -2596,6 +2616,8 @@ terraform.cloud/</p>
     </tr>
   </tbody>
 </table>
+
+<p><br /></p>
 
 <p>Once you have configured TerraTown, we can:</p>
 
@@ -2637,7 +2659,7 @@ terraform.cloud/</p>
 
 <p>The following comes after an experience with different ways to work with terraform and thus coming up with the best possible solution.</p>
 
-<p>The multiple home feature was part of this and it now part of <code class="language-plaintext highlighter-rouge">2.7.0</code>.<br />
+<p>The multiple home feature was part of this and now is part of <code class="language-plaintext highlighter-rouge">2.7.0</code>.<br />
 Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61">about our methodology</a>.</p>
 
 <h2 id="problematic-101">Problematic 101</h2>
@@ -2696,6 +2718,8 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
   </tbody>
 </table>
 
+<p><br /></p>
+
 <p><strong>Optimize for the speed of our operations;</strong></p>
 
 <table>
@@ -2721,18 +2745,18 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 
 <p>I thought you may forget what is that. <a href="https://developer.hashicorp.com/terraform/cloud-docs">Get the knowledge back.</a></p>
 
-<ol>
+<ul>
   <li>Access Terraform Cloud by following these steps:
     <ul>
       <li>Click “Try Terraform Cloud.”</li>
       <li>Select your “terra-house-1” project.</li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <p><img src="/assets/2.6.0/terra-house-2023.png" alt="TerraHouse" /></p>
 
-<ol>
+<ul>
   <li>Configure Execution Mode:
     <ul>
       <li>Change the execution mode to “local” in Terraform Cloud.</li>
@@ -2740,7 +2764,7 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <img src="/assets/2.6.0/click-settings.png" alt="Settings Project Pane" /></li>
     </ul>
   </li>
-</ol>
+</ul>
 
 <p><strong>The general pane will now popup.</strong></p>
 <ul>
@@ -2942,12 +2966,12 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 
 <p>Review and update variables in the module configurations. If you need to set nested Terraform variables in the tfvars file, refer to Terraform documentation for guidance.</p>
 
-<ol>
+<ul>
   <li>We asked GPT to help in this:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>How do u set nested tf variables in tf vars file.
 </code></pre></div>    </div>
   </li>
-</ol>
+</ul>
 
 <p>This is to make stuff look more damn neat.</p>
 
@@ -3038,41 +3062,32 @@ DESCRIPTION
 <p><strong>Step 8: Storage Module Vars Update</strong></p>
 
 <ol>
-  <li>
-    <p>Start with output.tf change the output <code class="language-plaintext highlighter-rouge">"cloudfront_url"</code> to <code class="language-plaintext highlighter-rouge">"domain_name"</code></p>
-  </li>
-  <li>
-    <p>In <code class="language-plaintext highlighter-rouge">resource-storage.tf</code> change the <code class="language-plaintext highlighter-rouge">source</code> and <code class="language-plaintext highlighter-rouge">etag</code> path for <code class="language-plaintext highlighter-rouge">index_html</code>, <code class="language-plaintext highlighter-rouge">error_html</code> for <code class="language-plaintext highlighter-rouge">aws_s3_object</code> to map to our new vars.</p>
-  </li>
+  <li>Start with output.tf change the output <code class="language-plaintext highlighter-rouge">"cloudfront_url"</code> to <code class="language-plaintext highlighter-rouge">"domain_name"</code></li>
+  <li>In <code class="language-plaintext highlighter-rouge">resource-storage.tf</code> change the <code class="language-plaintext highlighter-rouge">source</code> and <code class="language-plaintext highlighter-rouge">etag</code> path for <code class="language-plaintext highlighter-rouge">index_html</code>, <code class="language-plaintext highlighter-rouge">error_html</code> for <code class="language-plaintext highlighter-rouge">aws_s3_object</code> to map to our new vars.
+```hcl
+  source = var.index_html_filepath
+  source = “${var.public_path}/index.html”</li>
 </ol>
 
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">source</span> <span class="err">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">index_html_filepath</span>
-  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/index.html"</span>
+<p>etag = filemd5(var.index_html_filepath)
+  etag = filemd5(“${var.public_path}/index.html”)</p>
 
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">index_html_filepath</span><span class="err">)</span>
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/index.html"</span><span class="err">)</span>
+<p>source = var.error_html_filepath
+  source = “${var.public_path}/error.html”</p>
 
+<p>etag = filemd5(var.error_html_filepath)
+  etag = filemd5(“${var.public_path}/error.html”)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3. In the same file update source, etag but also the `for_each` for `upload_assets`.
 
+```hcl
+  for_each = fileset(var.assets_path,"*.{jpg,png,gif}")
+  for_each = fileset("${var.public_path}/assets","*.{jpg,png,gif}")
 
-  <span class="nx">source</span> <span class="err">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">error_html_filepath</span>
-  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/error.html"</span>
+  source = "${var.assets_path}/${each.key}"
+  etag = filemd5("${var.assets_path}${each.key}")
 
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">error_html_filepath</span><span class="err">)</span>
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/error.html"</span><span class="err">)</span>
-</code></pre></div></div>
-
-<ol>
-  <li>In the same file update source, etag but also the <code class="language-plaintext highlighter-rouge">for_each</code> for <code class="language-plaintext highlighter-rouge">upload_assets</code>.</li>
-</ol>
-
-<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">for_each</span> <span class="err">=</span> <span class="nx">fileset</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">assets_path</span><span class="err">,</span><span class="s2">"*.{jpg,png,gif}"</span><span class="err">)</span>
-  <span class="nx">for_each</span> <span class="err">=</span> <span class="nx">fileset</span><span class="err">(</span><span class="s2">"${var.public_path}/assets"</span><span class="err">,</span><span class="s2">"*.{jpg,png,gif}"</span><span class="err">)</span>
-
-  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.assets_path}/${each.key}"</span>
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.assets_path}${each.key}"</span><span class="err">)</span>
-
-  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/assets/${each.key}"</span>
-  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/assets/${each.key}"</span><span class="err">)</span>
+  source = "${var.public_path}/assets/${each.key}"
+  etag = filemd5("${var.public_path}/assets/${each.key}")
 </code></pre></div></div>
 
 <p><strong>Step 9: Module <code class="language-plaintext highlighter-rouge">variables.tf</code> Updates</strong></p>
@@ -3134,21 +3149,21 @@ DESCRIPTION
 
 <p>With these changes, you should be able to see both pages listed in your Terraform Cloud dashboard.</p>
 
-<h2 id="the-first-music-post">The First Music Post</h2>
+<h1 id="the-first-music-post">The First Music Post</h1>
 
 <p><img src="/assets/2.7.0/music-post.png" alt="Tunisian Rap TerraHouse Post" /></p>
 
-<h3 id="check-out-the-music-home">Check out The Music Home</h3>
+<h2 id="check-out-the-music-home">Check out The Music Home</h2>
 
 <p>→ <a href="https://d2y3y5anu2c2ur.cloudfront.net/">TerraTowns Independent Link</a></p>
 
 <p><img src="/assets/2.7.0/my-second-home.png" alt="Tunisian Rap TerraHouse" /></p>
 
-<h2 id="check-out-the-tunisian-food-post">Check Out The Tunisian Food Post</h2>
+<h1 id="check-out-the-tunisian-food-post">Check Out The Tunisian Food Post</h1>
 
 <p><img src="/assets/2.7.0/foodhome-post.png" alt="Tunisian Food TerraHouse Post" /></p>
 
-<h3 id="check-out-the-list-in-terrahome">Check Out The list in TerraHome</h3>
+<h2 id="check-out-the-list-in-terrahome">Check Out The list in TerraHome</h2>
 
 <p>→ <a href="https://d3opm9jrs6v4zx.cloudfront.net/">TerraTowns Independent Link</a></p>
 
@@ -3391,7 +3406,7 @@ bundle exec ruby server.rb
 
 <p>→ To <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/65">learn more about the methodology.</a></p>
 
-<h3 id="breaking-bad-fanpage">Breaking Bad FanPage</h3>
+<h1 id="breaking-bad-fanpage">Breaking Bad FanPage</h1>
 
 <p>This page is my way of expressing my admiration for the TV show. I’ve incorporated a quote generator and included assets that hold sentimental value from a dear friend.</p>
 
@@ -3424,7 +3439,7 @@ bundle exec ruby server.rb
 
 <p><img src="/assets/2.7.1/2-bb-home.png" alt="Breaking Bad FanPage" /></p>
 
-<h3 id="past-gaming-passion">Past Gaming Passion</h3>
+<h1 id="past-gaming-passion">Past Gaming Passion</h1>
 <p>This project is a highlight to what I used to play a lot in the past. It gives some insights to why I am good in english? And why I find mysef a master in the cloud?</p>
 
 <p>The post Title and description specified;</p>
@@ -3458,7 +3473,7 @@ Uncover Yahya's past gaming obsession and how his extensive involvement with Lea
 
 <p><img src="/assets/2.7.1/2-gamer-home.png" alt="League Of Legends WebPage" /></p>
 
-<h3 id="visit-tunisia">Visit Tunisia</h3>
+<h1 id="visit-tunisia-website">Visit Tunisia Website</h1>
 <p>Our economy is a bit messed up but we have great places.</p>
 
 <p>I think a smart person can visit have lots of fun with dead cheap money and go back happy.</p>

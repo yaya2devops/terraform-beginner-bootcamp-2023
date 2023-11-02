@@ -41,6 +41,8 @@ There are many ways for embedding the mock server:
 |:---:|:---|
 |🐛|Challenging to manage when issues arise|
 
+<br>
+
 **Another way may be;**
 
 |🤔|Git checkout and refrain from committing |
@@ -92,8 +94,10 @@ Include it in the `terraform` section.
 3. Perform necessary chmod operations on these files.
 4. delete the come with server `bin` directory.
 
-## 🎩 Understanding Sinatra
+# 🎩 Understanding Sinatra
 Sinatra is a web application framework. Visit [sinatrarb.com](http://sinatrarb.com) for more..
+
+![Hey Sinatra](https://sinatrarb.com/images/logo.png)
 
 The `server.rb` file works with the gems listed in the `Gemfile` to make the server work.
 
@@ -184,7 +188,7 @@ class TerraTownsMockServer < Sinatra::Base
 ```
 Add the return otherwise it wont work. and I created for you `find_user_by_bearer_token` method responsible for authenticating requests that use Bearer token-based authentication. 
 
-#### Coding Endpoints
+## Coding Endpoints
 - **Create a POST Endpoint for Creating Homes**:
    - Define a POST route `/api/u/:user_uuid/homes`.
    - Ensure correct headers and user authentication.
@@ -443,10 +447,13 @@ It is currently hanging, and **this is expected behavior.** <br>
 
 ### Relaunch the server
 
+
 | In sinatra review the 'read' operation|
 |:---|
-|Focus on the new house description|
-|You can delete it now|
+|!Focus on the new house description|
+|.You can delete it now|
+
+<br>
 
 **Server Reset and Interaction Steps**
 
@@ -498,7 +505,7 @@ Once all previous steps are completed successfully, We are ready to build the cu
 
 
 # TerraTowns Provider Skeleton 
-Welcome to the quickstart of our completely custom terraform provider. <br>Typically, it's recommended to develop a custom provider in a separate repository as an independent project. 
+Welcome to the quickstart of our completely custom terraform provider. <br>Typically, it's recommended to..<br> Develop a custom provider in a separate repository as an independent project. 
 
 **We'll nest it, empowered, within our project for this instance.**
 
@@ -507,14 +514,16 @@ Welcome to the quickstart of our completely custom terraform provider. <br>Typic
 + [Imports In Go Lanugage](#importing-in-go)
 + [Setup Terrtowns Plugins](#plugin-setup)
 + [Complie Your Custom Provider](#complie-your-custom-provider)
-+ [`mod.go` Requirement File](#-modgo--is-a-must)
++ [`mod.go` Requirement File](#moddotgo-is-a-must)
 + [Build Custom Provider Skeleton](#real-build-check)
 
 When you visit any provider on the Terraform Registry, you'll notice a consistent naming pattern.
 
-|terraform-provider-name|
-|:---|
-|[Browse and see for yourself](https://registry.terraform.io/browse/providers?tier=community).|
+|🖊️|terraform-provider-name|
+|---|:---|
+|🌐|[Browse and see for yourself](https://registry.terraform.io/browse/providers?tier=community).|
+
+<br>
 
 I filtered it for you on communtiy tier already. 
 
@@ -522,7 +531,9 @@ I filtered it for you on communtiy tier already.
 Also..
 - Consult back the custom providers stuctures and code blocks.
 - Hasicups is a very good project for learning Terraform.
-- Community often includes individuals who start and complete their providers.
+- Community often includes individuals who start and don't complete their providers.<br>
+But that's not us. we are doing it till the very end.
+
 
 Over the past weeks, we've been actively experimenting with a variety of exciting technologies and the fun just started.
 
@@ -554,8 +565,8 @@ func main() {
 }
 ```
 
-- Unlike languages like Ruby, Go files are compiled into binaries 
-- Unlike languages like Ruby Go files are not dynamically executed. 
+- Unlike languages like **Ruby,** **Go** files are compiled into binaries 
+- Unlike languages like **Ruby,** **Go** files are not dynamically executed. 
 - You compile the script, and it runs as a binary.
 
 Go is built-in on Gitpod. 
@@ -680,7 +691,7 @@ Nah.
 Okay np.
 ```
 
-#### Google UUID Lib
+### Google UUID Lib
 8. Google provides its own library at github.com/google/uuid, which offer a solution for validation.
 
 9. Use this [stackoverflow refernce](https://stackoverflow.com/questions/25051675/how-to-validate-uuid-v4-in-go) for more about validation.
@@ -708,7 +719,6 @@ Terraform maintains a hidden directory called `.terraform.d` with a `plugins` fo
 Ensure that you have a local provider directory where you place the binary files generated.
 
 1. Run the following command to build the custom provider binary:
-
 ```
 go build -o terraform-provider-terratowns-v1.0.0
 ```
@@ -732,7 +742,7 @@ provider_installation {
 
 Also..building the binary can be challenging (was really hard..)
 
-> Thanks to Jason for [this article.](https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10)
+> 🙏 Thanks to Jason for [this article.](https://servian.dev/terraform-local-providers-and-registry-mirror-configuration-b963117dfffa?gi=06e845629b10)
 
 
 #### Scripting The Build Process
@@ -758,14 +768,12 @@ Now make use of environment variables in your script to simplify the build proce
 7. Apply the environment variables for your plugin path.
 ```sh
 PLUGIN_DIR="~/.terraform.d/plugins/local.providers/local/terratowns/1.0.0/"
-
 mkrdir -p $PLUGIN_DIR/x86_64/
 mkrdir -p $PLUGIN_DIR/linux_amd64/
 ```
 8. Apply the environment variables for your plugin name and copy it.
 ```sh
 PLUGIN_NAME="terraform-provider-terratowns_v1.0.0"
-
 cp $PLUGIN_NAME $PLUGIN_DIR/x86_64
 cp $PLUGIN_NAME $PLUGIN_DIR/linux_amd64
 ```
@@ -774,7 +782,7 @@ First, [Verify the script from here right away.](bin/build_provider)
 
 Second. We can't build this yet<br>To really build the provider **we need something else.**
 
-### godotmod Is A Must
+### moddotgo Is A Must
 
 You need to ensure you have a `go.mod` file. 
 
@@ -797,7 +805,7 @@ Now we are ready for the build and further troubleshoot.
 
 ### Real Build Check
 
-1. Run the build script.
+- Run the **build script**. We called it `build_provider`
 
 |You will get an error about a missing import path. |
 |---|
@@ -1005,7 +1013,7 @@ Things are working great now!
 
 
 
-#### Good Stuff!
+### Good Stuff!
 Version `2.2.0` of the TerraTown Provider saw improvements in the build script, custom provider configuration, debugging capabilities, and error resolution. 
 
 We're also introducing the Terraform block for our new custom provider, ensuring its functionality. 
@@ -1027,7 +1035,7 @@ We'll create a basic structure for a new resource and introduce some Go programm
       
 The next `2.4.0` is where we will actually go and fill those cruds as per our requirements in go.
 
-### Preparing and Energizing
+## Preparing and Energizing
 Take note of the extensions you'll need, such as Go and Golang tools.
 1. Before all, uncomment the validator in your `main.go` code if you didn't remove it.
 
@@ -1043,7 +1051,7 @@ import ("log")
 
 We have set up debugging for this context.
 
-#### Issue Processing master
+### Issue Processing master
 5. build our provider to see, you may encounter errors. 
 6.  Replace single quotes (`''`) with double quotes (`""`) for the func validator.
 7.  Build again; if you encounter errors, include 'google' in the import statement for 'uuid' lib.
@@ -1232,7 +1240,7 @@ After these steps, you should have empty functions in place. This marks the comp
 
 Everything later will come into a place in week-2-perfecting.
 
-#### Production Considerations
+### Production Considerations
 In a real project, you wouldn't commit and create pull requests for these changes; <br>They would typically remain in a feature branch until the entire job is finished. 
 
 In the next phase and last, we'll start filling in the resource and making the API calls.
@@ -1431,7 +1439,7 @@ Consider the code to handle errors gracefully. <br>(Coming below)
 ```
 
 
-|This repetition could potentially be refactored; try?|
+|..This repetition could potentially be refactored|
 |:---|
 | try?|
 
@@ -1724,7 +1732,7 @@ Great and cool!
 
 ![1 Resource Created!](../assets/2.4.0/resource-deployed-terratowns.png)
 
-**NOTE:** I had to [deal with a 401](../assets/2.4.0/401-issue.png) before my last succefull apply. <br>I fixed with a simple replace of the current uuid with mine for the sinatra server.
+**NOTE:** I had to [deal with a 401](../assets/2.4.0/401-issue.png) before my last succefull apply. <br>I fixed it with a *simple replace* of the current uuid with mine for the sinatra server.
 
 ![401: Replaced and Resolved](../assets/2.4.0/401-resolve.png)
 
@@ -1732,7 +1740,7 @@ Great and cool!
 ## State File Effects
 It's retaining this state, so we should be able to continue mocking it.
 
-The state file in Terraform keeps track of the resource's status, including the `homeUUID`. It's crucial for Terraform to maintain resource mapping.
+The state file in Terraform keeps track of the resource's status, including the `homeUUID`. <br>It's crucial for Terraform to maintain resource mapping.
 ```json
 {
   "version": 4,
@@ -1813,9 +1821,9 @@ Terraform will detect and update the state accordingly.
 9. It updates our state, and the names align as desired.
    - Confirm that the state reflects the changes.
 
-#### Cleanup
+### Cleanup
 
-10. Destroy the state. All is perfect!
+- Destroy the state. All is perfect!
 
 ![Destroyed League Resource](../assets/2.4.0/destroy-league.png)
 
@@ -1875,7 +1883,7 @@ To use TerraTown, follow these steps:
 ![Where is my access token](../assets/2.5.0/access-code-get.png) 
 
 
-### Initial Terratowns Testing
+## Initial Terratowns Testing
 1. Go to your `main.tf` custom provider and fill in the uuid values.
 ```sh
   endpoint = "http://localhost:4567/api"
@@ -1919,22 +1927,22 @@ Clicking it will redirect you to the seemingly useless CloudFront.
 
 ![Terratowns url is brokie](../assets/2.5.0/on-click-wrong-url.png)
 
-### CloudFront Mapping
+## CloudFront Mapping
 
 Now, the question is whether the CloudFront real URL will take you to this location, or if we need to pass custom headers or headers through CloudFront to make it work. This will be determined.
 
 
 **Btw;**
-|Update not allowed If you change your domain name|
-|:---|
-|By design, You will need to perform a total teardown|
+
+|💡|Update not allowed If you change your domain name|
+|---|:---|
+|💡💡|By design, You will need to perform a total teardown|
 
 5. To proceed, execute the following command:
 ```
 tf destroy
 ```
 ![Destroyed for new URL](../assets/2.5.0/destroy-for-new-url-sake.png)
-
 6. Update the url to map to your own cloudfront url.
 7. Click on your post in [terratowns.cloud](https://terratowns.cloud/).
 
@@ -1942,7 +1950,7 @@ tf destroy
 
 It is now directing to my page. It has anime in it with 
 
-### Token Handling
+## Token Handling
 
 To securely handle tokens, do the following:
 
@@ -1958,7 +1966,7 @@ gp env TF_VARS_terratowns_access_token="your_access_token_here"
 This will allow you to reference the access token in your `main.tf` file using `var.terratowns_access_token`.
 
 
-#### Endpoint and UUID Configuration
+## Endpoint and UUID Configuration
 1. Set the TerraTowns endpoint in your `terraform.tfvars` file:
 ```
 terratowns_endpoint = "https://terratowns.cloud/api"
@@ -1991,7 +1999,7 @@ variable "teacherseat_user_uuid" {
 }
 ```
 
-#### Second Sprint
+### Second Sprint
 4. remove the previous `uuid` assignement.
 5. Add it to the commented terrahouse module (for last tag)
 6. Employ the same for our access token.
@@ -2015,7 +2023,7 @@ I fixed this already. But allow me please to fix yours in the next section.
 
 This can help `env | grep TF_VAR`
 
-#### Master Resolve For You
+### Master Resolve For You
 
 After initializing and applying Terraform configurations, you may encounter errors. 
 
@@ -2027,7 +2035,7 @@ Ensure that the asset URL in `tfvars.sample` ends with a `/`. Also, add the `ass
 
 The sole distinctive aspect in this situation is related to the unique bucket name.
 
-### Bucket Name Randomization
+## Bucket Name Randomization
 
 I believe we've successfully handled validation and using a random provider, now it's time to standardize the process for generating bucket names.
 
@@ -2049,7 +2057,6 @@ module "terrahouse_aws" {
 2. Add comment for the bucket name setting in the CDN module and change as required;
 ```sh
   comment             = "Static website hosting for: ${var.bucket_name}"
-
   comment             = "Static website hosting for: ${aws_s3_bucket.website_bucket.bucket}"
 ```
 3. Update variables and remove bucket validation in the CDN module. (I did in previous instruction)
@@ -2068,7 +2075,7 @@ The reason you observe the creation of **only a single resource** is because the
 
 This was a preivously running workspace. I ran the aws cli  again using our script briefly and get the apply going.
 
-### Testing Your First TerraHome
+## Testing Your First TerraHome
 
 Now if you go you can find ur page there.
 terraform.cloud/
@@ -2079,6 +2086,7 @@ terraform.cloud/
 |---|
 |It is a mix of gaming and anime. Hope you like the creativity.|
 
+<br>
 
 Once you have configured TerraTown, we can:
 
@@ -2107,7 +2115,7 @@ Welcome to the Terraform  `2.6.0` last official release with primary objective t
 
 The following comes after an experience with different ways to work with terraform and thus coming up with the best possible solution.
 
-The multiple home feature was part of this and it now part of `2.7.0`.<br>
+The multiple home feature was part of this and now is part of `2.7.0`.<br>
 Learn more [about our methodology](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61).
 
 
@@ -2134,6 +2142,8 @@ These experiences bring us to the following solution.
 |:---:|:---|
 |✅|Use Terraform Cloud|
 
+<br>
+
 **Optimize for the speed of our operations;**
 
 |🏎️| Conduct our computations and executions |
@@ -2149,13 +2159,13 @@ Welcome to this self-dedicated space for version `2.6.0`.
 
 I thought you may forget what is that. [Get the knowledge back.](https://developer.hashicorp.com/terraform/cloud-docs)
 
-1. Access Terraform Cloud by following these steps:
+- Access Terraform Cloud by following these steps:
    - Click "Try Terraform Cloud."
    - Select your "terra-house-1" project.
 
 ![TerraHouse](../assets/2.6.0/terra-house-2023.png)
 
-2. Configure Execution Mode:
+- Configure Execution Mode:
    - Change the execution mode to "local" in Terraform Cloud. 
    - After you picked your project, click **settings** from the left pane<br>
 ![Settings Project Pane](../assets/2.6.0/click-settings.png)
@@ -2323,7 +2333,7 @@ module "home_tnrap_hosting" {}
 
 Review and update variables in the module configurations. If you need to set nested Terraform variables in the tfvars file, refer to Terraform documentation for guidance.
 
-1. We asked GPT to help in this:
+- We asked GPT to help in this:
 ```
 How do u set nested tf variables in tf vars file.
 ```
@@ -2418,9 +2428,7 @@ DESCRIPTION
 **Step 8: Storage Module Vars Update**
 
 1. Start with output.tf change the output `"cloudfront_url"` to `"domain_name"`
-
 2. In `resource-storage.tf` change the `source` and `etag` path for `index_html`, `error_html` for `aws_s3_object` to map to our new vars.
-
 ```hcl
   source = var.index_html_filepath
   source = "${var.public_path}/index.html"
@@ -2436,7 +2444,6 @@ DESCRIPTION
   etag = filemd5(var.error_html_filepath)
   etag = filemd5("${var.public_path}/error.html")
 ```
-
 3. In the same file update source, etag but also the `for_each` for `upload_assets`.
 
 ```hcl
@@ -2510,22 +2517,22 @@ source ./bin/build_provider
 With these changes, you should be able to see both pages listed in your Terraform Cloud dashboard.
 
 
-## The First Music Post 
+# The First Music Post 
 
 ![Tunisian Rap TerraHouse Post](../assets/2.7.0/music-post.png)
 
-### Check out The Music Home
+## Check out The Music Home
 
 → [TerraTowns Independent Link](https://d2y3y5anu2c2ur.cloudfront.net/)
 
 ![Tunisian Rap TerraHouse](../assets/2.7.0/my-second-home.png)
 
 
-## Check Out The Tunisian Food Post
+# Check Out The Tunisian Food Post
 
 ![Tunisian Food TerraHouse Post](../assets/2.7.0/foodhome-post.png)
 
-### Check Out The list in TerraHome
+## Check Out The list in TerraHome
 
 → [TerraTowns Independent Link](https://d3opm9jrs6v4zx.cloudfront.net/)
 
@@ -2749,7 +2756,7 @@ As I mentioned before, I designed TerraHomes for every town. This section serves
 → To [learn more about the methodology.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/65)
 
 
-### Breaking Bad FanPage
+# Breaking Bad FanPage
 
 This page is my way of expressing my admiration for the TV show. I've incorporated a quote generator and included assets that hold sentimental value from a dear friend.
 
@@ -2777,7 +2784,7 @@ DESCRIPTION
 ![Breaking Bad FanPage](../assets/2.7.1/2-bb-home.png)
 
 
-### Past Gaming Passion
+# Past Gaming Passion
 This project is a highlight to what I used to play a lot in the past. It gives some insights to why I am good in english? And why I find mysef a master in the cloud?
 
 The post Title and description specified;
@@ -2804,7 +2811,7 @@ DESCRIPTION
 ![League Of Legends WebPage](../assets/2.7.1/2-gamer-home.png)
 
 
-### Visit Tunisia
+# Visit Tunisia Website
 Our economy is a bit messed up but we have great places.
 
 I think a smart person can visit have lots of fun with dead cheap money and go back happy.
