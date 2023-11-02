@@ -7,6 +7,9 @@ Welcome to space, and I genuinely hope you discover something of value here—no
 
 The curriculum was gradually developed, using a branch and tag-based approach, and eventually condensed into week-based timeframe, aligning with the designed methodology.
 
+![Week Zero Bootcamp Banner](banners/w0.png)
+
+
 To make the most of the following architecture, I strongly encourage you to follow the designated numerical branching in [the given order](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/1-semantic-versioning/w0-branches.png). 
 
 

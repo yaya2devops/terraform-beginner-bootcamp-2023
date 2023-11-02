@@ -1,11 +1,12 @@
 # Week¹ of Transformation
 The fun truly begins in this week. 
 
+> [Take me out Briefly..](../README.md)
+
 Once we've acquired the basic capabilities to advance from week zero. <br>
 We'll delve into more, more aspects of **Terraform** and **AWS**. 
 
-> [Take me out Briefly..](../README.md)
-
+![Week One Bootcamp Banner](banners/w1.png)
 
 We will undertake a comprehensive Terraform module refactoring. <br>We will also harness the power of tf variables. 
 
@@ -88,7 +89,7 @@ This to name just a few, the rest for you to explore.
       - [Executing Locally with Null Resources](#local-execution-with-null-resources)
   * [Executing a Flawless Cache Invalidation](#implement-invalidation)
     + [Fine-Tuning Output Configuration](#output-configuration)
-    + [Step 7: Performing a Cache Invalidation](#7-performing-cache-invalidation)
+    + [Performing a Cache Invalidation](#performing-cache-invalidation)
     + [Reverting Changes and Beyond](#reverting-changes-and-more)
   * [Terrahouse Asset Management Mastery](#terrahouse-asset-management)
     + [Elevating Your Skills](#improvisation)
@@ -2016,7 +2017,7 @@ output "cloudfront_url" {
 }
 ```
 
-### 7. Performing Cache Invalidation
+### Performing Cache Invalidation
 
 Lets try to change something and see.
 
@@ -2124,7 +2125,7 @@ In Terraform, you may find the need to cast things to other thing. <br>Calm, it'
 
 Let's get started with our `for_each`.
 
-## **for_each** Configuration
+## for each Configuration
 
 - if we are using a list => will use a key
 - if its more complex e.g map => we need key and value

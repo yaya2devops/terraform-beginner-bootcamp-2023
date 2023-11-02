@@ -5,7 +5,9 @@ The past week was absolutely fantastic and filled with excitement.
 
 > [Give me a moment.](../README.md)
 
-We embarked on some incredible tech adventures, such as crafting our very own Ruby server and designing a custom Terraform provider in Go. 
+We embarked on some incredible tech adventures, such as crafting our very own Ruby server and designing a custom Terraform provider in Go.
+
+![Week Final Bootcamp Banner](banners/w2.png)
 
 - [Create A `2.0.0` Ruby Server](#create-a--200--ruby-server)
 - [TerraTowns Provider Skeleton](#terratowns-provider-skeleton)
