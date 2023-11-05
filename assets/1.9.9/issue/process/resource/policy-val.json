@@ -1,0 +1,51 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:ListAllMyBuckets"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "cloudfront:ListDistributions",
+                "cloudfront:GetDistribution",
+                "cloudfront:ListInvalidations",
+                "cloudfront:ListCloudFrontOriginAccessIdentities",
+                "cloudfront:GetCloudFrontOriginAccessIdentity",
+                "cloudfront:GetCloudFrontOriginAccessIdentityConfig",
+                "cloudfront:GetOriginAccessControl",
+                "cloudfront:ListOriginAccessControls"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:HeadBucket",
+                "s3:GetBucketNotification",
+                "s3:GetBucketPolicy",
+                "s3:GetBucketCors",
+                "s3:GetBucketWebsite",
+                "s3:GetObject",
+                "s3:HeadObject",
+                "s3:GetObjectAcl",
+                "s3:GetBucketPublicAccessBlock"
+            ],
+            "Resource": [
+                "arn:aws:s3:::xxx2w7yvypfkim1mhlp5bjbwqky9dadc/*",
+                "arn:aws:s3:::xxx2w7yvypfkim1mhlp5bjbwqky9dadc"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
