@@ -1,3 +1,6 @@
+
+- [Discord](issue/discord/README.md)
+- [Process](issue/process/README.md)
 ```JSON
 [
   {"DomainName": "d36zdpm2d5ljdc.cloudfront.net"},

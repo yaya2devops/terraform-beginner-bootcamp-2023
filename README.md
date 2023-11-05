@@ -1,5 +1,7 @@
 # Terraform Beginner Bootcamp 2023
 
+> [Validator Resources](assets/1.9.9/README.md)
+
 ![Cooking for Week 2](journal/architectures/week2-physical-diagram.png)
 
 
