@@ -2857,22 +2857,36 @@ Made necessary fixes and improvements to the user interface and slider functiona
 
 ---
 
-In case you weren't aware, all the strategies I used have been revealed<br>(Far surpassing those below).
+## Wrapping Up
+
+In case you weren't aware, all the strategies I used have been revealed<br>(Far surpassing those below—Dig in🕳️).
+
+
+My relentless pursuit is your advantage ❤️
+
+| **My Gifts**                               | **Description**                                            |
+| :--------------------------------------| :------------------------------------------------------- |
+| [Chats](../assets/2.7.1/connect.md) | Learn how I interact with this thing to get things done. |
+| [Trees](public/yayauptree.md) | Explore the beauty of code  with this cool Tree trick.        |
+| [ExamProCo](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0) | Captured a collection of assets thanks to ExamPro.   |
+| [Issue 69](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/69) | Lear the project next steps and the number sixty nine.          |
+
+
 <br>
-My relentless pursuit is your advantage.
 
-- [Chats Got TerraHomes Done](../assets/2.7.1/connect.md)
-- [Tree and Beautify](public/yayauptree.md)
-- [ExamProCo Snapshot](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0)
+**Creativity** knows no bounds, and in the absence of drafts, the untamed mind finds its truest expression.
 
-> Creativity knows no bounds, and in the absence of drafts, the untamed mind finds its truest expression.
-
-### Measured Finish
+## Measured Finish
 
 This is the bootcamp seen and constructed through the eyes of the author. <br>
 Experiences and methods to reach the top varies.
 
-The author has absolute confidence in the enormous potential of this journey for you and his commitment to your triumph remains unswerving and ever-expanding.
+|:------|
+|ℹ️: The project concluded with 31 in commits, tags, branches and issues|
+
+<br>
+
+The author **has absolute confidence in the enormous potential** of this journey for you and his commitment to your triumph remains **unswerving and ever-expanding**.
 
 
 
