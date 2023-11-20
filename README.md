@@ -2,8 +2,7 @@
 
 # 🏙️ Terraform Beginner Bootcamp
 
-Hey.<br> 
-I [conquered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/3.1.0/assets/2.7.1/gitpodxcamp/README.md) a relentless **[22-day](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commits/main)** ☁️ bootcamp.
+Hey—I [conquered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/3.1.0/assets/2.7.1/gitpodxcamp/README.md) a relentless **[22-day](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commits/main)** ☁️ bootcamp.
 
 ![Welcome To TerraTowns!](assets/2.7.1/terratowns.png)
 

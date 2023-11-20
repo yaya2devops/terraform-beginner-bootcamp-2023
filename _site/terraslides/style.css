@@ -1,0 +1,163 @@
+/* CSS styles optimized for the project */
+
+/* Importing Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Variable definitions */
+
+/* Container styling */
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background-image: var(--background_color);
+    padding-bottom: 1rem;
+}
+
+/* Header styling */
+header {
+    padding: 2rem 0;
+    margin: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo styling */
+.logo {
+    height: 6rem; /* Set the desired height */
+    max-width: 20rem; /* Set the desired width */
+    overflow: hidden; /* Hide any content that overflows the defined dimensions */
+}
+
+.logo img {
+    height: auto; /* Set the desired height */
+    width: auto; /* Allow the width to adjust while maintaining the aspect ratio */
+}
+
+/* Heading styling */
+h1 {
+    color: var(--white_color);
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 0.2rem var(--orange_color) solid;
+    text-transform: uppercase;
+}
+   
+/* Card styling */ 
+.cards_box {
+    margin: 0 5rem;
+    padding: 3.5rem 5rem;
+}
+
+a {
+    text-decoration: none;
+}  
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.cards {
+    max-width: 1120px;
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+  
+.card_details {
+    width: 300px;
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+  
+.card_img_box {
+    position: relative;
+    background-color: var(--orange_color);
+    padding-top: .75rem;
+    margin-bottom: -.75rem;
+}
+  
+.card_data {
+    background: var(--black_color);
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+  
+.card_img {
+    width: 300px;
+    border-radius: 1rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+}
+   
+.card_name {
+    font-size: 1rem;
+    color: var(--font_color);
+    margin-bottom: .75rem;
+}
+  
+.card_description {
+    font-weight: 500;
+    margin-bottom: 1.75rem;
+    color: var(--white_color);
+}
+  
+.card_button {
+    display: inline-block;
+    background-color: var(--orange_color);
+    padding: .75rem 1.5rem;
+    border-radius: .25rem;
+    color: var(--white_color);
+    font-weight: 600;
+}
+  
+/* Swiper class */
+  .swiper-button-prev:after,
+  .swiper-button-next:after {
+    content: "";
+}
+  
+.swiper-button-prev, .swiper-button-next {
+    width: initial;
+    height: initial;
+    font-size: 3rem;
+    color: var(--orange_color);
+}
+
+.swiper-button-prev:hover, 
+.swiper-button-next:hover {
+    color: var(--orange_dark_color);
+}
+  
+.swiper-button-prev {
+    left: 0;
+}
+  
+.swiper-button-next {
+    right: 0;
+}
+  
+.swiper-pagination-bullet {
+    background-color:var(--orange_color);
+    opacity: 1;
+}
+  
+.swiper-pagination-bullet-active,
+.card_button:hover {
+    background-color: var(--orange_dark_color);
+}
+  
+

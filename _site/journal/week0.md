@@ -1650,7 +1650,6 @@ cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
 - Execute the script and view its output to confirm successful execution;
 ```
 ./bin/gen_tfrc
-
 /home/gitpod/.terraform.d/credentials.tfrc.json has been generated.
 ```
 
@@ -1659,9 +1658,6 @@ cat: /home/gitpod/.terraform.d/credentials.tfrc.json: No such file or directory
 ```sh
 cat /home/gitpod/.terraform.d/credentials.tfrc.json
 ```
-
-- `cat` open in within your terminal.
-- `open` will open it within your code editor.
 
 Great and cool! Lets get it automated.
 
@@ -1692,6 +1688,9 @@ We thought it was necessary to include the script in both sections to ensure it 
 
 ![File is Here Yey!](../assets/0.8.0/cat-open-inspire.png)
 
+- `cat` open in within your terminal.
+- `open` will open it within your code editor.
+
 **Verify by restarting your workspace to ensure that the file contains your token.**
 
 
@@ -1707,9 +1706,10 @@ E.g. Instead of `terraform init`, you can write just `tf init`.
 
 We'll cover how to manually set up the alias and create a bash script to automate the process.
 
-### **Section 1** Manual Alias Setup
+## **Section 1** Manual Alias Setup
 
-**Step 1: Accessing Your Bash Profile**
+### **Step 1: Accessing Your Bash Profile**
+
 To create an alias for Terraform manually, you need to edit your Bash profile.
 
 1. Open your terminal and run the following command to access your Bash profile:
@@ -1718,7 +1718,8 @@ nano ~/.bash_profile
 ```
 2. This command will open your Bash profile in the Nano text editor.
 
-**Step 2: Adding the Terraform Alias**
+### **Step 2: Adding the Terraform Alias**
+
 In the Nano text editor, navigate to the end of the file.
 
 3. Add the following line to create an alias for Terraform:
@@ -1727,16 +1728,17 @@ alias tf="terraform"
 ```
 4. Save your changes by pressing `Ctrl + O`, then press `Enter`.
 
-**Step 3: Updating Your Bash Profile**
+### **Step 3: Updating Your Bash Profile**
+
 After adding the alias, you need to update your Bash profile. Run this command:
 ```sh
 source ~/.bash_profile
 ```
 Now, you have successfully set up the Terraform alias manually.
 
-### **Section 2** Automating Alias Setup with a Bash Script
+## **Section 2** Automating Alias Setup with a Bash Script
 
-**Step 1: Creating a Bash Script**
+### **Step 1: Creating a Bash Script**
 To automate the alias setup, you can create a bash script. Here's how:
 
 1. Create a new file for your script using the terminal or a text editor. We'll call it `tf_alias` in `/bin/`.
@@ -1788,14 +1790,14 @@ echo 'alias tf="terraform"' >> ~/.bash_profile
 ```
 - Save your changes by pressing `Ctrl + O`, then press `Enter`.
 
-**Step 2: Making the Script Executable**
+### **Step 2: Making the Script Executable**
 You need to make the script executable. Run the following command:
 
 ```sh
 chmod u+x ./bin/tf_alias
 ```
 
-**Step 3: Executing the Script**
+### **Step 3: Executing the Script**
 Now, you can execute the script to add the alias to your `.bash_profile`. Run the following command:
 
 ```sh
@@ -1803,9 +1805,9 @@ Now, you can execute the script to add the alias to your `.bash_profile`. Run th
 ```
 The script will automatically add the Terraform alias to your Bash profile and update it.
 
-### **Section 3** Using the Alias in Gitpod
+## **Section 3** Using the Alias in Gitpod
 
-**Step 1 : Integrating with Gitpod**
+### **Step 1 : Integrating with Gitpod**
 If you're using Gitpod, you can integrate the alias in both AWS and Terraform blocks to ensure it's available in both terminals.
 
 1. In your Gitpod configuration file (`.gitpod.yml`), add the following lines to both the AWS;
@@ -1833,7 +1835,7 @@ Now, every time you start a Gitpod workspace;
 
 This is `0.9.0` making your Terraform workflow more efficient and user-friendly.
 
-### Week Cipher Conquests
+## Week Cipher Conquests
 This initial ignite been an exhilarating and enlightening experience as we delved into the foundational aspects of AWS and Terraform.
 
 We hope you didn't overlook anything, or else **I might get upset**.

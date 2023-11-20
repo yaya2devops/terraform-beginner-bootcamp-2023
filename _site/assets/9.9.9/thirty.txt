@@ -1,0 +1,30 @@
+--The Big Wrap Up.--
+
+Distru name    => URL                                    => endpoint           => description   => intended result
+--------------------------------------------------------------------------------------------- 
+E1L50PBO802ROE => ds3mmnyp4l57k.cloudfront.net           => video-valley       =>(BB)            => https://video-valley.ya-ya.tech/
+E91D6OAWMP4DJ  => https://d1z96397cxwgol.cloudfront.net/ => the-nomad-pad      => (Visit Tn)     => https://the-nomad-pad.ya-ya.tech/
+E2PF19K73XQB6H => https://d3opm9jrs6v4zx.cloudfront.net  => cooker-cove        => (tn food)      =>  https://cooker-cove.ya-ya.tech/
+E31VLG3UWFJ4KI => https://d3fozmkbn0u7h4.cloudfront.net/ =>  gamers-grotto     => (gaming)       => https://gamers-grotto.ya-ya.tech/
+EW1L32U2FTA9P  => https://d2y3y5anu2c2ur.cloudfront.net  => melomaniac-mansion => (tnrap)        => https://melomaniac-mansion.ya-ya.tech/
+E299Z4UDSYDZ81  => https://d2ose4lue5s0p.cloudfront.net/  => missingo           => (testing)     => https://missingo.ya-ya.tech/
+
+Tasks;
+- Screenshot CloudFront Serie Of Distru.
+- Instruct dns => Route, Cert process.
+- Create TerraHomes Webpage and present the projects.
+
+Great and Cool.
+
+# The How I did it
+
+I did onboard our domain to route 53.
+I did create a record for the terrahome (subdomain)
+I did request a certificate for *.domain 
+I specify the cert everytime in cloudfront distrus
+I did Alternate domain name (CNAME) - optional for terrahome.domain
+I did edit origin in behaviors to Redirect HTTP to HTTPS
+
+When you include the cloudfront url to your route53 record. Throw it naked. Dont include the https.
+
+

@@ -2651,7 +2651,7 @@ This Incl. 1 **Mixer** town for testing in Missingo.
 
 I ensured that these homes reflect my personality, allowing me to reveal more about who I am as a great person.
 
-## TerraHome: Coding a New Home
+### TerraHome: Coding a New Home
 In the following section, we will cover the steps necessary for you to add a new home.
 
 Although we've already covered this process in the previous version 2.7.0, we will do it again to assure we know what we are doing.
