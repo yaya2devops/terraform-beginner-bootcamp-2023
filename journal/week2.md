@@ -2881,10 +2881,11 @@ My relentless pursuit is your advantage ❤️
 This is the bootcamp seen and constructed through the eyes of the author. <br>
 Experiences and methods to reach the top varies.
 
-|:------|
-|ℹ️: The project concluded with 31 in commits, tags, branches and issues|
+|:------------|
+|ℹ️: The project concluded with 31 in [commits](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commits/main), [tags](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tags), [branches](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/branches) and [issues](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues?q=is%3Aissue+sort%3Aupdated-desc+is%3Aclosed)|
 
-<br>
+
+![The Big Credit](andrewxyaya.png)
 
 The author **has absolute confidence in the enormous potential** of this journey for you and his commitment to your triumph remains **unswerving and ever-expanding**.
 
