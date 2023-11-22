@@ -1245,8 +1245,8 @@ In a real project, you wouldn't commit and create pull requests for these change
 
 In the next phase and last, we'll start filling in the resource and making the API calls.
 
-|OpenAI plugins are great stuff|
-|:---:|
+- OpenAI plugins are great stuff
+
 
 
 # TerraTowns Home Resource
@@ -1858,7 +1858,7 @@ Welcome to `2.5.0` where we'll be testing our custom provider against real Terra
 + [Token Handling](#token-handling)
   + [Example for access token](#example-for-access-token)
   + [Bucket Name Randomization](#bucket-name-randomization)
-+ [Testing Your First TerraTown](#testing-your-first-terratown)
++ [Testing Your First TerraTown](#testing-your-first-terrahome)
 
 
 We will be configuring access tokens, endpoints, and other necessary settings to ensure our custom provider works seamlessly with TerraTowns.
@@ -2110,13 +2110,15 @@ This specific provides a clear overview and step-by-step instructions for testin
 Welcome to the Terraform  `2.6.0` last official release with primary objective to integrate Terraform Cloud with our local development environments.
   * [Problematic 101](#problematic-101)
   * [Problematic 202](#problematic-202)
-  * [Resovlver Pro Max](#resovlver-pro-max)
+  * [Resolver Pro Max](#resolver-pro-max)
   * [Head over Terraform Cloud](#head-over-terraform-cloud)
 
 The following comes after an experience with different ways to work with terraform and thus coming up with the best possible solution.
 
 The multiple home feature was part of this and now is part of `2.7.0`.<br>
-Learn more [about our methodology](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61).
+
+
+Learn more [**about our methodology**](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61).
 
 
 ## Problematic 101
@@ -2133,7 +2135,7 @@ We have now made a complete shift to using Terraform Cloud, and this transition 
 |:---:|:---|
 |❌|We have observed a decrease in execution speed|
 
-## Resovlver Pro Max
+## Resolver Pro Max
 These experiences bring us to the following solution.
 
 **Ensuring safety and persistence and never lose your state;**
@@ -2224,7 +2226,7 @@ Observe the state is now in your terraform dotfile.
 
 Have you also noticed? **It is damn fast as it used to.** But not only that..
 
-- Monitor the Terraform Cloud dashboard and find your state and secure and downloadable anytime, anywhere.
+- Monitor the Terraform Cloud dashboard and find your state; **secure** and **downloadable**, **anytime** and **anywhere**.
 
 ![Terraform Cloud Consult](../assets/2.6.0/state-managed.png)
 
@@ -2430,19 +2432,17 @@ DESCRIPTION
 1. Start with output.tf change the output `"cloudfront_url"` to `"domain_name"`
 2. In `resource-storage.tf` change the `source` and `etag` path for `index_html`, `error_html` for `aws_s3_object` to map to our new vars.
 ```hcl
-  source = var.index_html_filepath
-  source = "${var.public_path}/index.html"
-
-  etag = filemd5(var.index_html_filepath)
-  etag = filemd5("${var.public_path}/index.html")
-
-
-
-  source = var.error_html_filepath
-  source = "${var.public_path}/error.html"
-
-  etag = filemd5(var.error_html_filepath)
-  etag = filemd5("${var.public_path}/error.html")
+source = var.index_html_filepath
+source = "${var.public_path}/index.html"
+etag = filemd5(var.index_html_filepath)
+etag = filemd5("${var.public_path}/index.html")
+```
+Apply the same for the error file.
+```hcl
+source = var.error_html_filepath
+source = "${var.public_path}/error.html"
+etag = filemd5(var.error_html_filepath)
+etag = filemd5("${var.public_path}/error.html")
 ```
 3. In the same file update source, etag but also the `for_each` for `upload_assets`.
 
@@ -2519,22 +2519,34 @@ With these changes, you should be able to see both pages listed in your Terrafor
 
 # The First Music Post 
 
+I listen to music every day, mostly diverse genres. These are my original music choices, and you can expect me to listen to them with neutral to somewhat excited energy.
+
+
 ![Tunisian Rap TerraHouse Post](../assets/2.7.0/music-post.png)
 
 ## Check out The Music Home
 
 → [TerraTowns Independent Link](https://d2y3y5anu2c2ur.cloudfront.net/)
 
+You can listen even without signing in to Spotify. I'm confident you'll feel a closer connection if you give one of them a listen.
+
+
 ![Tunisian Rap TerraHouse](../assets/2.7.0/my-second-home.png)
 
 
 # Check Out The Tunisian Food Post
 
+We're a country that truly cherishes its food culture. It plays a significant role in our lives. 
+
 ![Tunisian Food TerraHouse Post](../assets/2.7.0/foodhome-post.png)
+
+Fortunately, I'm often occupied with computer work or at the gym; <br>otherwise, I might end up gaining weight.
 
 ## Check Out The list in TerraHome
 
 → [TerraTowns Independent Link](https://d3opm9jrs6v4zx.cloudfront.net/)
+
+These dishes are worth the extra calories; give them a try and keep me in mind.
 
 ![Tunisian Food TerraHouse](../assets/2.7.0/food-from-terratowns.png)
 
@@ -2750,7 +2762,7 @@ terraform login
 
 ## TerraTowns Deliverables
 
-As I mentioned before, I designed TerraHomes for every town. This section serves as a showcase of the most recent three additions.
+As I mentioned before, I designed TerraHomes for every TerraTown. <br>This section serves as a showcase of the most recent three additions.
 
 
 → To [learn more about the methodology.](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/65)
@@ -2867,9 +2879,9 @@ My relentless pursuit is your advantage ❤️
 | **My Gifts**                               | **Description**                                            |
 | :--------------------------------------| :------------------------------------------------------- |
 | [Chats](../assets/2.7.1/connect.md) | Learn how I interact with this thing to get things done. |
-| [Trees](public/yayauptree.md) | Explore the beauty of code  with this cool Tree trick.        |
-| [ExamProCo](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0) | Captured a collection of assets thanks to ExamPro.   |
-| [Issue 69](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/69) | Lear the project next steps and the number sixty nine.          |
+| [Trees](../public/yayauptree.md) | Explore the beauty of code  with this cool Tree trick.        |
+| [ExamPro](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0) | Captured a collection of assets thanks to ExamPro.   |
+| [Issue 69](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/69) | Learn the project next steps and the number sixty nine.          |
 
 
 <br>
@@ -2881,18 +2893,48 @@ My relentless pursuit is your advantage ❤️
 This is the bootcamp seen and constructed through the eyes of the author. <br>
 Experiences and methods to reach the top varies.
 
-|:------------|
+|:-|
 |ℹ️: The project concluded with 31 in [commits](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commits/main), [tags](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tags), [branches](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/branches) and [issues](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues?q=is%3Aissue+sort%3Aupdated-desc+is%3Aclosed)|
 
-
-![The Big Credit](andrewxyaya.png)
+<br>
 
 The author **has absolute confidence in the enormous potential** of this journey for you and his commitment to your triumph remains **unswerving and ever-expanding**.
 
+---
+
+## Technical Reference
+Below are the bootcamp projects, each accessible via a subdomain endpoint.
+
+- `https://missingo.ya-ya.tech`
+- `https://cooker-cove.ya-ya.tech`
+- `https://melomaniac-mansion.ya-ya.tech`
+- `https://gamers-grotto.ya-ya.tech`
+- `https://the-nomad-pad.ya-ya.tech` 
+- `https://video-valley.ya-ya.tech` 
+
+![Innovative Way](https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/3315a6cc1ef381e95baabfff254c46dfd266cab7/assets/9.9.9/ship-way.png)
+
+The information mentioned above has been elaborated in issue number sixty-nine.
+
+
+---
+
+## Surpassing All Endings Expectations
+
+
+The bootcamp concluded,<br>The author proudly received both tangible and moral credentials from the organizers.
+
+<div align="center">
+
+<b>📢Learn about <a href="yayaxandrew">the story behind this interaction</a>.</b>
+
+</div>
+
+![The Big Ever Lasting Credit](andrewxyaya.png)
+
+He looks forward to sharing additional work with you enthusiastically.
 
 
 
 
-
-
-
+See you in the cloud,

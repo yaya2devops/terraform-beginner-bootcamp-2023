@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/assets/css/style.css?v=40043df255408ffdfa65e8f7fe8eb610c330099f" media="screen" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=0f2a0d4b934b589ae07477bf1f0c40526c3fda91" media="screen" type="text/css">
     <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
 
     <!--[if lt IE 9]>
@@ -1554,8 +1554,9 @@ We have to code a func  skeleton for each.</p>
 
 <p>In the next phase and last, we’ll start filling in the resource and making the API calls.</p>
 
-<p>|OpenAI plugins are great stuff|
-|:—:|</p>
+<ul>
+  <li>OpenAI plugins are great stuff</li>
+</ul>
 
 <h1 id="terratowns-home-resource">TerraTowns Home Resource</h1>
 <p>We welcome you in this last and intense <code class="language-plaintext highlighter-rouge">4/4</code> part of our custom terraform provider creation.</p>
@@ -2353,7 +2354,7 @@ Providers required by configuration:
       <li><a href="#bucket-name-randomization">Bucket Name Randomization</a></li>
     </ul>
   </li>
-  <li><a href="#testing-your-first-terratown">Testing Your First TerraTown</a></li>
+  <li><a href="#testing-your-first-terrahome">Testing Your First TerraTown</a></li>
 </ul>
 
 <p>We will be configuring access tokens, endpoints, and other necessary settings to ensure our custom provider works seamlessly with TerraTowns.</p>
@@ -2653,14 +2654,15 @@ terraform.cloud/</p>
 <ul>
   <li><a href="#problematic-101">Problematic 101</a></li>
   <li><a href="#problematic-202">Problematic 202</a></li>
-  <li><a href="#resovlver-pro-max">Resovlver Pro Max</a></li>
+  <li><a href="#resolver-pro-max">Resolver Pro Max</a></li>
   <li><a href="#head-over-terraform-cloud">Head over Terraform Cloud</a></li>
 </ul>
 
 <p>The following comes after an experience with different ways to work with terraform and thus coming up with the best possible solution.</p>
 
-<p>The multiple home feature was part of this and now is part of <code class="language-plaintext highlighter-rouge">2.7.0</code>.<br />
-Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61">about our methodology</a>.</p>
+<p>The multiple home feature was part of this and now is part of <code class="language-plaintext highlighter-rouge">2.7.0</code>.<br /></p>
+
+<p>Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/61"><strong>about our methodology</strong></a>.</p>
 
 <h2 id="problematic-101">Problematic 101</h2>
 <p>We previously operated exclusively using local execution, which resulted in rapid infrastructure planning and implementation.</p>
@@ -2698,7 +2700,7 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
   </tbody>
 </table>
 
-<h2 id="resovlver-pro-max">Resovlver Pro Max</h2>
+<h2 id="resolver-pro-max">Resolver Pro Max</h2>
 <p>These experiences bring us to the following solution.</p>
 
 <p><strong>Ensuring safety and persistence and never lose your state;</strong></p>
@@ -2843,7 +2845,7 @@ Learn more <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2
 <p>Have you also noticed? <strong>It is damn fast as it used to.</strong> But not only that..</p>
 
 <ul>
-  <li>Monitor the Terraform Cloud dashboard and find your state and secure and downloadable anytime, anywhere.</li>
+  <li>Monitor the Terraform Cloud dashboard and find your state; <strong>secure</strong> and <strong>downloadable</strong>, <strong>anytime</strong> and <strong>anywhere</strong>.</li>
 </ul>
 
 <p><img src="/assets/2.6.0/state-managed.png" alt="Terraform Cloud Consult" /></p>
@@ -3064,30 +3066,29 @@ DESCRIPTION
 <ol>
   <li>Start with output.tf change the output <code class="language-plaintext highlighter-rouge">"cloudfront_url"</code> to <code class="language-plaintext highlighter-rouge">"domain_name"</code></li>
   <li>In <code class="language-plaintext highlighter-rouge">resource-storage.tf</code> change the <code class="language-plaintext highlighter-rouge">source</code> and <code class="language-plaintext highlighter-rouge">etag</code> path for <code class="language-plaintext highlighter-rouge">index_html</code>, <code class="language-plaintext highlighter-rouge">error_html</code> for <code class="language-plaintext highlighter-rouge">aws_s3_object</code> to map to our new vars.
-```hcl
-  source = var.index_html_filepath
-  source = “${var.public_path}/index.html”</li>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">source</span> <span class="err">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">index_html_filepath</span>
+<span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/index.html"</span>
+<span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">index_html_filepath</span><span class="err">)</span>
+<span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/index.html"</span><span class="err">)</span>
+</code></pre></div>    </div>
+    <p>Apply the same for the error file.</p>
+    <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">source</span> <span class="err">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">error_html_filepath</span>
+<span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/error.html"</span>
+<span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">error_html_filepath</span><span class="err">)</span>
+<span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/error.html"</span><span class="err">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>In the same file update source, etag but also the <code class="language-plaintext highlighter-rouge">for_each</code> for <code class="language-plaintext highlighter-rouge">upload_assets</code>.</li>
 </ol>
 
-<p>etag = filemd5(var.index_html_filepath)
-  etag = filemd5(“${var.public_path}/index.html”)</p>
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">for_each</span> <span class="err">=</span> <span class="nx">fileset</span><span class="err">(</span><span class="nx">var</span><span class="err">.</span><span class="nx">assets_path</span><span class="err">,</span><span class="s2">"*.{jpg,png,gif}"</span><span class="err">)</span>
+  <span class="nx">for_each</span> <span class="err">=</span> <span class="nx">fileset</span><span class="err">(</span><span class="s2">"${var.public_path}/assets"</span><span class="err">,</span><span class="s2">"*.{jpg,png,gif}"</span><span class="err">)</span>
 
-<p>source = var.error_html_filepath
-  source = “${var.public_path}/error.html”</p>
+  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.assets_path}/${each.key}"</span>
+  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.assets_path}${each.key}"</span><span class="err">)</span>
 
-<p>etag = filemd5(var.error_html_filepath)
-  etag = filemd5(“${var.public_path}/error.html”)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3. In the same file update source, etag but also the `for_each` for `upload_assets`.
-
-```hcl
-  for_each = fileset(var.assets_path,"*.{jpg,png,gif}")
-  for_each = fileset("${var.public_path}/assets","*.{jpg,png,gif}")
-
-  source = "${var.assets_path}/${each.key}"
-  etag = filemd5("${var.assets_path}${each.key}")
-
-  source = "${var.public_path}/assets/${each.key}"
-  etag = filemd5("${var.public_path}/assets/${each.key}")
+  <span class="nx">source</span> <span class="err">=</span> <span class="s2">"${var.public_path}/assets/${each.key}"</span>
+  <span class="nx">etag</span> <span class="err">=</span> <span class="nx">filemd5</span><span class="err">(</span><span class="s2">"${var.public_path}/assets/${each.key}"</span><span class="err">)</span>
 </code></pre></div></div>
 
 <p><strong>Step 9: Module <code class="language-plaintext highlighter-rouge">variables.tf</code> Updates</strong></p>
@@ -3151,21 +3152,31 @@ DESCRIPTION
 
 <h1 id="the-first-music-post">The First Music Post</h1>
 
+<p>I listen to music every day, mostly diverse genres. These are my original music choices, and you can expect me to listen to them with neutral to somewhat excited energy.</p>
+
 <p><img src="/assets/2.7.0/music-post.png" alt="Tunisian Rap TerraHouse Post" /></p>
 
 <h2 id="check-out-the-music-home">Check out The Music Home</h2>
 
 <p>→ <a href="https://d2y3y5anu2c2ur.cloudfront.net/">TerraTowns Independent Link</a></p>
 
+<p>You can listen even without signing in to Spotify. I’m confident you’ll feel a closer connection if you give one of them a listen.</p>
+
 <p><img src="/assets/2.7.0/my-second-home.png" alt="Tunisian Rap TerraHouse" /></p>
 
 <h1 id="check-out-the-tunisian-food-post">Check Out The Tunisian Food Post</h1>
 
+<p>We’re a country that truly cherishes its food culture. It plays a significant role in our lives.</p>
+
 <p><img src="/assets/2.7.0/foodhome-post.png" alt="Tunisian Food TerraHouse Post" /></p>
+
+<p>Fortunately, I’m often occupied with computer work or at the gym; <br />otherwise, I might end up gaining weight.</p>
 
 <h2 id="check-out-the-list-in-terrahome">Check Out The list in TerraHome</h2>
 
 <p>→ <a href="https://d3opm9jrs6v4zx.cloudfront.net/">TerraTowns Independent Link</a></p>
+
+<p>These dishes are worth the extra calories; give them a try and keep me in mind.</p>
 
 <p><img src="/assets/2.7.0/food-from-terratowns.png" alt="Tunisian Food TerraHouse" /></p>
 
@@ -3402,7 +3413,7 @@ bundle exec ruby server.rb
 
 <h2 id="terratowns-deliverables">TerraTowns Deliverables</h2>
 
-<p>As I mentioned before, I designed TerraHomes for every town. This section serves as a showcase of the most recent three additions.</p>
+<p>As I mentioned before, I designed TerraHomes for every TerraTown. <br />This section serves as a showcase of the most recent three additions.</p>
 
 <p>→ To <a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/65">learn more about the methodology.</a></p>
 
@@ -3542,16 +3553,16 @@ Made necessary fixes and improvements to the user interface and slider functiona
       <td style="text-align: left">Learn how I interact with this thing to get things done.</td>
     </tr>
     <tr>
-      <td style="text-align: left"><a href="public/yayauptree.md">Trees</a></td>
+      <td style="text-align: left"><a href="/public/yayauptree.html">Trees</a></td>
       <td style="text-align: left">Explore the beauty of code  with this cool Tree trick.</td>
     </tr>
     <tr>
-      <td style="text-align: left"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0">ExamProCo</a></td>
+      <td style="text-align: left"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/tree/3.1.0/assets/3.1.0">ExamPro</a></td>
       <td style="text-align: left">Captured a collection of assets thanks to ExamPro.</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/issues/69">Issue 69</a></td>
-      <td style="text-align: left">Lear the project next steps and the number sixty nine.</td>
+      <td style="text-align: left">Learn the project next steps and the number sixty nine.</td>
     </tr>
   </tbody>
 </table>
@@ -3573,10 +3584,45 @@ Experiences and methods to reach the top varies.</p>
   </tbody>
 </table>
 
-<p><img src="andrewxyaya.png" alt="The Big Credit" /></p>
+<p><br /></p>
 
 <p>The author <strong>has absolute confidence in the enormous potential</strong> of this journey for you and his commitment to your triumph remains <strong>unswerving and ever-expanding</strong>.</p>
 
+<hr />
+
+<h2 id="technical-reference">Technical Reference</h2>
+<p>Below are the bootcamp projects, each accessible via a subdomain endpoint.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">https://missingo.ya-ya.tech</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://cooker-cove.ya-ya.tech</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://melomaniac-mansion.ya-ya.tech</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://gamers-grotto.ya-ya.tech</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://the-nomad-pad.ya-ya.tech</code></li>
+  <li><code class="language-plaintext highlighter-rouge">https://video-valley.ya-ya.tech</code></li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/yaya2devops/terraform-beginner-bootcamp-2023/3315a6cc1ef381e95baabfff254c46dfd266cab7/assets/9.9.9/ship-way.png" alt="Innovative Way" /></p>
+
+<p>The information mentioned above has been elaborated in issue number sixty-nine.</p>
+
+<hr />
+
+<h2 id="surpassing-all-endings-expectations">Surpassing All Endings Expectations</h2>
+
+<p>The bootcamp concluded,<br />The author proudly received both tangible and moral credentials from the organizers.</p>
+
+<div align="center">
+
+<b>📢Learn about <a href="yayaxandrew">the story behind this interaction</a>.</b>
+
+</div>
+
+<p><img src="/journal/andrewxyaya.png" alt="The Big Ever Lasting Credit" /></p>
+
+<p>He looks forward to sharing additional work with you enthusiastically.</p>
+
+<p>See you in the cloud,</p>
 
         </section>
 
