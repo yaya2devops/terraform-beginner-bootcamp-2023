@@ -33,7 +33,11 @@ bundle install
 
 ```
 bundle exec jekyll serve
+
+
+bundle install && bundle exec jekyll serve
 ```
+
 
 ![Tracking](how.png)<br>
 You will get a local URL where u can make and track changes in real time.

@@ -28,6 +28,11 @@ tasks:
       npm install --global http-server
     command: 
       http-server
+  - name: jeykyll-ftw
+    before: |
+      cd $PROJECT_ROOT
+      bundle install 
+      bundle exec jekyll serve     
 vscode:
   extensions:
     - amazonwebservices.aws-toolkit-vscode

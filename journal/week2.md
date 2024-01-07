@@ -2935,13 +2935,16 @@ The bootcamp concluded,<br>The author proudly received both tangible and moral c
 He looks forward to sharing additional work with you enthusiastically.
 
 
-See you in the cloud,
-
-
 <details>
 <summary>
-You enjoyed this cute little bootcamp?
+↓ You enjoyed this cute little bootcamp?
 </summary>
 
-I did a bigger one and you may like to [abstract my work](https://github.com/yaya2devops/aws-cloud-project-bootcamp/blob/main/journal/README.md).
+I did a bigger one and you may as well like to <a href="https://github.com/yaya2devops/aws-cloud-project-bootcamp/blob/main/journal/README.md">abstract my work</a>.
 </details>
+
+<br>
+
+See you in the cloud,
+
+<br>
