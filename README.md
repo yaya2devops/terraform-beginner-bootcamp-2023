@@ -13,3 +13,6 @@ I extracted **every ounce** of wisdom and truth.<br> And now, I'm **passing the 
 - [Week Two](journal/week2.md) 
 
 **Take charge** of your own journey ~~under pressure~~ at **your own pace**.
+
+|[TerraCard](https://about-tfbc.ya-ya.tech/) | [TerraSlides](https://terraslides.ya-ya.tech/)|
+|---|---|
