@@ -1,6 +1,6 @@
 
 
-# 🏙️ Terraform Beginner Bootcamp
+# 🏙️ TF .BB
 
 Hey—I [conquered](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/blob/3.1.0/assets/2.7.1/gitpodxcamp/README.md) a relentless **[22-day](https://github.com/yaya2devops/terraform-beginner-bootcamp-2023/commits/main)** ☁️ bootcamp.
 
@@ -14,5 +14,5 @@ I extracted **every ounce** of wisdom and truth.<br> And now, I'm **passing the 
 
 **Take charge** of your own journey ~~under pressure~~ at **your own pace**.
 
-|[TerraCard](https://about-tfbc.ya-ya.tech/) | [TerraSlides](https://terraslides.ya-ya.tech/)|
 |---|---|
+|[**TerraCard**](https://about-tfbc.ya-ya.tech/) | [**TerraSlides**](https://terraslides.ya-ya.tech/)|
