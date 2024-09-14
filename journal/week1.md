@@ -1,4 +1,4 @@
-# Div¹ of Transformation
+# Div Of Transformation
 ![Division Two!](banners/divisions/2.png)
 
 The fun truly begins in this week. 
