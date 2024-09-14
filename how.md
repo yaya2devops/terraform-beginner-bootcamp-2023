@@ -35,7 +35,7 @@ bundle install
 bundle exec jekyll serve
 
 
-bundle install && bundle exec jekyll serve
+bundle update && bundle install && bundle exec jekyll serve
 ```
 
 

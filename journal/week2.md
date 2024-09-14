@@ -1,5 +1,6 @@
-# Final Week₂ Of The Bootcamp
+# The Final Div₂ 
 
+![Division Three!](banners/divisions/3.png)
 
 The past week was absolutely fantastic and filled with excitement. 
 

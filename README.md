@@ -14,5 +14,9 @@ I extracted **every ounce** of wisdom and truth.<br> And now, I'm **passing the 
 
 **Take charge** of your own journey ~~under pressure~~ at **your own pace**.
 
+
+![Division Core!](journal/banners/divisions/1.png)
+
+
 |---|---|
 |[**TerraCard**](https://about-tfbc.ya-ya.tech/) | [**TerraSlides**](https://terraslides.ya-ya.tech/)|

@@ -1,4 +1,6 @@
-# Week¹ of Transformation
+# Div¹ of Transformation
+![Division Two!](banners/divisions/2.png)
+
 The fun truly begins in this week. 
 
 > [Take me out Briefly..](../README.md)
